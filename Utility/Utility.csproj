@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{64A5EB28-24AC-42ED-895C-98CB41FF1E54}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Utility</RootNamespace>
+    <AssemblyName>Utility</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Persia, Version=2.0.2230.35390, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Persia.1.0.1\lib\Persia.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Activities" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CommonAttribute\DisplayFiledAttribute.cs" />
+    <Compile Include="CommonAttribute\IgnoreInEdit.cs" />
+    <Compile Include="CommonAttribute\JQGridAttribute.cs" />
+    <Compile Include="CommonAttribute\LTRAttribute.cs" />
+    <Compile Include="CommonAttribute\PlaceHolderAttribute.cs" />
+    <Compile Include="CommonAttribute\ReadOnlyAttribute.cs" />
+    <Compile Include="EncryptDecrypt.cs" />
+    <Compile Include="Ext\DynamicQueryable.cs" />
+    <Compile Include="Ext\EnumHelper.cs" />
+    <Compile Include="Ext\FileExt.cs" />
+    <Compile Include="Ext\LongExt.cs" />
+    <Compile Include="Ext\StringExt.cs" />
+    <Compile Include="Filters\AjaxOnlyFilter.cs" />
+    <Compile Include="Filters\AuthenticationCustomerClubFilter.cs" />
+    <Compile Include="Filters\AuthenticationManagerFilter.cs" />
+    <Compile Include="GlobalMessage.cs" />
+    <Compile Include="HtmlHelpers\ClsCKEditorHelper.cs" />
+    <Compile Include="HtmlHelpers\HtmlExtenstions.cs" />
+    <Compile Include="HtmlHelpers\ImageHelper.cs" />
+    <Compile Include="HtmlHelpers\MvcHtmlTableExtensions.cs" />
+    <Compile Include="HtmlHelpers\UploadHelper.cs" />
+    <Compile Include="NormalJsonClass.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublicEnum\ActionType.cs" />
+    <Compile Include="PublicEnum\AssessmentEnum.cs" />
+    <Compile Include="PublicEnum\AttendanceEnum.cs" />
+    <Compile Include="PublicEnum\BirthMonth.cs" />
+    <Compile Include="PublicEnum\CityTypeEnum.cs" />
+    <Compile Include="PublicEnum\ClinicVersionRole.cs" />
+    <Compile Include="PublicEnum\CodingEnum.cs" />
+    <Compile Include="PublicEnum\CompanyAccountEnum.cs" />
+    <Compile Include="PublicEnum\CompanyType.cs" />
+    <Compile Include="PublicEnum\ConcatOparatorSearchEnum.cs" />
+    <Compile Include="PublicEnum\CostEnum.cs" />
+    <Compile Include="PublicEnum\CustomActionType.cs" />
+    <Compile Include="PublicEnum\CustomerDocumentEnum.cs" />
+    <Compile Include="PublicEnum\DaysOfWeekEnum.cs" />
+    <Compile Include="PublicEnum\DiscountEnum.cs" />
+    <Compile Include="PublicEnum\DraftVersionPaperSize.cs" />
+    <Compile Include="PublicEnum\Education.cs" />
+    <Compile Include="PublicEnum\EnumCustomer.cs" />
+    <Compile Include="PublicEnum\EnumDate.cs" />
+    <Compile Include="PublicEnum\EnumForReportAreaView.cs" />
+    <Compile Include="PublicEnum\EnumRole.cs" />
+    <Compile Include="PublicEnum\EnumRoleType.cs" />
+    <Compile Include="PublicEnum\EnumScoring.cs" />
+    <Compile Include="PublicEnum\FieldDynamicPatient.cs" />
+    <Compile Include="PublicEnum\ImageFormmat.cs" />
+    <Compile Include="PublicEnum\InsuranceEnum.cs" />
+    <Compile Include="PublicEnum\LastDocNoInPatient.cs" />
+    <Compile Include="PublicEnum\LevelTypeEnum.cs" />
+    <Compile Include="PublicEnum\LoginResultStatus.cs" />
+    <Compile Include="PublicEnum\MedicalCenterRole.cs" />
+    <Compile Include="PublicEnum\MountEnum.cs" />
+    <Compile Include="PublicEnum\NotificationEnum.cs" />
+    <Compile Include="PublicEnum\ParametersSMSEnum.cs" />
+    <Compile Include="PublicEnum\PaymentNameEnum.cs" />
+    <Compile Include="PublicEnum\PregnancyCalculatorSelectorDateEnum.cs" />
+    <Compile Include="PublicEnum\PrescriptionEnum.cs" />
+    <Compile Include="PublicEnum\Prescription\GraphiEnum.cs" />
+    <Compile Include="PublicEnum\Prescription\PubliEnum.cs" />
+    <Compile Include="PublicEnum\ProfileType.cs" />
+    <Compile Include="PublicEnum\PubMenuEnum.cs" />
+    <Compile Include="PublicEnum\PubTypeEnum.cs" />
+    <Compile Include="PublicEnum\RateTypeEnum.cs" />
+    <Compile Include="PublicEnum\ReportInsuranceFormsEnum.cs" />
+    <Compile Include="PublicEnum\ReportVisitTimeParametrRadioButton.cs" />
+    <Compile Include="PublicEnum\SearchEnum.cs" />
+    <Compile Include="PublicEnum\SmsStatus.cs" />
+    <Compile Include="PublicEnum\SmsType.cs" />
+    <Compile Include="PublicEnum\TherapyEnum.cs" />
+    <Compile Include="PublicEnum\TypeCenterRole.cs" />
+    <Compile Include="PublicEnum\UserRole.cs" />
+    <Compile Include="PublicEnum\UserType.cs" />
+    <Compile Include="PublicEnum\ValidationCustomerInfoRepeatEnum.cs" />
+    <Compile Include="PublicEnum\WorkEnum.cs" />
+    <Compile Include="PublicEnum\WorkLogEnum.cs" />
+    <Compile Include="Utitlies\CommonCustomViewTablePaging.cs" />
+    <Compile Include="Utitlies\CreateDatabaseRuntime.cs" />
+    <Compile Include="Utitlies\DateTimeOperation.cs" />
+    <Compile Include="Utitlies\GenericTypeCompare.cs" />
+    <Compile Include="Utitlies\JsonData.cs" />
+    <Compile Include="Utitlies\MessageBox.cs" />
+    <Compile Include="Utitlies\Utility.cs" />
+    <Compile Include="Utitlies\VaribleForName.cs" />
+    <Compile Include="Utitlies\ViewHelper.cs" />
+    <Compile Include="Utitlies\viewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PublicEnum\Attendance\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

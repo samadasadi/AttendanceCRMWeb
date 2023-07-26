@@ -1,0 +1,1356 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="aa" xml:space="preserve">
+    <value>از</value>
+  </data>
+  <data name="AccountNO" xml:space="preserve">
+    <value>شماره حساب</value>
+  </data>
+  <data name="AccountSummaryDoctors" xml:space="preserve">
+    <value>خلاصه حساب پزشکان معالج </value>
+  </data>
+  <data name="ActionType" xml:space="preserve">
+    <value>نوع اقدام</value>
+  </data>
+  <data name="Active" xml:space="preserve">
+    <value>فعال</value>
+  </data>
+  <data name="ActiveList" xml:space="preserve">
+    <value>قابلیت های فعال</value>
+  </data>
+  <data name="ActivePrint" xml:space="preserve">
+    <value>رسید چاپگر حرارتی فعال باشد.</value>
+  </data>
+  <data name="Added" xml:space="preserve">
+    <value>اضافه</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>آدرس</value>
+  </data>
+  <data name="AddToAccountingClients_Alert" xml:space="preserve">
+    <value>در صورت انتخاب بعنوان مشتری دیگر امکان ویرایش وجود ندارد</value>
+  </data>
+  <data name="AdvancedSearch" xml:space="preserve">
+    <value>جستجوی پیشرفته</value>
+  </data>
+  <data name="AdvanceSearch" xml:space="preserve">
+    <value>جستجوی پیشرفته</value>
+  </data>
+  <data name="Age" xml:space="preserve">
+    <value>سن</value>
+  </data>
+  <data name="AlarmDate" xml:space="preserve">
+    <value>تاریخ آلارم</value>
+  </data>
+  <data name="all" xml:space="preserve">
+    <value>همه</value>
+  </data>
+  <data name="AmericanT132" xml:space="preserve">
+    <value>آمریکایی T1~32</value>
+  </data>
+  <data name="AmericanULLL" xml:space="preserve">
+    <value>آمریکایی UL_LL</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>مقدار</value>
+  </data>
+  <data name="appAwardDrPercent" xml:space="preserve">
+    <value>درصد امتیاز معرف</value>
+  </data>
+  <data name="appAwardPercent" xml:space="preserve">
+    <value>درصد امتیاز بیمار</value>
+  </data>
+  <data name="appHostIp" xml:space="preserve">
+    <value>Host Ip</value>
+  </data>
+  <data name="Appointment" xml:space="preserve">
+    <value>تعداد روزهای جلوتر اطلاع بیمار از وقت ملاقات توسط پیامک</value>
+  </data>
+  <data name="appToothQtyLock" xml:space="preserve">
+    <value>ویرایش تعداد دندان در ثبت درمان ممکن نباشد</value>
+  </data>
+  <data name="Assistant" xml:space="preserve">
+    <value>دستیار</value>
+  </data>
+  <data name="Automatically" xml:space="preserve">
+    <value>خودکار</value>
+  </data>
+  <data name="Automaticupdatinginbox" xml:space="preserve">
+    <value>به هنگام سازی خودکار صندوق ورودی</value>
+  </data>
+  <data name="AvanakPassword" xml:space="preserve">
+    <value>پسوورد آوانک</value>
+  </data>
+  <data name="AvanakUserName" xml:space="preserve">
+    <value>نام کاربری آوانک</value>
+  </data>
+  <data name="Avanak_ServerId" xml:space="preserve">
+    <value>سرور آوانک</value>
+  </data>
+  <data name="Award" xml:space="preserve">
+    <value>جایزه</value>
+  </data>
+  <data name="AwardAward" xml:space="preserve">
+    <value>اهدا جایزه</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>قبل</value>
+  </data>
+  <data name="Backup" xml:space="preserve">
+    <value>تعداد روز های یادآوری تهیه نسخه پشتیبان</value>
+  </data>
+  <data name="BankCenter" xml:space="preserve">
+    <value>نام بانک</value>
+  </data>
+  <data name="Barcode" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Basictariff" xml:space="preserve">
+    <value>تعرفه عمومی</value>
+  </data>
+  <data name="CallerHistoryDate" xml:space="preserve">
+    <value>تاریخ تماس</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>لغو </value>
+  </data>
+  <data name="CardNo" xml:space="preserve">
+    <value>شماره کارت</value>
+  </data>
+  <data name="CategoryName" xml:space="preserve">
+    <value>نام دسته</value>
+  </data>
+  <data name="cbiAccComment" xml:space="preserve">
+    <value>توضیحات</value>
+  </data>
+  <data name="cbiDegreeID" xml:space="preserve">
+    <value>تحصیلات</value>
+  </data>
+  <data name="cbiGender" xml:space="preserve">
+    <value>جنسیت</value>
+  </data>
+  <data name="cbiSaveAward" xml:space="preserve">
+    <value>ذخیره امتیاز</value>
+  </data>
+  <data name="cbiSaveSponsorAward" xml:space="preserve">
+    <value>ذخیره امتیاز معرف</value>
+  </data>
+  <data name="cbiSignImage" xml:space="preserve">
+    <value>الصاق امضا</value>
+  </data>
+  <data name="cbiSponsorDrID" xml:space="preserve">
+    <value>اسپانسر پزشک معالج</value>
+  </data>
+  <data name="cbiUseCharityAward" xml:space="preserve">
+    <value>استفاده از امتیاز خیریه</value>
+  </data>
+  <data name="cbiUseSponsorAward" xml:space="preserve">
+    <value>استفاده از امتیاز معرف</value>
+  </data>
+  <data name="Center" xml:space="preserve">
+    <value>شعبه</value>
+  </data>
+  <data name="CenterClinic" xml:space="preserve">
+    <value>مراکز کلینیک</value>
+  </data>
+  <data name="CenterInformation" xml:space="preserve">
+    <value>اطلاعات مرکز</value>
+  </data>
+  <data name="ChangeCostBase" xml:space="preserve">
+    <value>امکان تغییر بهای پایه حین ثبت زمان</value>
+  </data>
+  <data name="ChangePhoto" xml:space="preserve">
+    <value>تغییر</value>
+  </data>
+  <data name="CheckDate" xml:space="preserve">
+    <value>تاریخ سررسید</value>
+  </data>
+  <data name="CheckNo" xml:space="preserve">
+    <value>شماره چک</value>
+  </data>
+  <data name="CheckPassed" xml:space="preserve">
+    <value>چک پاس شد؟</value>
+  </data>
+  <data name="CheckType" xml:space="preserve">
+    <value>نوع عملیات</value>
+  </data>
+  <data name="checkUpDate" xml:space="preserve">
+    <value>تاریخ معاینه</value>
+  </data>
+  <data name="checkUpDateEn" xml:space="preserve">
+    <value>تاریخ معاینه</value>
+  </data>
+  <data name="CheckUpDR" xml:space="preserve">
+    <value>پزشک </value>
+  </data>
+  <data name="ChooseFile" xml:space="preserve">
+    <value>انتخاب فایل</value>
+  </data>
+  <data name="ChoosePhoto" xml:space="preserve">
+    <value>انتخاب عکس</value>
+  </data>
+  <data name="ciInsuranceBeginDateEn" xml:space="preserve">
+    <value>تاریخ شروع بیمه</value>
+  </data>
+  <data name="ciInsuranceEndDateEn" xml:space="preserve">
+    <value>تاریخ پایان بیمه</value>
+  </data>
+  <data name="ciInsuranceNo" xml:space="preserve">
+    <value>شماره بیمه</value>
+  </data>
+  <data name="CityCode" xml:space="preserve">
+    <value>پیش کد شهر</value>
+  </data>
+  <data name="clock" xml:space="preserve">
+    <value>ساعت</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>بستن</value>
+  </data>
+  <data name="ClosingHour" xml:space="preserve">
+    <value>(ساعت پایان کار کلینیک (از 24 ساعت</value>
+  </data>
+  <data name="cmbServiceID" xml:space="preserve">
+    <value>سرفصل</value>
+  </data>
+  <data name="Coding" xml:space="preserve">
+    <value>کدینگ</value>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>رنگ</value>
+  </data>
+  <data name="Coment" xml:space="preserve">
+    <value>توضیحات</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>توضیحات</value>
+  </data>
+  <data name="Communication" xml:space="preserve">
+    <value>مکاتبه</value>
+  </data>
+  <data name="companies" xml:space="preserve">
+    <value>شرکت ها</value>
+  </data>
+  <data name="ConfirmDate" xml:space="preserve">
+    <value>تاریخ بررسی</value>
+  </data>
+  <data name="Continual" xml:space="preserve">
+    <value>دائمی</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>بعد</value>
+  </data>
+  <data name="ControlCheck" xml:space="preserve">
+    <value>کنترل چک</value>
+  </data>
+  <data name="CostCode" xml:space="preserve">
+    <value>عنوان هزینه</value>
+  </data>
+  <data name="CostIncoming" xml:space="preserve">
+    <value>طرف های حساب</value>
+  </data>
+  <data name="costtreatment" xml:space="preserve">
+    <value>هزینه درمان</value>
+  </data>
+  <data name="CountryCode" xml:space="preserve">
+    <value>پیش کد کشور</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>افزودن</value>
+  </data>
+  <data name="CreateDate" xml:space="preserve">
+    <value>تاریخ شروع</value>
+  </data>
+  <data name="CreateTask" xml:space="preserve">
+    <value>تعریف وظایف</value>
+  </data>
+  <data name="currentsituation" xml:space="preserve">
+    <value>وضعیت موجود</value>
+  </data>
+  <data name="CustomerBasicInfo" xml:space="preserve">
+    <value>مشخصات اولیه</value>
+  </data>
+  <data name="CustomerBirthDate" xml:space="preserve">
+    <value>تاریخ تولد</value>
+  </data>
+  <data name="CustomerBirthDateEn" xml:space="preserve">
+    <value>تاریخ تولد</value>
+  </data>
+  <data name="CustomerDocument" xml:space="preserve">
+    <value>اسنادبیمار</value>
+  </data>
+  <data name="CustomerFatherName" xml:space="preserve">
+    <value>نام پدر</value>
+  </data>
+  <data name="CustomerInsuranceCode" xml:space="preserve">
+    <value>کد بیمه</value>
+  </data>
+  <data name="CustomerInsurancePercent" xml:space="preserve">
+    <value>درصد بیمه</value>
+  </data>
+  <data name="CustomerRecords" xml:space="preserve">
+    <value>پرونده بیمار</value>
+  </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>داشبورد</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>تاریخ</value>
+  </data>
+  <data name="DateofBirth" xml:space="preserve">
+    <value>تاریخ تولد</value>
+  </data>
+  <data name="DateofReceipt" xml:space="preserve">
+    <value>تاریخ وصول</value>
+  </data>
+  <data name="DatePayment" xml:space="preserve">
+    <value>تاریخ پرداخت</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>روز</value>
+  </data>
+  <data name="DeActive" xml:space="preserve">
+    <value>غیرفعال</value>
+  </data>
+  <data name="Degree" xml:space="preserve">
+    <value>رشته</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="DeliveryDate" xml:space="preserve">
+    <value>تاریخ تحویل</value>
+  </data>
+  <data name="DeliveryStatue_BlackList" xml:space="preserve">
+    <value>لیست سیاه</value>
+  </data>
+  <data name="DeliveryStatue_NotRecivedToPhone" xml:space="preserve">
+    <value>نرسیده به گوشی</value>
+  </data>
+  <data name="DeliveryStatue_Others" xml:space="preserve">
+    <value>بقیه موارد</value>
+  </data>
+  <data name="DeliveryStatue_Sent" xml:space="preserve">
+    <value>ارسال شده</value>
+  </data>
+  <data name="DeliveryStatue_SentByMobile" xml:space="preserve">
+    <value>ارسال شده توسط گوشی</value>
+  </data>
+  <data name="DeliveryStatue_SocialNetwork" xml:space="preserve">
+    <value>شبکه اجتماعی</value>
+  </data>
+  <data name="DeliveryStatue_Success" xml:space="preserve">
+    <value>تحویل موفق</value>
+  </data>
+  <data name="DeliveryStatue_TransferedToCenter" xml:space="preserve">
+    <value>رسیده به مخابرات</value>
+  </data>
+  <data name="DeliveryStatue_TransferedToOperetor" xml:space="preserve">
+    <value>رسیده به اپراتور</value>
+  </data>
+  <data name="DentisKey" xml:space="preserve">
+    <value>کد مشخصه دندان</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>شرح</value>
+  </data>
+  <data name="DiactiveList" xml:space="preserve">
+    <value> قابلیت های غیرفعال</value>
+  </data>
+  <data name="DiscountRate" xml:space="preserve">
+    <value>میزان تخفیف</value>
+  </data>
+  <data name="DocNO" xml:space="preserve">
+    <value>شماره پرونده</value>
+  </data>
+  <data name="Doctor" xml:space="preserve">
+    <value>پزشک معاینه</value>
+  </data>
+  <data name="DoingChildCode" xml:space="preserve">
+    <value>شرح درمان</value>
+  </data>
+  <data name="DoneStatus" xml:space="preserve">
+    <value>وضعیت انجام</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>دریافت</value>
+  </data>
+  <data name="DownloadFile" xml:space="preserve">
+    <value>دریافت فایل</value>
+  </data>
+  <data name="DrTime" xml:space="preserve">
+    <value>ساعات کاری پزشک</value>
+  </data>
+  <data name="DynamicReportFormTitle" xml:space="preserve">
+    <value>گزارش پویا</value>
+  </data>
+  <data name="DynamicReport_Title" xml:space="preserve">
+    <value>عنوان گزارش</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>ویرایش</value>
+  </data>
+  <data name="Education" xml:space="preserve">
+    <value>تحصیلات</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>ایمیل</value>
+  </data>
+  <data name="EmployeeActive" xml:space="preserve">
+    <value>فعال</value>
+  </data>
+  <data name="Enclosures" xml:space="preserve">
+    <value>ضمائم</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>تاریخ اتمام </value>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>زمان پایان</value>
+  </data>
+  <data name="EnName" xml:space="preserve">
+    <value>نام انگلیسی</value>
+  </data>
+  <data name="Explication" xml:space="preserve">
+    <value>توضیحات</value>
+  </data>
+  <data name="ExportPrice" xml:space="preserve">
+    <value>مبلغ برداشت</value>
+  </data>
+  <data name="Factor_No" xml:space="preserve">
+    <value>شماره فاکتور</value>
+  </data>
+  <data name="Family" xml:space="preserve">
+    <value>نام خانوادگی</value>
+  </data>
+  <data name="FaName" xml:space="preserve">
+    <value>نام فارسی</value>
+  </data>
+  <data name="FatherName" xml:space="preserve">
+    <value>نام پدر</value>
+  </data>
+  <data name="Fax" xml:space="preserve">
+    <value>فاکس</value>
+  </data>
+  <data name="Female" xml:space="preserve">
+    <value>زن</value>
+  </data>
+  <data name="FildeName" xml:space="preserve">
+    <value>نام فیلد</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>انتخاب تصویر</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>نام فایل</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>فیلتر</value>
+  </data>
+  <data name="FinancialServices" xml:space="preserve">
+    <value>خدمات مالی</value>
+  </data>
+  <data name="FirstName" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="form" xml:space="preserve">
+    <value>فرم</value>
+  </data>
+  <data name="FormBuilderName" xml:space="preserve">
+    <value>انتخاب آیکن</value>
+  </data>
+  <data name="FormType" xml:space="preserve">
+    <value>نوع فرم</value>
+  </data>
+  <data name="ForwardedCommunication" xml:space="preserve">
+    <value>مکاتبات ارجاع شده به من</value>
+  </data>
+  <data name="ForwardLetter" xml:space="preserve">
+    <value>ارجاع نامه</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>از تاریخ</value>
+  </data>
+  <data name="FromcheckUpDate" xml:space="preserve">
+    <value>تاریخ چک آپ از</value>
+  </data>
+  <data name="FromCustomerBirthDateEn" xml:space="preserve">
+    <value>تاریخ تولد از</value>
+  </data>
+  <data name="FromScoring" xml:space="preserve">
+    <value>از</value>
+  </data>
+  <data name="fvDiscount" xml:space="preserve">
+    <value>مبلغ تخفیف</value>
+  </data>
+  <data name="fvRealPrice" xml:space="preserve">
+    <value>قابل پرداخت</value>
+  </data>
+  <data name="GroupName" xml:space="preserve">
+    <value>نام گروه</value>
+  </data>
+  <data name="GroupPatient" xml:space="preserve">
+    <value>گروه بندی بیماران</value>
+  </data>
+  <data name="have" xml:space="preserve">
+    <value>دارد</value>
+  </data>
+  <data name="haveNot" xml:space="preserve">
+    <value>ندارد</value>
+  </data>
+  <data name="HomeTell" xml:space="preserve">
+    <value>تلفن منزل</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>آرم مرکز</value>
+  </data>
+  <data name="ImageCenter_ThermalPrinters" xml:space="preserve">
+    <value>آرم مرکز / چاپگر حرارتی</value>
+  </data>
+  <data name="Images" xml:space="preserve">
+    <value>عکس</value>
+  </data>
+  <data name="ImportPrice" xml:space="preserve">
+    <value>مبلغ</value>
+  </data>
+  <data name="Inactive" xml:space="preserve">
+    <value>غیر فعال</value>
+  </data>
+  <data name="Informationpatient" xml:space="preserve">
+    <value>اطلاعات تکمیلی </value>
+  </data>
+  <data name="Insurance" xml:space="preserve">
+    <value>بیمه</value>
+  </data>
+  <data name="Insurancecontributions" xml:space="preserve">
+    <value>سهم بیمه</value>
+  </data>
+  <data name="insuranceEmployeeID" xml:space="preserve">
+    <value>پزشک</value>
+  </data>
+  <data name="insuranceGnrPrice" xml:space="preserve">
+    <value>سهم عمومی بیمه</value>
+  </data>
+  <data name="insuranceGnrRefPrice" xml:space="preserve">
+    <value>تعرفه عمومی</value>
+  </data>
+  <data name="InsuranceInfo" xml:space="preserve">
+    <value>اطلاعات بیمه</value>
+  </data>
+  <data name="InsuranceNo" xml:space="preserve">
+    <value>شماره بیمه</value>
+  </data>
+  <data name="insurancePrice" xml:space="preserve">
+    <value>سهم تخصصی بیمه</value>
+  </data>
+  <data name="insuranceRefPrice" xml:space="preserve">
+    <value>تعرفه تخصصی</value>
+  </data>
+  <data name="Insuranceremains" xml:space="preserve">
+    <value>مانده بیمه</value>
+  </data>
+  <data name="Insurer" xml:space="preserve">
+    <value>بیمه گر</value>
+  </data>
+  <data name="InvoiceNumber" xml:space="preserve">
+    <value>شماره فاکتور</value>
+  </data>
+  <data name="Iranian" xml:space="preserve">
+    <value>ایرانی</value>
+  </data>
+  <data name="IsDone" xml:space="preserve">
+    <value>انجام شده</value>
+  </data>
+  <data name="IsMale" xml:space="preserve">
+    <value>جنسیت</value>
+  </data>
+  <data name="IsRespond" xml:space="preserve">
+    <value>پاسخ داده شده</value>
+  </data>
+  <data name="IsSearchable" xml:space="preserve">
+    <value>جست وجو</value>
+  </data>
+  <data name="IsSeen" xml:space="preserve">
+    <value>دیده شده</value>
+  </data>
+  <data name="IssueDate" xml:space="preserve">
+    <value>تاریخ صدور</value>
+  </data>
+  <data name="IsVisible" xml:space="preserve">
+    <value>نمایش</value>
+  </data>
+  <data name="Job" xml:space="preserve">
+    <value>شغل</value>
+  </data>
+  <data name="Laboratory" xml:space="preserve">
+    <value>لابراتور</value>
+  </data>
+  <data name="LastName" xml:space="preserve">
+    <value>نام خانوادگی</value>
+  </data>
+  <data name="lengthPhone" xml:space="preserve">
+    <value>طول ارقام شماره تلفن</value>
+  </data>
+  <data name="Lightpen" xml:space="preserve">
+    <value>یادداشت قلم نوری</value>
+  </data>
+  <data name="LightPenTemplate" xml:space="preserve">
+    <value>قالب قلم نوری</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>لیست</value>
+  </data>
+  <data name="ListFields" xml:space="preserve">
+    <value>لیست فیلد ها</value>
+  </data>
+  <data name="ListTreatment" xml:space="preserve">
+    <value>سرفصل درمان</value>
+  </data>
+  <data name="ListUser" xml:space="preserve">
+    <value>لیست کاربران</value>
+  </data>
+  <data name="LoadDocumentsWarehouse" xml:space="preserve">
+    <value>بارگزاری اسناد انبار</value>
+  </data>
+  <data name="LogOff" xml:space="preserve">
+    <value>خروج</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>مرد</value>
+  </data>
+  <data name="MaleMan" xml:space="preserve">
+    <value>جناب آقای</value>
+  </data>
+  <data name="MaleWoman" xml:space="preserve">
+    <value>سرکار خانم</value>
+  </data>
+  <data name="Manager" xml:space="preserve">
+    <value>مدیریت سیستم</value>
+  </data>
+  <data name="Manually" xml:space="preserve">
+    <value>دستی</value>
+  </data>
+  <data name="ManualSending" xml:space="preserve">
+    <value>آماده ارسال</value>
+  </data>
+  <data name="Married" xml:space="preserve">
+    <value>وضعیت تأهل</value>
+  </data>
+  <data name="Marry" xml:space="preserve">
+    <value>متاهل</value>
+  </data>
+  <data name="MenusAccessManagement" xml:space="preserve">
+    <value>مدیریت دسترسی منوها</value>
+  </data>
+  <data name="Milky" xml:space="preserve">
+    <value>شیری</value>
+  </data>
+  <data name="MissedCall" xml:space="preserve">
+    <value>تماس های از دست رفته</value>
+  </data>
+  <data name="MobileNumber" xml:space="preserve">
+    <value>تلفن همراه</value>
+  </data>
+  <data name="MoneyType" xml:space="preserve">
+    <value>نوع پرداخت</value>
+  </data>
+  <data name="Monitor" xml:space="preserve">
+    <value>نمایشگر تماس تلفنی</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value> ماه</value>
+  </data>
+  <data name="MultiInsertedForm" xml:space="preserve">
+    <value>قابلیت ثبت  چند تایی</value>
+  </data>
+  <data name="MyCheckPassed" xml:space="preserve">
+    <value>چک پاس گردید؟</value>
+  </data>
+  <data name="MyCommunication" xml:space="preserve">
+    <value>مکاتبات من</value>
+  </data>
+  <data name="MyTasks" xml:space="preserve">
+    <value>وظایف من</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>نام</value>
+  </data>
+  <data name="NameClinic" xml:space="preserve">
+    <value>نام کلینیک</value>
+  </data>
+  <data name="NationalCode" xml:space="preserve">
+    <value>کد ملی</value>
+  </data>
+  <data name="New" xml:space="preserve">
+    <value>جدید</value>
+  </data>
+  <data name="NewProfile" xml:space="preserve">
+    <value>افزودن پروفایل</value>
+  </data>
+  <data name="NewRecord" xml:space="preserve">
+    <value>ثبت مورد جدید</value>
+  </data>
+  <data name="NewUser" xml:space="preserve">
+    <value>کاربر جدید</value>
+  </data>
+  <data name="NewUserGroup" xml:space="preserve">
+    <value>ایجاد گروه کاربری</value>
+  </data>
+  <data name="NextVisitDate" xml:space="preserve">
+    <value>مراجعه بعدی</value>
+  </data>
+  <data name="NezamCode" xml:space="preserve">
+    <value>کد نظام پزشکی</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>خیر</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>اطلاعیه ها</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>تعداد</value>
+  </data>
+  <data name="NumberOfRemainingCharacters" xml:space="preserve">
+    <value>تعداد کاراکترهای باقیمانده</value>
+  </data>
+  <data name="NumberOfSMS" xml:space="preserve">
+    <value>تعداد پیامک</value>
+  </data>
+  <data name="NumberStatus" xml:space="preserve">
+    <value>وضعیت شماره دهی</value>
+  </data>
+  <data name="OfficeChecks" xml:space="preserve">
+    <value>چک های مطب</value>
+  </data>
+  <data name="OfficeTell" xml:space="preserve">
+    <value>تلفن محل کار</value>
+  </data>
+  <data name="OpeningHour" xml:space="preserve">
+    <value>(ساعت شروع به کار کلینیک (از 24 ساعت</value>
+  </data>
+  <data name="Operation" xml:space="preserve">
+    <value>عملیات</value>
+  </data>
+  <data name="Operations" xml:space="preserve">
+    <value>عملیات</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>سایر</value>
+  </data>
+  <data name="Parametrs" xml:space="preserve">
+    <value>پارامتر ها</value>
+  </data>
+  <data name="partBarCode" xml:space="preserve">
+    <value>بارکد</value>
+  </data>
+  <data name="partCategoryCode" xml:space="preserve">
+    <value>کد گروه کالا</value>
+  </data>
+  <data name="partCategoryID" xml:space="preserve">
+    <value>شناسه گروه کالا</value>
+  </data>
+  <data name="partCode" xml:space="preserve">
+    <value>کدکالا</value>
+  </data>
+  <data name="partCodeDescription" xml:space="preserve">
+    <value>عامل ردیابی</value>
+  </data>
+  <data name="partCodeName" xml:space="preserve">
+    <value>نام کالا</value>
+  </data>
+  <data name="partFarsiName" xml:space="preserve">
+    <value>مشخصات کالا</value>
+  </data>
+  <data name="partInventoryLevel" xml:space="preserve">
+    <value>عامل ارزیابی</value>
+  </data>
+  <data name="partLatinName" xml:space="preserve">
+    <value>عنوان لاتین</value>
+  </data>
+  <data name="partReorderQty" xml:space="preserve">
+    <value>نقطه سفارش</value>
+  </data>
+  <data name="partUnitID" xml:space="preserve">
+    <value>واحد سنجش</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>رمز عبور</value>
+  </data>
+  <data name="Pateint" xml:space="preserve">
+    <value>بیمار</value>
+  </data>
+  <data name="PatientAccount" xml:space="preserve">
+    <value>حساب بیمار</value>
+  </data>
+  <data name="PatientAppointment" xml:space="preserve">
+    <value>وقت ملاقات</value>
+  </data>
+  <data name="PatientChecks" xml:space="preserve">
+    <value>چک های بیمار</value>
+  </data>
+  <data name="PatientName" xml:space="preserve">
+    <value>نام بیمار</value>
+  </data>
+  <data name="patientsCommitment" xml:space="preserve">
+    <value>متن تعهد بیمار</value>
+  </data>
+  <data name="Payment" xml:space="preserve">
+    <value>پرداخت</value>
+  </data>
+  <data name="Payments" xml:space="preserve">
+    <value>مبلغ پرداختی</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>در انتظار</value>
+  </data>
+  <data name="percent" xml:space="preserve">
+    <value>درصد</value>
+  </data>
+  <data name="PercentOfPay" xml:space="preserve">
+    <value>درصد پرداخت</value>
+  </data>
+  <data name="Personnel" xml:space="preserve">
+    <value>پرسنل</value>
+  </data>
+  <data name="Peyment" xml:space="preserve">
+    <value>پرداخت</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>تلفن</value>
+  </data>
+  <data name="Photography" xml:space="preserve">
+    <value>فتوگرافی</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>عکس و امضا</value>
+  </data>
+  <data name="PlaceofBirth" xml:space="preserve">
+    <value>محل تولد</value>
+  </data>
+  <data name="PositionTeethId" xml:space="preserve">
+    <value>استاندارد موقعیت دندان ها</value>
+  </data>
+  <data name="PredicateQuery" xml:space="preserve">
+    <value>نتایج جستجو</value>
+  </data>
+  <data name="Pregnant" xml:space="preserve">
+    <value>بارداری</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>مبلغ</value>
+  </data>
+  <data name="PricePaymente" xml:space="preserve">
+    <value>مبلغ پرداختی</value>
+  </data>
+  <data name="PrintAccounting" xml:space="preserve">
+    <value>نسخه حسابداری</value>
+  </data>
+  <data name="PrintDoctor" xml:space="preserve">
+    <value>نسخه پزشک</value>
+  </data>
+  <data name="PrintPatient" xml:space="preserve">
+    <value>نسخه بیمار</value>
+  </data>
+  <data name="Priority" xml:space="preserve">
+    <value>اولویت</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>فیلدساز</value>
+  </data>
+  <data name="Profilename" xml:space="preserve">
+    <value>نام پروفایل</value>
+  </data>
+  <data name="publication" xml:space="preserve">
+    <value>نگارش</value>
+  </data>
+  <data name="QuickRegistration" xml:space="preserve">
+    <value>ثبت سریع</value>
+  </data>
+  <data name="Radiography" xml:space="preserve">
+    <value>رادیوگرافی</value>
+  </data>
+  <data name="RateValue" xml:space="preserve">
+    <value>مقدار</value>
+  </data>
+  <data name="ReadyToSend" xml:space="preserve">
+    <value>آماده ی ارسال</value>
+  </data>
+  <data name="RealPrice" xml:space="preserve">
+    <value>هزینه درمان</value>
+  </data>
+  <data name="ReceiptPrinters" xml:space="preserve">
+    <value>رسید چاپگر حرارتی</value>
+  </data>
+  <data name="Received" xml:space="preserve">
+    <value>دریافتی</value>
+  </data>
+  <data name="ReceivedInsurance" xml:space="preserve">
+    <value>دریافتی از بیمه</value>
+  </data>
+  <data name="receivers" xml:space="preserve">
+    <value>گیرندگان</value>
+  </data>
+  <data name="Reciever" xml:space="preserve">
+    <value>گیرنده</value>
+  </data>
+  <data name="RecordsDisease" xml:space="preserve">
+    <value>سوابق بیماری</value>
+  </data>
+  <data name="RegDate" xml:space="preserve">
+    <value>تاریخ ثبت</value>
+  </data>
+  <data name="Registration" xml:space="preserve">
+    <value>ثبت</value>
+  </data>
+  <data name="Registrationcosts" xml:space="preserve">
+    <value>ثبت هزینه ها</value>
+  </data>
+  <data name="RegTreatment" xml:space="preserve">
+    <value>ثبت درمان</value>
+  </data>
+  <data name="Religion" xml:space="preserve">
+    <value>مذهب</value>
+  </data>
+  <data name="RemainingCost" xml:space="preserve">
+    <value>مانده</value>
+  </data>
+  <data name="RememberTime" xml:space="preserve">
+    <value>یادآوری زمانی</value>
+  </data>
+  <data name="remove" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>گزارشات</value>
+  </data>
+  <data name="ReportReceivedToday" xml:space="preserve">
+    <value>خلاصه گزارش دریافتی امروز مطب</value>
+  </data>
+  <data name="RestOfInformation" xml:space="preserve">
+    <value>سایر اطلاعات</value>
+  </data>
+  <data name="RoleUser" xml:space="preserve">
+    <value>نقش کاربر</value>
+  </data>
+  <data name="Roofcommitment" xml:space="preserve">
+    <value>سقف  تعهد</value>
+  </data>
+  <data name="Row" xml:space="preserve">
+    <value>ردیف</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>ذخیره</value>
+  </data>
+  <data name="Score" xml:space="preserve">
+    <value>امتیاز</value>
+  </data>
+  <data name="Scoring" xml:space="preserve">
+    <value>امتیاز دهی</value>
+  </data>
+  <data name="ScoringTreatment" xml:space="preserve">
+    <value>امتیازات</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>جستجو</value>
+  </data>
+  <data name="SearchTitle" xml:space="preserve">
+    <value>عنوان جستجو</value>
+  </data>
+  <data name="SeenStatus" xml:space="preserve">
+    <value>وضعیت مشاهده</value>
+  </data>
+  <data name="SelectGroup" xml:space="preserve">
+    <value>انتخاب گروه</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>ارسال</value>
+  </data>
+  <data name="Sender" xml:space="preserve">
+    <value>فرستنده</value>
+  </data>
+  <data name="SenderNumber" xml:space="preserve">
+    <value>شماره فرستنده</value>
+  </data>
+  <data name="SendSettingsViaTheInternet" xml:space="preserve">
+    <value>تنظیمات ارسال از طریق اینترنت</value>
+  </data>
+  <data name="SendSMSSettings" xml:space="preserve">
+    <value>تنظیمات ارسال پیامک</value>
+  </data>
+  <data name="sent" xml:space="preserve">
+    <value>ارسال شده ها</value>
+  </data>
+  <data name="SentSMS" xml:space="preserve">
+    <value>ارسال شده</value>
+  </data>
+  <data name="Setting" xml:space="preserve">
+    <value>تنظیمات</value>
+  </data>
+  <data name="ShareAssistant" xml:space="preserve">
+    <value>سهم دستیار</value>
+  </data>
+  <data name="ShareClinic" xml:space="preserve">
+    <value>سهم کلینیک</value>
+  </data>
+  <data name="ShareDoctor" xml:space="preserve">
+    <value>سهم پزشک</value>
+  </data>
+  <data name="ShowInForm" xml:space="preserve">
+    <value>نمایش در فرم </value>
+  </data>
+  <data name="ShowInMainMenu" xml:space="preserve">
+    <value>نمایش در منوی اصلی</value>
+  </data>
+  <data name="ShowInWorkFlow" xml:space="preserve">
+    <value>نمایش در گردش کار</value>
+  </data>
+  <data name="ShowReport" xml:space="preserve">
+    <value>نمایش</value>
+  </data>
+  <data name="Signature" xml:space="preserve">
+    <value>امضاء</value>
+  </data>
+  <data name="Single" xml:space="preserve">
+    <value>مجرد</value>
+  </data>
+  <data name="SMS" xml:space="preserve">
+    <value>پیام کوتاه</value>
+  </data>
+  <data name="SMSDraft" xml:space="preserve">
+    <value>قالب پیامک</value>
+  </data>
+  <data name="SMSInbox" xml:space="preserve">
+    <value>صندوق دریافتی </value>
+  </data>
+  <data name="SMSPanelCredit" xml:space="preserve">
+    <value>اعتبار پنل پیامک</value>
+  </data>
+  <data name="SMSSickPay" xml:space="preserve">
+    <value>پیامک پرداختی بیمار</value>
+  </data>
+  <data name="SMSWelcome" xml:space="preserve">
+    <value>پیامک خوش آمدگویی</value>
+  </data>
+  <data name="SpecialDrug" xml:space="preserve">
+    <value>دارو های خاص</value>
+  </data>
+  <data name="SpecialNotations" xml:space="preserve">
+    <value>ریز مکالمات</value>
+  </data>
+  <data name="Sponsor" xml:space="preserve">
+    <value>معرف</value>
+  </data>
+  <data name="SponsorType" xml:space="preserve">
+    <value>نوع معرف</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>تاریخ شروع </value>
+  </data>
+  <data name="StartNumber" xml:space="preserve">
+    <value>شماره شروع</value>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>زمان شروع</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>وضعیت</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="subject" xml:space="preserve">
+    <value>موضوع</value>
+  </data>
+  <data name="SystemicSickness" xml:space="preserve">
+    <value>نوع بیماری</value>
+  </data>
+  <data name="Tarnama" xml:space="preserve">
+    <value>فکس</value>
+  </data>
+  <data name="TaskName" xml:space="preserve">
+    <value>عنوان وظیفه</value>
+  </data>
+  <data name="TellFile" xml:space="preserve">
+    <value>فایل تماس</value>
+  </data>
+  <data name="TelNumber" xml:space="preserve">
+    <value>شماره تماس</value>
+  </data>
+  <data name="TemplateName" xml:space="preserve">
+    <value>نام قالب جدید</value>
+  </data>
+  <data name="TemplatesList" xml:space="preserve">
+    <value>لیست قالب ها</value>
+  </data>
+  <data name="Text" xml:space="preserve">
+    <value>متن</value>
+  </data>
+  <data name="TextSms" xml:space="preserve">
+    <value>متن پیامک</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>زمان</value>
+  </data>
+  <data name="TimeReminder" xml:space="preserve">
+    <value>تعداد روزهای جلوتر موعد یادآوری</value>
+  </data>
+  <data name="Timingsenditemsreadytosend" xml:space="preserve">
+    <value>زمان بندی ارسال موارد اماده ارسال</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>عنوان</value>
+  </data>
+  <data name="TitleIncoming" xml:space="preserve">
+    <value>عنوان</value>
+  </data>
+  <data name="To" xml:space="preserve">
+    <value>تا تاریخ</value>
+  </data>
+  <data name="TocheckUpDate" xml:space="preserve">
+    <value>تاریخ چک آپ تا</value>
+  </data>
+  <data name="ToCustomerBirthDateEn" xml:space="preserve">
+    <value>تاریخ تولد تا</value>
+  </data>
+  <data name="ToothColor" xml:space="preserve">
+    <value>رنگ دندان</value>
+  </data>
+  <data name="ToothDescriptionList" xml:space="preserve">
+    <value>لیست توضیحات دندان</value>
+  </data>
+  <data name="ToScoring" xml:space="preserve">
+    <value> تا</value>
+  </data>
+  <data name="total" xml:space="preserve">
+    <value>جمع کل</value>
+  </data>
+  <data name="TotalCosts" xml:space="preserve">
+    <value>مجموع هزینه ها</value>
+  </data>
+  <data name="TotalPayment" xml:space="preserve">
+    <value>مجموع پرداختی ها</value>
+  </data>
+  <data name="TotalScore" xml:space="preserve">
+    <value>مجموع امتیازات</value>
+  </data>
+  <data name="Treatment" xml:space="preserve">
+    <value>درمان</value>
+  </data>
+  <data name="TreatmentConsiderations" xml:space="preserve">
+    <value>ملاحظات درمان</value>
+  </data>
+  <data name="Treatmentplan" xml:space="preserve">
+    <value>طرح درمان</value>
+  </data>
+  <data name="TreatmentRecommendations" xml:space="preserve">
+    <value>توصیه های درمانی</value>
+  </data>
+  <data name="TreatmentTopics" xml:space="preserve">
+    <value>سر فصل های تخصصی (جهت تعرفه) </value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>نوع</value>
+  </data>
+  <data name="Upload" xml:space="preserve">
+    <value>بارگزاری</value>
+  </data>
+  <data name="UseInsurance" xml:space="preserve">
+    <value>استفاده از بیمه</value>
+  </data>
+  <data name="UserAccess" xml:space="preserve">
+    <value>دسترسی کاربران</value>
+  </data>
+  <data name="UserGroup" xml:space="preserve">
+    <value>گروه های کاربری</value>
+  </data>
+  <data name="Usergrouplist" xml:space="preserve">
+    <value>لیست گروه های کاربران</value>
+  </data>
+  <data name="UserId" xml:space="preserve">
+    <value>تنظیم کننده</value>
+  </data>
+  <data name="UserImage" xml:space="preserve">
+    <value>انتخاب عکس</value>
+  </data>
+  <data name="UserInformation" xml:space="preserve">
+    <value>اطلاعات کاربر</value>
+  </data>
+  <data name="UserManagment" xml:space="preserve">
+    <value>مدیریت کاربران</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>نام کاربری</value>
+  </data>
+  <data name="UserRecipient" xml:space="preserve">
+    <value>دریافت کننده</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>کاربران</value>
+  </data>
+  <data name="UserType" xml:space="preserve">
+    <value>سمت شغلی</value>
+  </data>
+  <data name="ValidityDateFrom" xml:space="preserve">
+    <value>از</value>
+  </data>
+  <data name="ValidityDateTo" xml:space="preserve">
+    <value>تا</value>
+  </data>
+  <data name="vchhdrConsumerID" xml:space="preserve">
+    <value>درخواست کننده</value>
+  </data>
+  <data name="vchhdrNo" xml:space="preserve">
+    <value>شماره سند</value>
+  </data>
+  <data name="vchhdrSupplier" xml:space="preserve">
+    <value> فروشنده</value>
+  </data>
+  <data name="vchitmExQty" xml:space="preserve">
+    <value>تعداد صادره</value>
+  </data>
+  <data name="vchitmIMQty" xml:space="preserve">
+    <value>تعداد ورود</value>
+  </data>
+  <data name="VisitDate" xml:space="preserve">
+    <value>تاریخ درمان</value>
+  </data>
+  <data name="VisitInterval" xml:space="preserve">
+    <value>(بازه ی زمانی (دقیقه</value>
+  </data>
+  <data name="Visitor" xml:space="preserve">
+    <value>ویزیتور</value>
+  </data>
+  <data name="VisitTime" xml:space="preserve">
+    <value>وقت ملاقات</value>
+  </data>
+  <data name="WebSite" xml:space="preserve">
+    <value>وب سایت</value>
+  </data>
+  <data name="WeekDays" xml:space="preserve">
+    <value>روزهای هفته</value>
+  </data>
+  <data name="WorkFlow" xml:space="preserve">
+    <value>گردش کار</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>بله</value>
+  </data>
+</root>
