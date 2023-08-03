@@ -111,7 +111,6 @@ namespace Service.UserManagement.Attendance
             {
                 var _model = new Calendar();
                 entity.ModifiedDate = DateTime.Now;
-                entity.MedicalCenterId = Public.CurrentUser.MedicalCenterId;
                 entity.CalendarName = entity.YearsNumber.ToString();
                 if (entity.ID == 0)
                 {
@@ -356,8 +355,7 @@ namespace Service.UserManagement.Attendance
                 var _result = new viewModel<CalendarVm>();
                 _result.TLists = new List<CalendarVm>();
 
-                var _query = string.Format("EXEC [dbo].[sp_CalendarList] @medicalCenterId = '{0}',@From = {1},@To = {2},@text = {3}",
-                            Public.CurrentUser.MedicalCenterId,
+                var _query = string.Format("EXEC [dbo].[sp_CalendarList] @From = {0},@To = {1},@text = {2}",
                             (value.PageNum == 1 ? 1 : ((value.PageNum * value.PageSize) - value.PageSize)),
                             value.PageNum * value.PageSize,
                             (string.IsNullOrEmpty(value.Search) ? "NULL" : "N'" + value.Search + "'"));
@@ -418,7 +416,7 @@ namespace Service.UserManagement.Attendance
 
                 var _model = new JobTime();
                 entity.ModifiedDate = DateTime.Now;
-                entity.MedicalCenterId = Public.CurrentUser.MedicalCenterId;
+
                 if (entity.Id == 0)
                 {
                     await _repoJobTime.AddInt(GenericMapping<JobTimeVm, JobTime>.Map(entity));
@@ -478,7 +476,6 @@ namespace Service.UserManagement.Attendance
                             IsActive = model.IsActive,
                             IsDeleted = model.IsDeleted,
                             JobTimeName = model.JobTimeName,
-                            MedicalCenterId = model.MedicalCenterId,
                             ModifiedDate = model.ModifiedDate,
                             TimeFKhoroj = model.TimeFKhoroj,
                             TimeFVorod = model.TimeFVorod,
@@ -516,8 +513,7 @@ namespace Service.UserManagement.Attendance
                 _result.TLists = new List<JobTimeVm>();
 
 
-                var _query = string.Format("EXEC [dbo].[sp_JobTimeList] @medicalCenterId = '{0}',@From = {1},@To = {2},@text = {3}",
-                            Public.CurrentUser.MedicalCenterId,
+                var _query = string.Format("EXEC [dbo].[sp_JobTimeList] @From = {0},@To = {1},@text = {2}",
                             (value.PageNum == 1 ? 1 : ((value.PageNum * value.PageSize) - value.PageSize)),
                             value.PageNum * value.PageSize,
                             (string.IsNullOrEmpty(value.Search) ? "NULL" : "N'" + value.Search + "'"));
@@ -618,13 +614,11 @@ namespace Service.UserManagement.Attendance
                                                 + "\n ,[IsDeleted] "
                                                 + "\n ,[IsActive] "
                                                 + "\n ,[ModifiedDate] "
-                                                + "\n ,[MedicalCenterId] "
                                                 + "\n ,[Calendar_Id] "
                                                 + "\n ,[UserId] "
                                                 + "\n ,[Data] "
                                                 + "\n ,[IsTemp]) "
-                                                + "\n VALUES (N' ', 0, 1, GETDATE(), N'{0}', 0, '{1}', ' ', 1)",
-                                                Public.CurrentUser.MedicalCenterId,
+                                                + "\n VALUES (N' ', 0, 1, GETDATE(), 0, '{0}', ' ', 1)",
                                                 Public.CurrentUser.Id
                                                 );
                 await _repoShiftWork.ExecuteSqlCommand(_query);
@@ -645,8 +639,7 @@ namespace Service.UserManagement.Attendance
                 var _result = new viewModel<ShiftWorkVm>();
                 _result.TLists = new List<ShiftWorkVm>();
 
-                var _query = string.Format("EXEC [dbo].[sp_ShiftWorkList] @medicalCenterId = '{0}',@From = {1},@To = {2},@text = {3}",
-                            Public.CurrentUser.MedicalCenterId,
+                var _query = string.Format("EXEC [dbo].[sp_ShiftWorkList] @From = {0},@To = {1},@text = {2}",
                             (value.PageNum == 1 ? 1 : ((value.PageNum * value.PageSize) - value.PageSize)),
                             value.PageNum * value.PageSize,
                             (string.IsNullOrEmpty(value.Search) ? "NULL" : "N'" + value.Search + "'"));
@@ -703,10 +696,6 @@ namespace Service.UserManagement.Attendance
             return res;
         }
         #endregion
-
-
-
-
 
         #region User shift
 
@@ -835,7 +824,6 @@ namespace Service.UserManagement.Attendance
                 #region Add
                 var _model = new PubUser_Shift();
                 entity.ModifiedDate = DateTime.Now;
-                entity.MedicalCenterId = Public.CurrentUser.MedicalCenterId;
                 entity.DoingUserId = Public.CurrentUser.Id;
                 entity.EntesabDate = DateTime.Now;
                 if (entity.Id == 0)

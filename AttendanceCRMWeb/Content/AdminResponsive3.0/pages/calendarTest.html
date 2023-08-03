@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminLTE 3 | Calendar</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <!-- fullCalendar -->
+  <link rel="stylesheet" href="../plugins/fullcalendar/main.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="ion ion-clipboard mr-1"></i>
+                  To Do List
+                </h3>
+
+                <div class="card-tools">
+                  <ul class="pagination pagination-sm">
+                    <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
+                    <li class="page-item"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
+                  </ul>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <ul class="todo-list" data-widget="todo-list">
+                  <li>
+                    <!-- drag handle -->
+                    <span class="handle">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <!-- checkbox -->
+                    <div class="icheck-primary d-inline ml-2">
+                      <input type="checkbox" value="" name="todo1" id="todoCheck1">
+                      <label for="todoCheck1"></label>
+                    </div>
+                    <!-- todo text -->
+                    <span class="text">Design a nice theme</span>
+                    <!-- Emphasis label -->
+                    <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
+                    <!-- General tools such as edit or delete-->
+                    <div class="tools">
+                      <i class="fas fa-edit"></i>
+                      <i class="fas fa-trash-o"></i>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="handle">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <div class="icheck-primary d-inline ml-2">
+                      <input type="checkbox" value="" name="todo2" id="todoCheck2" checked>
+                      <label for="todoCheck2"></label>
+                    </div>
+                    <span class="text">Make the theme responsive</span>
+                    <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small>
+                    <div class="tools">
+                      <i class="fas fa-edit"></i>
+                      <i class="fas fa-trash-o"></i>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="handle">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <div class="icheck-primary d-inline ml-2">
+                      <input type="checkbox" value="" name="todo3" id="todoCheck3">
+                      <label for="todoCheck3"></label>
+                    </div>
+                    <span class="text">Let theme shine like a star</span>
+                    <small class="badge badge-warning"><i class="far fa-clock"></i> 1 day</small>
+                    <div class="tools">
+                      <i class="fas fa-edit"></i>
+                      <i class="fas fa-trash-o"></i>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="handle">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <div class="icheck-primary d-inline ml-2">
+                      <input type="checkbox" value="" name="todo4" id="todoCheck4">
+                      <label for="todoCheck4"></label>
+                    </div>
+                    <span class="text">Let theme shine like a star</span>
+                    <small class="badge badge-success"><i class="far fa-clock"></i> 3 days</small>
+                    <div class="tools">
+                      <i class="fas fa-edit"></i>
+                      <i class="fas fa-trash-o"></i>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="handle">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <div class="icheck-primary d-inline ml-2">
+                      <input type="checkbox" value="" name="todo5" id="todoCheck5">
+                      <label for="todoCheck5"></label>
+                    </div>
+                    <span class="text">Check your messages and notifications</span>
+                    <small class="badge badge-primary"><i class="far fa-clock"></i> 1 week</small>
+                    <div class="tools">
+                      <i class="fas fa-edit"></i>
+                      <i class="fas fa-trash-o"></i>
+                    </div>
+                  </li>
+                  <li>
+                    <span class="handle">
+                      <i class="fas fa-ellipsis-v"></i>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <div class="icheck-primary d-inline ml-2">
+                      <input type="checkbox" value="" name="todo6" id="todoCheck6">
+                      <label for="todoCheck6"></label>
+                    </div>
+                    <span class="text">Let theme shine like a star</span>
+                    <small class="badge badge-secondary"><i class="far fa-clock"></i> 1 month</small>
+                    <div class="tools">
+                      <i class="fas fa-edit"></i>
+                      <i class="fas fa-trash-o"></i>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <button type="button" class="btn btn-primary float-left"><i class="fas fa-plus"></i> Add item</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="sticky-top mb-3">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Draggable Events</h4>
+                  </div>
+                  <div class="card-body">
+                    <!-- the events -->
+                    <div id="external-events">
+                      <div class="external-event bg-success">Lunch</div>
+                      <div class="external-event bg-warning">Go home</div>
+                      <div class="external-event bg-info">Do homework</div>
+                      <div class="external-event bg-primary">Work on UI design</div>
+                      <div class="external-event bg-danger">Sleep tight</div>
+                      <div class="checkbox">
+                        <label for="drop-remove">
+                          <input type="checkbox" id="drop-remove">
+                          remove after drop
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Create Event</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+                      <ul class="fc-color-picker" id="color-chooser">
+                        <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
+                        <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
+                        <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
+                        <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
+                        <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>
+                      </ul>
+                    </div>
+                    <!-- /btn-group -->
+                    <div class="input-group">
+                      <input id="new-event" type="text" class="form-control" placeholder="Event Title">
+
+                      <div class="input-group-append">
+                        <button id="add-new-event" type="button" class="btn btn-primary">Add</button>
+                      </div>
+                      <!-- /btn-group -->
+                    </div>
+                    <!-- /input-group -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+
+
+              <div class="fc fc-media-screen fc-direction-ltr fc-theme-bootstrap" id="divTest">
+                <div class="fc-view-harness fc-view-harness-active" style="width:200px;height:200px; background-color:gray;">
+                  <div class="fc-daygrid fc-dayGridMonth-view fc-view">
+                    <table class="fc-scrollgrid table-bordered fc-scrollgrid-liquid">
+                      <tbody>
+                        <tr class="fc-scrollgrid-section fc-scrollgrid-section-body  fc-scrollgrid-section-liquid">
+                          <td>
+                            <div class="fc-scroller-harness fc-scroller-harness-liquid">
+                              <div class="fc-scroller fc-scroller-liquid-absolute" style="overflow: hidden auto;">
+                                <div class="fc-daygrid-body fc-daygrid-body-unbalanced " style="width: 122px;">
+                                  <table class="fc-scrollgrid-sync-table" style="width: 122px; height: 153px;">
+                                    <colgroup></colgroup>
+                                    <tbody>
+                                      <tr>
+                                        <td class="fc-daygrid-day fc-day fc-day-tue fc-day-past" data-date="2021-11-02" style="background-color:white;">
+                                          <div class="fc-daygrid-day-frame fc-scrollgrid-sync-inner">
+                                            <div class="fc-daygrid-day-top"><a class="fc-daygrid-day-number">2</a></div>
+                                            <div class="fc-daygrid-day-events"></div>
+                                            <div class="fc-daygrid-day-bg"></div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card card-primary">
+                <div class="card-body p-0">
+                  <!-- THE CALENDAR -->
+                  <div id="calendar"></div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+  <!-- jQuery -->
+  <script src="../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- jQuery UI -->
+  <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../dist/js/adminlte.min.js"></script>
+  <!-- fullCalendar 2.2.5 -->
+  <script src="../plugins/moment/moment.min.js"></script>
+  <script src="../plugins/fullcalendar/main.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="../dist/js/demo.js"></script>
+  <!-- Page specific script -->
+  <script>
+    $(function () {
+
+      $('.todo-list').sortable({
+        placeholder: 'sort-highlight',
+        handle: '.handle',
+        forcePlaceholderSize: true,
+        zIndex: 999999
+      })
+      /* initialize the external events
+       -----------------------------------------------------------------*/
+      function ini_events(ele) {
+        ele.each(function () {
+
+          // create an Event Object (https://fullcalendar.io/docs/event-object)
+          // it doesn't need to have a start or end
+          var eventObject = {
+            title: $.trim($(this).text()) // use the element's text as the event title
+          }
+
+          // store the Event Object in the DOM element so we can get to it later
+          $(this).data('eventObject', eventObject)
+
+          // make the event draggable using jQuery UI
+          $(this).draggable({
+            zIndex: 1070,
+            revert: true, // will cause the event to go back to its
+            revertDuration: 0,  //  original position after the drag
+            iframeFix: true,
+          })
+
+        })
+      }
+
+      ini_events($('#external-events div.external-event'))
+
+      /* initialize the calendar
+       -----------------------------------------------------------------*/
+      //Date for the calendar events (dummy data)
+      var date = new Date()
+      var d = date.getDate(),
+        m = date.getMonth(),
+        y = date.getFullYear()
+
+      var Calendar = FullCalendar.Calendar;
+      var Draggable = FullCalendar.Draggable;
+
+      var containerEl = document.getElementById('external-events');
+      var checkbox = document.getElementById('drop-remove');
+      var calendarEl = document.getElementById('calendar');
+
+      // initialize the external events
+      // -----------------------------------------------------------------
+
+      new Draggable(containerEl, {
+        itemSelector: '.external-event',
+        eventData: function (eventEl) {
+          return {
+            title: eventEl.innerText,
+            backgroundColor: window.getComputedStyle(eventEl, null).getPropertyValue('background-color'),
+            borderColor: window.getComputedStyle(eventEl, null).getPropertyValue('background-color'),
+            textColor: window.getComputedStyle(eventEl, null).getPropertyValue('color'),
+          };
+        }
+      });
+
+      var calendar = new Calendar(calendarEl, {
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        themeSystem: 'bootstrap',
+        //Random default events
+        events: [
+          {
+            title: 'All Day Event',
+            start: new Date(y, m, 1),
+            backgroundColor: '#f56954', //red
+            borderColor: '#f56954', //red
+            allDay: true
+          },
+          {
+            title: 'Long Event',
+            start: new Date(y, m, d - 5),
+            end: new Date(y, m, d - 2),
+            backgroundColor: '#f39c12', //yellow
+            borderColor: '#f39c12' //yellow
+          },
+          {
+            title: 'Meeting',
+            start: new Date(y, m, d, 10, 30),
+            allDay: false,
+            backgroundColor: '#0073b7', //Blue
+            borderColor: '#0073b7' //Blue
+          },
+          {
+            title: 'Lunch',
+            start: new Date(y, m, d, 12, 0),
+            end: new Date(y, m, d, 14, 0),
+            allDay: false,
+            backgroundColor: '#00c0ef', //Info (aqua)
+            borderColor: '#00c0ef' //Info (aqua)
+          },
+          {
+            title: 'Birthday Party',
+            start: new Date(y, m, d + 1, 19, 0),
+            end: new Date(y, m, d + 1, 22, 30),
+            allDay: false,
+            backgroundColor: '#00a65a', //Success (green)
+            borderColor: '#00a65a' //Success (green)
+          },
+          {
+            title: 'Click for Google',
+            start: new Date(y, m, 28),
+            end: new Date(y, m, 29),
+            url: 'https://www.google.com/',
+            backgroundColor: '#3c8dbc', //Primary (light-blue)
+            borderColor: '#3c8dbc' //Primary (light-blue)
+          }
+        ],
+        editable: true,
+        droppable: true, // this allows things to be dropped onto the calendar !!!
+        drop: function (info) {
+          // is the "remove after drop" checkbox checked?
+          if (checkbox.checked) {
+            // if so, remove the element from the "Draggable Events" list
+            info.draggedEl.parentNode.removeChild(info.draggedEl);
+          }
+        }
+      });
+
+      calendar.render();
+
+
+      /* ADDING EVENTS */
+      var currColor = '#3c8dbc' //Red by default
+      // Color chooser button
+      $('#color-chooser > li > a').click(function (e) {
+        e.preventDefault()
+        // Save color
+        currColor = $(this).css('color')
+        // Add color effect to button
+        $('#add-new-event').css({
+          'background-color': currColor,
+          'border-color': currColor
+        })
+      })
+      $('#add-new-event').click(function (e) {
+        e.preventDefault()
+        // Get value and make sure it is not null
+        var val = $('#new-event').val()
+        if (val.length == 0) {
+          return
+        }
+
+        // Create events
+        var event = $('<div />')
+        event.css({
+          'background-color': currColor,
+          'border-color': currColor,
+          'color': '#fff'
+        }).addClass('external-event')
+        event.text(val)
+        $('#external-events').prepend(event)
+
+        // Add draggable funtionality
+        ini_events(event)
+
+        // Remove event from text input
+        $('#new-event').val('')
+      })
+    })
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Droppable - Simple photo manager</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    table {
+      font-size: 1em;
+    }
+
+    .ui-draggable, .ui-droppable {
+      background-position: top;
+    }
+    #gallery {
+      float: left;
+      width: 65%;
+      min-height: 12em;
+    }
+
+    .gallery.custom-state-active {
+      background: #eee;
+    }
+
+    .gallery li {
+      float: left;
+      width: 96px;
+      padding: 0.4em;
+      margin: 0 0.4em 0.4em 0;
+      text-align: center;
+    }
+
+      .gallery li h5 {
+        margin: 0 0 0.4em;
+        cursor: move;
+      }
+
+      .gallery li a {
+        float: right;
+      }
+
+        .gallery li a.ui-icon-zoomin {
+          float: left;
+        }
+
+      .gallery li img {
+        width: 100%;
+        cursor: move;
+      }
+
+    #trash {
+      float: right;
+      width: 32%;
+      min-height: 18em;
+      padding: 1%;
+    }
+
+      #trash h4 {
+        line-height: 16px;
+        margin: 0 0 0.4em;
+      }
+
+        #trash h4 .ui-icon {
+          float: left;
+        }
+
+      #trash .gallery h5 {
+        display: none;
+      }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+  <script>
+    $(function () {
+
+      // There's the gallery and the trash
+      var $gallery = $("#gallery"),
+        $trash = $("#trash");
+
+      // Let the gallery items be draggable
+      $("li", $gallery).draggable({
+        cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+        revert: "invalid", // when not dropped, the item will revert back to its initial position
+        containment: "document",
+        helper: "clone",
+        cursor: "move"
+      });
+
+      // Let the trash be droppable, accepting the gallery items
+      $trash.droppable({
+        accept: "#gallery > li",
+        classes: {
+          "ui-droppable-active": "ui-state-highlight"
+        },
+        drop: function (event, ui) {
+          deleteImage(ui.draggable);
+        }
+      });
+
+      // Let the gallery be droppable as well, accepting items from the trash
+      $gallery.droppable({
+        accept: "#trash li",
+        classes: {
+          "ui-droppable-active": "custom-state-active"
+        },
+        drop: function (event, ui) {
+          recycleImage(ui.draggable);
+        }
+      });
+
+      // Image deletion function
+      var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>";
+      function deleteImage($item) {
+        $item.fadeOut(function () {
+          var $list = $("ul", $trash).length ?
+            $("ul", $trash) :
+            $("<ul class='gallery ui-helper-reset'/>").appendTo($trash);
+
+          $item.find("a.ui-icon-trash").remove();
+          $item.append(recycle_icon).appendTo($list).fadeIn(function () {
+            $item
+              .animate({ width: "48px" })
+              .find("img")
+              .animate({ height: "36px" });
+          });
+        });
+      }
+
+      // Image recycle function
+      var trash_icon = "<a href='link/to/trash/script/when/we/have/js/off' title='Delete this image' class='ui-icon ui-icon-trash'>Delete image</a>";
+      function recycleImage($item) {
+        $item.fadeOut(function () {
+          $item
+            .find("a.ui-icon-refresh")
+            .remove()
+            .end()
+            .css("width", "96px")
+            .append(trash_icon)
+            .find("img")
+            .css("height", "72px")
+            .end()
+            .appendTo($gallery)
+            .fadeIn();
+        });
+      }
+
+      // Image preview function, demonstrating the ui.dialog used as a modal window
+      function viewLargerImage($link) {
+        var src = $link.attr("href"),
+          title = $link.siblings("img").attr("alt"),
+          $modal = $("img[src$='" + src + "']");
+
+        if ($modal.length) {
+          $modal.dialog("open");
+        } else {
+          var img = $("<img alt='" + title + "' width='384' height='288' style='display: none; padding: 8px;' />")
+            .attr("src", src).appendTo("body");
+          setTimeout(function () {
+            img.dialog({
+              title: title,
+              width: 400,
+              modal: true
+            });
+          }, 1);
+        }
+      }
+
+      // Resolve the icons behavior with event delegation
+      $("ul.gallery > li").on("click", function (event) {
+        var $item = $(this),
+          $target = $(event.target);
+
+        if ($target.is("a.ui-icon-trash")) {
+          deleteImage($item);
+        } else if ($target.is("a.ui-icon-zoomin")) {
+          viewLargerImage($target);
+        } else if ($target.is("a.ui-icon-refresh")) {
+          recycleImage($item);
+        }
+
+        return false;
+      });
+    });
+  </script>
+</head>
+<body>
+
+  <div class="ui-widget ui-helper-clearfix">
+    <!-- https://jqueryui.com/resources/demos/droppable/images/high_tatras2_min.jpg -->
+    <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+      <li class="ui-widget-content ui-corner-tr">
+        <h5 class="ui-widget-header">High Tatras</h5>
+        <img src="https://jqueryui.com/resources/demos/droppable/images/high_tatras_min.jpg" alt="The peaks of High Tatras" width="96" height="72">
+        <a href="https://jqueryui.com/resources/demos/droppable/images/high_tatras.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+        <a href="link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete image</a>
+      </li>
+      <li class="ui-widget-content ui-corner-tr">
+        <h5 class="ui-widget-header">High Tatras 2</h5>
+        <img src="https://jqueryui.com/resources/demos/droppable/images/high_tatras2_min.jpg" alt="The chalet at the Green mountain lake" width="96" height="72">
+        <a href="https://jqueryui.com/resources/demos/droppable/images/high_tatras2.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+        <a href="link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete image</a>
+      </li>
+      <li class="ui-widget-content ui-corner-tr">
+        <h5 class="ui-widget-header">High Tatras 3</h5>
+        <img src="https://jqueryui.com/resources/demos/droppable/images/high_tatras3_min.jpg" alt="Planning the ascent" width="96" height="72">
+        <a href="https://jqueryui.com/resources/demos/droppable/images/high_tatras3.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+        <a href="link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete image</a>
+      </li>
+      <li class="ui-widget-content ui-corner-tr">
+        <h5 class="ui-widget-header">High Tatras 4</h5>
+        <img src="https://jqueryui.com/resources/demos/droppable/images/high_tatras4_min.jpg" alt="On top of Kozi kopka" width="96" height="72">
+        <a href="https://jqueryui.com/resources/demos/droppable/images/high_tatras4.jpg" title="View larger image" class="ui-icon ui-icon-zoomin">View larger</a>
+        <a href="link/to/trash/script/when/we/have/js/off" title="Delete this image" class="ui-icon ui-icon-trash">Delete image</a>
+      </li>
+    </ul>
+
+    <div id="trash" class="ui-widget-content ui-state-default">
+      <h4 class="ui-widget-header"><span class="ui-icon ui-icon-trash">Trash</span> Trash</h4>
+    </div>
+
+  </div>
+
+
+</body>
+</html>

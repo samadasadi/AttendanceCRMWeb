@@ -1,4 +1,4 @@
-﻿using Repository.Model.Accounting;
+﻿
 using Resources;
 using System;
 using System.Collections.Generic;
@@ -11,11 +11,10 @@ using Utility;
 using Utility.EXT;
 using Utility.PublicEnum;
 using Utility.Utitlies;
-using ViewModel.Accounting;
 
 namespace ViewModel.BasicInfo
 {
-    public class CostVm : IFinancialDocNumberInfo
+    public class CostVm
     {
         public CostVm()
         {
@@ -147,8 +146,6 @@ namespace ViewModel.BasicInfo
         [UIHint("HorizentalCheckBox")]
         [Display(Name = "پرداخت با چک")]
         public bool IsCheckPayment { get; set; }
-        public CheckTransactionVm checkTransaction { get; set; } = new CheckTransactionVm();
-        public FinancialDocumentNumberVm financialDocument { get; set; } = new FinancialDocumentNumberVm();
 
 
 
@@ -160,4 +157,49 @@ namespace ViewModel.BasicInfo
 
 
     }
+
+    public class TherapyFilterVm : PageingParamer
+    {
+        public TherapyFilterVm()
+        {
+            this.FromDate = DateTime.Now;
+            this.ToDate = DateTime.Now;
+        }
+        public Guid Id { get; set; }
+        //public DateTime FromDate { get; set; }
+        //public DateTime ToDate { get; set; }
+        public string Text { get; set; }
+        public string UserType { get; set; }
+    }
+
+
+    public class FilterModelCost : PageingParamer
+    {
+
+        public Guid Id { get; set; }
+
+        [DisplayName("نام و نام خانوادگی")]
+        [UIHint("HorizentalDropdwonR")]
+        public string PatientName { get; set; }
+        public List<NormalJsonClass> PatientNameList { get; set; }
+
+        [DisplayName("نوع تماس")]
+        [UIHint("HorizentalDropdwonR")]
+        public int? CallType { get; set; }
+
+        [Display(Name = "شماره تلفن")]
+        [UIHint("HorizentalTextBox")]
+        public string NS_BookNos { get; set; }
+
+        public string text { get; set; }
+
+        public CostSortType SortType { get; set; } = CostSortType.DateEn;
+
+
+        public CostEnum typeId { get; set; }
+
+        public string Type { get; set; }
+
+    }
+
 }

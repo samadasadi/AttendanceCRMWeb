@@ -83,14 +83,11 @@ namespace ViewModel.Security
         }
 
         public string DatabaseName { get; set; }
-        public Guid MedicalCenterId { get; set; }
         public string ConnectionString { get; set; }
         public string GetFullName()
         {
             return this.Name + " " + this.Family;
         }
-
-
 
         public string TinyKeyCode { get; set; }
         public string TinyKeyCode_Access
@@ -118,11 +115,7 @@ namespace ViewModel.Security
         }
         public bool IsVpsServer { get; set; }
 
-
-
-
         public bool IsAdministrator { get; set; }
-
         public bool IsSms { get { try { return this.IsVpsServer ? true : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(0, 1) == "1") ? true : false); } catch { return false; } } }
         public bool IsAnbar { get { try { return this.IsVpsServer ? true : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(1, 1) == "1") ? true : false); } catch { return false; } } }
         public bool IsAttendance { get { try { return this.IsVpsServer ? true : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(2, 1) == "1") ? true : false); } catch { return false; } } }
@@ -146,7 +139,6 @@ namespace ViewModel.Security
         /// </summary>
         public bool IsCenterActivityType { get { try { return this.IsVpsServer ? false : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(16, 1) == "1") ? true : false); } catch { return false; } } }
         public bool IsAvanak { get { try { return this.IsVpsServer ? true : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(17, 1) == "1") ? true : false); } catch { return false; } } }
-
         public bool IsTaminPrescription { get { try { return this.IsVpsServer || this.IsBasicallyKit ? true : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(18, 1) == "1") ? true : false); } catch { return false; } } }
         public bool IsBasicallyKit { get { try { return this.IsVpsServer ? false : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(19, 1) == "1") ? true : false); } catch { return false; } } }
         public bool IsAccountingKit { get { try { return this.IsVpsServer ? false : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(20, 1) == "1") ? true : false); } catch { return false; } } }

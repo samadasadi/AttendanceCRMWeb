@@ -38,28 +38,28 @@ namespace Repository
 
 
         Task<T> AddWithReturn(T entity);
-        Task<T> AddIntWithReturn(T entity, string userId = null, Guid? medicalCenterId = null);
+        Task<T> AddIntWithReturn(T entity, string userId = null);
         Task<string> GenerateDeleteSqlStr(string tableName, string condition);
 
 
-        Task Add(T entity, string userId = null, Guid? medicalCenterId = null);
+        Task Add(T entity, string userId = null);
         Task Add_Android(T entity);
         Task AddNoSaveChange(T entity);
         Task AddNoSaveChangeInt(T entity);
-        Task AddMultiSaveChange(T entity, string userId = null, Guid? medicalCenterId = null);
-        Task Update(T entity, T oldEntity = default(T), string userId = null, Guid? medicalCenterId = null);
+        Task AddMultiSaveChange(T entity, string userId = null);
+        Task Update(T entity, T oldEntity = default(T), string userId = null);
         Task Detached(T entity);
         Task UpdateNoSaveChange(T entity);
         Task Delete(T entity);
-        Task Delete(Expression<Func<T, bool>> predicate, T oldEntity = default(T), string userId = null, Guid? medicalCenterId = null);
+        Task Delete(Expression<Func<T, bool>> predicate, T oldEntity = default(T), string userId = null);
         Task DeleteNoSaveChange(T entity);
-        Task LogicalDelete(T entity, T oldEntity = default(T), string userId = null, Guid? medicalCenterId = null);
-        Task LogicalDelete(Expression<Func<T, bool>> predicate, T oldEntity = default(T), string userId = null, Guid? medicalCenterId = null);
+        Task LogicalDelete(T entity, T oldEntity = default(T), string userId = null);
+        Task LogicalDelete(Expression<Func<T, bool>> predicate, T oldEntity = default(T), string userId = null);
         Task LogicalDeleteWithAttach(T entity);
-        Task Commit(T entity = default(T), T oldEntity = default(T), string userId = null, Guid? medicalCenterId = null);
+        Task Commit(T entity = default(T), T oldEntity = default(T), string userId = null);
         Task ExecuteSqlCommand(string sqlStr);
-        Task AddRange(IEnumerable<T> list, string userId = null, Guid? medicalCenterId = null);
-        Task AddInt(T entity, string userId = null, Guid? medicalCenterId = null);
+        Task AddRange(IEnumerable<T> list, string userId = null);
+        Task AddInt(T entity, string userId = null);
         Task AddIntWithOutModifiedDate(T entity);
 
 

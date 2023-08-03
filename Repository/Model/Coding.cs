@@ -71,8 +71,8 @@ namespace Repository.Model
         public string POS_InvoiceNumber { get; set; }
         public string InternationalServiceCode { get; set; }
         public bool DeductionCommitmentCeiling { get; set; }
-        public Guid? AccountingCollection_Id { get; set; }
+        //public Guid? AccountingCollection_Id { get; set; }
 
-        public bool IsAccountingClient { get; set; }
+        //public bool IsAccountingClient { get; set; }
     }
 }

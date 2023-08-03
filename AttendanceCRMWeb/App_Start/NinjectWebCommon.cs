@@ -21,6 +21,7 @@ namespace AttendanceCRMWeb.App_Start
     using Repository.Infrastructure;
     using Service;
     using Service.Common;
+    using Service.Cost;
     //using Service.Accounting;
     //using Service.Basic.Classes.Service.EssentialInfo;
     //using Service.BasicInfo;
@@ -42,7 +43,7 @@ namespace AttendanceCRMWeb.App_Start
         /// <summary>
         /// Starts the application.
         /// </summary>
-        public static void Start() 
+        public static void Start()
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
@@ -111,6 +112,15 @@ namespace AttendanceCRMWeb.App_Start
             kernel.Bind<IAttendanceReportService>().To<AttendanceReportService>();
             kernel.Bind<IShiftService>().To<ShiftService>();
             kernel.Bind<ITransactionRequestService>().To<TransactionRequestService>();
+            kernel.Bind<ICodingService>().To<CodingService>();
+            kernel.Bind<Service.BasicInfo.IFileService>().To<Service.BasicInfo.FileService>();
+            kernel.Bind<IRegisterService>().To<RegisterService>();
+            kernel.Bind<IChatService>().To<ChatService>();
+            kernel.Bind<IGeneralSettingService>().To<GeneralSettingService>();
+            kernel.Bind<ICompanyAccountService>().To<CompanyAccountService>();
+
+            //kernel.Bind<IScheduleTaskService>().To<TaskService>();
+            //kernel.Bind<IScheduleTask>().To<QueuedMessagesSendTask>();
 
             //kernel.Bind<IDentRepository>().To<DentRepository>();
             //kernel.Bind<IWorkFlowRepository>().To<WorkFlowRepository>();
@@ -120,19 +130,15 @@ namespace AttendanceCRMWeb.App_Start
             //kernel.Bind<IBackupsDBService>().To<BackupsDBService>();
             //kernel.Bind<ICallerHistoryService>().To<CallerHistoryService>();
             //kernel.Bind<Service.Basic.Classes.Service.EssentialInfo.IFileService>().To<Service.Basic.Classes.Service.EssentialInfo.FileService>();
-            //kernel.Bind<IChatService>().To<ChatService>();
             //kernel.Bind<ICheckService>().To<CheckService>();
             //kernel.Bind<IClubService>().To<ClubService>();
-            //kernel.Bind<ICodingService>().To<CodingService>();
             //kernel.Bind<ICommunicationService>().To<CommunicationService>();
-            //kernel.Bind<ICompanyAccountService>().To<CompanyAccountService>();
             //kernel.Bind<ICostService>().To<CostService>();
             //kernel.Bind<ICustomerClubService>().To<CustomerClubService>();
             //kernel.Bind<ICustomerDocumentService>().To<CustomerDocumentService>();
             //kernel.Bind<ICustomerInfoService>().To<CustomerInfoService>();
             //kernel.Bind<IDescriptionToothService>().To<DescriptionToothService>();
             //kernel.Bind<IFieldDynamicPatientService>().To<FieldDynamicPatientService>();
-            //kernel.Bind<IGeneralSettingService>().To<GeneralSettingService>();
             //kernel.Bind<IHolidayService>().To<HolidayService>();
             //kernel.Bind<IInsuranceCashService>().To<InsuranceCashService>();
             //kernel.Bind<IInsuranceService>().To<InsuranceService>();
@@ -150,19 +156,16 @@ namespace AttendanceCRMWeb.App_Start
             //kernel.Bind<ISearchService>().To<SearchService>();
             //kernel.Bind<ISMSDraftService>().To<SMSDraftService>();
             //kernel.Bind<ISMSService>().To<SMSService>();
-            //kernel.Bind<ITaskService>().To<TaskService>();
             //kernel.Bind<Itbl_DragService>().To<tbl_DragService>();
             //kernel.Bind<ITherapyService>().To<TherapyService>();
             //kernel.Bind<ITNPrescriptionService>().To<TNPrescriptionService>();
             //kernel.Bind<IUsersService>().To<UsersService>();
             //kernel.Bind<IWorkFlowService>().To<WorkFlowService>();
-            //kernel.Bind<Service.BasicInfo.IFileService>().To<Service.BasicInfo.FileService>();
             //kernel.Bind<IDynamicReportService>().To<DynamicReportService>();
             //kernel.Bind<IAwardService>().To<AwardService>();
             //kernel.Bind<IRequestCustomerClubVisitTimeService>().To<RequestCustomerClubVisitTimeService>();
             //kernel.Bind<IScoringService>().To<ScoringService>();
             //kernel.Bind<IUserRateHistoryService>().To<UserRateHistoryService>();
-            //kernel.Bind<IRegisterService>().To<RegisterService>();
             //kernel.Bind<IUserGroupService>().To<UserGroupService>();
             //kernel.Bind<ISindhWarehouseService>().To<SindhWarehouseService>();
             //kernel.Bind<IWarehouseLogInService>().To<WarehouseLogInService>();
@@ -172,12 +175,12 @@ namespace AttendanceCRMWeb.App_Start
             //kernel.Bind<IAccountService>().To<AccountingService>();
             //kernel.Bind<IAccontingAssetService>().To<AccontingAssetService>();
             //kernel.Bind<IAdvancedChartDentService>().To<AdvancedChartDentService>();
-            //kernel.Bind<IScheduleTask>().To<QueuedMessagesSendTask>();
+
             kernel.Bind<IScheduleTaskRunner>().To<ScheduleTaskRunner>();
-            //kernel.Bind<ITaskScheduler>().To<TaskManager>().InSingletonScope();
-            //kernel.Bind<ITaskScheduler>().To<TaskManager>().InSingletonScope();
-            //kernel.Bind<ObservableCollection<ITaskScheduler>>().ToConstructor(x =>new ObservableCollection<ITaskScheduler>(x.Inject<IList<ITaskScheduler>>()));
-            //kernel.Bind<ITaskScheduler>().To<TaskManager>().InSingletonScope().WithConstructorArgument("httpClientFactory", HttpClientFactory.Create());
+            kernel.Bind<ITaskScheduler>().To<TaskManager>().InSingletonScope();
+            kernel.Bind<ITaskScheduler>().To<TaskManager>().InSingletonScope();
+            kernel.Bind<ObservableCollection<ITaskScheduler>>().ToConstructor(x => new ObservableCollection<ITaskScheduler>(x.Inject<IList<ITaskScheduler>>()));
+            kernel.Bind<ITaskScheduler>().To<TaskManager>().InSingletonScope().WithConstructorArgument("httpClientFactory", HttpClientFactory.Create());
 
             //kernel.Bind<IAccountingModelFactory>().To<AccountingModelFactory>();
             //kernel.Bind<IAccountingWarehouseService>().To<AccountingWarehouseService>();

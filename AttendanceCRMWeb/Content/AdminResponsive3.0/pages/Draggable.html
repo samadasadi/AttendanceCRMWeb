@@ -1,0 +1,372 @@
+
+
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Droppable - Simple photo manager</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    table {
+      font-size: 1em;
+    }
+
+    .ui-draggable, .ui-droppable {
+      background-position: top;
+    }
+
+    #gallery {
+      float: left;
+      width: 65%;
+      min-height: 12em;
+    }
+
+    .gallery.custom-state-active {
+      background: #eee;
+    }
+
+    .gallery li {
+      float: left;
+      width: 96px;
+      padding: 0.4em;
+      margin: 0 0.4em 0.4em 0;
+      text-align: center;
+    }
+
+      .gallery li h5 {
+        margin: 0 0 0.4em;
+        cursor: move;
+      }
+
+      .gallery li a {
+        float: right;
+      }
+
+        .gallery li a.ui-icon-zoomin {
+          float: left;
+        }
+
+      .gallery li img {
+        width: 100%;
+        cursor: move;
+      }
+
+    #trash {
+      float: right;
+      width: 32%;
+      min-height: 18em;
+      padding: 1%;
+    }
+
+      #trash h4 {
+        line-height: 16px;
+        margin: 0 0 0.4em;
+      }
+
+        #trash h4 .ui-icon {
+          float: left;
+        }
+
+      #trash .gallery h5 {
+        display: none;
+      }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <!-- fullCalendar -->
+  <link rel="stylesheet" href="../plugins/fullcalendar/main.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+</head>
+<body>
+
+
+  <div class="wrapper">
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+
+          <div class="row">
+            <div class="col-md-3">
+              <div class="sticky-top mb-3">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Draggable Events</h4>
+                  </div>
+                  <div class="card-body">
+                    <!-- the events -->
+                    <div id="external-events">
+                      <div class="external-event bg-success">Lunch</div>
+                      <div class="external-event bg-warning">Go home</div>
+                      <div class="external-event bg-info">Do homework</div>
+                      <div class="external-event bg-primary">Work on UI design</div>
+                      <div class="external-event bg-danger">Sleep tight</div>
+                      <div class="checkbox">
+                        <label for="drop-remove">
+                          <input type="checkbox" id="drop-remove">
+                          remove after drop
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Create Event</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+                      <ul class="fc-color-picker" id="color-chooser">
+                        <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
+                        <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
+                        <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
+                        <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
+                        <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>
+                      </ul>
+                    </div>
+                    <!-- /btn-group -->
+                    <div class="input-group">
+                      <input id="new-event" type="text" class="form-control" placeholder="Event Title">
+
+                      <div class="input-group-append">
+                        <button id="add-new-event" type="button" class="btn btn-primary">Add</button>
+                      </div>
+                      <!-- /btn-group -->
+                    </div>
+                    <!-- /input-group -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+
+
+
+              <div class="card card-primary">
+                <div class="card-body p-0">
+                  <!-- THE CALENDAR -->
+                  <div id="calendar" class="ui-widget-content ui-state-default ui-droppable" style="height:200px;">
+
+                  </div>
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+
+
+
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+
+  <script src="../plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- jQuery UI -->
+  <script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../dist/js/adminlte.min.js"></script>
+  <!-- fullCalendar 2.2.5 -->
+  <script src="../plugins/moment/moment.min.js"></script>
+  <script src="../plugins/fullcalendar/main.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="../dist/js/demo.js"></script>
+  <!-- Page specific script -->
+  <script>
+
+
+    $(function () {
+
+      // There's the gallery and the trash
+      var $gallery = $("#external-events"),
+        $trash = $("#calendar");
+
+      // Let the gallery items be draggable
+      $(".external-event", $gallery).draggable({
+        //cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+        //revert: "invalid", // when not dropped, the item will revert back to its initial position
+        //containment: "document",
+        //helper: "clone",
+        //cursor: "move"
+
+
+        zIndex: 1070,
+        revert: true, // will cause the event to go back to its
+        revertDuration: 0,  //  original position after the drag
+        iframeFix: true,
+        containment: "document",
+        cursor: "move"
+      });
+
+
+      // Let the trash be droppable, accepting the gallery items
+      $trash.droppable({
+        accept: "#external-events div.external-event",
+        classes: {
+          "ui-droppable-active": "ui-state-highlight"
+        },
+        drop: function (event, ui) {
+          deleteImage(ui.draggable);
+        }
+      });
+
+      // Let the gallery be droppable as well, accepting items from the trash
+      $gallery.droppable({
+        accept: ".external-event",
+        classes: {
+          "ui-droppable-active": "custom-state-active"
+        },
+        drop: function (event, ui) {
+          recycleImage(ui.draggable);
+        }
+      });
+
+      // Image deletion function
+      var recycle_icon = "<a  title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>";
+      function deleteImage($item) {
+        $item.fadeOut(function () {
+          //var $list = $("ul", $trash).length ?
+          //  $("ul", $trash) :
+          //  $("<ul class='gallery ui-helper-reset'/>").appendTo($trash);
+          var $list = $("<div class='ui-droppable'/>").appendTo($trash);
+
+          $item.find("a.ui-icon-trash").remove();
+          $item.append(recycle_icon).appendTo($list).fadeIn(function () {
+            $item
+              .animate({ width: "248px" })
+              .find("img")
+              .animate({ height: "36px" });
+          });
+        });
+      }
+
+      // Image recycle function
+      var trash_icon = "<a href='link/to/trash/script/when/we/have/js/off' title='Delete this image' class='ui-icon ui-icon-trash'>Delete image</a>";
+      function recycleImage($item) {
+        $item.fadeOut(function () {
+          $item
+            .find("a.ui-icon-refresh")
+            .remove()
+            .end()
+            .css("width", "296px")
+            .append(trash_icon)
+            .find("img")
+            .css("height", "72px")
+            .end()
+            .appendTo($gallery)
+            .fadeIn();
+        });
+      }
+
+      // Image preview function, demonstrating the ui.dialog used as a modal window
+      function viewLargerImage($link) {
+        var src = $link.attr("href"),
+          title = $link.siblings("img").attr("alt"),
+          $modal = $("img[src$='" + src + "']");
+
+        if ($modal.length) {
+          $modal.dialog("open");
+        } else {
+          var img = $("<img alt='" + title + "' width='384' height='288' style='display: none; padding: 8px;' />")
+            .attr("src", src).appendTo("body");
+          setTimeout(function () {
+            img.dialog({
+              title: title,
+              width: 400,
+              modal: true
+            });
+          }, 1);
+        }
+      }
+
+      // Resolve the icons behavior with event delegation
+      $(".external-event").on("click", function (event) {
+        var $item = $(this),
+          $target = $(event.target);
+
+        if ($target.is("a.ui-icon-trash")) {
+          deleteImage($item);
+        } else if ($target.is("a.ui-icon-zoomin")) {
+          viewLargerImage($target);
+        } else if ($target.is("a.ui-icon-refresh")) {
+          recycleImage($item);
+        }
+
+        return false;
+      });
+    });
+
+
+
+    $(function () {
+
+      var $trash2 = $("#calendar");
+
+      //  function ini_events(ele) {
+      //    ele.each(function () {
+      //      // create an Event Object (https://fullcalendar.io/docs/event-object)
+      //      // it doesn't need to have a start or end
+      //      var eventObject = {
+      //        title: $.trim($(this).text()) // use the element's text as the event title
+      //      }
+      //      // store the Event Object in the DOM element so we can get to it later
+      //      $(this).data('eventObject', eventObject)
+      //      // make the event draggable using jQuery UI
+      //      $(this).draggable({
+      //        zIndex: 1070,
+      //        revert: true, // will cause the event to go back to its
+      //        revertDuration: 0,  //  original position after the drag
+      //        iframeFix: true,
+      //      })
+      //    })
+      //  }
+      //  ini_events($('#external-events div.external-event'))
+      //  new Draggable(containerEl, {
+      //    itemSelector: '.external-event',
+      //    eventData: function (eventEl) {
+      //      return {
+      //        title: eventEl.innerText,
+      //        backgroundColor: window.getComputedStyle(eventEl, null).getPropertyValue('background-color'),
+      //        borderColor: window.getComputedStyle(eventEl, null).getPropertyValue('background-color'),
+      //        textColor: window.getComputedStyle(eventEl, null).getPropertyValue('color'),
+      //      };
+      //    }
+      //  });
+    })
+
+
+  </script>
+</body>
+</html>

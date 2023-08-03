@@ -87,7 +87,7 @@ namespace ViewModel.UserManagement.Attendance
         public string Explain { get; set; }
 
         public DateTime ModifiedDate { get; set; }
-        public Guid MedicalCenterId { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public bool IsActive { get; set; }

@@ -210,7 +210,7 @@ namespace Service.UserManagement.Attendance
                 #region Add
                 var _model = new TransactionRequest();
                 entity.ModifiedDate = DateTime.Now;
-                entity.MedicalCenterId = Public.CurrentUser.MedicalCenterId;
+
                 if (entity.Id == Guid.Empty)
                 {
                     entity.IsDeleted = false;

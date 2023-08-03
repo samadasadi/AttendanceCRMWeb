@@ -19,7 +19,7 @@ namespace ViewModel.UserManagement.Attendance
         public Guid Id { get; set; }
 
         public DateTime ModifiedDate { get; set; }
-        public Guid MedicalCenterId { get; set; }
+
         public bool IsDeleted { get; set; }
         public string ModifiedDateStr { get { try { return DateTimeOperation.M2S(ModifiedDate); } catch { return ""; } } }
         public string ModifiedDateStr_Time { get { try { return ModifiedDate.ToString("HH:mm"); } catch { return ""; } } }

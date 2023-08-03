@@ -1,4 +1,5 @@
-﻿using Service.UserManagement.Attendance;
+﻿using AttendanceCRMWeb.Controllers;
+using Service.UserManagement.Attendance;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,23 +12,21 @@ using ViewModel.UserManagement.Attendance;
 
 namespace AttendanceCRMWeb.Areas.Admin.Controllers
 {
-    public class AttendanceController : BaseController
+    public class EmployeeAttendanceController : BaseController
     {
         #region Fields
-        private readonly IAttendanceService _serviceAttendance;
         private readonly IAttendanceReportService _serviceAttendanceReport;
         private readonly IShiftService _serviceShiftService;
         private readonly ITransactionRequestService _serviceTransactionRequest;
         #endregion
 
         #region ctor
-        public EmployeeAttendanceController(IAttendanceService service,
+        public EmployeeAttendanceController(
             IAttendanceReportService serviceAttendanceReport,
             IShiftService serviceShiftService,
             ITransactionRequestService serviceTransactionRequest
             )
         {
-            _serviceAttendance = service;
             _serviceAttendanceReport = serviceAttendanceReport;
             _serviceShiftService = serviceShiftService;
             _serviceTransactionRequest = serviceTransactionRequest;

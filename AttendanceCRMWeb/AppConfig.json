@@ -1,0 +1,7 @@
+﻿{
+  "DataConnectionString": "Data Source=.\\sql_2014; Initial Catalog=AttendanceCRM; User ID=sa; Password=Admin@110; MultipleActiveResultSets=True;",
+  "ServerName": ".\\sql_2014",
+  "UserId": "sa",
+  "Password": "Admin@110",
+  "Database": "AttendanceCRM"
+}

@@ -27,6 +27,7 @@ namespace AttendanceCRMWeb.Controllers
     public class BaseController : Controller
     {
         public IFileService FileService { get; set; }
+
         public IUserService usersService { get; set; }
 
         protected int _selectCount = 10;
@@ -38,7 +39,6 @@ namespace AttendanceCRMWeb.Controllers
             FileService = EngineContext.Resolve<IFileService>();
         }
 
-        /* handle Authantication for current user.  */
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             if (AppSettings.ISVPS == "0")
@@ -163,6 +163,7 @@ namespace AttendanceCRMWeb.Controllers
             }
             catch { }
         }
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             //
@@ -179,6 +180,7 @@ namespace AttendanceCRMWeb.Controllers
             }
             base.OnActionExecuted(filterContext);
         }
+
         private void OnActionExecutedForLocal(ActionExecutedContext filterContext)
         {
             if (Session["sessionid"] == null)
@@ -210,15 +212,12 @@ namespace AttendanceCRMWeb.Controllers
 
         //TODo:User File service insted of this function
         /// <summary>
-        /// Global Save HttpPostedFile2ase /Create directory » year/filename
+        /// Global Save HttpPostedFile2ase /Create directory » year/filename.
+        /// create a  file directory every year and stores file in there.
+        /// and create a FileVm obj model and insert it to db and return it to controller.
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-
-        /*
-         * create a  file directory every year and stores file in there.
-         * and create a FileVm obj model and insert it to db and return it to controller.
-         */
         public FileVm GlobalSaveFile(HttpPostedFileBase file, string routFolder)
         {
             try
@@ -227,21 +226,20 @@ namespace AttendanceCRMWeb.Controllers
                 var year = jc.GetYear(DateTime.Now);
                 var yearPath = Server.MapPath(routFolder + year + "/");
                 var localPath = routFolder + year + "/";
+
                 #region DirectoryBuilder
-                //Year
                 if (!Directory.Exists(yearPath))
                     Directory.CreateDirectory(yearPath);
-
                 #endregion
-                #region SaveWithNewGuid
 
+                #region SaveWithNewGuid
                 var guid = Guid.NewGuid();
-                //originalFileName = file.FileName;
                 var fileEXtention = Path.GetExtension(file.FileName);
                 localPath = localPath + guid + fileEXtention;
                 var path = Server.MapPath("~" + localPath);
                 file.SaveAs(path);
                 #endregion
+
                 var fileVm = new FileVm()
                 {
                     FileName = file.FileName,
@@ -258,7 +256,6 @@ namespace AttendanceCRMWeb.Controllers
             }
         }
 
-        /* return string 'edit'.  */
         protected virtual string FormName
         {
             get { return "edit"; }
@@ -323,8 +320,6 @@ namespace AttendanceCRMWeb.Controllers
             return Json(DateTimeOperation.M2S(rDate));
         }
 
-        /* Creates a FilePathResult object by using the 
-         * file name, the content type, and the file download name.  */
         public FileResult Download(string path)
         {
             var p = "/";
@@ -339,9 +334,6 @@ namespace AttendanceCRMWeb.Controllers
             return File(str, contentType, fileName);
         }
 
-
-
-
         protected JsonResult ErrorJson(object errors)
         {
             return Json(new
@@ -354,7 +346,6 @@ namespace AttendanceCRMWeb.Controllers
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public sealed class NoCacheAttribute : ActionFilterAttribute
     {
-        /* set HttpContext.Responce atrributes.  */
         public override void OnResultExecuting(ResultExecutingContext filterContext)
         {
             filterContext.HttpContext.Response.Cache.SetExpires(DateTime.UtcNow.AddDays(-1));

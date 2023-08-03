@@ -46,7 +46,6 @@ namespace Service.Consts
             set;
         }
         public static List<ChatUserModel> UserChatList { get; set; }
-        public static List<PublicAnnouncement> PublicAnnouncementsList { get; set;}
         public static AccountExpireInfo AccountExpireInfo { get; set; }
         public static GeneralSetting GeneralSetting { get; set; }
 

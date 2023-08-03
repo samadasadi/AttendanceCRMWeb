@@ -13,20 +13,18 @@ using ViewModel.Security;
 using Utility.EXT;
 using ViewModel.BasicInfo;
 using Repository.iContext;
-using Service.Report;
 using System.Text;
 using System.Threading.Tasks;
 using Repository.Infrastructure;
 using System.Web.Script.Serialization;
 using RestSharp;
-using Service.Helper;
 using System.Threading;
 using ViewModel;
 using System.Management;
 using Newtonsoft.Json;
 using Repository.Model.ApplicationMenu;
-//using TINYLib;
-//using Log4Me.Models;
+using System.Diagnostics.PerformanceData;
+
 
 namespace Service.Security
 {
@@ -39,11 +37,8 @@ namespace Service.Security
 
         Task<IEnumerable<PubRole>> GetAllUserRoles(UserLogin user);
 
-        Task<LoginResultStatus> Login(string username, string password, Guid MedicalId, string TinyData, string DatabaseName, string IPAddress, string sessionId, string cnnection, string Type = "Login");
+        Task<LoginResult> Login(string username, string password, string DatabaseName, string IPAddress, string sessionId, string cnnection, string Type = "Login");
 
-        Task<LoginResultStatus> LoginCustomerClub(string nationalCode, string mobileNumber, Guid MedicalId, string Type = "Login");
-
-        Task<LoginResultStatus> LoginCustomerClubWithCard(string cardNo, Guid MedicalId, string Type = "Login");
 
         Task<IEnumerable<PubUserGroup>> GetAvailableRoleGroups(Guid userId);
 
@@ -52,8 +47,6 @@ namespace Service.Security
         Task<Guid> GetCurrentRoleGroup(Guid userId);
 
         Task<IEnumerable<NormalJsonClass>> GetRoleGroupPermission(Guid roleGroupId);
-
-        Task<List<MedicalCenterVm>> GetMedicalCenterList();
 
         FormSecurity GetFormSecurity(EnumRole role);
 
@@ -67,10 +60,6 @@ namespace Service.Security
 
         Task<UserVm> GetUserWithSession(string username);
 
-        Task<List<ViewModel.UserManagement.tbl_LoginVm>> GetLastLoginRecord();
-
-        Task<DataModel> GetPublicAnnouncement();
-
     }
     public class UserService : IUserService
     {
@@ -81,15 +70,8 @@ namespace Service.Security
         private readonly IRepository<PubRole> _roleRepo;
         private readonly IRepository<Coding> _CodingRepo;
         private readonly IRepository<PubUserGroup> _userGroupRepository;
-        private readonly IRepository<MedicalCenter> _MedicalCenterRepo;
-        private readonly IRepository<DynamicReport> _dynamicReportrepo;
-        private readonly IRepository<ServiceInfo> _serviceInforepo;
         private readonly IRepository<GeneralSetting> _GeneralSettingrepo;
-        private readonly IDynamicReportService _DynamicReportService;
         private IRepository<File> _filerepo;
-
-
-        private readonly IRepository<CustomerBasicInformation> _repocustomerBasicInformation;
 
         public UserService(IContextFactory contextFactory,
             IRepository<PubUser> repo,
@@ -99,14 +81,8 @@ namespace Service.Security
             IRepository<PubUserGroup> roleGroupRepository,
             IRepository<PubMenu> menuRepo,
             IRepository<Coding> codingRepo,
-            IRepository<MedicalCenter> MedicalCenterRepo,
-            IRepository<DynamicReport> dynamicReportrepo,
-            IDynamicReportService dynamicReportService,
-            IRepository<ServiceInfo> serviceInforepo,
             IRepository<File> filerepo,
-            IRepository<GeneralSetting> generalSettingrepo,
-            IRepository<CustomerBasicInformation> repocustomerBasicInformation
-            //IRepository<RolesMedicalCenter> rolesMedicalCenter
+            IRepository<GeneralSetting> generalSettingrepo
             )
         {
             var currentcontext = contextFactory.GetContext();
@@ -134,27 +110,13 @@ namespace Service.Security
             _roleRepo.FrameworkContext = currentcontext;
             _roleRepo.DbFactory = contextFactory;
 
-            _MedicalCenterRepo = MedicalCenterRepo;
-            _MedicalCenterRepo.FrameworkContext = currentcontext;
-            _MedicalCenterRepo.DbFactory = contextFactory;
-
             _menuRepo = menuRepo;
             _menuRepo.FrameworkContext = currentcontext;
             _menuRepo.DbFactory = contextFactory;
 
-            _DynamicReportService = dynamicReportService;
-
-            _serviceInforepo = serviceInforepo;
-            _serviceInforepo.FrameworkContext = currentcontext;
-            _serviceInforepo.DbFactory = contextFactory;
-
             _GeneralSettingrepo = generalSettingrepo;
             _GeneralSettingrepo.FrameworkContext = currentcontext;
             _GeneralSettingrepo.DbFactory = contextFactory;
-
-            _dynamicReportrepo = dynamicReportrepo;
-            _dynamicReportrepo.FrameworkContext = currentcontext;
-            _dynamicReportrepo.DbFactory = contextFactory;
 
             _CodingRepo = codingRepo;
             _CodingRepo.FrameworkContext = currentcontext;
@@ -165,14 +127,6 @@ namespace Service.Security
             _filerepo.DbFactory = contextFactory;
 
 
-            _repocustomerBasicInformation = repocustomerBasicInformation;
-            _repocustomerBasicInformation.FrameworkContext = currentcontext;
-            _repocustomerBasicInformation.DbFactory = contextFactory;
-
-
-            //_rolesMedicalCenter = rolesMedicalCenter;
-            //_rolesMedicalCenter.FrameworkContext = currentcontextCommanDb;
-            //_rolesMedicalCenter.DbFactory = contextFactory;
         }
 
         public async Task<IEnumerable<UserInRole>> GetAllUserInRoles(Guid userId)
@@ -200,74 +154,8 @@ namespace Service.Security
             //}
         }
 
-        public async System.Threading.Tasks.Task UpdateServiceInfoAndGeneralSetting(string dataPartition, Guid MedicalCenter)
-        {
-            var ServiceInfoList = await _serviceInforepo.GetAll();
-            //سیو کد قفل در تیبل جنرال ستینگ
-            if (dataPartition != "")
-            {
-                string codeGhofl = dataPartition.Substring(0, 5);
-                var hg = await _GeneralSettingrepo.First(m => m.MedicalCenterId == MedicalCenter && m.IsDeleted == false);
-                var ress = await _GeneralSettingrepo.Find(hg.Id);
-                ress.Log = codeGhofl;
-                await _GeneralSettingrepo.Commit();
-                string rsult = dataPartition.Remove(0, 6);
-                var bashgaheMoshtarian = rsult.Substring(0, 1);
-                //rsult = dataPartition.Remove(0, 7);
-                var Namayeshgar = rsult.Substring(1, 1);
-                //rsult = dataPartition.Remove(0, 8);
 
-                var Emtiazat = rsult.Substring(2, 1);
-                //rsult = dataPartition.Remove(0, 9);
-
-                var sms = rsult.Substring(3, 1);
-                //rsult = dataPartition.Remove(0, 10);
-
-                var ghalamNori = rsult.Substring(4, 1);
-                //rsult = dataPartition.Remove(0, 11);
-
-                var Android = rsult.Substring(5, 1);
-                if (ServiceInfoList != null)
-                {
-                    foreach (var item in ServiceInfoList)
-                    {
-                        var res = await _serviceInforepo.Find(item.Id);
-                        if (item.Name == "باشگاه مشتریان")
-                        {
-                            res.IsActive = bashgaheMoshtarian == "1" ? true : false;
-                            await _serviceInforepo.Commit();
-                        }
-                        else if (item.Name == "نمایشگر تماس")
-                        {
-                            res.IsActive = Namayeshgar == "1" ? true : false;
-                            await _serviceInforepo.Commit();
-                        }
-                        else if (item.Name == "امتیازات")
-                        {
-                            res.IsActive = Emtiazat == "1" ? true : false;
-                            await _serviceInforepo.Commit();
-                        }
-                        else if (item.Name == "اس ام اس")
-                        {
-                            res.IsActive = sms == "1" ? true : false;
-                            await _serviceInforepo.Commit();
-                        }
-                        else if (item.Name == "قلم نوری")
-                        {
-                            res.IsActive = ghalamNori == "1" ? true : false;
-                            await _serviceInforepo.Commit();
-                        }
-                        else if (item.Name == "اندروید جدید")
-                        {
-                            res.IsActive = Android == "1" ? true : false;
-                            await _serviceInforepo.Commit();
-                        }
-                    }
-                }
-            }
-        }
-
-        public async Task<PubUserLoinVm> GetUserLogin(string username, string password, Guid MedicalId)
+        public async Task<PubUserLoinVm> GetUserLogin(string username, string password)
         {
             try
             {
@@ -276,8 +164,8 @@ namespace Service.Security
                 var _queryUser = String.Format(@"select top(1) * "
                                                  + "\nfrom tbl_Employees  "
                                                  + "\nwhere NetworkUserName = '{0}'  "
-                                                 + "\n    and UserPwd='{1}' and MedicalCenterId='{2}'  "
-                                                 + "\n    and IsUserActive=1 and EmployeeActive=1 and IsDeleted = 0 ", username, npassword, MedicalId);
+                                                 + "\n    and UserPwd='{1}' "
+                                                 + "\n    and IsUserActive=1 and EmployeeActive=1 and IsDeleted = 0 ", username, npassword);
 
                 var user = (await _repo.RunQuery<PubUserLoinVm>(_queryUser)).ToList().FirstOrDefault();
 
@@ -312,11 +200,9 @@ namespace Service.Security
             }
         }
 
-        public async Task<LoginResultStatus> Login(
+        public async Task<LoginResult> Login(
             string username,
             string password,
-            Guid MedicalId,
-            string TinyData,
             string DatabaseName,
             string _IPAddress,
             string sessionId,
@@ -324,19 +210,22 @@ namespace Service.Security
             string Type = "Login")
         {
 
-            if (string.IsNullOrEmpty(TinyData))
-                return LoginResultStatus.KeyDataIsNotValid;
 
 
-            var user = await GetUserLogin(username, password, MedicalId);
+            var user = await GetUserLogin(username, password);
             if (user == null)
-                return LoginResultStatus.InCorrectLoginInformation;
+                return new LoginResult
+                {
+                    LoginResultStatus = LoginResultStatus.InCorrectLoginInformation
+                };
 
 
             if (!IsAdministrator(username, password) && !(user.FromValidityDate <= DateTime.Now && user.ToValidityDate >= DateTime.Now))
-            {
-                return LoginResultStatus.ExpireDate;
-            }
+                return new LoginResult
+                {
+                    LoginResultStatus = LoginResultStatus.ExpireDate
+                };
+
 
 
             var userVm = new UserLogin()
@@ -352,7 +241,7 @@ namespace Service.Security
                 Password = user.UserPwd
             };
 
-
+            var TinyData = "asadi";
             if (TinyData.Length > 0)
             {
                 userVm.IsVpsServer = AppSettings.ISVPS == "0" ? false : true;
@@ -373,7 +262,11 @@ namespace Service.Security
                 {
                     var _dehashedKeyCode = EncDec.Decrypt(_savedKeyCode);
                     if (_dehashedKeyCode != _keyCode)
-                        return LoginResultStatus.KeyCodeIsNotValidWithDatabase;
+                        return new LoginResult
+                        {
+                            KeyCode = _keyCode,
+                            LoginResultStatus = LoginResultStatus.KeyCodeIsNotValidWithDatabase
+                        };
                 }
 
 
@@ -416,7 +309,6 @@ namespace Service.Security
 
             userVm.Menus = await GetAllMenuVm(userVm);
             userVm.IsAdministrator = IsAdministrator(username, password);
-            userVm.MedicalCenterId = MedicalId;
 
             if (user != null && user.FileId != null && user.FileId != Guid.Empty)
             {
@@ -441,25 +333,7 @@ namespace Service.Security
             }
             Public.CurrentUser = userVm;
             Public.CurrentUser.IsAccountingClient = user.IsAccountingClient;
-            try
-            {
-                await LastUpdateDate(userVm);
-                if (Public.UpdateVersionInfo == null
-                    || !Public.UpdateVersionInfo.CheckForUpdate
-                    || Public.UpdateVersionInfo.Last_CheckForUpdate.Date < DateTime.Now.Date)
-                {
-                    System.Threading.Tasks.Task updatetask =
-                        new System.Threading.Tasks.Task(async () =>
-                        {
-                            await GetAppVersionInfo();
-                        });
-                    updatetask.Start();
-                }
-            }
-            catch { }
 
-            //var _query = @"delete from tbl_Login where  CAST(ModifiedDate AS DATE) < CAST(GETDATE() AS DATE)";
-            //await _loginRepo.ExecuteSqlCommand(_query);
 
             var _ip1 = Utility.Utitlies.Utility.GetIp();
             var _queryLogin = String.Format("insert into tbl_Login  (UserId, SessionId, LoggedIn, ModifiedDate, IpAddress, OperatingSystem, Browser) " +
@@ -475,50 +349,9 @@ namespace Service.Security
 
             //DataSettingsManager.SaveSettings(_settings);
 
-            Public.GeneralSetting = await _GeneralSettingrepo.First(m => m.MedicalCenterId == MedicalId && m.IsDeleted == false);
+            Public.GeneralSetting = await _GeneralSettingrepo.First(m => m.IsDeleted == false);
 
-            return LoginResultStatus.Success;
-        }
-
-        private async System.Threading.Tasks.Task UpdateServiceInfo(UserLogin user, string TinyData)
-        {
-            string _access = TinyData;
-            string[] _strSplit = _access.Split('-');
-
-            StringBuilder _query = new StringBuilder();
-            _query.Append(String.Format(@" update tbl_Application set Log='{0}' ", _strSplit[0]));
-            _query.AppendLine();
-            _query.Append(String.Format(@" update ServiceInfo set IsActive='{0}' where Id='87c2d2dc-869e-e611-80ca-382c4a41072f' ", user.IsSms));
-            _query.AppendLine();
-            _query.Append(String.Format(@" update ServiceInfo set IsActive='{0}' where Id='87c2d2dc-869e-e611-80ca-382c4a51072f' ", user.IsAnbar));
-            _query.AppendLine();
-            _query.Append(String.Format(@" update ServiceInfo set IsActive='{0}' where Id='87c2d2dc-869e-e611-80ca-382c4ab1072f' ", user.IsAttendance));
-            _query.AppendLine();
-            _query.Append(String.Format(@" update ServiceInfo set IsActive='{0}' where Id='87c2d2dc-869e-e611-80ca-387c4a41072f' ", user.IsCustomerClub));
-            _query.AppendLine();
-            _query.Append(String.Format(@" update ServiceInfo set IsActive='{0}' where Id='87c2d2dc-869e-e611-80ca-388c4a41072f' ", user.IsCallerID));
-            _query.AppendLine();
-            _query.Append(String.Format(@" update ServiceInfo set IsActive='{0}' where Id='87c2d2dc-869e-e611-80ca-392c4a41072f' ", user.IsPrinter));
-            _query.AppendLine();
-            _query.Append(String.Format(@" update ServiceInfo set IsActive='{0}' where Id='87c2d2dc-869e-e611-80ca-392c4a41080f' ", user.IsPrescription));
-            _query.AppendLine();
-            _query.Append(String.Format(@" update ServiceInfo set IsActive='{0}' where Id='87c2d2dc-869e-e611-80ca-392c4a41081f' ", user.IsCredits));
-            _query.AppendLine();
-            _query.Append(String.Format(@" update ServiceInfo set IsActive='{0}' where Id='87c2d2dc-869e-e611-80ca-392c4a41082f' ", user.IsFingerPrint));
-            _query.AppendLine();
-            _query.Append(String.Format(@" update ServiceInfo set IsActive='{0}' where Id='87c2d2dc-869e-e611-80ca-392c4a41083f' ", user.IsCardReader));
-            _query.AppendLine();
-            _query.Append(String.Format(@" update ServiceInfo set IsActive='{0}' where Id='87c2d2dc-869e-e611-80ca-392c4a41084f' ", user.IsMoneyBag));
-            _query.AppendLine();
-            _query.Append(String.Format(@" update ServiceInfo set IsActive='{0}' where Id='87c2d2dc-869e-e611-80ca-392c4a41085f' ", user.IsInatallments));
-            _query.AppendLine();
-            _query.Append(String.Format(@" update ServiceInfo set IsActive='{0}' where Id='87c2d2dc-869e-e611-80ca-392c4a41086f' ", user.IsIOS));
-            _query.AppendLine();
-            _query.Append(String.Format(@" update ServiceInfo set IsActive='{0}' where Id='87c2d2dc-869e-e611-80ca-392c4a41087f' ", user.IsVPS));
-            _query.AppendLine();
-            _query.Append(String.Format(@" update ServiceInfo set IsActive='{0}' where Id='87c2d2dc-869e-e611-80ca-392c4a41088f' ", user.IsAndroid));
-
-            await _serviceInforepo.ExecuteSqlCommand(_query.ToString());
+            return new LoginResult { LoginResultStatus = LoginResultStatus.Success };
         }
 
         public async Task<List<MenuVm>> GetAllMenuVm(UserLogin user)
@@ -820,14 +653,6 @@ namespace Service.Security
             throw new NotImplementedException();
         }
 
-        public async Task<List<MedicalCenterVm>> GetMedicalCenterList()
-        {
-            Mapping.GenericMapping<MedicalCenter, MedicalCenterVm>.CreateMapping();
-            var res = (from z in await _MedicalCenterRepo.GetAll()
-                       select (Mapping.GenericMapping<MedicalCenter, MedicalCenterVm>.Map(z))).ToList();
-            return res;
-        }
-
         public FormSecurity GetFormSecurity(EnumRole role)
         {
             if (Public.CurrentUser == null)
@@ -884,52 +709,6 @@ namespace Service.Security
             //return Public.CurrentUser.
         }
 
-        public async Task<LoginResultStatus> LoginCustomerClubWithCard(string cardNo, Guid MedicalId, string Type = "Login")
-        {
-            var user = await _repocustomerBasicInformation.First(m =>
-                                                    m.CardNo == cardNo
-                                                    && m.CardNo != null
-                                                    && m.IsDeleted == false
-                                                    && m.MedicalCenterId == MedicalId);
-            if (user != null)
-                FillCustomerClusbSession(user);
-
-            return user == null ? LoginResultStatus.InCorrectLoginInformation : LoginResultStatus.Success;
-        }
-
-        public async Task<LoginResultStatus> LoginCustomerClub(string nationalCode, string mobileNumber, Guid MedicalId, string Type = "Login")
-        {
-            var user = await _repocustomerBasicInformation.First(m =>
-                                                    m.NationalCode == nationalCode
-                                                    && m.MobileNumber == mobileNumber
-                                                    && m.IsDeleted == false
-                                                    && m.MedicalCenterId == MedicalId);
-            if (user != null)
-                FillCustomerClusbSession(user);
-
-            return user == null ? LoginResultStatus.InCorrectLoginInformation : LoginResultStatus.Success;
-        }
-
-        public void FillCustomerClusbSession(CustomerBasicInformation user)
-        {
-            if (user == null) { Public.CustomerLogin = null; return; }
-
-            Public.CustomerLogin = new CustomerLogin()
-            {
-                CustomerId = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                MedicalCenterId = user.MedicalCenterId,
-                ScoreBoxView = user.ScoreBoxView,
-            };
-
-            Public.CurrentUser = new UserLogin
-            {
-                MedicalCenterId = user.MedicalCenterId,
-                AvailableRole = new List<EnumRole>(),
-                Menus = new List<MenuVm>(),
-            };
-        }
 
         public async Task<bool> IsUserLogginedYet(string username, string sessionId)
         {
@@ -984,69 +763,7 @@ namespace Service.Security
             }
         }
 
-        public async Task<ApiResultModel<CheckUpdateVersionModelVm>> GetAppVersionInfo()
-        {
-            try
-            {
-                var _resultModel = new ApiResultModel<CheckUpdateVersionModelVm>();
-                _resultModel = await CommonServiceHelper.RunWebApiCommand<CheckUpdateVersionModelVm>(new WebApiHelperVm
-                {
-                    ContentBody = null,
-                    method = Method.Get,
-                    Url = "api/DoctorAccount/GetAppVersionInfoNewVer"
-                });
 
-                if (_resultModel != null && !_resultModel.Error && _resultModel.TModel != null)
-                {
-                    //_resultModel.model.DataSetting = new DataSettings();
-                    //_resultModel.model.DataSetting = DataSettingsManager.LoadSettings(null, true);
-
-                    var _currentSettign = DataSettingsManager.LoadSettings(null, true);
-
-                    _resultModel.TModel.VersionUpdates.Select(c => { c.HasThisVersion = (c.Version > _currentSettign.AppVersionInt ? false : true); return c; }).ToList();
-
-                    if (_currentSettign.AppVersion == _resultModel.TModel.DataSetting.AppVersion)
-                    {
-                        _resultModel.TModel.AvailabilityNewUpdates = false;
-                    }
-                    else
-                        _resultModel.TModel.AvailabilityNewUpdates = true;
-
-                    _resultModel.TModel.CheckForUpdate = true;
-                    _resultModel.TModel.Last_CheckForUpdate = DateTime.Now;
-
-                    Public.UpdateVersionInfo = _resultModel.TModel;
-                }
-
-                await GetPublicAnnouncement();
-
-                return _resultModel;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public async Task<DataModel> GetPublicAnnouncement()
-        {
-            try
-            {
-                var _AnnouncementResult = new ApiResultModel<List<PublicAnnouncement>>();
-                _AnnouncementResult = await CommonServiceHelper.RunWebApiCommand<List<PublicAnnouncement>>(new WebApiHelperVm
-                {
-                    ContentBody = null,
-                    method = Method.Get,
-                    Url = "api/DoctorAccount/GetAnnouncementForClient"
-                });
-                if (_AnnouncementResult != null && !_AnnouncementResult.Error && _AnnouncementResult.TModel != null)
-                {
-                    Public.PublicAnnouncementsList = _AnnouncementResult.TModel;
-                }
-                return new DataModel();
-            }
-            catch (Exception ex) { return new DataModel(); }
-        }
 
         public static string GetOsFriendlyName()
         {
@@ -1056,91 +773,6 @@ namespace Service.Security
                 return os["Caption"].ToString();
             }
             return string.Empty;
-        }
-        public async Task<ApiResultModel<DoctorAccountVm>> LastUpdateDate(UserLogin user)
-        {
-            try
-            {
-
-                var _query = @" EXEC GetUsingAccountInformation ";
-                var _model = (await _repo.RunQuery<UsingAccountInformationVm>(_query)).ToList().FirstOrDefault();
-                if (_model == null) return new ApiResultModel<DoctorAccountVm>
-                {
-                    Error = true,
-                    Message = "اطلاعات یافت نشد"
-                };
-                _model.KeyCode = user.TinyUserCode;
-                _model.CurrentVersion = user.AppVersion;
-
-                try
-                {
-                    var _system = Environment.OSVersion;
-                    _model.Operation_System = GetOsFriendlyName();
-                    _model.Operation_System_Version = _system.Version.Major + "." + _system.Version.Minor;
-                }
-                catch { }
-
-                #region اطلاعات پزشکان
-                //_query = @"select top(15) emp.FirstName+' '+emp.LastName as DoctorName, "
-                //                    + "\n	IDNo as NationalCode, "
-                //                    + "\n	emp.empNezamCode as NezamCode, "
-                //                    + "\n	EmpMobileNo as MobileNumber, "
-                //                    + "\n	Salamat_Username, "
-                //                    + "\n	Salamat_Password "
-                //                    + "\nfrom tbl_Employees emp "
-                //                    + "\nwhere EmployeeTypeID = '0120202' and (emp.empNezamCode is not null or Salamat_Username is not null)";
-                //_model.AdditionallDataJson = (await _repo.RunQuery<AdditionalDoctorInfo>(_query)).ToList();
-                //_model.AdditionallData = JsonConvert.SerializeObject(_model.AdditionallDataJson);
-                #endregion
-
-                System.Threading.Tasks.Task task =
-                    new System.Threading.Tasks.Task(async () =>
-                    {
-                        if (Utility.Utitlies.Utility.CheckForInternetConnection())
-                        {
-                            var _result = await CommonServiceHelper.RunWebApiCommand<AccountExpireInfo>(new WebApiHelperVm
-                            {
-                                ContentBody = _model,
-                                method = Method.Post,
-                                Url = "api/DoctorAccount/UsageAccountInformation"
-                            });
-                            if (_result != null && _result.Error == false)
-                            {
-                                Public.AccountExpireInfo = _result.TModel;
-                            }
-                        }
-                    });
-                task.Start();
-
-
-                return new ApiResultModel<DoctorAccountVm>();
-            }
-            catch (Exception ex)
-            {
-                return new ApiResultModel<DoctorAccountVm>
-                {
-                    Error = true,
-                    Message = ex.Message
-                };
-            }
-        }
-
-        public async Task<List<ViewModel.UserManagement.tbl_LoginVm>> GetLastLoginRecord()
-        {
-            try
-            {
-                var _query = $"select top(50) _login.*, _emp.FirstName, _emp.LastName, (select top(1) [Path] from [File] where Id = _emp.FileId) FilePath, _emp.Id EmployeeId "
-                    + "\nfrom tbl_Login _login "
-                    + "\nLeft Join tbl_Employees _emp on _emp.NetworkUserName = _login.UserId "
-                    + "\norder by ModifiedDate desc";
-
-                var _result = (await _loginRepo.RunQuery<ViewModel.UserManagement.tbl_LoginVm>(_query)).ToList();
-                return _result;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
 
 

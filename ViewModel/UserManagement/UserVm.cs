@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Web;
 using System.Web.Mvc;
 using Utility;
-using ViewModel.Accounting;
 using ViewModel.UserManagement.Attendance;
 
 namespace ViewModel.UserManagement
@@ -83,12 +82,7 @@ namespace ViewModel.UserManagement
         }
 
         public List<NormalJsonClass> RoleGroups { get; set; }
-        // public List<NormalJsonClass> TreatmentTopicsList { get; set; }
-        public List<NormalJsonClass> TreatmentTopicsList { get; set; }
-        //[Display(Name = "سرفصل های تخصصی")]
-        [Display(ResourceType = typeof(Md), Name = "TreatmentTopics")]
-        [UIHint("HorizentalDropdwonMultiple")]
-        public int[] TreatmentTopics { get; set; }
+
 
         public List<UserGroupVm> UserGroupsList { get; set; }
         public Guid[] SelectedRoleGroups { get; set; }
@@ -271,7 +265,6 @@ namespace ViewModel.UserManagement
         public int OTP { get; set; }
 
         public int UnreadCount { get; set; }
-        public AccountingClientsVm accountingClientsVm { get; set; } = new AccountingClientsVm();
 
 
 

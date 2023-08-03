@@ -1,39 +1,1083 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@using Service.Consts
+@using Repository.Model.Common
+@using Service.Common
+@using Repository.Infrastructure
+@using Service.UserManagement
+
+@using Service.Consts
+@{
+    //ViewBag.TitleIcon = Public.CurrentUser.IsCenterActivityType ? "~/Media/LogoMedical.png" : "~/Media/logo.png";
+
+    var taskService = EngineContext.Resolve<IGenericAttributeService>();
+    var showRememberInHeader = taskService.GetAttribute<bool>(new Repository.Model.BaseClass { Id = Guid.Empty, MedicalCenterId = Public.CurrentUser.MedicalCenterId }, GenericAttributeDefault.ShowRememberInHeader).Result;
+
+    var _collapsedMenu = taskService.GetAttribute<bool>(new Repository.Model.BaseClass { Id = Public.CurrentUser.Id, MedicalCenterId = Public.CurrentUser.MedicalCenterId }, GenericAttributeDefault.ApplicationPushMenu).Result;
+    var searchOption_SearchEnterKeyOnly = taskService.GetAttribute<bool>(new Repository.Model.BaseClass { Id = Guid.Empty, MedicalCenterId = Public.CurrentUser.MedicalCenterId }, GenericAttributeDefault.ApplicationSearchOption_SearchEnterKeyOnly).Result;
+
+    var _collapsmnu = _collapsedMenu ? "sidebar-collapse" : "";
+
+    string tokenId = "9yK%2f5wv5kyMNf2z9zFe4AHPCFaOSj13P";
+
+    var chatService = EngineContext.Resolve<IChatService>();
+    Public.UserChatList = chatService.GetUserListAndUnreadMessage().Result;
+
+
+    var _seachOption = taskService.GetAttribute<string>(new Repository.Model.BaseClass { Id = Public.CurrentUser.Id, MedicalCenterId = Public.CurrentUser.MedicalCenterId }, GenericAttributeDefault.ApplicationSearchOption).Result;
+    _seachOption = !string.IsNullOrEmpty(_seachOption) ? _seachOption : "102";
+    var _value = (_seachOption == ((int)Utility.PublicEnum.ConditionalSearchEnum.Mesl).ToString() ? "مثل" : "شامل");
+
+
+}
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    @*<link rel="icon" type="image/x-icon" href="@Url.Content(ViewBag.TitleIcon)">*@
+    <link rel="icon" type="image/x-icon" href="~/Media/logo.png">
+    <title>@ViewBag.Title</title>
+    <script src="~/Content/AdminResponsive3.0/plugins/jquery/jquery.min.js"></script>
+    <link href="~/Content/AdminResponsive3.0/dist/css/rtl.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/AdminResponsive3.0/plugins/select2/css/select2.min.css">
+    <link rel="stylesheet" href="~/Content/AdminResponsive3.0/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="~/Content/AdminResponsive/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/AdminResponsive/bower_components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/Content/AdminResponsive3.0/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link href="~/Content/AdminResponsive3.0/dist/css/adminlte.css" rel="stylesheet" />
+    <script>
+    var MinaDent = MinaDent || {};
+    window.lang = '@Service.Consts.Cookies.Lang';
+    </script>
+    @Html.Partial("~/Views/Shared/P_Css.cshtml")
+    @RenderSection("styles", required: false)
+    <link rel="stylesheet" href="~/Content/AdminResponsive3.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    @* این دوفایل برای جدول های برنامه اضافه شده اند *@
+    @*<link href="~/Scripts/Framework/datatables/datatables.min.css" rel="stylesheet" />
+        <script src="~/Scripts/Framework/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="~/Scripts/Framework/datatables/js/dataTables.bootstrap.min.js"></script>
+        <script src="~/Scripts/Framework/datatables/datatables.js"></script>
+        <script src="~/Scripts/Framework/datatables/moment-with-locales-2.22.2.min.js"></script>
+        <script src="~/Scripts/Framework/datatables/dataTables.buttons.min.js"></script>
+        <script src="~/Scripts/Framework/datatables/buttons.bootstrap.min.js"></script>*@
+    @* End *@
+
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="~/Themes/resources/css/reset.css">
+    <link href="~/Themes/resources/css/icon.css" rel="stylesheet">
+    <link id="color" rel="stylesheet" type="text/css" href="~/Themes/resources/css/colors/blue.css">
+    <script type="text/javascript">
+        var CalendarHolidaysItems = "[]";
+        try {
+            CalendarHolidaysItems = JSON.parse('[["1401/04/19","عید سعید قربان [ ١٠ ذوالحجه ]"],["1401/04/27","عید سعید غدیر خم [ ١٨ ذوالحجه ]"],["1401/05/16","تاسوعای حسینی [ ٩ محرم ]"],["1401/05/17","عاشورای حسینی [ ١٠ محرم ]"],["1401/06/26","اربعین حسینی [ ٢٠ صفر ]"],["1401/07/03","رحلت رسول اکرم؛شهادت امام حسن مجتبی علیه السلام [ ٢٨ صفر ]"],["1401/07/05","شهادت امام رضا علیه السلام [ ٣٠ صفر ]"],["1401/07/13","شهادت امام حسن عسکری علیه السلام [ ٨ ربیع الاول ]"],["1401/07/22","میلاد رسول اکرم و امام جعفر صادق علیه السلام [ ١٧ ربیع الاول ]"],["1401/10/06","شهادت حضرت فاطمه زهرا سلام الله علیها [ ٣ جمادی الثانیه ]"],["1401/11/15","ولادت امام علی علیه السلام و روز پدر [ ١٣ رجب ]"],["1401/11/22","پیروزی انقلاب اسلامی"],["1401/11/29","مبعث رسول اکرم (ص) [ ٢٧ رجب ]"],["1401/12/17","ولادت حضرت قائم عجل الله تعالی فرجه و جشن نیمه شعبان [ ١٥ شعبان ]"],["1401/12/29","روز ملی شدن صنعت نفت ایران"]]')
+        } catch (e) {
+            CalendarHolidaysItems = "[]"
+        }
+        var CalendarHolidaysItemsEmpty = [];
+        var bolChangeResizeMenu = false;
+        var clientId = "127bc64f-8dae-4a10-9acf-de9d9ef717fc";
+        var pagename = location.pathname.substring(location.pathname.lastIndexOf("/") + 1).replace(".aspx", "").toLowerCase();
+        var formBuilder = {
+            isCRM: true,
+            plan: {
+                type: 1, createFormCount: 0,
+                submissionCount: 0,
+                useDataStorage: 500,
+                fieldInFormCount: 0,
+                deneyFields: [],
+                payment: false,
+                linkQueryString: false,
+                linkViewForm: true,
+                linkEditForm: true,
+                limitForm: true,
+                createSubmitTemplate: true,
+                viewTemplateCount: 0,
+                webhook: false, api: true,
+                emailWatermark: false,
+                formWatermark: false, sms: true,
+                smsCount: 500,
+                importExcel: true,
+                exportExcel: true,
+                user: 10, priceFa: null,
+                priceEn: null,
+                taxFa: 9,
+                taxEn: 0,
+                costDayFa: 30000,
+                costDayEn: 60,
+                allowChangeUrl: true,
+                allowAdvancePermission: true,
+                telegram: true,
+                PrsonalEmailSender: true,
+                PersonalSmsSender: true,
+                auth: false,
+                authLimitText: "ماژول فرم ساز پیشرفته",
+                QueryStringLimitText: "ماژول فرم ساز پیشرفته",
+                PaymentLimitText: "ماژول فرم ساز پیشرفته"
+            }
+        };
+
+
+        var chatUsers = @Html.Raw(Json.Encode(Public.UserChatList));
+
+
+        var shortcut = [
+            { title: "گردش کار", url: "wf_show.aspx?rnd_=0.527492820220704123552", icon: "icon-workflow", color: "" },
+            { title: "کار", url: "todopage.aspx?rnd_=0.527492820220704123552", icon: "icon-task", color: "" },
+            { title: "رویداد", url: "event.aspx?rnd_=0.527492820220704123552", icon: "icon-event", color: "" },
+            { title: "فرم", url: "FormSubmission.aspx?type=info\u0026rnd_=0.527492820220704123552", icon: "icon-file-text", color: "" },
+            { title: "مشتری", url: "cus.aspx?rnd_=0.527492820220704123552", icon: "icon-male", color: "" },
+            { title: "امکانات تلفنی", url: "ivrviewlines.aspx?rnd_=0.527492820220704123552", icon: "icon-phone", color: "" },
+            { title: "کارتابل", url: "cartabl_new.aspx?rnd_=0.527492820220704123552", icon: "icon-folder-close", color: "" },
+            { title: "ایمیل", url: "create_Email.aspx?rnd_=0.527492820220704123552", icon: "icon-envelope-alt", color: "" },
+            { title: "حسابداری", url: "Store_FactorSales.aspx?type=pre\u0026rnd_=0.527492820220704123552", icon: "icon-dollar", color: "" }
+        ];
+    </script>
+    <script src="~/Themes/resources/scripts/smooth.menu.js" type="text/javascript"></script>
+    <script src="~/Themes/resources/scripts/Common.js"></script>
+    <script src="~/Themes/resources/scripts/smooth.dialog.js" type="text/javascript"></script>
+    <script src="~/Themes/resources/scripts/perfect-scrollbar-0.4.5.with-mousewheel.min.js" type="text/javascript"></script>
+    <link href="~/Themes/resources/css/ivr.css" rel="stylesheet">
+    <script src="~/Themes/resources/scripts/NotificationCenter.js"></script>
+    <link href="~/Themes/resources/css/NotificationCenter.css" rel="stylesheet">
+    <script src="~/Themes/resources/scripts/CrmSocket.js"></script>
+
+    @if (Public.CurrentUser.AvailableRole.Contains(Utility.PublicEnum.EnumRole.Calls))
+    {
+        <script src="~/Themes/resources/scripts/callerid.js" type="text/javascript"></script>
+    }
+    <script src="~/Themes/resources/scripts/manageSMS2.master.js" type="text/javascript"></script>
+    <script src="~/Themes/resources/scripts/CommentComponent.js" type="text/javascript"></script>
+    <script src="~/Themes/resources/scripts/moment.min.js" type="text/javascript"></script>
+    <script src="~/Themes/resources/scripts/moment-jalaali.js" type="text/javascript"></script>
+    <link href="~/Themes/resources/css/RaveshUI.css" rel="stylesheet">
+    <link href="~/Themes/resources/css/RaveshUI-inputs.css" rel="stylesheet">
+    <script src="~/Themes/resources/scripts/RaveshUI.js" type="text/javascript"></script>
+    <script src="~/Themes/resources/scripts/RaveshUI-inputs.js" type="text/javascript"></script>
+    <script src="~/pages/formBuilder/scripts/utility.js"></script>
+    <script src="~/Themes/resources/scripts/smooth.js" type="text/javascript"></script>
+    <link href="~/pages/chats/css/ChatCenter.css" rel="stylesheet">
+    <script type="text/javascript">
+        var style = $("#color");
+        var style_path = "resources/css/colors";
+        var urlParams = {}; $(function () {
+            var f, b = /\+/g, h = /([^&=]+)=?([^&]*)/g, c = function (a) {
+                return decodeURIComponent(a.replace(b, " "))
+            }, g = window.location.search.substring(1); while (f = h.exec(g)) { urlParams[c(f[1])] = c(f[2]) }
+        });
+    </script>
+
+    <!-- calendar block-->
+    <script type="text/javascript" src="~/Themes/resources/scripts/calendar.js"></script>
+    <script type="text/javascript" src="~/Themes/resources/scripts/FullCalendar/jalali.js"></script>
+
+    @if (Public.CurrentUser.AvailableRole.Contains(Utility.PublicEnum.EnumRole.Chat) && Public.UserChatList.Count > 1)
+    {
+
+        <style>
+            .content-wrapper {
+                margin-left: 55px;
+            }
+
+            .ch-container {
+                top: 56px;
+            }
+
+            .user-list-mini-mode {
+                left: 0;
+                position: fixed;
+                /*top: 0;*/
+                z-index: 1000;
+            }
+
+            .chat-mode {
+                left: 0;
+                position: fixed;
+                /*top: 0;*/
+                z-index: 1037;
+            }
+        </style>
+
+
+        if (Request.Browser.IsMobileDevice)
+        {
+            @*<style>
+                    .ch-container.user-list-mini-mode {
+                        left: -55px;
+                    }
+                </style>*@
+        }
+
+    }
+
+
+    <style>
+        .dark-mode .ch-container {
+            background-color: #343a40;
+        }
+
+        .dark-mode .ravesh-dialog {
+            background-color: #343a40;
+        }
+
+            .dark-mode .ravesh-dialog .footer {
+                background-color: #343a40;
+            }
+    </style>
+
+
 </head>
-<body>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-        <div class="container">
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                </ul>
+<body class="hold-transition sidebar-mini layout-fixed  layout-navbar-fixed text-sm @_collapsmnu" dir="rtl">
+
+
+    <script type="text/javascript">
+        function ok_tips() {
+            $("#dialog_tips").dialog("close");
+            if ($("#ctl00_chktips").attr("checked")) {
+                //$.ajax({ url: "main_server.aspx?cmd=Cookies", cache: false, dataType: "json" })
+            }
+        }
+        function formatDoc(b, a, c) {
+            document.execCommand(b, false, c);
+            document.getElementById(a).focus()
+        }
+        if (!resources) { var resources = {} }
+        var tabid = "";
+        var heartbeatparametr = { tabid: tabid };
+        var hearbeatFns = [];
+        var startSessionFns = [];
+        var timeHeartBeat = 1000;
+        var timerHeartBeat;
+        var rezbool = false;
+        resources = {
+            calander: "fa",
+            owner: "مالک",
+            customer: "مشتری",
+            form: "فرم",
+            sale: "فروش",
+            from: "از",
+            event: "رویداد",
+            Reminder: "یادآوری",
+            ticket: "تیکت",
+            comments: "نظرات",
+            result_search: "نتیجه جستجو",
+            until: "تا",
+            isEmpty: "اطلاعات فیلد ها وارد شود",
+            conntIvr: "در حال اتصال",
+            ready_send: "آماده ارسال",
+            help: "راهنما",
+            please_wait: "لطفا کمی صبر کنید",
+            chat_disconnect: "ارتباط با این کاربر قطع شده است",
+            passwordConfirm: "رمز عبور و تکرار رمز عبور یکسان نیست",
+            lang: "fa", log: "ثبت کردن وقایع",
+            send_again_notsended: "ارسال مجدد ارسال نشده ها",
+            Please_select: "انتخاب نمایید",
+            skip: "رد کردن",
+            next: "مرحله بعد",
+            end: "پایان", videoHelp: "راهنمای تصویری", faq: "سوال و جواب های متداول", adding: "اضافه", tourHelp: "تور آموزش مجازی", textLanguages: ["فارسی", "انگلیسی", "متغیر"], recipientTelStatus: ["خالی", "نامعتبر", "تکراری"],
+            smsStatus: ["تعداد کل پیامک ها", "ارسال موفق", "ارسال ناموفق", "رسیده به گوشی", "نرسیده به گوشی", "خطای مخابراتی", "سایر وضعیت ها"], smsStatusTotal: ["تعداد کل پیامک ها", "ارسال موفق", "ارسال ناموفق", "تعداد خوشه ها", "وضعیت", "تعداد", "تعداد کل ایمیل ها"], excelUploadError: "لطفا فایل اکسل با فرمت xls یا xlsx انتخاب نمایید", calculateErrMessage: "لطفاً اطلاعات ( متن پیامک، گیرندگان و یا عنوان پیامک) را وارد نمایید", packOptionsText: ["مشاهده", "ویرایش", "کپی", "جزئیات", "حذف", "ایا از حذف مطمئن هستید؟"],
+            variablesArr: ["#form_", "#date#", "#time#", "#customer_name#", "#customer_perfix#", "#customer_group_name#", "#form_name#", "#form_body#", "#email_text#", "#user_name#", "#user_email#", "#user_select_name#", "#user_select_login#", "#user_select_pass#", "#ticket_id#", "#ticket_group#", "#ticket_answer#", "#ticket_text#", "#ticket_result#"], direction: "rtl", istype: "در حال تایپ", name: "نام", email: "ایمیل", return_: "برگشت", tel: "تلفن", score: "امتیاز", mobile: "موبایل", request: "پیغام",
+            newcustomer: "ایجاد مشتری جدید", selectcustomer: "انتخاب مشتری",
+            groupcustomer: "گروه مشتری", reg: "ثبت", cancel: "انصراف", search: "جستجو",
+            user: "کاربر", transfer: "انتقال", yes: "بله", disconnect: "قطع ارتباط",
+            talk: "گفتگو", refer: "ارجاع به کاربران دیگر", chat: "گفتگوی آنلاین",
+            newchatrequest: "درخواست جدید برای گفتگو", code: "کد", question: "مطمئن هستید؟", isnotOnline: "آنلاین نمی باشد", close_all: "بستن همه", customer_search: "جستجوی مشتری", seller: "فروشنده", registrar: "ثبت کننده", true_: "بله", false_: "خیر", sms_send_quick: "ارسال پيامک", register_remember: "ثبت یادآوری", features_phone: "امکانات تلفنی", notes_tab: "برگه یادداشت", shortcuts: "میانبرها", store: {
+                cap_factor_before: "پیش فاکتور", cap_factor: "فاکتور",
+                cap_msg_fac_req_ok: "درخواست تایید s0 شماره ( s1 )",
+                cap_status_wait_approval: "منتظر تایید توسط", cap_status_wait: "انتظار",
+                cap_msg_fac_wait: "s0 شماره ( s1 ) در صف انتظار قرار دارد", cap_status_yes: "تایید شده",
+                cap_by2: "توسط", cap_msg_fac_ok: "تایید s0 انجام شد", cap_status_no: "تایید نشده", cap_msg_fac_not_ok: "s0 تایید نشد",
+            }, ReportGenerator_view: "مشاهده", ReportGenerator_rename: "تغییر نام",
+            ReportGenerator_createFolder: "ایجاد پوشه جدید", ReportGenerator_remove: "حذف",
+            ReportGenerator_download: "دانلود", ReportGenerator_modify: "ویرایش",
+            ReportGenerator_copy: "کپی", ReportGenerator_manageAccess: "تعریف دسترسی ها",
+            ReportGenerator_createReport: "تعریف گزارش جدید", ReportGenerator_UploadReportFile: "آپلود گزارش", ReportGenerator_RemoveConfirm: "آیا برای حذف مطمئن هستید؟", ReportGenerator_Move: "", ReportGenerator_Refresh: "بارگذاری مجدد", ReportGenerator_SearchResult: "نتیجه جستجو", ReportGenerator_Cut: "جابجایی", ReportGenerator_SearchResult: "نتیجه جستجو", ReportGenerator_paste: "چسباندن", back: "برگشت", more: "بیشتر", ReportGenerator_NoCondition: "",
+            ReportGenerator_Equal: "برابر با", ReportGenerator_LessThan: "کمتر از", ReportGenerator_LessThanOrEqual: "کمتر یا مساوری", ReportGenerator_GreaterThan: "بیشتر از", ReportGenerator_GreaterThanOrEqual: "بیشتر یا مساوی", ReportGenerator_Between: "مابین", ReportGenerator_Like: "شامل", ReportGenerator_and: "و", notFound: "اطلاعاتی یافت نشد", ReportGenerator_report: "گزارش", viewPreviousMessage: "مشاهده پیام های قبلی", massageText: "متن پیام", file: "فایل", createLink: "ایجاد لینک", save: "ذخیره", linkText: "متن لینک",
+            create: "ایجاد", nameCustomer: "نام مشتری", userName: "نام کاربری", typeForFindCustomer: "برای پیدا کردن نام مشتری , تایپ کنید", typeForFindUser: "برای پیدا کردن نام کاربر , تایپ کنید", enterLinkAddress: "آدرس لینک وارد شود", enterLinkText: "متن لینک وارد شود", of: "از", startTyping: "تایپ کنید", expand: "باز کردن", collaps: "جمع کردن", edited: "ویرایش شده", deleted: "حذف شده", new_message: "نظر جدید", concern_sale: "مربوط به فروش", number: "شماره", actions: "عملیات", enter_fail_result: "دلایل فروش ناموفق",
+            attachs: "ضمایم", payOnline: "واریز آنلاین پول", host_name: "http://192.168.1.200", select: "انتخاب", color: "رنگ", image_align: "تراز عکس", source: "منبع", tempName_err: "<div id='message-error' class='message message-error' width='100%'><div class='text'><div class='dismiss left'><i class='icon-times' title='message-error'></i></div><strong>انجام نشد</strong>نام قالب وارد شود</div></div>", msg_error_enter_name: "نام قالب وارد شود", stamp_add_before: "مهر قبلا اضافه شده است", column: "ستون", row: "ردیف",
+            and: "و", merge: "ادغام", didnt_done: "انجام نشد", ok: "تایید", add_parameter: "افزودن پارامتر", start_typing: "تایپ کنید", select_links: "انتخاب گروه مشتری", all_groups: "همه گروه ها", credit: "اعتبار", button: "دکمه", mentionMe: "نظرات اشاره شده به من", all: "همه موارد", calleriid: "کالرآیدی", payment: "پرداخت", accounting: "حسابداری", sms: "پیامک", logcustomer: "وقایع مشتری",
+        };
+        var sendidMenu_;
+    </script>
+    <input type="hidden" name="tokenId" id="tokenId" value="~4Ts07tO1dv9uP35NVVWOzEKSLBwJnFRLoHyEyf8Yc+WWKfdLydqI7g==">
+    <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+    <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+    <input type="hidden" name="__vsk" id="__vsk" />
+    <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="">
+    <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="">
+    <input type="hidden" value="minadent" id="HFdomain">
+    <input type="hidden" value="@tokenId" id="HFcodeDU">
+    <input type="hidden" value="@tokenId" id="hfcodeing">
+    <input type="hidden" value="user" id="HFFromSection">
+    <input type="hidden" value="@Public.CurrentUser.GetFullName()" id="HFUserUserName">
+    <input type="hidden" value="0.527492820220704123552" id="HFRnd">
+    <input type="hidden" value="2022/07/04 08:05" id="HFfirstDateTime">
+    <input type="hidden" value="@Public.CurrentUser.UserName" id="HFUserCode">
+    <input type="hidden" value="@Public.CurrentUser.UserId" id="HFUser_Cust_Code">
+    <input type="hidden" value="@Public.CurrentUser.UserId" id="HFUser_id">
+    <input type="hidden" value="farsicom" id="HelpKnowledgeBaseDomain">
+    <input type="hidden" value="fa" id="HFlang">
+
+    @* اگر ساعت چت ها بهم ریخت این کد فعال شود *@
+    @*<input type="hidden" value="270" id="HFTimeZone">*@
+    <input type="hidden" value="0" id="HFTimeZone">
+
+    <input type="hidden" value="true" id="HFAllowPublicSms">
+    <input type="hidden" value="http://192.168.1.200" id="HFServerurl">
+
+    <input type="hidden" value="@(string.Format("{0}", searchOption_SearchEnterKeyOnly?"true":"false"))" id="SearchEnterKeyOnly">
+
+
+
+
+
+
+
+
+
+    <div class="wrapper">
+
+        <style>
+            .mds-bootstrap-persian-datetime-picker-popover {
+                font-family: "Vazir";
+                font-weight: bold;
+            }
+
+            .mds-bootstrap-persian-datetime-picker-container table tfoot tr td button.btn-light {
+                background-color: #fff;
+                color: #007bff;
+                font-weight: bold;
+            }
+
+            .mds-bootstrap-persian-datetime-picker-popover .popover-header {
+                font-size: 0.775rem;
+                background-color: #fff;
+                border-bottom: 1px solid #fff;
+            }
+
+            .mds-bootstrap-persian-datetime-picker-container table table tbody.days tr {
+                height: 35px;
+            }
+
+                .mds-bootstrap-persian-datetime-picker-container table table tbody.days tr td {
+                    vertical-align: middle;
+                }
+
+            .mds-bootstrap-persian-datetime-picker-container table table tbody.days td[data-day][data-selectedday] {
+                border-radius: 50%;
+                background-color: #56ff5a;
+            }
+        </style>
+
+        <style>
+            .text-sm .main-header .nav-link, .main-header.text-sm .nav-link {
+                padding: 0.4rem 0.6rem;
+            }
+        </style>
+
+
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav" style="padding: 5px;">
+
+
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" onclick="push_menu()"><i class="fas fa-bars"></i></a>
+                </li>
+
+
+                @if (!Request.Browser.IsMobileDevice)
+                {
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a href="#" class="nav-link">پرونده بیمار</a>
+                    </li>
+                }
+            </ul>
+
+            <!-- SEARCH FORM -->
+            @if (!Request.Browser.IsMobileDevice)
+            {
+                <div class="form-inline ml-3">
+                    <div class="input-group input-group-sm p-0 m-0">
+                        <input type="text" hidden value="@(_seachOption)" id="inputValForConditional" />
+                        <input class="form-control form-control-navbar" type="search" id="txtSearch_quick" autocomplete="off" placeholder="جستجوی بیماران" aria-label="جستجوی بیماران">
+                        <div class="input-group-append">
+                            <button class="btn btn-navbar" type="button" id="search-btn" name="search">
+                                <i class="fas fa-search"></i>
+                                <span id="lblSearchOperatorQuickInMenu" data-value="@(_seachOption)" style="cursor:pointer;">@_value</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav mr-auto" style="" id="headerBari"></ul>
+
+            <ul class="navbar-nav" style="">
+
+                @if (Request.Browser.IsMobileDevice)
+                {
+                    @* نمایش باکس جستجوی پیشرفته در هدر. حذف نشود *@
+                    <li class="nav-item">
+                        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                            <i class="fas fa-search"></i>
+                        </a>
+                        <div class="navbar-search-block">
+                            <div class="form-inline">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" hidden value="@(_seachOption)" id="inputValForConditional" />
+                                    <input class="form-control form-control-navbar" type="search" id="txtSearch_quick" autocomplete="off" placeholder="جستجو بیمار" aria-label="Search">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-navbar" id="search-btn" name="search">
+                                            <i class="fas fa-search"></i>
+                                            <span id="lblSearchOperatorQuickInMenu" data-value="@(_seachOption)" style="cursor:pointer;">@_value</span>
+                                        </button>
+                                        <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+
+                @if (!Request.Browser.IsMobileDevice)
+                {
+                    <li class="nav-item dropdown" id="btnShowNoteBook" data-toggle="modal">
+                        <a href="#" class="nav-link" title="یادداشت" onclick="ShowNoteBook()">
+                            <i class="fa fa-book"></i>
+                        </a>
+                    </li>
+                }
+                @if (Public.CurrentUser.AvailableRole.Contains(Utility.PublicEnum.EnumRole.CallerId))
+                {
+                    if (!Request.Browser.IsMobileDevice)
+                    {
+                        <li class="nav-item dropdown">
+                            <div class="nav-link" data-toggle="dropdown" title="لیست تماس ها" id="CallerIdLog">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                        </li>
+                    }
+                }
+
+                @if (!Request.Browser.IsMobileDevice)
+                {
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" title="ماشین حساب" data-toggle="modal" data-target="#modal-default">
+                            <i class="fa fa-calculator"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown" data-toggle="modal">
+                        <a href="#" class="nav-link" data-toggle="dropdown" style="color: #007bff;">
+                            @Public.CurrentUser.CurrentDatePersian
+                        </a>
+                    </li>
+                }
+
+
+                @if (Public.CurrentUser.AvailableRole.Contains(Utility.PublicEnum.EnumRole.UserDailyAccounting))
+                {
+                    if (!Request.Browser.IsMobileDevice)
+                    {
+                        <li id="liUpdateVersion" class="nav-item dropdown">
+                            <a href="tab5" class="nav-link" onclick="GetUserDailyAccounting()" data-toggle="dropdown" title="صورتحساب کاربر">
+                                <i class="fa fa-line-chart"></i>
+                            </a>
+                        </li>
+                    }
+                }
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        @Html.Raw(Public.CurrentUser.ImgPath_Header)
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left">
+                        <div style="padding:20px">
+                            <div style="text-align:center;">
+                                @Html.Raw(Public.CurrentUser.ImgPath)
+                                @if (Public.CurrentUser != null)
+                                {
+                                    <div style=" margin-top: 10px;">
+                                        <p>
+                                            <a href="/UserManagement/Register/DetailView/@Public.CurrentUser.Id" class="d-block">@Public.CurrentUser.GetFullName()</a>
+                                        </p>
+                                        <p><small>نام کاربری: </small>&nbsp;&nbsp;@Public.CurrentUser.UserName</p>
+                                        <small>@Public.CurrentUser.EmployeeType</small>
+                                    </div>
+                                }
+                            </div>
+                            <div class="dropdown-divider"></div>
+
+                            @if (Public.CurrentUser.IsCenterActivityType)
+                            {
+                                <a href="http://minamedical.ir/" target="_blank" class="dropdown-item" style="text-align:center;">
+                                    <img src="~/Media/LogoMedical.png" style=" width: 50px; height: 50px;" />
+                                    <p class="text-red">مینا مدیکال &nbsp;-&nbsp; Ver&nbsp;:&nbsp;@Service.Consts.Public.CurrentUser.AppVersion</p>
+                                    <p class="text-green">کد قفل &nbsp;:&nbsp;&nbsp;&nbsp;@Public.CurrentUser.TinyUserCode</p>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="https://minadent.ir/" target="_blank" class="dropdown-item" style="text-align:center;">
+                                    <img src="~/Media/logo.png" style=" width: 50px; height: 50px;" />
+                                    <p class="text-red">مینا دنت &nbsp;-&nbsp; Ver&nbsp;:&nbsp;@Service.Consts.Public.CurrentUser.AppVersion</p>
+                                    <p class="text-green">کد قفل &nbsp;:&nbsp;&nbsp;&nbsp;@Public.CurrentUser.TinyUserCode</p>
+                                </a>
+                            }
+                            <p style="text-align:center; margin:5px;"><a href="#" data-toggle="modal" data-target="#modal-ActiveKit">مشاهده کیت های فعال برنامه</a></p>
+
+                            <div class="dropdown-divider"></div>
+                            <div style="padding-top:10px">
+                                <a href="@Url.Action("ChangePassword", "Register" , new { Area="UserManagement" })" class="btn btn-block btn-secondary btn-flat"><i class="fa fa-lock"></i>&nbsp;&nbsp; تغییر رمز عبور</a>
+
+                                <div style="display:flex;justify-content:space-between;">
+                                    <a href="@Url.Action("RestartApplication", "Common" , new { Area="UserManagement" })" class="btn btn-block bg-gradient-orange btn-flat" style="margin-top: 0.5rem;">
+                                        &nbsp;&nbsp; راه اندازی مجدد
+                                    </a>
+                                    <a href="@Url.Action("LogOff", "Account" , new { Area="" })" class="btn btn-block bg-gradient-danger btn-flat" style="margin-right:5px;"><i class="fa fa-power-off"></i>&nbsp;&nbsp; خروج</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                @if (Public.UpdateVersionInfo != null && Public.UpdateVersionInfo.AvailabilityNewUpdates)
+                {
+                    if (!Request.Browser.IsMobileDevice)
+                    {
+                        <li class="nav-item">
+                            <a href="#" class="nav-link pt-0" title="لیست تغییرات برنامه" data-toggle="modal" data-target="#modal-updates">
+                                @if (Public.AccountExpireInfo.RemainDayCount > 0)
+                                {<span class="badge bg-success" style="font-size:10px;padding:8px;">بروزرسانی جدید</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger" style="font-size:10px;padding:8px;">اتمام پشتیبانی</span>
+                                }
+                            </a>
+                        </li>
+                    }
+                }
+
+                <li id="liUpdateVersion" class="nav-item dropdown">
+                    <a href="tab5" class="nav-link" onclick="GtUpdateVersion()" data-toggle="dropdown" title="لیست تغییرات برنامه">
+                        <i class="fa fa-info"></i>
+                    </a>
+                </li>
+
+
+                @*@if (!Request.Browser.IsMobileDevice)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                                <i class="fas fa-expand-arrows-alt"></i>
+                            </a>
+                        </li>
+                    }*@
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link chat-button" href="#">
+                        <i class="fas fa-comment"></i>
+                    </a>
+                </li>
+
+            </ul>
+
+
+
+        </nav>
+
+        @Html.Partial("~/Views/Shared/P_RightMenu.cshtml", Public.CurrentUser.AvailableMenus)
+
+        <div class="content-wrapper">
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                    </div>
+                </div>
+            </div>
+            <section class="content">
+                <div class="container-fluid"></div>
+
+                <style>
+                    .loader {
+                        width: 270px;
+                        height: 80px;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        margin-top: -50px;
+                        margin-left: -50px;
+                        z-index: 1;
+                        box-shadow: 9px 5px 10px #888888;
+                        display: none;
+                    }
+                </style>
+                <div class="box box-danger loader text-center" id="divWait">
+                    <div class="blockUI blockOverlay" style="z-index: 99999; border: none; margin: 0px; padding: 0px; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgba(158, 158, 158, 0.31); opacity: 0; cursor: wait; position: fixed;"></div>
+                    <div class="blockUI blockMsg blockPage" style="z-index: 991011; position: fixed; padding: 0px; margin: -60px 0px 0px; width: 40%; top: 50%; left: 29%; text-align: center; color: rgb(0, 0, 0); border: none; background-color: rgb(255, 255, 255); cursor: wait; height: 120px; opacity: 1;">
+
+
+                        <div class="row message-box-hidden overfelow-x-hidden no-padding" id="wait" style="display: block;">
+                            <div class="col-md-12">
+                                <div class="card " style="box-shadow: 9px 5px 10px #888888;">
+                                    <div class="card-body">
+                                        <span style="font-size: 25px;">
+                                            لطفاً صبر کنید ...!
+                                        </span>
+                                        @*<i style="font-size: 30px;" class="fas fa-2x fa-sync-alt fa-spin"></i>*@
+                                        @*<img src="~/assets/Loading.gif" />*@
+                                        <object aria-label="SVGator astronaut animation" style="width:50px;height:50px;" type="image/svg+xml" data="~/assets/00logo.svg"><img alt="SVGator astronaut animation"></object>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                @RenderBody()
+
+            </section>
+
+            @Html.Partial("P_Modal")
+
+
+            @if (Sessions.ResultMessage != null)
+            {
+
+                <input type="hidden" id="msg" value="@Sessions.ResultMessage" />
+                ViewBag.ResultMessage = null;
+                Sessions.ResultMessage = null;
+            }
+
+            @* ماشین حساب *@
+            <div class="modal fade" id="modal-default" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content bg-secondary" style="width:535px;">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            <h6 class="modal-title">ماشین حساب</h6>
+                        </div>
+                        <div class="modal-body">
+                            @Html.Partial("HiddenPK")
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-outline-light" data-dismiss="modal">بستن</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            @if (Public.UpdateVersionInfo != null && Public.UpdateVersionInfo.AvailabilityNewUpdates)
+            {
+                <div class="modal fade" id="modal-updates" style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                @if (Public.CurrentUser.IsCenterActivityType)
+                                {
+                                    <h6 class="modal-title">تغییرات مینا مدیکال</h6>
+                                }
+                                else
+                                {
+                                    <h6 class="modal-title">تغییرات مینا دنت</h6>
+                                }
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" style="max-height:500px;overflow-y:auto;">
+
+                                @Html.Partial("_SupportCheck")
+
+                                @Html.Partial("_UpdateVersions")
+
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            <div class="modal fade" id="modal-ActiveKit" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title">کیت های فعال برنامه</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="max-height:500px;overflow-y:auto;">
+
+                            <div class="col-md-4 d-flex flex-column text-right">
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsSms ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; پیامک</span>
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsFingerPrint ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; اثر انگشت</span>
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsAttendance ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; حضور و غیاب</span>
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsCustomerClub ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; باشگاه مشتریان</span>
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsCallerID ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; کالر آیدی و ضبظ مکالمه</span>
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsAvanak ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; آوانک</span>
+                            </div>
+                            <div class="col-md-4 d-flex flex-column text-right">
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsPrinter ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; پرینتر حرارتی</span>
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsCredits ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; اعتبارات</span>
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsMoneyBag ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; کیف پول</span>
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsInatallments ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; سرپرست خانوار</span>
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsCardReader ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; ارتباط با کارتخوان</span>
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsTaminPrescription ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; نسخه تامین اجتماعی</span>
+                            </div>
+                            <div class="col-md-4 d-flex flex-column text-right">
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsIOS ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; IOS</span>
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsAndroid ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; Android</span>
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsPrescription ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; ثبت نسخ</span>
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsWhatsAppKit ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; واتساپ</span>
+                                <span class="text-muted mb-2"><i class="fas @(Public.CurrentUser.IsAccountingKit ?" fa-check text-success ":" fa-times text-danger ")"></i> &nbsp; حسابداری پیشرفته</span>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+
+        <aside class="control-sidebar control-sidebar-dark" style="bottom:0px; ">
+        </aside>
+
+
+        <footer class="main-footer">
+            <strong>کپی رایت &copy; <span>@Public.CurrentUser.AppVersionDate</span> &nbsp; <a href="http://minadent.ir">گروه نرم افزاری مینا</a>.</strong>
+            تمامی حقوق محفوظ است.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>ورژن</b> @Public.CurrentUser.AppVersion
+            </div>
         </footer>
+
+
+
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+
+    <script src="~/Content/AdminResponsive3.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/AdminResponsive3.0/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="~/Content/AdminResponsive3.0/dist/js/adminlte.js"></script>
+    <script src="~/Content/AdminResponsive3.0/dist/js/demo.js"></script>
+    <script src="~/Content/AdminResponsive3.0/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script src="~/Content/AdminResponsive3.0/plugins/raphael/raphael.min.js"></script>
+    <script src="~/Content/AdminResponsive3.0/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+    <script src="~/Content/AdminResponsive3.0/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+    <script src="~/Content/AdminResponsive3.0/plugins/chart.js/Chart.min.js"></script>
+    <script src="~/Content/AdminResponsive3.0/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+
+    <style>
+        .paper {
+            /*position: absolute;*/
+            position: fixed;
+            z-index: 1;
+            height: 540px;
+            width: 450px;
+            background: rgba(255,255,255,0.9);
+            margin: -275px -225px;
+            left: 50%;
+            top: 50%;
+            box-shadow: 0px 0px 5px 0px #888;
+        }
+
+            .paper::before {
+                content: '';
+                position: absolute;
+                right: 45px;
+                height: 100%;
+                width: 2px;
+                background: rgba(255,0,0,0.4);
+            }
+
+        .lines {
+            margin-top: 40px;
+            height: calc(100% - 40px);
+            width: 100%;
+            background-image: repeating-linear-gradient(white 0px, white 24px, steelblue 25px);
+        }
+
+        .text {
+            position: absolute;
+            top: 65px;
+            left: 55px;
+            bottom: 10px;
+            right: 53px;
+            line-height: 25px;
+            overflow: hidden;
+            outline: none;
+        }
+
+        .holes {
+            position: absolute;
+            right: 10px;
+            height: 25px;
+            width: 25px;
+            background: lightgoldenrodyellow;
+            border-radius: 50%;
+            box-shadow: inset 0px 0px 2px 0px #888;
+        }
+
+        .hole-top {
+            top: 10%;
+        }
+
+        .hole-middle {
+            top: 50%;
+        }
+
+        .hole-bottom {
+            bottom: 10%;
+        }
+    </style>
+    <div class="paper" style="display:none">
+        <div class="lines"><div class="text" id="divContentTextNoteBook" contenteditable spellcheck="false"></div></div>
+        <div class="holes hole-top"></div>
+        <div class="holes hole-middle"></div>
+        <div class="holes hole-bottom"></div>
+    </div>
+
+    <script src="~/Content/AdminResponsive3.0/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <script>
+        $(function () {
+            bsCustomFileInput.init();
+        });
+
+
+        function push_menu() {
+
+
+            if ('@_collapsedMenu' == 'True') {
+                WrapAndSaveBlockData('@GenericAttributeDefault.ApplicationPushMenu', 'False');
+            }
+            else {
+                WrapAndSaveBlockData('@GenericAttributeDefault.ApplicationPushMenu', 'True');
+            }
+        }
+
+    </script>
+
+    @Html.Partial("~/Views/Shared/P_Js.cshtml")
+    <script src="~/Content/AdminResponsive3.0/plugins/select2/js/select2.full.min.js"></script>
+    <script src="~/Scripts/View/SearchModal.js"></script>
+
+
+    <div style="display:none;">
+        <div id="LeadSource_editable">
+            <div class="tags">
+                <span></span>
+                <i class="ui-icon ui-icon-close cursor delete_LeadSource" title="حذف"></i>
+            </div>
+        </div>
+    </div>
+    <script src="~/Themes/resources/scripts/NotificationCenterManager.js" type="text/javascript"></script>
+
+    @if (Public.CurrentUser.AvailableRole.Contains(Utility.PublicEnum.EnumRole.Chat) && Public.UserChatList.Count > 1)
+    {
+        <script src="~/pages/chats/script/ChatCenter.js" type="text/javascript"></script>
+    }
+
+    <script src="~/Themes/resources/scripts/ScanImageHandler.js" type="text/javascript"></script>
+
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $('.select2').select2()
+
+        //Initialize Select2 Elements
+        $('.select2bs4').select2({
+            theme: 'bootstrap4'
+        });
+
+
+        $.get("/Home/Headerbar").done(function (result) {
+            $("#headerBari").html(result);
+        });
+
+
+    });
+
+    function isEmpty(val) {
+
+        if (val === '' || val === undefined || val === null)
+            return true;
+        else return false;
+    }
+
+    function GetItem_Notification(count, area, controller, action, divId) {
+
+
+
+        var _url = '';
+        if (area != null && area != '' && area != undefined)
+            _url = _url + "/" + area;
+
+        $("#" + divId).html('');
+        if (count > 0) {
+            $.ajax({
+                type: "GET",
+                url: _url + "/" + controller + "/" + action,
+                data: {},
+                success: function (res) {
+
+
+                    $("#" + divId).html(res);
+                }
+            }).done(function (o) {
+            });
+        }
+    }
+
+    function FinishedLab(id) {
+
+        AjaxCallAction('GET', '/BasicInfo/Therapy/FinishedLab', { id: id }, true, function (res) { }, false);
+
+        $.get("/Home/Headerbar").done(function (result) {
+            $("#headerBari").html(result);
+        });
+    }
+
+    function DeliveredLab(id) {
+        AjaxCallAction('GET', '/BasicInfo/Therapy/DeliveredLab', { id: id }, true, function (res) { }, false);
+
+        $.get("/Home/Headerbar").done(function (result) {
+            $("#headerBari").html(result);
+        });
+    }
+
+    function TransactionRequestStatus(id, type) {
+
+        var _url = "/UserManagement/EmployeeAttendance/DeclineTransactionRequest";
+        if (type == '1') {
+            _url = "/UserManagement/EmployeeAttendance/AcceptTransactionRequest";
+        }
+
+        $.ajax({
+            url: _url,
+            type: 'GET',
+            scriptCharset: "utf-16",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-16",
+            data: { Id: id },
+            success: function (res) {
+                if (!res.Error) {
+                    $.get("/Home/Headerbar").done(function (result) {
+                        $("#headerBari").html(result);
+                    });
+
+                    $("#" + id).html('');
+                }
+                else {
+                    AlertDialog(res.Message, "خطا", 'error');
+                }
+            }, error: function () {
+                AlertDialog("متاسفانه عملیات با موفقیت انجام نشد", "خطا", 'error');
+            }
+        });
+    }
+
+
+    function GetItem_NotificationCaller(divId) {
+
+        $.ajax({
+            type: "GET",
+            url: "/Caller/GetCallerLog",
+            data: { count: 100 },
+            success: function (res) {
+
+                $("#" + divId).html(res);
+            }
+        }).done(function (o) {
+        });
+    }
+
+    function ShowNoteBook() {
+
+        if ($('.paper').css('display') == 'none') {
+            $.post("/Home/ShowNote").done(
+                function (result) {
+
+                    $("#divContentTextNoteBook").html(result);
+                });
+            $('.paper').slideDown();
+        }
+        else if ($('.paper').css('display') == 'block') {
+            $('.paper').slideUp();
+            $.post("/BasicInfo/Notebook/CreateNote", { text: $('#divContentTextNoteBook').html() }).done(
+                function (result) {
+
+                });
+        }
+    }
+
+    $(document).on('keyup', '.select2-search__field', function (e) {
+
+        if ($(e.currentTarget).parent().parent().find(".select2-results__options")[0].id === "select2-DocNumberForQuickSearchForMenu-results") {
+            FillSelectByAjaxWithSearchInDatabase("DocNumberForQuickSearchForMenu", $(this).val(), e, this);
+        }
+    });
+    $("#DocNumberForQuickSearchForMenu").change(function (e) {
+        document.location.href = "/BasicInfo/CustomerInfo/Detail/" + $(this).val();
+    });
+    $("#lblSearchOperatorQuickInMenu").click(function (e) {
+        e.preventDefault();
+
+        if ($(this).attr("data-value") === "@((int)Utility.PublicEnum.ConditionalSearchEnum.Include)") {
+            $(this).text("مثل");
+            $(this).attr("data-value", "@((int)Utility.PublicEnum.ConditionalSearchEnum.Mesl)");
+            SavePreferenceObject('@GenericAttributeDefault.ApplicationSearchOption', '@((int)Utility.PublicEnum.ConditionalSearchEnum.Mesl)', '@Public.CurrentUser.Id');
+        }
+        else {
+            $(this).text("شامل");
+            $(this).attr("data-value","@((int)Utility.PublicEnum.ConditionalSearchEnum.Include)");
+            SavePreferenceObject('@GenericAttributeDefault.ApplicationSearchOption', '@((int)Utility.PublicEnum.ConditionalSearchEnum.Include)', '@Public.CurrentUser.Id');
+        }
+        $("#inputValForConditional").val($(this).attr("data-value"));
+
+    });
+
+
+    function GtUpdateVersion() {
+
+        InitModal('', '/Home/GtUpdateVersion', {}, null, true);
+    }
+
+
+    function GetUserDailyAccounting() {
+
+        InitModal('', '/UserManagement/Register/GetUserDailyAccounting', {}, null, true);
+    }
+
+
+
+</script>

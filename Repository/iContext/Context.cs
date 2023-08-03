@@ -2,7 +2,6 @@
 using Repository.Model;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using Repository.Mapping;
 using Repository.Model.Chat;
 using System;
 using Repository.Model.Common;
@@ -56,7 +55,6 @@ namespace Repository.iContext
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-            modelBuilder.Configurations.Add(new DoingConfigMapping());
 
 
             modelBuilder.Entity<JobTime>()

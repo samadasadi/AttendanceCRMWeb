@@ -30,10 +30,11 @@ namespace Repository.iContext
             Configuration.LazyLoadingEnabled = true;
             ((IObjectContextAdapter)this).ObjectContext.CommandTimeout = 0;
         }
-        public DbSet<MedicalCenter> MedicalCenters { get; set; }
         public DbSet<Users> Users { get; set; }
-        public DbSet<RolesMedicalCenter> RolesMedicalCenters { get; set; }
-        public DbSet<BackupsDB> BackupsDB { get; set; }
+
+        //public DbSet<MedicalCenter> MedicalCenters { get; set; }
+        //public DbSet<RolesMedicalCenter> RolesMedicalCenters { get; set; }
+        //public DbSet<BackupsDB> BackupsDB { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

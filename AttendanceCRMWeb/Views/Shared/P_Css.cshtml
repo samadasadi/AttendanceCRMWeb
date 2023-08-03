@@ -1,0 +1,645 @@
+﻿@using Utility
+@using Service.Consts
+@{
+    var _isCallerActiv = (Public.CurrentUser.IsCallerActive == true ? "1" : "0");
+}
+
+<style>
+
+
+    .pagination {
+        padding-left: 0;
+        margin: 20px 0;
+        border-radius: 4px
+    }
+
+        .pager li, .pagination > li {
+            display: inline
+        }
+
+            .pagination > li > a, .pagination > li > span {
+                position: relative;
+                float: left;
+                padding: 6px 12px;
+                margin-left: -1px;
+                line-height: 1.42857143;
+                color: #337ab7;
+                text-decoration: none;
+                background-color: #fff;
+                border: 1px solid #ddd
+            }
+
+            .pagination > li:first-child > a, .pagination > li:first-child > span {
+                margin-left: 0;
+                border-top-left-radius: 4px;
+                border-bottom-left-radius: 4px
+            }
+
+            .pagination > li:last-child > a, .pagination > li:last-child > span {
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px
+            }
+
+            .pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
+                z-index: 2;
+                color: #23527c;
+                background-color: #eee;
+                border-color: #ddd
+            }
+
+        .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+            z-index: 3;
+            color: #fff;
+            cursor: default;
+            background-color: #337ab7;
+            border-color: #337ab7
+        }
+
+        .pagination > .disabled > a, .pagination > .disabled > a:focus, .pagination > .disabled > a:hover, .pagination > .disabled > span, .pagination > .disabled > span:focus, .pagination > .disabled > span:hover {
+            color: #777;
+            cursor: not-allowed;
+            background-color: #fff;
+            border-color: #ddd
+        }
+
+    .pagination-lg > li > a, .pagination-lg > li > span {
+        padding: 10px 16px;
+        font-size: 18px;
+        line-height: 1.3333333
+    }
+
+    .pagination-lg > li:first-child > a, .pagination-lg > li:first-child > span {
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px
+    }
+
+    .pagination-lg > li:last-child > a, .pagination-lg > li:last-child > span {
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px
+    }
+
+    .pagination-sm > li > a, .pagination-sm > li > span {
+        padding: 5px 10px;
+        font-size: 12px;
+        line-height: 1.5
+    }
+
+    .badge, .label {
+        font-weight: 700;
+        line-height: 1;
+        white-space: nowrap;
+        text-align: center
+    }
+
+    .pagination-sm > li:first-child > a, .pagination-sm > li:first-child > span {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px
+    }
+
+    .pagination-sm > li:last-child > a, .pagination-sm > li:last-child > span {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px
+    }
+
+
+    /*the container must be positioned relative:*/
+    .autocomplete {
+        position: relative;
+        display: inline-block;
+    }
+
+    input {
+        border: 1px solid transparent;
+        background-color: #fff;
+        padding: 5px;
+        font-size: 14px;
+    }
+
+        input[type=text] {
+            background-color: #fff;
+            width: 100%;
+        }
+
+        input[type=submit] {
+            background-color: DodgerBlue;
+            color: #fff;
+            cursor: pointer;
+        }
+
+    .autocomplete-items {
+        overflow-y: scroll;
+        max-height: 300px;
+        position: absolute;
+        border: 1px solid #d4d4d4;
+        /*border-bottom: none;*/
+        border-top: none;
+        z-index: 99;
+        /*position the autocomplete items to be the same width as the container:*/
+        top: 80%;
+        left: 0px;
+        right: 0px;
+    }
+
+        .autocomplete-items div {
+            padding: 7px;
+            cursor: pointer;
+            background-color: #fff;
+            border-bottom: 1px solid #fdf7f7;
+            font-size: 10px;
+        }
+
+            /*when hovering an item:*/
+            .autocomplete-items div:hover {
+                background-color: #e9e9e9;
+            }
+
+    /*when navigating through the items using the arrow keys:*/
+    .autocomplete-active {
+        background-color: DodgerBlue !important;
+        color: #ffffff;
+    }
+
+    .pricesection {
+        direction: ltr;
+        text-align: left;
+    }
+
+
+    .dir-ltr {
+        direction: ltr;
+    }
+
+    .table th, .table td {
+        padding: 0.2rem;
+        padding-left: 1rem;
+    }
+
+
+    .ps-container .ps-scrollbar-y-rail {
+        z-index: 999;
+        position: absolute; /* please don't change 'position' */
+        right: 3px; /* there must be 'right' for ps-scrollbar-y-rail */
+        width: 8px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        opacity: 0;
+        filter: alpha(opacity = 0);
+        -o-transition: background-color .2s linear, opacity .2s linear;
+        -webkit-transition: background-color.2s linear, opacity .2s linear;
+        -moz-transition: background-color .2s linear, opacity .2s linear;
+        transition: background-color .2s linear, opacity .2s linear;
+    }
+
+    .ps-container:hover .ps-scrollbar-y-rail,
+    .ps-container.hover .ps-scrollbar-y-rail {
+        opacity: 0.6;
+        filter: alpha(opacity = 60);
+    }
+
+    .ps-container .ps-scrollbar-y-rail:hover,
+    .ps-container .ps-scrollbar-y-rail.hover {
+        background-color: #eee;
+        opacity: 0.9;
+        filter: alpha(opacity = 90);
+    }
+
+    .ps-container .ps-scrollbar-y-rail.in-scrolling {
+        opacity: 0.9;
+        filter: alpha(opacity = 90);
+    }
+
+
+
+
+    .blue.btn {
+        color: #FFFFFF;
+        background-color: #3598dc;
+    }
+
+        .blue.btn:hover, .blue.btn:focus, .blue.btn:active, .blue.btn.active {
+            color: #FFFFFF;
+            background-color: #2386ca;
+        }
+
+    .open .blue.btn.dropdown-toggle {
+        color: #FFFFFF;
+        background-color: #2386ca;
+    }
+
+    .blue.btn:active, .blue.btn.active {
+        background-image: none;
+        background-color: #1f78b5;
+    }
+
+        .blue.btn:active:hover, .blue.btn.active:hover {
+            background-color: #217ebd;
+        }
+
+    .open .blue.btn.dropdown-toggle {
+        background-image: none;
+    }
+
+    .blue.btn.disabled, .blue.btn.disabled:hover, .blue.btn.disabled:focus, .blue.btn.disabled:active, .blue.btn.disabled.active, .blue.btn[disabled], .blue.btn[disabled]:hover, .blue.btn[disabled]:focus, .blue.btn[disabled]:active, .blue.btn[disabled].active, fieldset[disabled] .blue.btn, fieldset[disabled] .blue.btn:hover, fieldset[disabled] .blue.btn:focus, fieldset[disabled] .blue.btn:active, fieldset[disabled] .blue.btn.active {
+        background-color: #3598dc;
+    }
+
+    .blue.btn .badge {
+        color: #3598dc;
+        background-color: #FFFFFF;
+    }
+
+    .btn.blue-stripe {
+        border-right: 3px solid #3598dc;
+    }
+
+    .red.btn {
+        color: #FFFFFF;
+        background-color: #cb5a5e;
+    }
+
+        .red.btn:hover, .red.btn:focus, .red.btn:active, .red.btn.active {
+            color: #FFFFFF;
+            background-color: #c23f44;
+        }
+
+    .open .red.btn.dropdown-toggle {
+        color: #FFFFFF;
+        background-color: #c23f44;
+    }
+
+    .red.btn:active, .red.btn.active {
+        background-image: none;
+        background-color: #b0383c;
+    }
+
+        .red.btn:active:hover, .red.btn.active:hover {
+            background-color: #b83a3e;
+        }
+
+    .open .red.btn.dropdown-toggle {
+        background-image: none;
+    }
+
+    .red.btn.disabled, .red.btn.disabled:hover, .red.btn.disabled:focus, .red.btn.disabled:active, .red.btn.disabled.active, .red.btn[disabled], .red.btn[disabled]:hover, .red.btn[disabled]:focus, .red.btn[disabled]:active, .red.btn[disabled].active, fieldset[disabled] .red.btn, fieldset[disabled] .red.btn:hover, fieldset[disabled] .red.btn:focus, fieldset[disabled] .red.btn:active, fieldset[disabled] .red.btn.active {
+        background-color: #cb5a5e;
+    }
+
+    .red.btn .badge {
+        color: #cb5a5e;
+        background-color: #FFFFFF;
+    }
+
+    .btn.red-stripe {
+        border-right: 3px solid #cb5a5e;
+    }
+
+    .breakWorkForFieldSazAndFormSaz {
+        word-break: break-all;
+    }
+</style>
+
+
+<link href="~/Scripts/chosen/chosen.css" rel="stylesheet" />
+<link href="~/Scripts/jquery-ui-1.11.2.custom/jquery-ui.css" rel="stylesheet" />
+<link href="~/Content/AdminResponsive3.0/plugins/toastr/toastr.min.css" rel="stylesheet" />
+
+
+<link href="@Url.Content("~/Content/Style/Site.css")" rel="stylesheet" />
+
+
+<link href="~/Content/AdminResponsive3.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/AdminResponsive3.0/MD.BootstrapPersianDateTimePicker-master-bs4/src/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
+
+
+
+
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/View/Common.js"></script>
+<script src="~/Scripts/View/UserManagment.js"></script>
+<script src="~/Scripts/View/Coding.js"></script>
+<script src="~/assets/global/plugins/jstree/dist/jstree.min.js"></script>
+<script src="~/assets/admin/pages/scripts/ui-tree.js"></script>
+<script src="~/Scripts/jquery.tmpl.js"></script>
+<script type="text/x-jquery-tmpl" id="CallerId">
+    <div class="row" id="${TelNumber}" onclick="Redirect(this.id);" data-customerId="${CustomerId}" target="_blank">
+        @*<div class="col-md-12">*@
+        <div style="float:right;">
+            <p style="color: #000000;height: 10px;">
+                <span class="bold">${CustomerName}</span>
+            </p>
+            <p style="color: #1b5525 !important;height: 10px;">
+                <i class="fa fa-phone-square"></i>&nbsp;
+                ${TelNumber}
+            </p>
+            <p style="color: #52687f;direction: ltr;text-align: right;height: 10px;font-size:8px;">
+                ${DateStr}
+            </p>
+        </div>
+        @*<div class="col-md-2">*@
+        <img src="${CustomerImage}" alt="" class="pull-right" style="width: 50px;height: 50px;Border-radius: 8px;float:right;">
+        @*</div>*@
+        @*</div>*@
+    </div>
+</script>
+<script type="text/x-jquery-tmpl" id="smsid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-10">
+                <p style="color:green;">
+                    <a href="#" class="bold" style="color:green">${PatientName}</a>
+                </p>
+                <a href="#" target="_blank" style="color: #a10000 !important;">
+                    <i class="fa fa-envelope"></i>&nbsp;
+                    ${SenderNumber}
+                </a>
+                <p style="color: #52687f;direction: ltr;text-align: right">
+                    ${MessageText}
+                </p>
+                <span style="color:darkorchid"> ساعت : ${RecivedTime}</span>
+            </div>
+        </div>
+    </div>
+</script>
+<input type="hidden" id="lastCallerDate" value="@DateTimeOperation.M2SWithTime(DateTime.Now)" />
+<input type="hidden" id="lastSmsDate" value="@DateTimeOperation.M2SWithTime(DateTime.Now)" />
+<script src="~/Scripts/View/SearchModal.js"></script>
+<script src="~/Scripts/View/WorkFlow.js"></script>
+
+<style>
+    #toastsContainerBottomLeft {
+        max-height: 450px;
+        overflow-y: auto;
+        background-color: #fff;
+        padding: 5px;
+        margin: 8px;
+        border-radius: 5px;
+        box-shadow: hsl(0deg 0% 80%) 0 0 16px;
+    }
+</style>
+<script type="text/javascript">
+
+    var _getFinger = false;
+    function SetgetFingerValue() {
+        _getFinger = false;
+    }
+
+
+    function ssssss() {
+        ReceiveCall("{'ID':'00000000-0000-0000-0000-000000000000','FirstName':'ناشناس','LastName':'','Image':'','Color':'','Date':'\/Date(1563018556634)\/','Number':'09035677177','status':'0'}");
+    }
+
+
+
+    function ReceiveCall(json) {
+
+        if (json == undefined || json == null)
+            return;
+        try {
+            $.ajax({
+                type: "Get",
+                url: "@Url.Action("GetNextCallerList", "Caller", new { Area=""})",
+                data: {
+                    value: json
+                },
+                success: function (result) {
+
+                    if (result.CallerList != null) {
+                        o = $("#CallerId").tmpl({
+                            TelNumber: result.CallerList.Number,
+                            DateStr: result.CallerList.PDate,
+                            CustomerName: result.CallerList.DisplayName,
+                            CustomerImage: (result.CallerList.Image != null && result.CallerList.Image != "" && result.CallerList.Image != undefined ? result.CallerList.Image : "/assets/Img/user.gif"),
+                            CustomerId: result.CallerList.Status != "0" ? result.CallerList.ID : "0",
+                        });
+                        //toastr.info(o[0].outerHTML);
+
+                        $(document).Toasts('create', {
+                            class: 'bg-info',
+                            delay: 5000,
+                            //title: 'Toast Title',
+                            //subtitle: 'Subtitle',
+                            close: true,
+                            body: o[0].outerHTML
+                        });
+
+                        var objDiv = document.getElementById("toastsContainerBottomLeft");
+                        objDiv.scrollTop = objDiv.scrollHeight;
+
+                        addClearAllButton();
+                    }
+                }, error: function (error) {
+                    if (error.status == 500) {
+                        alert(error.status);
+                    }
+                }
+            });
+
+        } catch (e) {
+
+        }
+    };
+
+    function addClearAllButton() {
+        var _closeAll = "<a href='#' id='btnCloseAlldd' class='nav-link' data-toggle='dropdown' title='بستن همه' style='background-color: #fff;height: 25px;border-radius: 5px;box-shadow: hsl(0deg 0% 80%) 0 0 16px;' onclick='ClearAllCall();'><i class='fa fa-close'></i><span>بستن همه</span></a>";
+
+        if (!document.getElementById("btnCloseAlldd")) {
+            $("#toastsContainerBottomLeft").append(_closeAll);
+        }
+    }
+
+    function ClearAllCall() {
+
+        var div = document.getElementById("toastsContainerBottomLeft");
+        div.remove();
+    }
+
+    function Redirect(phoneNumber) {
+        var id = $('#' + phoneNumber).attr("data-customerId");
+        if (id === '0') {
+            QuickRegistrationFromIncomCall(phoneNumber);
+        } else {
+            var url = window.location.href;
+            var arr = url.split("/");
+            window.location.href = arr[0] + '/BasicInfo/CustomerInfo/Detail/' + id;
+        }
+    }
+
+    function QuickRegistrationFromIncomCall(phoneNumber) {
+
+        try {
+            var isMobile = false;
+            var subStr = phoneNumber.substr(0, 2);
+            if (subStr === '09') {
+                isMobile = true;
+            }
+            $.ajax({
+                type: "Get",
+                url: "/BasicInfo/CustomerInfo/QuickRegister",
+                data: { phoneNumber: phoneNumber, flag: isMobile },
+                beforeSend: function () {
+                    showWait();
+                },
+                success: function (result) {
+
+                    bootbox.dialog({
+                        message: result,
+                        size: 'medium',
+                        className: "medium",
+                        title: MinaDent.Common.QuickRegistration,
+                        buttons: {
+                            Custom: {
+                                label: MinaDent.Common.SaveBtnTxt,
+                                className: "blue",
+                                callback: function () {
+
+                                    var isChecked = $('#addToContact').is(":checked");
+                                    if (isChecked) {
+
+                                        var _phonenumber = $('#phoneNumber').val();
+                                        var _customerId = $('#addToPhone').val();
+                                        var _patientId = $('#CustomerBasicInfo_PatineName').val();
+                                        if (_patientId != null && _patientId != undefined && _patientId != "") {
+                                            $.ajax({
+                                                type: "Get",
+                                                url: '/BasicInfo/CustomerInfo/UpdatePatientPhoneNumber',
+                                                data: { patientId: _patientId, phone: $('#phoneNumber').val(), whereToAdd: $('#addToPhone').val() },
+                                                success: function (result) {
+                                                    $('#callerHistory').hide();
+                                                },
+                                                error: function (error) {
+                                                }
+                                            });
+                                        }
+                                        else {
+                                            AlertDialog("لطفا نام بیمار را انتخاب نمایید", "خطا");
+                                        }
+                                    }
+                                    else {
+
+                                        if (!$("#CustomerBasicInfo_DocNO").val()) { AlertDialog("شماره پرونده را وارد نمایید", "خطا"); return false; }
+                                        if (!$("#CustomerBasicInfo_FirstName").val()) { AlertDialog("نام را وارد نمایید", "خطا"); return false; }
+                                        if (!$("#CustomerBasicInfo_LastName").val()) { AlertDialog("نام خانوادگی را وارد نمایید", "خطا"); return false; }
+                                        if (!$("#CustomerBasicInfo_CheckUpDR").val()) { AlertDialog("پزشک معاینه را انتخاب نمایید", "خطا"); return false; }
+
+                                        var _phoneNumber = $("#phoneNumber").val()
+                                            $("#CustomerBasicInfo_MobileNumber").val(_phoneNumber);
+
+
+                                        $.post("/BasicInfo/CustomerInfo/QuickCreate", $("#QuickFrm").serialize() + "&SelectCount=1&page=1",
+                                            function (res) {
+
+                                                $('#callerHistory').hide();
+                                            });
+                                    }
+                                }
+                            },
+                            cancel: {
+                                label: '<i class="fa fa-times"></i> ' + MinaDent.Common.cancelBtnTxt
+                            },
+                        }
+                    })
+                },
+                complete: function () {
+
+                    hideWait();
+                    $('.modal-backdrop.fade.in').css({ display: 'none' });
+                }
+            });
+        } catch (e) {
+
+        }
+    }
+
+    function RetrivePatientList() {
+        $.ajax({
+            url: '/BasicInfo/CustomerInfo/RetrivePatientList',
+            type: 'GET',
+            success: function (result) {
+                if (result.length > 0) {
+                    for (var i = 0; i < result.length; i++) {
+                        var select =
+                            '<option value="' + result[i].Id + '">' + result[i].PatientName + '</option>';
+                        $('#patientList').append(select);
+                    }
+                }
+                $("#patientList").chosen({
+                    max_selected_options: 1,
+                    rtl: true,
+                    allow_single_deselect: true,
+                    no_results_text: "یافت نشد",
+                    width: "95%"
+                });
+            },
+            error: function (xhr) {
+
+            }
+        });
+    }
+
+    function ReceiveSms() {
+        try {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "positionClass": "toast-bottom-left",
+                "onclick": "function(){return false;}",
+                "showDuration": "1000",
+                "hideDuration": "20300",
+                "timeOut": "150090",
+                "extendedTimeOut": "20300",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut",
+                "toasterBackGround": "sms-backGround"
+            };
+            $.ajax({
+                type: "Get",
+                url: "@Url.Action("GetNextSMSList", "SMSInbox", new { Area="BasicInfo"})",
+                data: { lastSmsDate: $("#lastSmsDate").val().toString() },
+                success: function (result) {
+                    //$("#lastSmsDate").val(result.lastSmsDate);
+                    if (result.smsList != null) {
+                        for (var i = 0; i < result.smsList.length; i++) {
+                            o = $("#smsid").tmpl({
+                                SenderNumber: result.smsList[0].SenderPhoneLine,
+                                MessageText: result.smsList[0].MessageText,
+                                PatientName: result.smsList[0].SenderName != null ? result.smsList[0].SenderName : "ناشناس",
+                                RecivedTime: result.smsList[0].RecivedTime
+                            });
+                            toastr.info(o[0].outerHTML);
+                        }
+                    }
+                }, error: function (error) {
+
+                }
+            });
+        } catch (e) {
+
+        }
+    };
+
+</script>
+<script>
+    $(document).ready(function () {
+        $('.nav-a a[data-toggle=tab]').click(function (e) {
+            e.preventDefault();
+            $('a[href="' + "#" + $(this).attr('href') + '"]').tab('show');
+            if (window.location.toString().split("/")[3] != "Home") {
+                window.location.href = "@Url.Action("IndexR","Home",new {Area="" })" + "?tabId=" + $(this).attr('href');
+            }
+        })
+    });
+</script>
+
+
+
+
+
+
+
+
+
+

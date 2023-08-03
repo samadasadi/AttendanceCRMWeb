@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.PerformanceData;
 using Utility;
+using Utility.PublicEnum;
 using ViewModel.UserManagement.Attendance;
 
 namespace ViewModel.Security
@@ -60,7 +62,6 @@ namespace ViewModel.Security
 
     }
 
-
     public class PubUserLoinVm
     {
         public int UserId { get; set; }
@@ -80,7 +81,6 @@ namespace ViewModel.Security
         public string DiseaseGroupAccessPatient { get; set; }
         public bool IsAccountingClient { get; set; }
     }
-
 
     public class UsingAccountInformationVm
     {
@@ -109,11 +109,11 @@ namespace ViewModel.Security
 
     }
 
-
     public class DoctorAccountVm
     {
         public string KeyCode { get; set; }
     }
+
     public class AccountExpireInfo: UsingAccountInformationVm
     {
         public string ExpierDateEnStr { get { return ExpierDateEn != null ? DateTimeOperation.M2S(this.ExpierDateEn.Value) : ""; } }
@@ -142,5 +142,31 @@ namespace ViewModel.Security
         public string Salamat_Username { get; set; }
         public string Salamat_Password { get; set; }
     }
+
+    public class LoginResult
+    {
+        public string KeyCode { get; set; }
+        public LoginResultStatus LoginResultStatus { get; set; } = LoginResultStatus.Success;
+        public string LoginResultStatusStr
+        {
+            get
+            {
+                var _result = "";
+
+                switch (this.LoginResultStatus)
+                {
+                    case LoginResultStatus.Success: _result = ""; break;
+                    case LoginResultStatus.ExpireDate: _result = "زمان استفاده از سیستم برای این نام کاربری به پایان رسیده است، لطفا با نام کاربری ادمین وارد شوید."; break;
+                    case LoginResultStatus.InCorrectLoginInformation: _result = "نام کاربری یا رمز عبور اشتباه است"; break;
+                    case LoginResultStatus.KeyCodeIsNotValidWithDatabase: _result = $"قفل سخت افزاری موجود با قفل اولیه مغایرت دارد. کد فعلی: ({this.KeyCode}) لطفا با پشتیبانی تماس بگیرید"; break;
+                    case LoginResultStatus.KeyDataIsNotValid: _result = "اطلاعات قفل صحیح نیست لطفا با پشتیبانی تماس بگیرید"; break;
+                    default: _result = ""; break;
+                }
+
+                return _result;
+            }
+        }
+    }
+
 
 }

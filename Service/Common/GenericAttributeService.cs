@@ -140,7 +140,7 @@ namespace Service.Common
 
             attribute.CreatedOrUpdatedDateUTC = DateTime.UtcNow;
             attribute.ModifiedDate = DateTime.UtcNow;
-            attribute.MedicalCenterId = attribute.MedicalCenterId;
+
             attribute.Id = Guid.NewGuid();
             await _genericAttributeRepository.Add(attribute);
         }
@@ -231,7 +231,7 @@ namespace Service.Common
                         Key = key,
                         KeyGroup = keyGroup,
                         Value = valueStr,
-                        MedicalCenterId = entity.MedicalCenterId
+
                     };
 
                     await InsertAttribute(prop);

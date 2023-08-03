@@ -1,0 +1,191 @@
+﻿@using ViewModel.Security
+
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+    var MediaList = (List<Utility.NormalJsonClass>)ViewData["MedicalId"];
+}
+<style>
+
+    .validation-summary-errors {
+        color: #ffeb00;
+        text-align: center;
+        margin: 10px;
+        padding-top: 20px;
+    }
+
+        .validation-summary-errors ul li {
+            list-style: none;
+        }
+
+
+
+    .glow {
+        /*font-size: 80px;*/
+        color: #fff;
+        text-align: center;
+        -webkit-animation: glow 1s ease-in-out infinite alternate;
+        -moz-animation: glow 1s ease-in-out infinite alternate;
+        animation: glow 1s ease-in-out infinite alternate;
+    }
+
+    @@-webkit-keyframes glow {
+        from {
+            /*text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;*/
+            text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #ff0000, 0 0 40px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 20px #ff020e;
+        }
+
+        to {
+            /*text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;*/
+            text-shadow: 0 0 10px #fff, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 21px #ff0000, 0 0 15px #ff0000, 0 0 20px #ff0000, 0 0 15px #ff0000;
+        }
+    }
+</style>
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    @Html.Partial("LoginCss")
+</head>
+<body class="page-md login">
+    <div class="logo"></div>
+    <div class="menu-toggler sidebar-toggler"></div>
+    <div class="content">
+        <h6 class="form-title" style="float:left;font-size:10px;color:white;">Ver: @Service.Consts.AppSettings.AppVersion</h6>
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @name = "Login" }))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "" })
+            @Html.AntiForgeryToken()
+            <h3 class="form-title">فرم ورود</h3>
+            <div class="form-group">
+                <label class="control-label col-form-label visible-ie8 visible-ie9">نام کاربری</label>
+                <div class="input-icon">
+                    <i class="fa fa-user"></i>
+                    @*@if ((int)ViewBag.type== 1)
+                        {
+                            @Html.TextBoxFor(m => m.UserName, new { placeholder = "نام کاربری", @class = "form-control placeholder-no-fix", autocomplete = "off", @style = "direction: rtl" , @readonly =true})
+                        }*@
+
+                    @Html.TextBoxFor(m => m.UserName, new { placeholder = "نام کاربری", @class = "form-control placeholder-no-fix", autocomplete = "off", @style = "direction: rtl" })
+
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-form-label visible-ie8 visible-ie9">کلمه عبور</label>
+                <div class="input-icon">
+                    <i class="fa fa-lock"></i>
+                    @Html.PasswordFor(m => m.Password, new { placeholder = "کلمه عبور", @class = "form-control placeholder-no-fix", @style = "direction: rtl" })
+                    @Html.ValidationMessageFor(m => m.Password)
+                </div>
+            </div>
+            <div class="form-actions">
+                @*<label class="checkbox">
+                        <input type="checkbox" name="remember" value="1" /> به خاطر بسپار
+                    </label>*@
+                <input hidden name="Type" value="Login" id="Type" type="text" />
+                <input hidden name="HashPass" id="HashPass" value="" type="text" />
+                @*<button type="submit" class="btn blue pull-right" style="width:100%;">ورود <i class="m-icon-swapleft m-icon-white"></i></button>*@
+                <button type="submit" class="btn green pull-right" style="width: 100%; background-color: #b71540;">ورود <i class="m-icon-swapleft m-icon-white"></i></button>
+                @*<button id="scanfinger" type="button" class="btn red pull-left">اثر انگشت <i class="fas fa-fingerprint"></i></button>*@
+                @*<button onclick="AlterDatabase()" type="button" class="btn blue-chambray pull-left">بروزرسانی ساختار<i class="fas fa-fingerprint"></i></button>*@
+
+
+
+                <script src="~/Content/AdminResponsive3.0/plugins/jquery/jquery.min.js"></script>
+                <link href="~/Content/AdminResponsive3.0/plugins/toastr/toastr.min.css" rel="stylesheet" />
+                <script src="~/Content/AdminResponsive3.0/plugins/toastr/toastr.min.js"></script>
+
+                <script>
+                    function AlterDatabase() {
+
+                        toastr.options = {
+                            //"positionClass": "toast-top-center",
+                            "timeOut": "10000",
+                            "extendedTimeOut": "10000",
+                        };
+
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Account/AlterDatabase",
+                            data: { MedicalId: $("#MedicalId").val() },
+                            beforeSend: function () {
+                                toastr.info('لطفا تا پایان عملیات منتظر بمانید');
+                            },
+                            success: function (result) {
+
+                                if (!result.Error) {
+                                    toastr.success('اجرای اسکریپت با موفقیت انجام شد');
+                                }
+                                else {
+                                    toastr.error(result.Message);
+                                }
+                            }, error: function (err) {
+                                toastr.error(err);
+                            },
+                            complete: function () {
+                                //hideWait();
+                            }
+                        });
+                    }
+                </script>
+            </div>
+            @*@Html.Partial("_socialButtons")
+                @Html.Partial("ForgotLink")*@
+
+            <br />
+            <br />
+            <div class="form-actions">
+                <p>
+                    ورود به بخش باشگاه مشتریان سایت
+                    <a href="/Account/LoginCustomerClub" id="forget-password">
+                        اینجا
+                    </a>
+                    کلیک کنید
+                </p>
+                <p>
+                    ورود به بخش باشگاه مشتریان داخل مرکز
+                    <a href="/Account/LoginCustomerCllub" id="forget-password">
+                        اینجا
+                    </a>
+                    کلیک کنید
+                </p>
+                <p>
+                    برای ورود به بخش مدیریت
+                    <a href="/Account/LoginManager" id="forget-password">
+                        اینجا
+                    </a>
+                    کلیک کنید
+                </p>
+            </div>
+            @*<div class="form-actions">
+                <p style="color: #c23616; font-size: 14px; font-weight: bold; ">
+                    برای بازسازی بانک اطلاعاتی
+                    <a href="#" style="color: #0097e6" onclick="AlterDatabase()">
+                        اینجا
+                    </a>
+                    کلیک کنید
+                </p>
+            </div>*@
+
+            <div class="login-options">
+                <h4 style=" color: #000;">ارتباط با ما</h4>
+                <div class="form-actions">
+                    <p style="color: #fff;">
+                        وبسایت :
+                        <a style="color: #0767e7" href="https://minadent.ir/" target="_blank">www.minadent.ir</a>
+                    </p>
+                    <p style="color: #fff;">
+                        شماره تماس : <span style="color:#ffffff;">77743500-021</span>
+                    </p>
+                </div>
+            </div>
+        }
+        @Html.Partial("_ForgetPassword")
+        <input data-val="true" type="hidden" id="type" value="@ViewBag.type">
+    </div>
+    <div class="copyright"></div>
+    @Html.Partial("Loginjs")
+</body>
+</html>

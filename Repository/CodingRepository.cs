@@ -20,13 +20,13 @@ namespace Repository
 
 
 
-        public async Task Add(Coding entity, string userId = null, Guid? medicalCenterId = null)
+        public async Task Add(Coding entity, string userId = null)
         {
             FrameworkContext.Set<Coding>().Add(entity);
             await FrameworkContext.SaveChangesAsync();
         }
 
-        public Task AddInt(Coding entity, string userId = null, Guid? medicalCenterId = null)
+        public Task AddInt(Coding entity, string userId = null)
         {
             throw new NotImplementedException();
         }
@@ -36,12 +36,12 @@ namespace Repository
             throw new NotImplementedException();
         }
 
-        public Task<Coding> AddIntWithReturn(Coding entity, string userId = null, Guid? medicalCenterId = null)
+        public Task<Coding> AddIntWithReturn(Coding entity, string userId = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task AddMultiSaveChange(Coding entity, string userId = null, Guid? medicalCenterId = null)
+        public Task AddMultiSaveChange(Coding entity, string userId = null)
         {
             throw new NotImplementedException();
         }
@@ -56,7 +56,7 @@ namespace Repository
             throw new NotImplementedException();
         }
 
-        public Task AddRange(IEnumerable<Coding> list, string userId = null, Guid? medicalCenterId = null)
+        public Task AddRange(IEnumerable<Coding> list, string userId = null)
         {
             throw new NotImplementedException();
         }
@@ -71,7 +71,7 @@ namespace Repository
             throw new NotImplementedException();
         }
 
-        public async Task Commit(Coding entity = null, Coding oldEntity = null, string userId = null, Guid? medicalCenterId = null)
+        public async Task Commit(Coding entity = null, Coding oldEntity = null, string userId = null)
         {
           await  FrameworkContext.SaveChangesAsync();
         }
@@ -96,7 +96,7 @@ namespace Repository
             FrameworkContext.Set<Coding>().Remove(entity);
           await  FrameworkContext.SaveChangesAsync();
         }
-        public async Task Delete(Expression<Func<Coding, bool>> predicate, Coding oldEntity = null, string userId = null, Guid? medicalCenterId = null)
+        public async Task Delete(Expression<Func<Coding, bool>> predicate, Coding oldEntity = null, string userId = null)
         {
             foreach (var item in FrameworkContext.Set<Coding>().Where(predicate).ToList())
             {
@@ -201,12 +201,12 @@ namespace Repository
             throw new NotImplementedException();
         }
 
-        public Task LogicalDelete(Coding entity, Coding oldEntity = null, string userId = null, Guid? medicalCenterId = null)
+        public Task LogicalDelete(Coding entity, Coding oldEntity = null, string userId = null)
         {
             throw new NotImplementedException();
         }
 
-        public Task LogicalDelete(Expression<Func<Coding, bool>> predicate, Coding oldEntity = null, string userId = null, Guid? medicalCenterId = null)
+        public Task LogicalDelete(Expression<Func<Coding, bool>> predicate, Coding oldEntity = null, string userId = null)
         {
             throw new NotImplementedException();
         }
@@ -251,7 +251,7 @@ namespace Repository
             throw new NotImplementedException();
         }
 
-        public Task Update(Coding entity, Coding oldEntity = null, string userId = null, Guid? medicalCenterId = null)
+        public Task Update(Coding entity, Coding oldEntity = null, string userId = null)
         {
             throw new NotImplementedException();
         }

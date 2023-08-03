@@ -13,7 +13,7 @@ namespace Repository.Model.Chat
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         public bool IsDeleted { get; set; }
-        public Guid MedicalCenterId { get; set; }
+
         public DateTime ModifiedDate { get; set; }
         public TChat() => this.deleted = DeleteModeEnum.NotDeleted;
         public int fromId { get; set; }

@@ -7,6 +7,10 @@ using ViewModel.Basic;
 
 namespace Service.Consts
 {
+    public class TemplateSetting
+    {
+        public string TitleLink { get; set; }
+    }
     public class Cach
     {
         public static TemplateSetting TemplateSetting

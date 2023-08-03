@@ -1615,7 +1615,6 @@ namespace Service.UserManagement.Attendance
                         ToDate = filter.personAccountingFilter.ToDate.Value,
                         Id = Guid.NewGuid(),
                         IsDeleted = false,
-                        MedicalCenterId = Public.CurrentUser.MedicalCenterId,
                         ModifiedDate = DateTime.Now,
                         PuUser_Id = filter.Id,
                         DoingUserId = Public.CurrentUser.Id,
@@ -1696,7 +1695,6 @@ namespace Service.UserManagement.Attendance
                     costPersonID = _personAccount.PuUser_Id.ToString(),
                     CostCode = _employee.UserType == "0120202" ? "015010101" : "015010102",
                     Price = _personAccount.DataJson_Value.personAccounting.KhalesPardakhti,
-                    MedicalCenterId = Public.CurrentUser.MedicalCenterId,
                     Coment = "حقوق ماه " + _personAccount.PersonelSalariMonthStr,
                     date = DateTimeOperation.M2S(DateTime.Now),
                     DateEn = DateTime.Now,
@@ -1736,7 +1734,6 @@ namespace Service.UserManagement.Attendance
                     costPersonID = _personAccount.PuUser_Id.ToString(),
                     costInCode = _employee.UserType == "0120202" ? "015010101" : "015010102",
                     Price = _personAccount.DataJson_Value.personAccounting.KhalesPardakhti,
-                    MedicalCenterId = Public.CurrentUser.MedicalCenterId,
                     Coment = "حقوق ماه " + _personAccount.PersonelSalariMonthStr,
                     date = DateTimeOperation.M2S(DateTime.Now),
                     DateEn = DateTime.Now,
@@ -1871,7 +1868,6 @@ namespace Service.UserManagement.Attendance
                                                         + "\n        ,[ChangebyPerson] "
                                                         + "\n        ,[WorkCode] "
                                                         + "\n        ,[DoingUserId] "
-                                                        + "\n        ,[MedicalCenterId] "
                                                         + "\n        ,[ModifiedDate]) "
                                                         + "\n  VALUES "
                                                         + "\n        ({0} "
@@ -1888,7 +1884,6 @@ namespace Service.UserManagement.Attendance
                                                         + "\n        ,{11} "
                                                         + "\n        ,{12} "
                                                         + "\n        ,{13} "
-                                                        + "\n        ,{14} "
                                                         + "\n        ,GETDATE()) ",
                                                        !string.IsNullOrEmpty(entity.CardNo) ? "'" + entity.CardNo + "'" : "NULL",
                                                        entity.DeviceCode != null ? "'" + entity.DeviceCode + "'" : "NULL",
@@ -1903,8 +1898,7 @@ namespace Service.UserManagement.Attendance
                                                        entity.VerifyMethod != null ? "'" + entity.VerifyMethod + "'" : "NULL",
                                                        "'" + (entity.ChangebyPerson ? "1" : "0") + "'",
                                                        "'" + entity.WorkCode + "'",
-                                                       "N'" + Public.CurrentUser.Id + "'",
-                                                       "N'" + Public.CurrentUser.MedicalCenterId + "'"
+                                                       "N'" + Public.CurrentUser.Id + "'"
                                                        );
                     await _repoTimeRecord.ExecuteSqlCommand(_query);
                     #endregion
@@ -1937,7 +1931,7 @@ namespace Service.UserManagement.Attendance
                     }
                     else
                     {
-                        await _repoTimeRecord.Add(GenericMapping<TimeRecordVm, TimeRecords>.Map(entity), Public.CurrentUser.UserName, Public.CurrentUser.Id);
+                        await _repoTimeRecord.Add(GenericMapping<TimeRecordVm, TimeRecords>.Map(entity), Public.CurrentUser.UserName);
                         return new DataModelResult { Error = false };
                     }
                 }
@@ -2004,7 +1998,6 @@ namespace Service.UserManagement.Attendance
 
 
                 var _query = "EXEC [dbo].[sp_AttLogList] " +
-                    $"\n@medicalCenterId = '{Public.CurrentUser.MedicalCenterId}'," +
                     $"\n@From = {(value.PageNum == 1 ? 1 : ((value.PageNum * value.PageSize) - value.PageSize))}," +
                     $"\n@To = {value.PageNum * value.PageSize}," +
                     $"\n@text = {(string.IsNullOrEmpty(value.Search) ? "NULL" : "N'" + value.Search + "'")}," +

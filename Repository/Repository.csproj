@@ -52,6 +52,9 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=7.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.7.0.0\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.WebSockets, Version=0.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.WebSockets.0.2.3.1\lib\net45\Microsoft.WebSockets.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -87,7 +90,6 @@
     <Compile Include="DataSettingsManager.cs" />
     <Compile Include="DynamicQuery.cs" />
     <Compile Include="iContext\CommonContext.cs" />
-    <Compile Include="iContext\CommonContextInitialization.cs" />
     <Compile Include="iContext\Context.cs" />
     <Compile Include="iContext\ContextFactory.cs" />
     <Compile Include="iContext\FrameworkContext.cs" />
@@ -100,7 +102,6 @@
     <Compile Include="IPagedList.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="IWebHelper.cs" />
-    <Compile Include="Mapping\DoingConfigMapping.cs" />
     <Compile Include="Model\ApplicationMenu\PubMenuDefault.cs" />
     <Compile Include="Model\Attendance\Calendar.cs" />
     <Compile Include="Model\Attendance\EmployeeAccounting.cs" />
@@ -121,17 +122,19 @@
     <Compile Include="Model\Common\GenericAttribute.cs" />
     <Compile Include="Model\Common\GenericAttributeDefault.cs" />
     <Compile Include="Model\Cost_Incoming.cs" />
-    <Compile Include="Model\Database\Tbl_Customer_document.cs" />
     <Compile Include="Model\File.cs" />
     <Compile Include="Model\GeneralSetting.cs" />
     <Compile Include="Model\PubMenu.cs" />
     <Compile Include="Model\PubRole.cs" />
     <Compile Include="Model\PubUser.cs" />
     <Compile Include="Model\PubUserGroup.cs" />
+    <Compile Include="Model\QuickLink.cs" />
     <Compile Include="Model\ScheduleTask.cs" />
     <Compile Include="Model\Task.cs" />
     <Compile Include="Model\tbl_Attendance.cs" />
     <Compile Include="Model\Tbl_Cost.cs" />
+    <Compile Include="Model\tbl_FP.cs" />
+    <Compile Include="Model\tbl_Login.cs" />
     <Compile Include="Model\UserChatHistory.cs" />
     <Compile Include="Model\UserInRole.cs" />
     <Compile Include="Model\Users.cs" />
