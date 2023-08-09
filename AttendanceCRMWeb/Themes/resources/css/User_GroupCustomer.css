@@ -1,0 +1,42 @@
+﻿.MultiGroupSelector {
+    background-color: white;
+    border: solid 1px #ccc;
+    overflow: hidden;
+    min-height: 27px;
+    padding: 0 1px;
+}
+.MultiGroupSelector.ui-state-active{
+    background:none !important;
+}
+
+    .MultiGroupSelector .tag-groupSelector {
+        background-color: #E0E0E0;
+        min-width: 25px;
+        margin: 4px 2px;
+        line-height: 20px;
+        padding: 0 5px;
+        border-radius: 2px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+    }
+
+        .MultiGroupSelector .tag-groupSelector i {
+            color: #777;
+            cursor: pointer;
+            margin: 0 2px;
+        }
+
+            .MultiGroupSelector .tag-groupSelector i:hover {
+                color: #000;
+            }
+.MultiGroupSelector.disabled{
+    display:none;
+}
+
+            .MultiGroupSelectorDisabled {
+                background-color: #F0F0F0;
+                border: solid 1px #ccc;
+                overflow: hidden;
+                min-height: 27px;
+                padding: 0 1px;
+}

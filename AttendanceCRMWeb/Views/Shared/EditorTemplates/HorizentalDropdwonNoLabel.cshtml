@@ -1,0 +1,8 @@
+﻿@using System.Web.UI.WebControls
+@model Guid
+@{ var required = ViewData.ModelMetadata.IsRequired;
+}
+<div class="col-md-9">
+    @Html.DropDownListFor(model => model, (SelectList)ViewData[ViewData.ModelMetadata.PropertyName], "--", new { @class = "form-control chzn-select" })
+    @Html.ValidationMessageFor(model => model, "", new { @class = "text-danger" })
+</div>

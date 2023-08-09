@@ -1,0 +1,1576 @@
+/*
+ * FullCalendar v1.5.4 Stylesheet
+ *
+ * Copyright (c) 2011 Adam Shaw
+ * Dual licensed under the MIT and GPL licenses, located in
+ * MIT-LICENSE.txt and GPL-LICENSE.txt respectively.
+ *
+ * Date: Tue Sep 4 23:38:33 2012 -0700
+ *
+ */
+
+.fc {
+    direction: ltr;
+    text-align: left;
+}
+
+    .fc table {
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    html .fc,
+    .fc table {
+        font-size: 1em;
+    }
+
+    .fc td,
+    .fc th {
+        padding: 0;
+        vertical-align: top;
+    }
+
+
+
+/* Header
+------------------------------------------------------------------------*/
+
+.fc-header td {
+    white-space: nowrap;
+}
+
+.fc-header-left {
+    width: 25%;
+    text-align: left;
+}
+
+.fc-header-center {
+    text-align: center;
+}
+
+.fc-header-right {
+    width: 25%;
+    text-align: right;
+}
+
+.fc-header-title {
+    direction: rtl;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 12px;
+}
+
+    .fc-header-title h2 {
+        margin-top: 0;
+        white-space: nowrap;
+        border-bottom: 0px !important;
+    }
+
+.fc .fc-header-space {
+    padding-left: 10px;
+}
+
+.fc-header .fc-button {
+    margin-bottom: 1em;
+    vertical-align: top;
+}
+
+/* buttons edges butting together */
+
+.fc-header .fc-button {
+    margin-right: -1px;
+}
+
+.fc-header .fc-corner-right {
+    margin-right: 1px; /* back to normal */
+}
+
+.fc-header .ui-corner-right {
+    margin-right: 0; /* back to normal */
+}
+
+/* button layering (for border precedence) */
+
+.fc-header .fc-state-hover,
+.fc-header .ui-state-hover {
+    z-index: 2;
+}
+
+.fc-header .fc-state-down {
+    z-index: 3;
+}
+
+.fc-header .fc-state-active,
+.fc-header .ui-state-active {
+    z-index: 4;
+}
+
+
+
+/* Content
+------------------------------------------------------------------------*/
+
+.fc-content {
+    clear: both;
+}
+
+.fc-view {
+    width: 100%; /* needed for view switching (when view is absolute) */
+    overflow: hidden;
+}
+
+
+
+/* Cell Styles
+------------------------------------------------------------------------*/
+
+.fc-widget-header, /* <th>, usually */
+.fc-widget-content { /* <td>, usually */
+    border: 1px solid #ccc;
+}
+
+.fc-state-highlight { /* <td> today cell */ /* TODO: add .fc-today to <th> */
+    background: #ffc;
+}
+
+.fc-cell-overlay { /* semi-transparent rectangle while dragging */
+    background: #9cf;
+    opacity: .2;
+    filter: alpha(opacity=20); /* for IE */
+}
+
+
+
+/* Buttons
+------------------------------------------------------------------------*/
+
+.fc-button {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.fc-state-default { /* non-theme */
+    border-style: solid;
+    border-width: 1px 0;
+}
+
+.fc-button-inner {
+    position: relative;
+    float: left;
+    overflow: hidden;
+}
+
+.fc-state-default .fc-button-inner { /* non-theme */
+    border-style: solid;
+    border-width: 0 1px;
+}
+
+.fc-button-content {
+    position: relative;
+    float: left;
+    height: 1.9em;
+    line-height: 1.9em;
+    padding: 0 .6em;
+    white-space: nowrap;
+}
+
+    /* icon (for jquery ui) */
+
+    .fc-button-content .fc-icon-wrap {
+        position: relative;
+        float: left;
+        top: 50%;
+    }
+
+    .fc-button-content .ui-icon {
+        position: relative;
+        float: left;
+        margin-top: -50%;
+        *margin-top: 0;
+        *top: -50%;
+    }
+
+/* gloss effect */
+
+.fc-state-default .fc-button-effect {
+    position: absolute;
+    top: 50%;
+    left: 0;
+}
+
+    .fc-state-default .fc-button-effect span {
+        position: absolute;
+        top: -100px;
+        left: 0;
+        width: 500px;
+        height: 100px;
+        border-width: 100px 0 0 1px;
+        border-style: solid;
+        border-color: #fff;
+        background: #444;
+        opacity: .09;
+        filter: alpha(opacity=9);
+    }
+
+/* button states (determines colors)  */
+
+.fc-state-default,
+.fc-state-default .fc-button-inner {
+    border-style: solid;
+    border-color: #ccc #bbb #aaa;
+    background: #F3F3F3;
+    color: #000;
+}
+
+.fc-state-hover,
+.fc-state-hover .fc-button-inner {
+    border-color: #999;
+}
+
+.fc-state-down,
+.fc-state-down .fc-button-inner {
+    border-color: #555;
+    background: #777;
+}
+
+.fc-state-active,
+.fc-state-active .fc-button-inner {
+    border-color: #555;
+    background: #777;
+    color: #fff;
+}
+
+.fc-state-disabled,
+.fc-state-disabled .fc-button-inner {
+    color: #999;
+    border-color: #ddd;
+}
+
+.fc-state-disabled {
+    cursor: default;
+}
+
+    .fc-state-disabled .fc-button-effect {
+        display: none;
+    }
+
+
+
+/* Global Event Styles
+------------------------------------------------------------------------*/
+
+.fc-event {
+    border-style: solid;
+    border-width: 0;
+    font-size: .85em;
+    cursor: default;
+}
+
+a.fc-event,
+.fc-event-draggable {
+    cursor: pointer;
+}
+
+a.fc-event {
+    text-decoration: none;
+}
+
+.fc-rtl .fc-event {
+    text-align: right;
+}
+
+.fc-event-skin {
+    border-color: #fff; /* default BORDER color */
+    background-color: #36c; /* default BACKGROUND color */
+    color: #fff; /* default TEXT color */
+    cursor: pointer;
+}
+
+.fc-event-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-style: solid;
+    border-width: 0;
+    overflow: hidden;
+    direction:rtl !important;
+    text-align:right;
+}
+
+.fc-event-time,
+.fc-event-title {
+    padding: 0 1px;
+    vertical-align:text-top;
+    direction:rtl !important;
+}
+
+.fc .ui-resizable-handle { /*** TODO: don't use ui-resizable anymore, change class ***/
+    display: block;
+    position: absolute;
+    z-index: 99999;
+    overflow: hidden; /* hacky spaces (IE6/7) */
+    font-size: 300%; /* */
+    line-height: 50%; /* */
+}
+
+
+
+/* Horizontal Events
+------------------------------------------------------------------------*/
+
+.fc-event-hori {
+    /*border-width: 1px 0;
+    margin-bottom: 1px;*/
+}
+
+    /* resizable */
+
+    .fc-event-hori .ui-resizable-e {
+        top: 0 !important; /* importants override pre jquery ui 1.7 styles */
+        right: -3px !important;
+        width: 7px !important;
+        height: 100% !important;
+        cursor: e-resize;
+    }
+
+    .fc-event-hori .ui-resizable-w {
+        top: 0 !important;
+        left: -3px !important;
+        width: 7px !important;
+        height: 100% !important;
+        cursor: w-resize;
+    }
+
+    .fc-event-hori .ui-resizable-handle {
+        _padding-bottom: 14px; /* IE6 had 0 height */
+    }
+
+
+
+/* Fake Rounded Corners (for buttons and events)
+------------------------------------------------------------*/
+
+.fc-corner-left {
+    margin-left: 1px;
+}
+
+    .fc-corner-left .fc-button-inner,
+    .fc-corner-left .fc-event-inner {
+        margin-left: -1px;
+    }
+
+.fc-corner-right {
+    margin-right: 1px;
+}
+
+    .fc-corner-right .fc-button-inner,
+    .fc-corner-right .fc-event-inner {
+        margin-right: -1px;
+    }
+
+.fc-corner-top {
+    margin-top: 1px;
+}
+
+    .fc-corner-top .fc-event-inner {
+        margin-top: -1px;
+    }
+
+.fc-corner-bottom {
+    margin-bottom: 1px;
+}
+
+    .fc-corner-bottom .fc-event-inner {
+        margin-bottom: -1px;
+    }
+
+
+
+/* Fake Rounded Corners SPECIFICALLY FOR EVENTS
+-----------------------------------------------------------------*/
+
+.fc-corner-left .fc-event-inner {
+    border-left-width: 1px;
+}
+
+.fc-corner-right .fc-event-inner {
+    border-right-width: 1px;
+}
+
+.fc-corner-top .fc-event-inner {
+    border-top-width: 1px;
+}
+
+.fc-corner-bottom .fc-event-inner {
+    border-bottom-width: 1px;
+}
+
+
+
+/* Reusable Separate-border Table
+------------------------------------------------------------*/
+
+table.fc-border-separate {
+    border-collapse: separate;
+}
+
+.fc-border-separate th,
+.fc-border-separate td {
+    border-width: 1px 0 0 1px;
+}
+
+    .fc-border-separate th.fc-last,
+    .fc-border-separate td.fc-last {
+        border-right-width: 1px;
+    }
+
+.fc-border-separate tr.fc-last th,
+.fc-border-separate tr.fc-last td {
+    border-bottom-width: 1px;
+}
+
+.fc-border-separate tbody tr.fc-first td,
+.fc-border-separate tbody tr.fc-first th {
+    border-top-width: 0;
+}
+
+
+
+/* Month View, Basic Week View, Basic Day View
+------------------------------------------------------------------------*/
+
+.fc-grid th {
+    text-align: center;
+}
+
+.fc-grid .fc-day-number {
+    float: right;
+    padding: 0 2px;
+}
+
+.fc-grid .fc-other-month .fc-day-number {
+    opacity: 0.3;
+    filter: alpha(opacity=30); /* for IE */
+    /* opacity with small font can sometimes look too faded
+	   might want to set the 'color' property instead
+	   making day-numbers bold also fixes the problem */
+}
+
+.fc-grid .fc-day-content {
+    clear: both;
+    padding: 2px 2px 1px; /* distance between events and day edges */
+}
+
+/* event styles */
+
+.fc-grid .fc-event-time {
+    font-weight: normal;
+}
+
+/* right-to-left */
+
+.fc-rtl .fc-grid .fc-day-number {
+    float: left;
+}
+
+.fc-rtl .fc-grid .fc-event-time {
+    float: right;
+}
+
+
+
+/* Agenda Week View, Agenda Day View
+------------------------------------------------------------------------*/
+
+.fc-agenda table {
+    border-collapse: separate;
+}
+
+.fc-agenda-days th {
+    text-align: center;
+}
+
+.fc-agenda .fc-agenda-axis {
+    width: 50px;
+    padding: 0 4px;
+    vertical-align: middle;
+    text-align: right;
+    white-space: nowrap;
+    font-weight: normal;
+}
+
+.fc-agenda .fc-day-content {
+    padding: 2px 2px 1px;
+}
+
+/* make axis border take precedence */
+
+.fc-agenda-days .fc-agenda-axis {
+    border-right-width: 1px;
+}
+
+.fc-agenda-days .fc-col0 {
+    border-left-width: 0;
+}
+
+/* all-day area */
+
+.fc-agenda-allday th {
+    border-width: 0 1px;
+}
+
+.fc-agenda-allday .fc-day-content {
+    min-height: 34px; /* TODO: doesnt work well in quirksmode */
+    _height: 34px;
+}
+
+/* divider (between all-day and slots) */
+
+.fc-agenda-divider-inner {
+    height: 2px;
+    overflow: hidden;
+}
+
+.fc-widget-header .fc-agenda-divider-inner {
+    background: #eee !important;
+}
+
+/* slot rows */
+
+.fc-agenda-slots th {
+    border-width: 1px 1px 0;
+}
+
+.fc-agenda-slots td {
+    border-width: 1px 0 0;
+    background: none;
+}
+
+    .fc-agenda-slots td div {
+        height: 20px;
+    }
+
+.fc-agenda-slots tr.fc-slot0 th,
+.fc-agenda-slots tr.fc-slot0 td {
+    border-top-width: 0;
+}
+
+.fc-agenda-slots tr.fc-minor th,
+.fc-agenda-slots tr.fc-minor td {
+    border-top-style: dotted;
+}
+
+    .fc-agenda-slots tr.fc-minor th.ui-widget-header {
+        *border-top-style: solid; /* doesn't work with background in IE6/7 */
+    }
+
+
+
+/* Vertical Events
+------------------------------------------------------------------------*/
+
+.fc-event-vert {
+    border-width: 0 1px;
+}
+
+    .fc-event-vert .fc-event-head,
+    .fc-event-vert .fc-event-content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .fc-event-vert .fc-event-time {
+        white-space: nowrap;
+        font-size: 10px;
+    }
+
+    .fc-event-vert .fc-event-bg { /* makes the event lighter w/ a semi-transparent overlay  */
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        opacity: .3;
+        filter: alpha(opacity=30);
+    }
+
+.fc .ui-draggable-dragging .fc-event-bg, /* TODO: something nicer like .fc-opacity */
+.fc-select-helper .fc-event-bg {
+    display: none\9; /* for IE6/7/8. nested opacity filters while dragging don't work */
+}
+
+/* resizable */
+
+.fc-event-vert .ui-resizable-s {
+    bottom: 0 !important; /* importants override pre jquery ui 1.7 styles */
+    width: 100% !important;
+    height: 8px !important;
+    overflow: hidden !important;
+    line-height: 8px !important;
+    font-size: 11px !important;
+    font-family: monospace;
+    text-align: center;
+    cursor: s-resize;
+}
+
+.fc-agenda .ui-resizable-resizing { /* TODO: better selector */
+    _overflow: hidden;
+}
+
+/*.ui-datepicker.ui-widget-content{
+      height: 216px;
+}*/
+
+#wrap .ui-widget-content {
+    border: 1px solid #DDD !important;
+    background: #FFF !important;
+    color: #000 !important;
+    border-radius: 0;
+  
+}
+
+#datepickerSch .ui-state-default {
+    background: none;
+    border: 0;
+    line-height: 21px;
+    width: 18px;
+    font-size: 12px;
+    height: 18px;
+    margin:0px;
+}
+
+.ui-datepicker td.ui-datepicker-current-day a {
+    background: #e6e6e6 !important;
+    color: #000 !important;
+}
+
+.ui-datepicker tr.ui-datepicker-current-week, .ui-datepicker tr.ui-datepicker-current-week span {
+    background: #e6e6e6!important;
+}
+
+.ui-datepicker .ui-datepicker-header {
+    position: relative !important;
+    background: #F6F6F6 !important;
+    border: none !important;
+    padding:1px 0  1px 0 !important;
+}
+
+.ui-datepicker-calendar th {
+    color: #000!important;
+    padding: 6px 0px;
+    background-color: #fff;
+}
+
+.ui-datepicker td.ui-datepicker-today a {
+    background: #BDBDBD !important;
+    color: #FFF !important;
+}
+
+.ui-datepicker td .ui-state-hover {
+    color: #000 !important;
+}
+
+.ui-datepicker-other-month span {
+    color: #DADADA!important;
+    background-color: #FFF!important;
+}
+
+/*.ui-state-default {
+    border: none !important;
+    background-color: white !important;
+    background-image: none !important;
+}*/
+
+.ui-datepicker-other-month span {
+    color: dimGray !important;
+}
+
+.ui-datepicker-current-week td a {
+    background-color: #E6E6E6 !important;
+}
+
+th.fc-widget-header {
+    height: 37px !important;
+    background-color: #f9f9f9 !important;
+    vertical-align: middle !important;
+    color: #000 !important;
+    padding: 0 !important;
+}
+
+.ui-datepicker-title span {
+    color: #999999;
+}
+
+
+body {
+    /*margin-top: 40px;*/
+    /*text-align: center;*/
+    /*font-size: 12px;
+    font-family: 'B Koodak', tahoma; /*"Lucida Grande",Helvetica,Arial,Verdana,sans-serif;*/
+    /*direction: rtl;*/
+}
+
+#wrap {
+    font-size: 12px;
+    font-family: BKoodakBold, 'B Koodak', tahoma;
+    text-align: center;
+    width: 1100px;
+    margin: 10px;
+}
+
+h4 {
+    /*font-size: 16px;
+    margin-top: 0;
+    padding-top: 1em;*/
+}
+
+.external-event, .external-Calender { /* try to mimick the look of a real event */
+    margin: 10px 0;
+    padding: 2px 4px;
+    background: #3366CC;
+    color: #fff;
+    font-size: .85em;
+    cursor: pointer;
+}
+
+#external-events p {
+    margin: 1.5em 0;
+    font-size: 11px;
+    color: #666;
+}
+
+    #external-events p input {
+        margin: 0;
+        vertical-align: middle;
+    }
+
+#calendar {
+    float: left;
+    width: 875px;
+    font-size: 14px;
+}
+
+.LeftPanel {
+    width: 190px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    background: #eee;
+    text-align: left;
+    margin: 10px 0;
+}
+
+#datepickerSch {
+    width: 210px;
+    height: 240px;
+    font-family: 'B Koodak', tahoma;
+}
+
+.saveBut,.editBut,.cancelBut {
+    min-width: 50px;
+    cursor: pointer;
+    font-weight: normal;
+    border: 1px solid #E1E1E1;
+    white-space: nowrap;
+    text-align: center;
+    outline: medium none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    padding: 0 6px; /*5px 6px 7px 6px*/
+    background-image: none;
+    background-color: #F3F3F3;
+    border-radius: 2px;
+    height: 28px;
+    margin-top: 0;
+}
+
+    .saveBut:hover,.editBut:hover {
+        background-color: #529E3B;
+        color: #FFFFFF;
+    }
+
+.addBut {
+    width: 50px !important;
+    margin-right: 35px;
+}
+
+.FilterHeader {
+    background-color: #f6f6f6;
+    height: 12px;
+    padding: 10px;
+}
+
+    .FilterHeader i {
+        float: left;
+        cursor: pointer;
+    }
+
+    .FilterHeader h4 {
+        color: #999999;
+    }
+
+#Connection {
+    height: 98px;
+}
+
+    #Connection div {
+        border-bottom: 1px solid #eee;
+        height: 20px;
+    }
+
+    #Connection i {
+        float: left;
+        cursor: pointer;
+    }
+
+    #Connection img {
+        width: 15px;
+        height: 15px;
+        margin-left: 10px;
+        float: right;
+    }
+
+    #Connection div:last-child {
+        border-bottom: 0;
+        margin: 0;
+        padding: 0 5px;
+    }
+
+        #Connection div:last-child input {
+            font-family: 'B Koodak',tahoma;
+            width: 100%;
+            cursor: pointer;
+            background-color: #fcfcfc;
+            border: 0;
+            padding: 0;
+            height: 30px;
+        }
+
+            #Connection div:last-child input:hover {
+                background-color: #eee;
+            }
+
+#Filters {
+    font-family:Tahoma;
+    height: 200px;
+    overflow-x: hidden;
+}
+
+.Row {
+    border: 1px solid #eeeeee;
+    height: 85px;
+    margin-bottom: 10px;
+}
+
+    .Row div {
+        margin: 1px 3px;
+        height: 10px;
+        padding: 3px 5px;
+        text-align: right;
+        cursor: default;
+        display:inline-table;
+        width: 94%;
+    }
+
+    .Row input {
+        margin: 0;
+        float: left;
+    }
+
+#workflow {
+    background-color: linen;
+    color: black;
+}
+
+#event {
+    background-color: lightgreen;
+    color: white;
+}
+
+#Schedule {
+    background-color: crimson;
+    color: white;
+}
+
+.dynamic {
+    overflow: auto;
+}
+
+.Drow span {
+    font-size: 11px;
+    width: 150px;
+    float: right;
+}
+
+.Drow input {
+    float: left;
+    margin: 0;
+}
+.fc-event-vert,.fc-event-vert .fc-event-inner {
+    border-left:0px !important;
+}
+
+.fc_Reminder .fc-event-head {
+    background-color: #03A9F4;
+}
+.fc_Workflow .fc-event-head {
+    background-color: #8BC34A;
+}
+.fc_Email .fc-event-head {
+    background-color: #6D45B5;
+}
+.fc_Sms .fc-event-head {
+    background-color: #E91E63;
+}
+.fc_EmailTemplateSchedule .fc-event-head {
+    background-color: #FFEB3B;
+}
+.fc_EmailTemplateScheduleDate .fc-event-head {
+    background-color: #e1e1e1;
+}
+.fc_Costumer .fc-event-head {
+    background-color: #607D8B;
+}
+
+
+.fc_Reminder, .fc_Reminder .fc-event-inner {
+    background-color: #03A9F4;
+        border-left: 5px solid #03A9F4;
+    color: black;
+}
+
+.fc_Workflow, .fc_Workflow .fc-event-inner {
+    background-color: #8BC34A;
+       border-left: 5px solid #8BC34A;
+    color: white;
+}
+
+.fc_Email, .fc_Email .fc-event-inner {
+    background-color: #6D45B5;
+       border-left: 5px solid #6D45B5;
+    color: #fff;
+}
+
+.fc_Sms, .fc_Sms .fc-event-inner {
+    background-color: #E91E63;
+       border-left: 5px solid #E91E63;
+    color: white;
+}
+
+.fc_EmailTemplateSchedule, .fc_EmailTemplateSchedule .fc-event-inner {
+    background-color: #FFEB3B;
+       border-left: 5px solid #FFEB3B;
+    color: black;
+}
+
+.fc_EmailTemplateScheduleDate, .fc_EmailTemplateScheduleDate .fc-event-inner {
+    background-color: #e1e1e1;
+       border-left: 5px solid #e1e1e1;
+    color: black;
+}
+
+.fc_Costumer, .fc_Costumer .fc-event-inner {
+    background-color: #607D8B;
+       border-left: 5px solid #607D8B;
+    color: black;
+}
+
+.fc_Event, .fc_Event .fc-event-inner {
+    background-color: #51b749;
+       border-left: 5px solid #51b749;
+    color: black;
+}
+
+.fc_Todo, .fc_Todo .fc-event-inner {
+    background-color: #f2f2f2 !important;
+    color: #3C3C3C !important;
+    direction: rtl;
+    border-left: 5px solid #FF9800;
+}
+
+.fc_felicity, .fc_felicity .fc-event-inner {
+    background-color:rgb(214, 214, 214);
+    color: black;
+    border-color: #afe9d4;
+  }
+
+.fc_varform, .fc_varform .fc-event-inner {
+    background-color: black;
+    border-left: 5px solid black;
+    color: white;
+    border-color: black;
+}
+
+.fc_varparam, .fc_varparam .fc-event-inner {
+    background-color: #D14836;
+    border-left: 5px solid #D14836;
+    color: white;
+    border-color: white;
+}
+
+
+.Timed, .Timed .fc-event-inner {
+    line-height: 17px;
+    background-color: #f2f2f2 !important;
+    color: #3C3C3C !important;
+    direction: rtl;
+}
+
+.fc-event-inner span {
+    padding: 0 2px;
+}
+
+.fc-event-inner input {
+    display:none;
+    height: 10px;
+    width: 10px;
+    border: 0px;
+    cursor: pointer;
+    margin:0 3px 0 3px !important;
+    padding:0 !important;
+}
+
+.fc-event {
+   line-height: 20px;
+    min-height:20px;
+    margin-bottom:3px;
+   padding-top: 5px !important;
+
+}
+
+.OutlookEvent {
+    background-color: #36c;
+}
+
+.unchkd {
+    background-color: white !important;
+}
+
+.Row div .checkboxs {
+    width: 11px;
+    height: 11px;
+    float: left;
+    border: 1px solid #000000;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.fc-event-width-overirde {
+    width: 50px !important;
+}
+
+.eventbulbtitle {
+    /*background-color: #f7f7f7;
+    border-radius: 3px;
+    padding: 4px;*/
+    text-align: right;
+    color:#fff;
+    direction:rtl;
+}
+
+.qtip-wiki {
+    max-width: 385px;
+}
+
+    .qtip-wiki p {
+        margin: 0 0 6px;
+    }
+
+    .qtip-wiki h1 {
+        font-size: 20px;
+        line-height: 1.1;
+        margin: 0 0 5px;
+    }
+
+    .qtip-wiki img {
+        float: left;
+        margin: 10px 10px 10px 0;
+    }
+
+    .qtip-wiki .info {
+        overflow: hidden;
+    }
+
+    .qtip-wiki p.note {
+        font-weight: 700;
+    }
+
+#DownListDiv {
+    padding: 10px;
+    display: none;
+    font-family: tahoma;
+    z-index: 1000;
+    position: absolute;
+    border: 1px solid #EEEEEE;
+    width: 300px;
+    overflow: hidden;
+    background-color: #fefefe;
+    font-size: 12px;
+    right: 363px;
+    -webkit-box-shadow: 7px 4px 14px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 7px 4px 14px 0px rgba(0,0,0,0.75);
+    box-shadow: 7px 4px 14px 0px rgba(0,0,0,0.75);
+}
+
+    #DownListDiv h5 {
+           font-weight: normal;
+    line-height: 20px;
+    font-family: tahoma;
+    color: #383838;
+    font-size: 12px;
+    width: 260px;
+    text-align: right;
+    padding: 0px 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    }
+
+    #DownListDiv td {
+        width: 90px;
+        text-align: right;
+    }
+
+#DownList {
+    margin: 0 15px;
+}
+
+#AutoPostToGoogleList, #AutoPostToOutlookList {
+    padding: 5px;
+}
+
+.toltip {
+    padding: 5px 10px;
+    background-color: rgba(10, 9, 9, 0.58);
+    color: white;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    z-index: 1001;
+}
+
+.Loading {
+    display:block;
+    width:100%;
+    font-size:11px;
+    margin-bottom:10px;
+    display:none;
+}
+
+    .Loading lable {
+        color:#fff;
+        background-color:red;
+        border-radius:3px;
+        padding:3px 10px;
+        font-weight:bold;
+    }
+
+#FullmenuQuickBar {
+    padding: 10px 5px 5px 5px;
+    -webkit-box-shadow: -2px 3px 8px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: -2px 3px 8px 5px rgba(0, 0, 0, 0.5);
+    border-right: 1px solid #5F5C5C;
+    bottom: 0px;
+    z-index: 99999;
+    margin-top: 11px;
+    left: -260px;
+    width: 246px;
+    position: fixed;
+    height: 100%;
+    background: #fcfcfc;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#FullmenuQuickBar h3 {
+    border-bottom: 3px double #e3e3e3;
+    font-family: BKoodakBold,"B Koodak",tahoma;
+    font-size: 21px;
+    padding: 15px;
+    text-align: center;
+    cursor:default;
+}
+
+#FullmenuQuickBar .backlink {
+    border: 1px solid #555555;
+    border-radius: 50%;
+    bottom: 0;
+    color: rgb(78, 78, 78);
+    cursor: pointer;
+    font-size: 31px;
+    height: 40px;
+    left: 200px;
+    line-height: 37px;
+    margin: 6px;
+    position: absolute;
+    text-align: center;
+    width: 40px;
+}
+
+.FilterBar {
+  border-bottom: 1px solid #eee;
+    height: 33px;
+    margin: 0 18px 12px 0px;
+    width: 98%;
+    line-height: 25px;
+    position: relative;
+}
+.page-utility-contain {
+    left: 0px;
+}
+
+.btn-event-Feature {
+      float: left;
+}
+.page-utility-contain div {
+    margin-right: 2px;
+}
+
+.FulldivNewFeatureRow {
+    width:95%;
+    border-bottom:1px solid #eee;
+    height:75px;
+    background-color: #fff;
+    margin:5px 0 5px 5px;
+}
+
+
+.boxevent-head {
+    height: 30px;
+    line-height: 28px;
+    margin: 1px;
+    overflow: hidden;
+}
+
+.boxevent-title {
+    padding: 5px;
+    height: 30px;
+    line-height: 28px;
+    margin: 1px;
+    overflow: hidden;
+    text-align:right;
+}
+
+.boxtitle {
+    padding:0 5px;
+}
+
+.nohide {
+    cursor:default ;
+}
+
+.boxevent-username {
+    float:right;
+}
+
+.box-datetime {
+    float:left;
+}
+
+.box-type {
+    float:right;
+}
+
+#FulldivNewFeature {
+    background-color: #f0f0f0;
+}
+
+.dg_Reminder {
+    border-right: 5px solid #03A9F4;
+}
+
+.dg_Workflow {
+    border-right: 5px solid #8BC34A;
+}
+
+.dg_Email {
+    border-right: 5px solid #6D45B5;
+}
+
+.dg_Sms {
+    border-right: 5px solid #E91E63;
+}
+
+.dg_EmailTemplateSchedule {
+    border-right: 5px solid #FFEB3B;
+    }
+
+.dg_Costumer {
+    border-right: 5px solid #607D8B;
+    }
+
+.dg_Event {
+    border-right: 5px solid #51b749;
+    }
+
+.dg_Todo {
+    border-right: 5px solid #FF9800;
+    }
+
+.dg_felicity {
+    border-right: 5px solid rgb(214, 214, 214);
+}
+
+.dg_varform {
+    border-right: 5px solid black;
+}
+
+.dg_varparam {
+     border-right: 5px solid #D14836;
+}
+
+#dialog_day   {
+    display: none;
+    z-index: 900000000;
+    width: 400px;
+    margin: 9px 0;
+}
+
+#dialog_event{
+    display: none;
+    z-index: 900000000;
+    width: 400px;
+    margin: 9px 0;
+}
+
+.bubble {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 0;
+}
+
+
+.bubblemain {
+    padding: 16px;
+    position: relative;
+}
+
+.bubbleclose {
+    cursor: pointer;
+    height: 13px;
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    width: 13px;
+}
+
+.top-prong {
+    top : -9px;
+}
+
+.bottom-prong {
+    bottom: -9px;
+}
+
+.no-prong, .top-prong, .bottom-prong {
+    height: 9px;
+    overflow: hidden;
+    position: absolute;
+    width: 18px;
+}
+
+.bottom-prong .prong-lt {
+    border-bottom-width: 0;
+}
+.prong-lt {
+    border-color: #fff transparent;
+    border-image: none;
+    border-style: solid;
+    border-width: 9px;
+}
+
+.top-prong .prong-lt {
+    border-top-width: 0;
+}
+.top-prong .prong-lt {
+    top: 1px;
+}
+
+.cb-root {
+    font-size: 14px;
+    font-family: BKoodakBold, 'B Koodak', tahoma;
+    overflow: hidden;
+    width: 100%;
+}
+
+.cb-switcher {
+    margin-bottom: 0.8em;
+    font-size:18px;
+}
+
+.cb-switcher-selected {
+    font-weight: bold;
+     cursor:default;
+}
+
+.cb-root a, .cb-root .lk {
+    font-weight: bold;
+}
+.bubble .lk {
+    text-decoration: none;
+}
+.cb-switcher-link {
+    color: #15c;
+}
+
+.lk, .lk-button, a.lk, .lk-online, a.lk-online {
+    text-decoration: none;
+}
+
+.lk:hover , .lk-button:hover, a.lk:hover, .lk-online:hover, a.lk-online:hover {
+    text-decoration: underline;
+}
+
+.lk, .lk-button, a.lk, .lk-online, a.lk-online {
+    color: #15c;
+    cursor: pointer;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+
+.cb-root form {
+    margin: 0;
+    width: 100%;
+}
+
+.cb-table {
+    width: 100%;
+}
+
+.cb-key {
+    font-weight: normal;
+    padding: 0.4em 0 0.4em 1em;
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+    color:#aaa;
+    font-size:14px;
+}
+
+.cb-value {
+    font-size:15px;
+    padding: 0.4em 0;
+    width: 95%;
+}
+
+.textbox-fill-wrapper {
+    overflow: hidden;
+    width: 100%;
+}
+
+
+.cb-event-title-input {
+    width: 99%;
+}
+.textbox-fill-input {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #c0c0c0 #d9d9d9 #d9d9d9;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+    padding: 2px;
+    width: 96%;
+}
+
+
+.cb-example {
+    font-size: 85%;
+    padding-top: 2px;
+}
+
+.cb-actions {
+    padding-top: 0.8em;
+}
+
+#editLink {
+    font-size:15px;
+}
+
+#btncreateevent {
+    width:85px;
+    height:27px;
+    padding: 4px 6px 6px 6px;
+    font-family: Tahoma,Lucida Grande,Verdana,Lucida Sans Regular,Lucida Sans Unicode,Arial,sans-serif;
+    font-size: 11px;
+    border:1px solid rgba(0, 0, 0, 0.1);
+    border-radius:2px;
+    background-color:#f5f5f5;
+    color:#444;
+}
+
+    #btncreateevent:hover {
+        background-color: #f8f8f8;
+        border: 1px solid #c6c6c6;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        color:#222;
+    }
+
+    .cb-textarea {
+    height: 3.9em;
+}
+
+.cb-day-text {
+    float:left;
+    padding:0 5px;
+}
+
+#dialog_event h3 {
+    /*border-bottom: 1px solid #eee;*/
+    padding: 10px;
+    text-align: center;
+    border-radius:3px;
+    color:#fff;
+}
+
+#dialog_event .bubbleclose {
+    margin:12px;
+}
+
+.NoBorderCalendar  {
+    border-left: 5px solid;
+}
+
+.NoBorderCalendar div {
+    border: 0px solid !important;
+    margin-left: 0px !important;
+}
+
+#fc_Todo.chkd  {
+    background-color: #FF9800 !important;
+}
+
+.fc_Event.allday .fc-event-inner {
+    margin-left: -5px;
+}
+
+.addvarfilterdiv {
+    /*height:180px;*/
+    padding-top:10px;
+    border-right:1px solid #eee;
+    border-left:1px solid #eee;
+}
+
+.lbldiv {
+    width:60px;
+}
+#addvarfilterdiv{
+        font-family: tahoma;
+    font-size: 11px;
+}
+.addBut{
+        font-family: tahoma;
+    font-size: 11px;
+}
+#addvarfilterdiv select {
+    font-family: tahoma;
+    font-size: 12px;
+}

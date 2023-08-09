@@ -1,0 +1,10 @@
+﻿@model object
+@{ var required = ViewData.ModelMetadata.IsRequired;
+}
+<div class="form-group  row @string.Format("{0}",required?"rqd":"")">
+    @Html.LabelFor(model => model, htmlAttributes: new { @class = "control-label col-form-label col-md-3" })
+    <div class="col-md-9">
+        @Html.DropDownListFor(model => model, (SelectList)ViewData[ViewData.ModelMetadata.PropertyName], "--", new { @class = "form-control chzn-select" })
+        @Html.ValidationMessageFor(model => model, "", new { @class = "text-danger" })
+    </div>
+</div>

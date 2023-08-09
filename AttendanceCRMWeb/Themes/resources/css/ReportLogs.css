@@ -1,0 +1,1064 @@
+﻿.DivMain {
+    overflow: auto; /*اسکرول*/
+    width: 100%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 11px;
+    height: 760px;
+    /*border: 1px solid hsl(0, 0%, 86%);*/
+    /*border-radius: 5px 5px 5px 5px;*/
+    /*background: hsl(0, 0%, 96%);*/
+}
+    /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+    .DivMain .searchLogBox {
+        width: 50%!important;
+        background: #F7F7F7;
+        border: 1px solid #CDCDCD;
+        border-radius: 2px;
+        box-shadow: 0 2px 2px -2px #CCC;
+        padding: 3px;
+        margin-right: auto;
+        margin-left: auto;
+        height: 27px;
+        /*margin-top: 10px;*/
+    }
+
+    .DivMain .labelSearch {
+        padding: 7px 10px 10px 10px;
+    }
+
+    .DivMain .txtSearch {
+        box-shadow: 1px 1px #AAA;
+        background: #FCFCFC;
+        font-weight: normal;
+        color: #555;
+        padding: 4.5px;
+        margin-top: 0px;
+        border: 1px #DDD solid!important;
+        width: 146px;
+        height: 14px;
+    }
+
+    .DivMain .btnSearchLog {
+        margin-right: -2px;
+        padding: 4px 9px;
+        background-image: linear-gradient(to bottom,#FFF,#E6E6E6);
+        box-shadow: 1px 1px #AAA;
+        border-style: solid solid none solid;
+        border-width: 1px;
+        border-color: #E6E6E6;
+        cursor: pointer;
+    }
+
+    .DivMain .ui-icon:active {
+        position: relative;
+        top: 1px;
+    }
+
+    .DivMain .showAdvancedSearch {
+        line-height: 27px;
+        margin-right: 10px;
+        margin-left: 10px;
+        color: #016CC4;
+        font-size: 11px;
+    }
+
+        .DivMain .showAdvancedSearch:hover {
+            text-decoration: none;
+        }
+
+
+        .DivMain .showAdvancedSearch:active {
+            position: relative;
+            top: 1px;
+        }
+
+    .DivMain .DivAdvancedSearch {
+        border: 1px solid #AAA;
+        border-radius: 4px;
+        background-color: #EEE;
+        box-shadow: #AAA -1px 1px 2px;
+        z-index: 2!important;
+        display: none;
+        width: 535px;
+        margin-left: auto;
+        margin-right: auto;
+        /*height: 171px;*/
+    }
+
+    .DivMain .txtAdvancedSearch {
+        line-height: 28px;
+        vertical-align: baseline;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .DivMain #format1 {
+        padding-bottom: 1px;
+        margin-left: 10px;
+        margin-right: 10px;
+        direction: rtl;
+    }
+
+    .DivMain #format2 {
+        padding-bottom: 1px;
+    }
+
+    .DivMain .DateAdvancedSearch {
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-right: 3px;
+        padding-left: 3px;
+        line-height: 23px;
+        width: 99%;
+    }
+
+    .DivMain .dateBox {
+        direction: ltr;
+        text-align: center;
+        font-family: Tahoma;
+        font-size: 8pt;
+        width: 70px;
+        border: solid 1px #AAA;
+        border-radius: 3px;
+        height: 17px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .DivMain .txtDateAdvancedSearch {
+        line-height: 20px;
+        vertical-align: baseline;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .DivMain .ui-button {
+        border-style: solid solid solid solid;
+        border-width: 1px;
+        border-color: #AAA;
+        background: #FFF url('../images/ui-bg_diagonals-small_100_f0efea_40x40.png') repeat-x 50% 50%;
+        font-weight: normal;
+        color: #212121;
+        min-width: 85px;
+    }
+
+.layout-timeline .media .comment .Customer {
+    color: #016CC4!important;
+    font-weight: 400;
+    margin-top: -5px;
+    margin-bottom: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    line-height: 1.75;
+    /*padding-right: 2px;*/
+    min-height: 25px;
+    text-align: justify;
+    font-weight: 400;
+}
+
+.DivMain .ui-button-right {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.DivMain .ui-button-left {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.DivMain .ui-button-active {
+    border: 1px solid #D3D3D3;
+    background: #E6E6E6 url('../images/phpThumb_generated_thumbnailpng.png') repeat-x 50% 50%;
+    font-weight: normal;
+    color: #555;
+}
+
+/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.DivMain .txtTarikh {
+    width: 66px;
+    font-size: 12px;
+    border: none;
+    color: hsl(0, 0%, 53%);
+    margin-top: -3px;
+    text-align: center;
+}
+
+
+.DivMain .FirstEvent {
+    background: #C9DBE3;
+    margin-top: 60px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    position: relative;
+    border: 2px solid #4B8DC3;
+    border-radius: 3px;
+    text-align: center;
+    width: 91px;
+    padding: 5px;
+    font-family: Garamond, serif;
+    line-height: 1em;
+    color: #FFF;
+    font-weight: bold;
+    font-size: 20px;
+    z-index: 2;
+    display: none;
+    /*text-shadow: 0px 0px 0 #858585,1px 1px 0 #0B0B0B, 2px 2px 0 #000,3px 3px 2px rgba(0, 0, 0, 0.15),3px 3px 1px rgba(0, 0, 0, 0.5),0px 0px 2px rgba(0, 0, 0, 0.2);*/
+}
+
+.DivMain a:hover {
+    text-decoration: none;
+}
+
+.DivMain .LastEvent {
+    margin-right: auto;
+    margin-left: auto;
+    border: 1px solid #DBDBDB;
+    box-shadow: 0 3px 0 0 #DBDBDB;
+    border-radius: 5px 5px 5px 5px;
+    background: #FFF;
+    text-align: center;
+    width: 49px;
+    height: 24px;
+    color: #969696;
+    font-weight: bold;
+    font-size: 12px;
+    clear: both;
+    vertical-align: bottom;
+    padding-top: 9px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.DivMain .NoList {
+    color: #318FC4;
+    font-size: 11px;
+    width: 23%!important;
+    background: #F7F7F7;
+    border: 1px solid #CDCDCD;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px -2px #CCC;
+    margin-bottom: 15px;
+    margin-top: 50px;
+    padding: 10px;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    display: none;
+}
+
+.DivMain .Box .NoList {
+    color: #318FC4;
+    font-weight: 600;
+    font-size: 14px;
+    width: 50%!important;
+    background: #F7F7F7;
+    border: 1px solid #CDCDCD;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px -2px #CCC;
+    margin-bottom: 15px;
+    margin-top: 50px;
+    padding: 14px;
+    text-align: center;
+    margin-right: auto;
+    margin-left: auto;
+    display: none;
+}
+
+.DivMain .Print {
+    border: 1px solid #E6E6E6;
+    border-radius: 4px 4px 4px 4px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 0px;
+    padding: 5px 4px;
+    background-image: linear-gradient(to bottom,#FFF,#E6E6E6);
+    box-shadow: 1px 2px #AAA;
+    color: #016CC4;
+    cursor: pointer;
+}
+
+    .DivMain .Print:active {
+        position: relative;
+        top: 1px;
+    }
+
+.DivMain .LoadImg {
+    margin: -11px auto -12px;
+    /*margin-left:auto;
+    margin-right:auto;*/
+    display: block;
+    clear: both;
+    padding-top: 1px;
+}
+
+.DivMain .FirstLoadImg {
+    padding-top: 10px!important;
+}
+
+.layout-timeline.layout-timeline-mirror .EmptyDate {
+    box-shadow: none!important;
+    box-shadow: none!important;
+    border: 0!important;
+    background: transparent!important;
+    top: -23px!important;
+}
+
+.layout-timeline.layout-timeline-mirror .EmptyPading {
+    padding: 1px 0px 1px 0px!important;
+    margin-top: -50px;
+}
+
+.layout-timeline.layout-timeline-mirror .timeline {
+    float: right;
+    width: 50%;
+    padding-right: 6px;
+    padding-left: 45px;
+    margin-bottom: initial;
+}
+
+.layout-timeline *, .layout-timeline *:before, .layout-timeline *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.layout-timeline.layout-timeline-mirror .Box {
+    margin: 0 auto 0px;
+    position: relative;
+    border: 1px solid #DBDBDB;
+    box-shadow: 0 2px 0 0 #DBDBDB;
+    border-radius: 4px;
+    background: #F7F7F7;
+}
+
+.layout-timeline.layout-timeline-mirror .EditableBox {
+    border: 3px solid #BDBDBD;
+    /*background: #BDBDBD;*/
+}
+
+.layout-timeline.layout-timeline-mirror .DivLog {
+    border-style: none;
+    border-width: 1px;
+    border-color: #F0F0F0 #F0F0F0 #CDCDCD #F0F0F0;
+    margin-bottom: 0px;
+}
+
+.layout-timeline.layout-timeline-mirror .Box .comment {
+    color: #7D7D7D;
+    padding: 4px 1px 0px 1px;
+}
+
+.layout-timeline.layout-timeline-mirror .Box .Subject {
+    font-weight: bold;
+    margin-top: -1px;
+    margin-bottom: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    line-height: 1.75;
+    padding-right: 3px;
+    padding-left: 3px;
+    color: #979797;
+    min-height: 19px;
+    text-align: justify;
+}
+
+.layout-timeline.layout-timeline-mirror .SubjectComment {
+    margin-top: -2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    line-height: 1.75;
+    padding-right: 3px;
+    padding-left: 3px;
+    color: #979797;
+    /*min-height: 19px;*/
+    text-align: justify;
+    font-family: tahoma;
+    font-size: 11px;
+    padding-bottom: 7px;
+}
+
+.layout-timeline.layout-timeline-mirror .SubjectLinks {
+    margin-top: -17px;
+    margin-bottom: 2px;
+    padding-top: 4px;
+    padding-bottom: 2px;
+    line-height: 1.55;
+    padding-right: 3px;
+    color: #979797;
+    text-align: justify;
+    padding-left: 3px;
+    min-height: 1px;
+}
+
+.layout-timeline.layout-timeline-mirror .RemoveTag {
+    border-style: solid none none none;
+    border-width: thin;
+    border-color: #F0F0F0;
+    margin-top: 3px;
+    padding-bottom: 0px;
+    background: #F7F7F7;
+    width: 97%!important;
+    min-height: 29px!important;
+    height: 100%!important;
+}
+
+.layout-timeline.layout-timeline-mirror .tmpDate {
+    display: none;
+}
+
+
+.layout-timeline.layout-timeline-mirror .DivInsertComment .layout-timeline.layout-timeline-mirror .MainDivComment {
+    margin-top: -6px;
+    display: none;
+}
+
+.layout-timeline.layout-timeline-mirror .DivComment {
+    position: relative;
+    margin-top: 8px;
+    position: relative;
+    border: 1px solid #E6E6E6;
+    padding: 1px;
+    background: #ECECEC;
+    display: none;
+}
+
+    .layout-timeline.layout-timeline-mirror .DivComment:after {
+        position: absolute;
+        top: -8px;
+        right: 10px;
+        display: inline-block;
+        border-right: 7px solid rgba(0, 0, 0, 0);
+        border-bottom: 7px solid #E6E6E6;
+        border-left: 7px solid rgba(0, 0, 0, 0);
+        border-bottom-color: #E6E6E6;
+        content: '';
+        margin-bottom: -2px;
+    }
+
+.layout-timeline.layout-timeline-mirror .DivAddComment { /*.....................................................................................*/
+    display: none;
+}
+
+.layout-timeline.layout-timeline-mirror .CommentBottun {
+    height: 19px;
+}
+
+.layout-timeline.layout-timeline-mirror .CommentDiv {
+    border-style: none none solid none;
+    border-width: 1px;
+    border-color: #F8F8F8;
+}
+
+.layout-timeline.layout-timeline-mirror .CommentImage {
+    margin-top: 1px;
+    padding: 1px;
+    margin-right: 4px;
+    margin-left: 4px;
+    background-color: #FFF;
+    border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    border: 1px solid #DBDBDB;
+    width: 30px;
+    height: 30px;
+}
+
+.layout-timeline.layout-timeline-mirror .CommentImagePic {
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    width: 26px;
+    height: 26px;
+}
+
+.layout-timeline.layout-timeline-mirror .CommentDateTime {
+    margin-top: 4px;
+    height: 12px;
+}
+
+.layout-timeline.layout-timeline-mirror .CommentTime {
+    color: #B8B8B8;
+    height: 12px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.layout-timeline.layout-timeline-mirror .CommentText {
+    padding-top: 3px;
+    padding-bottom: 4px;
+    color: #838383;
+    min-height: 15px;
+    font-size: 10px;
+    margin-top: 3px;
+    margin-bottom: 2px;
+    line-height: 1.55;
+    text-align: justify;
+    background: #ECECEC;
+    font-family: tahoma;
+}
+
+.layout-timeline.layout-timeline-mirror .Commentauthor {
+    color: #016CC4;
+}
+
+.layout-timeline.layout-timeline-mirror .viewallcomments {
+    padding-bottom: 2px;
+    line-height: 1.55;
+    padding-left: 8px;
+    padding-right: 8px;
+    color: #9294DB;
+    border-style: none none solid none;
+    border-width: 1px;
+    border-color: #F8F8F8;
+}
+
+    .layout-timeline.layout-timeline-mirror .viewallcomments:hover {
+        text-decoration: none;
+    }
+
+/*''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''*/
+.layout-timeline.layout-timeline-mirror .DateDay {
+    font-weight: bold;
+}
+
+.layout-timeline.layout-timeline-mirror .DateMonth {
+    text-transform: capitalize;
+    font-size: 10px;
+}
+
+.layout-timeline.layout-timeline-mirror .DateYear {
+    text-transform: uppercase;
+    font-size: 9px;
+}
+
+.layout-timeline ul.timeline > li .time {
+    top: 20px;
+    display: block;
+    line-height: 13px;
+    border: 1px solid #DBDBDB;
+    box-shadow: 0 3px 0 0 #DBDBDB;
+    border-radius: 5px 5px 5px 5px;
+    background: #FFF;
+    z-index: 1;
+    width: 50px;
+    padding: 2px 0;
+    text-align: center;
+    position: absolute;
+    left: -69px;
+    font-size: 12px;
+    color: #969696;
+}
+
+.layout-timeline ul.timeline > li .TimeDatePoint {
+    position: absolute;
+    top: 58px;
+    width: 8px;
+    height: 8px;
+    background: #4B8DC3;
+    margin-left: 21px;
+}
+
+.layout-timeline ul.timeline > li .TimeDateLine {
+    position: absolute;
+    top: 61px;
+    width: 45px;
+    height: 2px;
+    background: #4B8DC3;
+    margin-left: 24px;
+}
+
+.layout-timeline ul.timeline > li .time .type {
+    color: hsl(207, 50%, 53%);
+    font-weight: bold;
+}
+
+.layout-timeline ul.timeline {
+    list-style: none;
+}
+
+    .layout-timeline ul.timeline > li {
+        position: relative;
+        padding: 40px 0px 1px 0px!important;
+    }
+
+        .layout-timeline ul.timeline > li.active .time:before, .layout-timeline ul.timeline > li.active .time:after {
+            background: hsl(207, 50%, 53%);
+        }
+
+        .layout-timeline ul.timeline > li.active:before {
+            display: block;
+            position: absolute;
+            content: "";
+            top: 0;
+            bottom: 0;
+            left: -45px;
+            width: 2px;
+            z-index: 2;
+            background: hsl(207, 50%, 53%);
+            z-index: 1;
+        }
+/*'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''عکس*/
+.layout-timeline .media {
+    font-size: 11px;
+    margin: 0px 0 0px;
+}
+
+.layout-timeline.layout-timeline-mirror .media > .pull-left {
+    margin-right: 4px;
+    margin-top: 2px;
+    padding: 1px;
+    margin-left: 6px;
+    background-color: hsl(0, 100%, 100%);
+    width: 46px;
+    height: 46px;
+}
+
+.layout-timeline.layout-timeline-mirror .thumb {
+    border-radius: 5px 5px 5px 5px;
+    margin-top: 1px;
+    margin-right: 3px;
+    margin-left: 3px;
+    padding: 1px;
+    border: 1px solid #DBDBDB;
+    background-color: #FFF;
+}
+
+    .layout-timeline.layout-timeline-mirror .thumb img {
+        border-radius: 5px 5px 5px 5px;
+        width: 42px;
+        height: 42px;
+    }
+
+.layout-timeline .media .media-body {
+    border-width: 1px;
+    height: 23px;
+    border-bottom-color: #F0F0F0;
+    border-bottom-style: solid;
+}
+
+    .layout-timeline .media .media-body .author {
+        color: #016CC4;
+        margin-top: 6px;
+        padding-right: 1px;
+    }
+
+.layout-timeline.layout-timeline-mirror .mutedTimeText {
+    border-style: none;
+    color: #B4B0B0;
+    margin-top: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
+    height: 13px;
+    width: 29px;
+    font-size: 11px;
+    background: #F7F7F7;
+    text-align: center;
+    font-weight: bold;
+}
+
+.layout-timeline.layout-timeline-mirror .mutedTimeEdit {
+    border-style: solid;
+    border-width: thin;
+    border-color: #F0F0F0;
+    background: #FFF;
+}
+
+.layout-timeline.layout-timeline-mirror .mutedDateText {
+    color: #B4B0B0;
+    font-weight: bold;
+    margin-top: 4px;
+    width: 56px;
+    height: 11px;
+    font-size: 11px;
+    display: none;
+    text-align: center;
+}
+
+.layout-timeline.layout-timeline-mirror .mutedDateEdit {
+    border-style: solid;
+    border-width: thin;
+    border-color: #F0F0F0;
+}
+/*'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''Odd*/
+
+.layout-timeline.layout-timeline-mirror ul.timeline > li:nth-child(even) {
+    left: -100%;
+    width: 100%;
+    margin-left: -90px;
+    /*margin-top: -20px;*/
+}
+
+.layout-timeline.layout-timeline-mirror .EmptyPading li:nth-child(even) {
+    padding: 0px 0px 1px 0px!important;
+    margin-top: -50px;
+}
+
+.layout-timeline.layout-timeline-mirror ul.timeline > li:nth-child(even).active:before {
+    left: auto;
+    right: -47px;
+}
+
+.layout-timeline.layout-timeline-mirror ul.timeline > li:nth-child(even) .time {
+    left: auto;
+    right: -71px;
+    text-align: center;
+    top: 28px;
+    z-index: 1!important;
+}
+
+.layout-timeline ul.timeline > li:nth-child(even) .TimeDateLine {
+    position: absolute;
+    top: 61px;
+    width: 45px;
+    height: 2px;
+    background: #4B8DC3;
+    margin-left: -21px;
+}
+/*////////////////////////////////////////////////////////////////////////////*/
+.DivMain .ThingAdvance {
+    margin-bottom: 5px;
+    height: 50px;
+}
+
+.DivMain .Saprator {
+    clear: both;
+    margin-right: auto;
+    margin-left: auto;
+    width: 99%;
+    border-style: none none solid none;
+    border-width: thin;
+    border-color: #CCC;
+}
+
+.DivMain .edit_tag_link {
+    padding-top: 3px;
+    padding-right: 9px;
+    padding-left: 9px;
+    width: 100%;
+}
+
+.DivMain .NameCustomer {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.DivMain .tagSearch {
+    margin-top: 4px;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    margin-bottom: 4px;
+    line-height: 1.55;
+    padding-right: 20px;
+    padding-left: 20px;
+    background-color: #FFF;
+    color: #C7C7C7;
+}
+
+.DivMain .EditTagAdvanceSearch {
+    border: thin solid #F0F0F0;
+    padding-bottom: 0px;
+    background: #FFFFFF;
+    border-radius: 3px;
+    margin-bottom: 3px;
+    width: 400px!important;
+    min-height: 29px!important;
+    height: 100%!important;
+    color: #979797!important;
+    display: inline-block;
+}
+
+.DivMain .txtTagAdvancedSearch {
+    line-height: 28px;
+    vertical-align: baseline;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.DivMain .checkTag {
+    display: none;
+}
+
+.DivMain .TagAnd {
+    border: 1px solid #D3D3D3;
+    font-weight: normal;
+    color: #555;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    display: inline-block;
+    line-height: normal;
+    cursor: pointer;
+    text-align: center;
+    height: 20px;
+    min-width: 20px;
+}
+
+.DivMain .TagOR {
+    border: 1px solid #D3D3D3;
+    font-weight: normal;
+    color: #555;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    display: inline-block;
+    line-height: normal;
+    cursor: pointer;
+    text-align: center;
+    height: 20px;
+    min-width: 20px;
+    margin-right: -4px;
+}
+
+.DivMain .TagAndOR {
+    display: inline-block;
+    vertical-align: text-bottom;
+    padding: 10px;
+    display: none;
+    direction: rtl;
+}
+
+.DivMain .TotalRow {
+    white-space: nowrap;
+    color: #979797;
+    border: 1px solid #E6E6E6;
+    border-radius: 4px 4px 4px 4px;
+    margin-top: 1px;
+    padding: 6px 4px;
+}
+
+.DivMain .TagChecked {
+    background-color: #4B8DC3;
+    color: #FFFFFF;
+}
+
+.DivMain .AdvanceSearchUser {
+    border: 1px solid #D3D3D3;
+    background: #E6E6E6;
+    font-weight: normal;
+    color: #555;
+    border-radius: 3px;
+    width: 150px;
+}
+
+.DivMain .DivAdvance {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    min-height: 20px;
+}
+
+.DivMain .search_cus_close {
+    min-width: 18px;
+    cursor: pointer;
+}
+
+.PrintDiv {
+    border-style: solid none none none;
+    border-width: thin;
+    border-color: #CCCCCC;
+}
+
+    .PrintDiv .Owner {
+        margin-top: 4px;
+        font-weight: bold;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .PrintDiv .Customer {
+        height: 18px;
+        margin-top: 4px;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .PrintDiv .TimeText {
+        color: #B4B0B0;
+        margin-top: 4px;
+        margin-left: 10px;
+        margin-right: 10px;
+        font-size: 11px;
+        text-align: center;
+    }
+
+    .PrintDiv .LogBox {
+        border-style: none none solid none;
+        border-top-width: thin;
+        border-bottom-width: thin;
+        border-top-color: #C0C0C0;
+        border-bottom-color: #C0C0C0;
+        clear: both;
+    }
+
+    .PrintDiv .comment {
+        border-style: solid none solid none;
+        border-top-width: thin;
+        border-bottom-width: thin;
+        border-top-color: #FAFAFA;
+        border-bottom-color: #FAFAFA;
+        clear: both;
+        padding-bottom: 15px;
+    }
+
+    .PrintDiv .Subject {
+        font-weight: bold;
+        line-height: 1.75;
+        padding-right: 10px;
+        padding-left: 10px;
+        color: #979797;
+        text-align: justify;
+    }
+
+    .PrintDiv .SubjectComment {
+        line-height: 1.75;
+        padding-right: 10px;
+        padding-left: 10px;
+        color: #979797;
+        text-align: justify;
+        font-family: tahoma;
+        font-size: 11px;
+    }
+
+    .PrintDiv .TagLog {
+        margin-top: -1px;
+    }
+
+    .PrintDiv .LogTagPrint {
+        display: inline-block;
+    }
+
+.DivAdvancedPrint {
+    border-style: none solid solid solid;
+    border-width: 1px;
+    border-color: #CDCDCD;
+    height: 46px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 0px 0px 4px 4px;
+    background-color: #EEE;
+    left: 145px;
+    z-index: 2 !important;
+    direction: rtl;
+    display: none;
+    margin-right: auto;
+    margin-left: auto;
+    width: 15%;
+}
+
+    .DivAdvancedPrint .PrintKind {
+        padding-bottom: 2px;
+        line-height: 1.75;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+/*......................................................*/
+textarea {
+    color: #3e4548;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 100%;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+}
+
+pre, code, kbd, samp {
+    font-family: monospace, serif;
+    _font-family: 'courier new', monospace;
+    font-size: 1em;
+}
+
+pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+textarea {
+    font-size: 100%;
+    margin: 0;
+    vertical-align: baseline;
+    *vertical-align: middle;
+}
+
+textarea {
+    overflow: auto;
+    vertical-align: top;
+    resize: vertical;
+}
+
+    textarea:invalid {
+        background-color: #f0dddd;
+    }
+
+.wrap {
+    width: 80%;
+    margin: 0 auto;
+    padding: 40px 0;
+}
+
+.flex-text-wrap {
+    position: relative;
+    *zoom: 1;
+}
+
+textarea, .flex-text-wrap {
+    outline: 0;
+    margin: 0;
+    border: none;
+    padding: 0;
+    *padding-bottom: 0!important;
+}
+
+    .flex-text-wrap textarea, .flex-text-wrap pre {
+        *white-space: pre;
+        *word-wrap: break-word;
+        white-space: pre-wrap;
+        width: 100%;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    .flex-text-wrap textarea {
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        resize: none;
+        /* IE7 box-sizing fudge factor */
+        *height: 94%;
+        *width: 94%;
+    }
+
+    .flex-text-wrap pre {
+        display: block;
+        visibility: hidden;
+    }
+
+    textarea, .flex-text-wrap pre {
+        line-height: 1.7;
+    }
+
+
+    .DivLog .tag {
+    cursor: pointer;
+}
+
+    .DivLog .tag:active {
+        position: relative;
+        top: 1px;
+        box-shadow: 1px 1px #AAA;
+    }
+
+.DivAdvancedSearch .deleteFilter {
+    text-align: center;
+    color: #FFF;
+    font-size: 10px;
+    cursor: pointer;
+    border-top: thin solid #BEBEBE;
+    clear: both;
+    padding: 3px;
+    background-color: #C8CDD1;
+    margin-bottom: 1px;
+}

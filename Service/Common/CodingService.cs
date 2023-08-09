@@ -23,7 +23,6 @@ namespace Service.Common
     {
         Task<List<NormalJsonClass>> GetLaboratoryServiceList();
         Task<List<NormalJsonClass>> GetLaboratoryServiceDetail(string serviceId);
-        Task<IEnumerable<CodingVm>> GetAll();
         Task<Coding> SaveNewCode(CodingVm model);
         Task<Coding> SavePreCode(CodingVm model);
         Task<string> Delete(string code);
@@ -43,7 +42,7 @@ namespace Service.Common
         Task<List<NormalJsonClass>> GetAllInsurance();
         Task<IEnumerable<CodingVm>> GetAllChildFormBuilder(string code, int levelNum);
         Task<Coding> FindByCode(string code);
-        Task<IEnumerable<CodingVm>> GetAll(Guid MedicalCenterId);
+        Task<IEnumerable<CodingVm>> GetAll();
         Task<List<NormalJsonClass>> GetFormLists();
         Task<List<NormalJsonClass>> GetAccountPartiesList(CodingVm entity);
 
@@ -166,10 +165,6 @@ namespace Service.Common
             {
                 var _centerType = Public.CurrentUser.IsCenterActivityType;
 
-
-                //var _query = string.Format(@"select * from tbl_Coding where code <> N'016'");
-                //var _res = (await _repo.RunQuery<Coding>(_query)).ToList();
-
                 var _res = (await _repo.Get(m => m.code != "016")).ToList();
                 var res = _res.ToList().Select(z => new CodingVm()
                     {
@@ -195,6 +190,25 @@ namespace Service.Common
                 throw ex;
             }
         }
+        //public async Task<IEnumerable<CodingVm>> GetAll()
+        //{
+
+        //    var res = (await _repo.GetAll())
+        //        .AsEnumerable()
+        //        .Select(z => new CodingVm()
+        //        {
+        //            code = z.code,
+        //            FaName = z.FaName,
+        //            name = z.name,
+        //            CodeCanGrow = z.CodeCanGrow,
+        //            CodeActive = z.CodeActive,
+        //            Assistance = (z.Assistance == true ? true : false),
+        //            len = z.len,
+        //            level = z.level,
+        //            WorkFlow = z.WorkFlow == null ? false : true,
+        //        });
+        //    return res;
+        //}
         public async Task<IEnumerable<CodingVm>> GetAllChild(string code, int levelNum)
         {
             var model = await _repo.Find(code);
@@ -610,26 +624,6 @@ namespace Service.Common
             return await _repo.First(p => p.code.Equals(code));
         }
 
-        public async Task<IEnumerable<CodingVm>> GetAll(Guid MedicalCenterId)
-        {
-            var medicalCenter = MedicalCenterId;
-
-            var res = (await _repo.Get(m => m.MedicalCenterId == medicalCenter))
-                .AsEnumerable()
-                .Select(z => new CodingVm()
-                {
-                    code = z.code,
-                    FaName = z.FaName,
-                    name = z.name,
-                    CodeCanGrow = z.CodeCanGrow,
-                    CodeActive = z.CodeActive,
-                    Assistance = (z.Assistance == true ? true : false),
-                    len = z.len,
-                    level = z.level,
-                    WorkFlow = z.WorkFlow == null ? false : true,
-                });
-            return res;
-        }
 
 
 

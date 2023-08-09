@@ -1,0 +1,60 @@
+﻿@using ViewModel.UserManagement.Attendance;
+
+@model  Utility.Utitlies.viewModel<TransactionRequestVm>
+@{
+    var formSecurity = (ViewModel.Security.FormSecurity)ViewBag.FormSecurity;
+}
+
+
+<table class="table table-hover text-nowrap">
+    <thead>
+        <tr>
+            <th>عملیات</th>
+            <th>پرسنل</th>
+            <th>تاریخ درخواست</th>
+            <th>ساعت درخواست</th>
+            <th>مرخصی</th>
+            <th>درخواست</th>
+            <th>از تاریخ</th>
+            <th>از ساعت</th>
+            <th>تا تاریخ</th>
+            <th>تا ساعت</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model.TLists)
+            {
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <div class="row" style="float:right;">
+                                <div style="float:left;padding:5px;min-width: 80px;">
+                                    <button class="btn btn-block bg-gradient-success btn-flat" onclick="TransactionRequestStatus('@item.Id', '1')">تایید</button>
+                                </div>
+                                <div style="float:left;padding:5px;min-width: 80px;">
+                                    <button class="btn btn-block bg-gradient-danger btn-flat" onclick="TransactionRequestStatus('@item.Id', '2')">لغو</button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td><a>@item.Person_Name</a></td>
+                    <td><a>@item.ModifiedDateStr</a></td>
+                    <td><a>@item.ModifiedDateStr_Time</a></td>
+                    <td><a>@item.ReqTypeStr</a></td>
+                    <td><a>@item.Transaction_Name</a></td>
+                    <td><a>@item.FromDateRequestStr</a></td>
+                    <td><a>@item.FromDateRequestStr_Time</a></td>
+                    <td><a>@item.ToDateRequestStr</a></td>
+                    <td><a>@item.ToDateRequestStr_Time</a></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+
+
+
+

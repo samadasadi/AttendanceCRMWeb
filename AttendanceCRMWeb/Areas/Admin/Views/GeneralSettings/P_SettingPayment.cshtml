@@ -1,0 +1,14 @@
+﻿
+@model ViewModel.Common.GeneralSettingVm
+@using Utility.HtmlHelpers
+
+@using (Html.CreateDivForBootstrap())
+{
+    <div class="col-md-6">
+        @Html.EditorFor(m => m.PaymentName)
+    </div>
+    <div class="col-md-6">
+        @Html.EditorFor(m => m.Comment)
+    </div>
+}
+

@@ -1,0 +1,21 @@
+﻿@model string
+@{
+    var placeholder = string.Empty;
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("placeholder"))
+    {
+        placeholder = ViewData.ModelMetadata.AdditionalValues["placeholder"] as string;
+    }
+
+}
+
+<div class="input-group">
+    <div class="input-group-addon">
+        @Html.LabelFor(model => model)
+    </div>
+    @Html.TextBoxFor(model => model, new { @class = "form-control", placeholder = placeholder })
+    <div>
+        <div class="required">
+            @Html.ValidationMessageFor(model => model, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>

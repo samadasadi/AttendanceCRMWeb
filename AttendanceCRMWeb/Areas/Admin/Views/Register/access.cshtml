@@ -1,0 +1,46 @@
+﻿@using System
+@using System.Collections.Generic
+@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@model ViewModel.UserManagement.UserVm
+@Html.MyHelper().PageHeader("دسترسی کاربر", Model != null ? Model.Id : Guid.Empty)
+
+<div class="portlet-body form">
+    @using (Html.BeginForm())
+    {
+        if (Model != null && Model.Id != Guid.Empty)
+        {
+            @Html.HiddenFor(m => m.Id)
+        }
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label col-form-label col-md-3" for="">دسترسی به</label>
+                <div class="col-sm-9">
+                    <table class="table">
+                        @foreach (var item in Model.RoleGroups)
+                        {
+                            <tr>
+                                <td>@item.Text</td>
+                                <td>
+                                    <input type="checkbox" name="SelectedRoleGroups" value="@item.Value" @string.Format("{0}", item.Selected ? "checked" : "") />
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                    <div class="row">
+                        <div class="col-md-offset-3 col-md-9">
+                            <button type="submit" class="btn green">ثبت</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
+
+
+

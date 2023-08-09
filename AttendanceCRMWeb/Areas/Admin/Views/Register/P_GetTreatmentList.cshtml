@@ -1,0 +1,126 @@
+﻿
+@model  viewModel<ViewModel.BasicInfo.TherapyVm>
+@using Utility.Utitlies
+@using Utility.PublicEnum
+@using Service.Consts
+
+@{
+    var formSecurity = (ViewModel.Security.FormSecurity)ViewBag.FormSecurity;
+}
+
+<!-- /.box-header -->
+<div style="overflow-x:scroll;">
+    <table id="example2" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th style="min-width:100px;">شماره پرونده</th>
+                <th style="text-align:right;min-width:200px;">نام بیمار</th>
+                <th style="min-width:100px;">تاریخ</th>
+                <th style="min-width:150px;">سرفصل درمان</th>
+                <th style="min-width:250px;">@Resources.Md.DoingChildCode</th>
+
+                @if (Public.CurrentUser.IsCenterActivityType == false)
+                {
+                    <th style="min-width:100px;">شماره دندان</th>
+                }
+                <th style="min-width:100px;">تعداد</th>
+                <th style="min-width:100px;">@Resources.Md.TotalCosts</th>
+                <th style="min-width:100px;">@Resources.Md.Insurancecontributions</th>
+                <th style="min-width:100px;">@Resources.Md.fvDiscount</th>
+                <th style="min-width:100px;">@Resources.Md.Price</th>
+                <th style="min-width:100px;">نوع تخفیف</th>
+                <th style="min-width:100px;">مراجعه بعدی</th>
+                <th style="min-width:100px;">نوع درمان</th>
+                <th style="min-width:200px;">@Resources.Md.Doctor</th>
+                <th style="min-width:200px;">@Resources.Md.Assistant</th>
+                <th style="min-width:200px;">@Resources.Md.UserName</th>
+                <th style="min-width:200px;">@Resources.Md.Coment</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.TLists)
+            {
+                <tr>
+
+
+                    <td><a href="/Admin/CustomerInfo/Detail/@item.CustomerId" target="_blank">@item.DocNo</a></td>
+                    <td><a href="/Admin/CustomerInfo/Detail/@item.CustomerId" target="_blank">@item.FirstName - @item.LastName</a></td>
+                    <td>@item.VisitDate</td>
+                    <td>@item.DoingCodeStr</td>
+                    <td>@item.DoingChildCodeStr</td>
+                    @if (Public.CurrentUser.IsCenterActivityType == false)
+                    {
+                        <td>@item.DentisKey</td>
+                    }
+                    <td>@item.TeethNumber</td>
+                    <td>@item.fvRealPrice.Value.ToPrice()</td>
+                    <td>@item.fvInsurancePrice.ToPrice()</td>
+                    <td>@item.fvDiscount.Value.ToPrice()</td>
+                    <td>@item.Price.ToPrice()</td>
+                    <td>@item.DiscountType</td>
+                    <td>@item.insno</td>
+                    <td>@item.doingType</td>
+                    <td><a href="/Admin/Register/DetailView/@item.DoctorId" target="_blank"><span>@item.DocNoName</span></a></td>
+                    <td><a href="/Admin/Register/DetailView/@item.fvAssistantID" target="_blank"><span>@item.AssistantName</span></a></td>
+                    <td>@item.UserName</td>
+                    <td>@item.Coment</td>
+
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>شماره پرونده</th>
+                <th style="text-align:right;">نام بیمار</th>
+                <th>تاریخ</th>
+                <th>سرفصل درمان</th>
+                <th>@Resources.Md.DoingChildCode</th>
+
+                @if (Public.CurrentUser.IsCenterActivityType == false)
+                {
+                    <th>شماره دندان</th>
+                }
+                <th>تعداد</th>
+                <th>@Resources.Md.TotalCosts</th>
+                <th>@Resources.Md.Insurancecontributions</th>
+                <th>@Resources.Md.fvDiscount</th>
+                <th>@Resources.Md.Price</th>
+                <th>نوع تخفیف</th>
+                <th>مراجعه بعدی</th>
+                <th>نوع درمان</th>
+                <th>@Resources.Md.Doctor</th>
+                <th>@Resources.Md.Assistant</th>
+                <th>@Resources.Md.UserName</th>
+                <th>@Resources.Md.Coment</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+@Html.Partial(VaribleForName.NamePartialOperationPageing, Model.CommonCustomViewTablePaging)
+<!-- /.box-body -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+    $(function () {
+        $('.select2').select2()
+        $('.mailbox-messages input[type="checkbox"]').iCheck({
+            checkboxClass: 'icheckbox_flat-blue',
+            radioClass: 'iradio_flat-blue'
+        });
+    });
+</script>
+

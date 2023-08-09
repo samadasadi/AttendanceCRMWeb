@@ -1,0 +1,41 @@
+﻿@using System.ComponentModel
+@model object
+@{
+    var placeholder = string.Empty;
+    var ltr = false;
+    var isRadonly = false;
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("placeholder"))
+    {
+        placeholder = ViewData.ModelMetadata.AdditionalValues["placeholder"] as string;
+    }
+
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("ltr"))
+    {
+        ltr = (bool)ViewData.ModelMetadata.AdditionalValues["ltr"];
+    }
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("isReadOnly"))
+    {
+        isRadonly = (bool)ViewData.ModelMetadata.AdditionalValues["isReadOnly"];
+    }
+
+    var required = ViewData.ModelMetadata.IsRequired;
+
+
+}
+<div class="form-group row @string.Format("{0}",required?"rqd":"")">
+
+    @Html.LabelFor(model => model, htmlAttributes: new { @class = "control-label col-form-label col-md-3 text-right" })
+    <div class="col-sm-9">
+        @if (isRadonly)
+        {
+            @Html.TextBoxFor(model => model, new { @class = string.Format("form-control {0}", ltr ? "ltr" : ""), @readonly = "readonly" })
+        }
+        else
+        {
+            @Html.TextBoxFor(model => model, new { @class = string.Format("form-control {0}", ltr ? "ltr" : "") })
+        }
+
+        @Html.ValidationMessageFor(model => model, "", new { @class = "text-danger" })
+    </div>
+</div>
+

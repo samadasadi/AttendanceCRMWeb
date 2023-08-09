@@ -26,7 +26,7 @@
                 @Html.Raw(Public.CurrentUser.ImgPath_RightMenu)
             </div>
             <div class="info">
-                <a href="/UserManagement/Register/DetailView/@Public.CurrentUser.Id" class="d-block">@Public.CurrentUser.GetFullName() - @Public.CurrentUser.UserName</a>
+                <a href="/Admin/Register/DetailView/@Public.CurrentUser.Id" class="d-block">@Public.CurrentUser.GetFullName() - @Public.CurrentUser.UserName</a>
             </div>
         </div>
 
@@ -185,23 +185,6 @@
                         </a>
                     </li>*@
 
-                <li class="nav-header">برچسب ها</li>
-                <li class="nav-item">
-                    @if (Public.CurrentUser.IsCenterActivityType)
-                    {
-                        <a href="http://minamedical.ir/" class="nav-link ">
-                            <img src="~/Media/LogoMedical.png" class="img-circle" alt="ورود به سایت مینا مدیکال" style="width:25px;">
-                            <p>مدیکال</p>
-                        </a>
-                    }
-                    else
-                    {
-                        <a href="https://minadent.ir/" class="nav-link ">
-                            <img src="~/Media/logo.png" class="img-circle" alt="ورود به سایت مینا دنت" style="width:25px;">
-                            <p>مینا دنت</p>
-                        </a>
-                    }
-                </li>
             </ul>
         </nav>
 
@@ -237,7 +220,7 @@
             b.innerHTML += "<input type='hidden' value='" + arr[i]._pName + "' id='" + arr[i]._pId + "'>";
             b.addEventListener("click", function (e) {
                 inp.value = this.getElementsByTagName("input")[0].value;
-                document.location.href = "/BasicInfo/CustomerInfo/Detail/" + this.getElementsByTagName("input")[0].id + "";
+                document.location.href = "/Admin/CustomerInfo/Detail/" + this.getElementsByTagName("input")[0].id + "";
                 closeAllLists();
             });
             a.appendChild(b);

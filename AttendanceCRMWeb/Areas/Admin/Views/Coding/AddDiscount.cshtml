@@ -1,0 +1,58 @@
+﻿@model ViewModel.Common.CodingVm
+
+
+<link href="~/Scripts/FontawesomeIconpickerMaster/fontawesome-iconpicker.min.css" rel="stylesheet" />
+
+<form class="form-horizontal">
+    <div class="col-md-12">
+
+        @Html.EditorFor(m => m.name)
+        <br />
+        <div class="col-md-12">
+            @Html.EditorFor(m => m.CodeActive)
+        </div>
+            @Html.HiddenFor(m => m.Parent)
+            @Html.HiddenFor(m => m.code)
+            @Html.EditorFor(m => m.UserCode)
+            @Html.EditorFor(m => m.tag)
+            @Html.EditorFor(m => m.index)
+            @Html.EditorFor(m => m.Price)
+
+
+            @if (Model.Parent == "022")
+            {<div class="col-md-6">
+                    @Html.EditorFor(m => m.WorkFlow)
+                </div>
+                Model.FaName = Model.FaName ?? "fa-envelope-o";
+                <style>
+                    .modal-dialog {
+                        max-width: 60% !important;
+                    }
+
+                        .modal-dialog modal-lg {
+                            max-width: 60% !important;
+                        }
+                </style>
+            }
+            <div id="SumAlert"></div>
+        </div>
+</form>
+<script>
+    $(function () {
+        MinaDent.Common.AjaxInitialization();
+        changeColInputAndLabel("name", 6, 6);
+        changeColInputAndLabel("UserCode", 6, 6);
+        changeColInputAndLabel("tag", 6, 6);
+        changeColInputAndLabel("index", 6, 6);
+        changeColInputAndLabel("Price", 6, 6);
+        changeColInputAndLabel("CodeActive", 6, 6);
+    });
+    $(function () {
+        $(".iconpicker-item").click(function () {
+            var title = $(this).attr('title').replace(".", "");
+            $('#FaName').val(title)
+            $(".iconpicker-component").html("<i class=\"fa " + title + "\"></i>")
+        });
+    });
+</script>
+

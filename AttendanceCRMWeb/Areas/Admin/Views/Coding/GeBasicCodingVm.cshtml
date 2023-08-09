@@ -1,0 +1,8 @@
+﻿
+
+@model Utility.Utitlies.viewModel<ViewModel.Common.CodingVm>
+@using Utility.HtmlHelpers
+
+
+    @Html.SelectAndText(Model.CommonCustomViewTablePaging.IdComboSelectCount, Resources.Md.Search, Model.CommonCustomViewTablePaging.IdTextSearch, Resources.Md.Create, "MinaDent.Coding.ShowDiv(" + "\"" + Model.CommonCustomViewTablePaging.TableIdDiv + "\"" + "," + "\"" + Model.CommonCustomViewTablePaging.IdComboSelectCount + "\"" + "," + "\"" + Model.CommonCustomViewTablePaging.IdTextSearch + "\"" + ");", (bool)ViewBag.IsShowButtonAdd, true, false, true, null)
+    @Html.Partial("P_ListBasicCoding", Model)

@@ -1,0 +1,22 @@
+﻿@model DateTime?
+@{
+    var placeholder = string.Empty;
+
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("placeholder"))
+    {
+        placeholder = ViewData.ModelMetadata.AdditionalValues["placeholder"] as string;
+    }
+    var name = (ViewData.ModelMetadata).PropertyName;
+    var required = ViewData.ModelMetadata.IsRequired;
+}
+
+
+    <div class="col-sm-7" style="padding:0px 2px 0px 0px; top: -7px;">
+        @Html.MyHelper().TreasuryTextBoxFor(model => model, TextBoxType.Date)
+        @if (required)
+        {
+            <span class="field-validation-valid text-danger" data-valmsg-for="@string.Format("{0}Str",name)" data-valmsg-replace="true"></span>
+        }
+    </div>
+
+

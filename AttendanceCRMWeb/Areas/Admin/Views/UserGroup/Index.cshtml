@@ -1,0 +1,78 @@
+﻿
+@using AttendanceCRMWeb.Helpers
+@using Utility.HtmlHelpers
+@model List<ViewModel.UserManagement.UserGroupVm>
+@{
+    ViewBag.Title = "کاربران | گروه های کاربری";
+    Layout = Utility.Utitlies.VaribleForName.AddressLayoutMasterNew;
+    var formSecurity = (ViewModel.Security.FormSecurity)ViewBag.FormSecurity;
+}
+
+
+
+@using (Html.BsPanel(Resources.Md.Usergrouplist))
+{
+
+    @Html.ActionLink(Resources.Md.NewRecord, "Create", "UserGroup", new { Area = "Admin" }, new { @class = "btn btn-info" })
+
+
+
+
+    <table class="table table-hover text-nowrap">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>عملیات</th>
+                <th>عنوان</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="mailbox-name" style="vertical-align:middle; width:100px;">-</td>
+                        <td style="vertical-align:middle; width:170px;">
+
+                            <a class="btn btn-info btn-sm" href="/Admin/UserGroup/Edit?id=@item.Id" ><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;ویرایش</a>
+                            <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="Delete('@item.Id')"><i class="fas fa-trash"></i></a>
+
+                        </td>
+                        <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.Name</a></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+
+
+
+}
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        function FormatLink(cellValue, options, rowObject) {
+            var o = "<a href=" + '/Admin/UserGroup/Edit' + "/" + cellValue + "  class='fa fa-edit Mercury-icon' title='ویرایش' >" + ' ' + "<a/>";
+            return o;
+        }
+
+
+
+        function Delete(id) {
+            ConfirmDelete("GET", "/Admin/UserGroup/DeleteRow", { id: id }, function (res) {
+                debugger;
+
+                if (!res.error) {
+                    location.reload();
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            });
+        }
+
+    </script>
+}

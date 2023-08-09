@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -67,6 +68,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attendance\DeviceGroupVm.cs" />
+    <Compile Include="Attendance\DeviceTransactionEventVm.cs" />
+    <Compile Include="Attendance\PublicViewModel.cs" />
     <Compile Include="BaseNopEntityModel.cs" />
     <Compile Include="BaseNopModel.cs" />
     <Compile Include="BasePagedListModel.cs" />
@@ -75,17 +79,21 @@
     <Compile Include="BasicInfo\CostVm.cs" />
     <Compile Include="BasicInfo\Cost_IncomingVm.cs" />
     <Compile Include="BasicInfo\DataModel.cs" />
+    <Compile Include="BasicInfo\MedicalCenterVm.cs" />
     <Compile Include="BasicVm.cs" />
     <Compile Include="Basic\MenuVm.cs" />
     <Compile Include="Chat\ChatUserModel.cs" />
     <Compile Include="Chat\TChatVm.cs" />
+    <Compile Include="Common\BackUpVm.cs" />
     <Compile Include="Common\CodingVm.cs" />
     <Compile Include="Common\FileVm.cs" />
     <Compile Include="Common\GeneralSettingVm.cs" />
+    <Compile Include="Cost\MedicalCenterCostReport.cs" />
     <Compile Include="IPagedModel.cs" />
     <Compile Include="Message\SMSVm.cs" />
     <Compile Include="NopModelBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportParameter.cs" />
     <Compile Include="Report\InformationGlobalReport.cs" />
     <Compile Include="Security\ChangePasswordViewModel.cs" />
     <Compile Include="Security\CustomerLogin.cs" />

@@ -1,0 +1,12 @@
+﻿@model bool?
+<style type="text/css">
+</style>
+@{
+    var name = (ViewData.ModelMetadata).PropertyName;
+}
+<div class="form-group row">
+    @Html.LabelFor(m => m, new { @class = "control-label col-form-label col-md-3" })
+    <div class="col-sm-9">
+        @Html.CheckBoxFor(model => model == null ? false : true)
+    </div>
+</div>

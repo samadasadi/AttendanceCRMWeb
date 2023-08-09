@@ -1,0 +1,155 @@
+﻿@using Utility
+@using System
+@using System.Collections.Generic
+@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@using ViewModel.UserManagement.Attendance;
+@model  ReportParameter
+
+
+
+<form id="reportParameter" class="col-md-12 form-horizontal">
+    <div class="col-md-12">
+
+
+        <div class="col-md-6">
+            @Html.EditorFor(x => x.PersonId)
+            @Html.EditorFor(x => x.FromDate)
+            @Html.EditorFor(x => x.ToDate)
+
+
+
+
+
+
+
+
+        </div>
+        <div class="col-md-6">
+
+            <div class="form-group">
+                <div class="col-md-3" for="Week0">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <input data-val="true" id="chbHour1" name="chbHour1" type="checkbox" value="true">
+                        </div>
+                        <label class="control-label col-form-label col-md-9 text-right" for="chbHour1">بیش از</label>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="form-group  row rqd">
+                        <div class="col-sm-3">
+                            <input class="form-control" data-val="true" data-val-required="*" id="Hour1" name="Hour1" onkeypress="return isPlusNumberKey(event,this);" value="">
+                            <span class="field-validation-valid text-danger" data-valmsg-for="Hour1" data-valmsg-replace="true"></span>
+                        </div>
+                        <label class="text-AlignBySoftWare col-md-9" for="Hour1">ساعت مرخصی ساعتی در روز، غیبت لحاظ شود</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3" for="Week0">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <input data-val="true" id="chbHour2" name="chbHour2" type="checkbox" value="true">
+                        </div>
+                        <label class="control-label col-form-label col-md-9 text-right" for="chbHour2">بیش از</label>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="form-group  row rqd">
+                        <div class="col-sm-3">
+                            <input class="form-control" data-val="true" data-val-required="*" id="Hour2" name="Hour2" onkeypress="return isPlusNumberKey(event,this);" value="">
+                            <span class="field-validation-valid text-danger" data-valmsg-for="Hour2" data-valmsg-replace="true"></span>
+                        </div>
+                        <label class="text-AlignBySoftWare col-md-9" for="Hour2">ساعت غیبت ساعتی در روز، به غیبت روزانه تبدیل شود</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3" for="Week0">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <input data-val="true" id="chbHour3" name="chbHour3" type="checkbox" value="true">
+                        </div>
+                        <label class="control-label col-form-label col-md-9 text-right" for="chbHour3">مقدار</label>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="form-group  row rqd">
+                        <div class="col-sm-3">
+                            <input class="form-control" data-val="true" data-val-required="*" id="Hour3" name="Hour3" onkeypress="return isPlusNumberKey(event,this);" value="">
+                            <span class="field-validation-valid text-danger" data-valmsg-for="Hour3" data-valmsg-replace="true"></span>
+                        </div>
+                        <label class="text-AlignBySoftWare col-md-9" for="Hour3">ساعت از غیبت فرد بخشیده شود</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3" for="Week0">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <input data-val="true" id="chbHour4" name="chbHour4" type="checkbox" value="true">
+                        </div>
+                        <label class="control-label col-form-label col-md-9 text-right" for="chbHour4">مقدار</label>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="form-group  row rqd">
+                        <div class="col-sm-3">
+                            <input class="form-control" data-val="true" data-val-required="*" id="Hour4" name="Hour4" onkeypress="return isPlusNumberKey(event,this);" value="">
+                            <span class="field-validation-valid text-danger" data-valmsg-for="Hour4" data-valmsg-replace="true"></span>
+                        </div>
+                        <label class="text-AlignBySoftWare col-md-9" for="Hour4">ساعت، از تاخیر و تعجیل فرد بخشیده شود</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3" for="Week0">
+                    <div class="form-group row">
+                        <div class="col-sm-3">
+                            <input data-val="true" id="chbHour5" name="chbHour5" type="checkbox" value="true">
+                        </div>
+                        <label class="control-label col-form-label col-md-9 text-right" for="chbHour5">مقدار</label>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="form-group  row rqd">
+                        <div class="col-sm-3">
+                            <input class="form-control" data-val="true" data-val-required="*" id="Hour5" name="Hour5" onkeypress="return isPlusNumberKey(event,this);" value="">
+                            <span class="field-validation-valid text-danger" data-valmsg-for="Hour5" data-valmsg-replace="true"></span>
+                        </div>
+                        <label class="text-AlignBySoftWare col-md-9" for="Hour5">ساعت، از کارکرد فرد کسر شود</label>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row" style="float:left;margin-left:10px;">
+            <div style="float:left;padding:5px;min-width: 135px;">
+                @Html.MyHelper().Button(Resources.Md.ShowReport, ButtonType.Button, ButtonStyle.Info, ButtonIconType.Print, new { onClick = "return ShowReport()", style = "width:130px" })
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@Html.Partial("P_Report_Area", viewData: new ViewDataDictionary {
+{ Utility.PublicEnum.EnumForReportAreaView.UrlReport.ToString(), "TotalPerformancePersonal_Report" },
+{ Utility.PublicEnum.EnumForReportAreaView.ShowScriptFromDateAndToDate.ToString(), true },
+{ Utility.PublicEnum.EnumForReportAreaView.SetConfigureDateComponent.ToString(), true },
+{ Utility.PublicEnum.EnumForReportAreaView.SetAttributeForDivReportView.ToString(), true },
+{ Utility.PublicEnum.EnumForReportAreaView.ShowNotification.ToString(), true } })
+
+<script type="text/javascript">
+
+
+    $(function () {
+        $(".select2").select2();
+    });
+
+
+</script>
+

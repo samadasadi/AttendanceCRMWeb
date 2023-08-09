@@ -1,0 +1,429 @@
+﻿
+@using Utility.HtmlHelpers
+
+@model IEnumerable<ViewModel.UserManagement.UserVm>
+
+@{
+    ViewBag.Title = "کاربران | مدیریت کاربران";
+
+    Layout = Utility.Utitlies.VaribleForName.AddressLayoutMasterNew;
+    var formSecurity = (ViewModel.Security.FormSecurity)ViewBag.FormSecurity;
+    var _maxUserCount = Service.Consts.Public.CurrentUser.UserCount;
+    var _userCount = ViewBag.usercount;
+}
+
+@section styles
+{
+    <style>
+        .disableImage {
+            filter: grayscale(1);
+        }
+
+        .box-shadowDefult {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.18);
+            margin: 26px;
+        }
+
+        .btnFontDelete {
+            font-size: medium;
+        }
+    </style>
+    <link rel="stylesheet" href="~/Content/AdminResponsive3.0/plugins/iCheck/square/blue.css">
+}
+
+
+<div class="row">
+    <div class="col-md-12">
+
+        <div class="row">
+            @{
+                using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "4"))
+                {
+                    @HtmlExtenstions.BsBox("تعداد اکانت فعال", _userCount.ToString(), ColorBox.red, Icons.user, "اطلاعات بیشتر")
+                }
+                using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "4"))
+                {
+                    @HtmlExtenstions.BsBox("تعداد اکانت باقیمانده", (_maxUserCount - _userCount).ToString(), ColorBox.yellow, Icons.user, "اطلاعات بیشتر")
+                }
+                using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "4"))
+                {
+                    @HtmlExtenstions.BsBox("تعداد کاربران ثبت شده", (Model != null ? Model.Count().ToString() : ""), ColorBox.green, Icons.user, "اطلاعات بیشتر")
+                }
+            }
+        </div>
+
+        <div class="card" style="margin-top: 0px;">
+            <div class="card-header border-0">
+                <h6 class="card-title" style="font-size: 14px;">فیلتر</h6>
+            </div>
+            <div class="card-body p-2">
+
+                <form id="formUsers" class="col-md-12 form-horizontal">
+
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-md-4 control-label">جستجو</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="txtSearch" list="txtSearch_List" autocomplete="off" />
+
+                                <datalist id="txtSearch_List">
+                                </datalist>
+                            </div>
+                        </div>
+
+                        <style>
+                            .select2 select2-container {
+                                direction: rtl;
+                            }
+                        </style>
+                        <div class="form-group row ">
+                            @*@Html.LabelFor(model => model, htmlAttributes: new { @class = "control-label col-form-label col-md-3 text-right" })*@
+                            <label class="col-md-4 control-label">سمت شغلی</label>
+                            <div class="col-md-8 text-right">
+                                @if (ViewData["UserType"] != null)
+                                {
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().UserType, (SelectList)ViewData["UserType"], "جستجو کنید", new { @class = "form-control select2", style = "width:100%;direction: rtl;" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(model => model.FirstOrDefault().UserType, new List<SelectListItem>() { }, "جستجو کنید", new { @class = "form-control select2", style = "width:100%;direction: rtl;" })
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <div class="form-group row">
+                            <label class="col-md-4 control-label">وضعیت</label>
+                            <div class="col-md-8">
+                                <select class="form-control select2" style="width:100%" id="chkStatus" name="chkStatus">
+                                    <option selected value="">همه</option>
+                                    <option value="1">فعال</option>
+                                    <option value="0">غیرفعال</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-4 control-label">فعالسازی نام کاربری</label>
+                            <div class="col-md-8">
+                                <select class="form-control select2" style="width:100%" id="IsUserActive" name="IsUserActive">
+                                    <option selected value="">همه</option>
+                                    <option value="1">فعال</option>
+                                    <option value="0">غیرفعال</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+            <div class="card-footer clearfix p-2">
+                @if (formSecurity.Add)
+                {
+                    <a href="~/Admin/Register/Create" class="btn btn-block btn-success  mt-2" onclick="Filter()" style="width:130px;float:right;"><span class="fa fa-user-plus"></span> @Resources.Md.New</a>
+                }
+                <button type="button" class="btn btn-block btn-info  mt-2" onclick="Filter()" style="width:130px;float:left;"><span class="fa fa-filter"></span> @Resources.Md.Filter</button>
+            </div>
+        </div>
+
+
+        <div class="row d-flex align-items-stretch" id="div_Grid_Users">
+            @Html.Partial("P_Grid_Users", Model)
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="~/Content/AdminResponsive3.0/plugins/iCheck/icheck.min.js"></script>
+    <script>
+
+        var currentFocus;
+        function autocomplete(inp, arr) {
+
+            var a, b, i;
+            closeAllLists();
+            currentFocus = -1;
+            a = document.createElement("DIV");
+            a.setAttribute("id", inp.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+            a.setAttribute("tabindex", "-1");
+            a.setAttribute("style","top: 100%;")
+            inp.parentNode.appendChild(a);
+
+            for (i = 0; i < arr.length; i++) {
+                b = document.createElement("DIV");
+                b.innerHTML += "<img src='" + arr[i]._pImage + "' class='img-circle' style='width: 15px; height: 15px; margin-left: 8px; box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.5);'>";
+                b.innerHTML += arr[i]._pName;
+                b.innerHTML += "<input type='hidden' value='" + arr[i]._pName + "' id='" + arr[i]._pId + "'>";
+                b.addEventListener("click", function (e) {
+                    inp.value = this.getElementsByTagName("input")[0].value;
+                    //document.location.href = "/Admin/CustomerInfo/Detail/" + this.getElementsByTagName("input")[0].id + "";
+                    closeAllLists();
+                });
+                a.appendChild(b);
+            }
+            function closeAllLists(elmnt) {
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
+                }
+            }
+            document.addEventListener("click", function (e) {
+                closeAllLists(e.target);
+            });
+        }
+
+        function searchEventKeyUpForAutoComplete_User(eval, e, id) {
+            if ($(eval).val() == null || $(eval).val() == "") { $("#" + id + "").html(""); return; }
+            if (e.which === undefined) {
+                return;
+            }
+            searchMenu(eval, $(eval).val(), id);
+        }
+        var counterKeyUp = 0;
+        var counterKeyUpSucc = 0;
+        function searchMenu(eval, text, id) {
+
+            if (!isEmpty(text) && text.length >= 3) {
+                counterKeyUp++;
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/Register/Filter_WithHot_Part",
+                    data: { Search: text, EmployeeActive: null, IsUserActive: null },
+                    dataType: "json",
+                    beforeSend: function () {
+
+                    },
+                    success: function (result) {
+
+
+                        counterKeyUpSucc++;
+
+                        if (result.length > 0) {
+
+                            //var itemList = "";
+                            var _patientList = [];
+                            $.each(result, function (i, item) {
+                                //itemList += "<option value='" + toCharInSearchDatabase(item.FullNameTiming) + "-" + item.DocNO + "' data-id='" + item.FirstName + "'>";
+
+                                var _pName = toCharInSearchDatabase(item.Name) + " " + toCharInSearchDatabase(item.Family);
+                                var _pId = item.Id;
+                                var _pImage = "";
+                                if (item.IMAGE != null && item.IMAGE != "") {
+                                    _pImage = item.IMAGE;
+                                }
+                                else { _pImage = "/Content/Image/profile-empty.jpg"; }
+                                _patientList.push({ _pName, _pId, _pImage });
+                            });
+                            //$("#" + id + "").html(itemList);
+                            autocomplete(document.getElementById(eval.id), _patientList);
+                        }
+                    },
+                    complete: function () {
+                        //hideWait();
+
+                    },
+                    error: function () { }
+                });
+            }
+        }
+
+        $("#txtSearch").keyup(function (e) {
+
+            //searchEventKeyUpForAutoComplete_User(this, e, "txtSearch_List");
+
+            Filter();
+
+        });
+        $("#UserType").change(function () {
+            Filter();
+        });
+        $("#chkStatus").change(function () {
+            Filter();
+        });
+        $("#IsUserActive").change(function () {
+            Filter();
+        });
+
+        function Filter() {
+
+            var chkStatus = null;
+            if (!isEmpty($('#chkStatus').val())) {
+                if ($('#chkStatus').val() === "1") chkStatus = true;
+                else chkStatus = false;
+            }
+
+            var IsUserActive = null;
+            if (!isEmpty($('#IsUserActive').val())) {
+                if ($('#IsUserActive').val() === "1") IsUserActive = true;
+                else IsUserActive = false;
+            }
+
+            $.ajax({
+                url: "/Admin/Register/Filter",
+                type: 'POST',
+                scriptCharset: "utf-16",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-16",
+                data: {
+                    Search: $("#txtSearch").val(),
+                    EmployeeActive: chkStatus,
+                    IsUserActive: IsUserActive,
+                    UserType: $("#UserType").val()
+                },
+                success: function (res) {
+
+                    $("#div_Grid_Users").html(res);
+
+                }, error: function () {
+                    AlertDialog("متاسفانه عملیات با موفقیت انجام نشد", "خطا", 'error');
+                }
+            });
+        }
+
+    $('input').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue',
+        increaseArea: '20%' // optional
+    });
+    $('input.activeUser').on('ifChanged', function (event) {
+
+        var active = $(this).prop("checked");
+        var id = $(this).attr("data-id");
+        $.ajax({
+            url: "/Admin/Register/checkUseractive",
+            type: 'GET',
+            scriptCharset: "utf-16",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-16",
+            data: { Id: id, EmployeeActive: active },
+            success: function (res) {
+                if (active) {
+                    $("#" + id + "").animate({ backgroundColor: "white" }, 1000);
+                    $("#div-" + id + "").removeClass("disableImage");
+                }
+                else {
+                    $("#" + id + "").animate({ backgroundColor: "#EEE!important" }, 1000);
+                    $("#div-" + id + "").addClass("disableImage");
+                }
+            }, error: function () {
+                AlertDialog("متاسفانه عملیات با موفقیت انجام نشد", "خطا", 'error');
+            }
+        });
+    });
+
+    $(".activeUser").click(function () {
+
+
+    });
+
+    //$(".activeUser").live("click", function () {
+    //
+    //    var active = $(this).prop("checked");
+    //    $.ajax({
+    //        url: "/Admin/Register/checkUseractive",
+    //        type: 'GET',
+    //        scriptCharset: "utf-16",
+    //        contentType: "application/x-www-form-urlencoded; charset=UTF-16",
+    //        data: { Id: $(this).attr("data-id"), EmployeeActive: active },
+    //        success: function (res) {
+    //        }, error: function () {
+    //            AlertDialog("متاسفانه عملیات با موفقیت انجام نشد", "خطا", 'error');
+    //        }
+    //    });
+    //});
+
+
+    function Set(id) {
+
+        var active = $(this).prop("checked");
+        $.ajax({
+            url: "/Admin/Register/checkUseractive",
+            type: 'GET',
+            scriptCharset: "utf-16",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-16",
+            data: { Id: id, EmployeeActive: active },
+            success: function (res) {
+            }, error: function () {
+                AlertDialog("متاسفانه عملیات با موفقیت انجام نشد", "خطا", 'error');
+            }
+        });
+    }
+    function DeleteModal(userId) {
+
+        bootbox.confirm({
+            message: 'از حذف گزينه هاي انتخاب شده مطمئن هستيد؟',
+            buttons: {
+                confirm: {
+                    label: MinaDent.Common.yesBtnTxt,
+                    className: "red",
+                    callback: function () {
+
+                        del(userId);
+                    }
+                },
+                cancel: {
+                    label: MinaDent.Common.noBtnTxt,
+                    className: "blue"
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    del(userId);
+                }
+                else {
+                    console.log('عملیات حذف با موفقیت انجام شد' + result);
+                }
+            }
+        });
+    }
+    function del(userId) {
+
+        $.ajax({
+            url: "/Admin/Register/Delete",
+            type: 'GET',
+            scriptCharset: "utf-16",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-16",
+            data: { id: userId },
+            success: function (res) {
+
+                $('#Modal').modal('hide');
+                //$("#" + userId + "").remove();
+                window.location.href = '@Url.Action("Index", "Register")';
+            }, error: function () {
+                AlertDialog("متاسفانه عملیات با موفقیت انجام نشد", "خطا", 'error');
+            }
+        });
+    }
+    function add(userId) {
+
+        $.ajax({
+            url: "/Admin/Register/Edit",
+            type: 'GET',
+            scriptCharset: "utf-16",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-16",
+            data: { id: userId },
+            success: function (res) {
+                //
+                //$('#Modal').modal('hide');
+                //$("#" + $("#Id").val() + "").remove();
+            }, error: function () {
+                AlertDialog("متاسفانه عملیات با موفقیت انجام نشد", "خطا", 'error');
+            }
+        });
+    }
+
+    function ResetPasswordModal(userId) {
+
+    }
+    </script>
+}

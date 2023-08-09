@@ -11,7 +11,7 @@ namespace Repository.Model
         [Key]
         public int Id { get; set; }
         public DateTime ModifiedDate { get; set; }
-        public Guid MedicalCenterId { get; set; }
+
         public Guid DoingUserId { get; set; }
         public bool IsDeleted { get; set; }
 

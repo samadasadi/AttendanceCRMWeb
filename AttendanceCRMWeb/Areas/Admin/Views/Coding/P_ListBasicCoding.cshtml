@@ -1,0 +1,56 @@
+﻿@using Utility.PublicEnum
+@model Utility.Utitlies.viewModel<ViewModel.Common.CodingVm>
+@using Utility.HtmlHelpers
+@{
+    var _model = Model.T_model;
+    bool _show_deleteEdit = true;
+    if (_model.code == "0" + ((int)CodingEnum.Insurer).ToString())
+    { _show_deleteEdit = false; }
+
+    if (_model.code == "0" + ((int)CodingEnum.Labretory).ToString())
+    { _show_deleteEdit = false; }
+
+    if (_model.code == "0" + ((int)CodingEnum.CostList).ToString())
+    { _show_deleteEdit = false; }
+
+    if (_model.code == "0" + ((int)PrescriptionEnum.Prescription).ToString())
+    { _show_deleteEdit = false; }
+
+    if (_model.code == "0" + ((int)CodingEnum.InformationSick).ToString())
+    { _show_deleteEdit = false; }
+
+    if (_model.code == "0" + ((int)CodingEnum.Warehouses).ToString())
+    { _show_deleteEdit = false; }
+
+    if (_model.code == "0" + ((int)CodingEnum.ListServices).ToString())
+    { _show_deleteEdit = false; }
+
+    if (_model.code == "0" + ((int)PubTypeEnum.Personel).ToString())
+    { _show_deleteEdit = false; }
+
+
+}
+
+<div class="table-responsive">
+    <div id="@Model.CommonCustomViewTablePaging.TableIdDiv">
+
+        @(Html.TableFor<ViewModel.Common.CodingVm>()
+                .Columns(column =>
+                {
+                    column.Expression(p => p.name).Title("نام");
+                    column.Expression(p => p.Price).Title("مبلغ");
+                    column.Expression(p => p.codeActiveStatus).Title("وضعیت");
+                })
+                .DataSource(Model.TLists)
+                .ToHtml(
+                        idTextSearch: Model.CommonCustomViewTablePaging.IdTextSearch,
+                        isShowButtonDeleteAndUpdate: _show_deleteEdit
+                        )
+                )
+        @Html.Partial(Utility.Utitlies.VaribleForName.NamePartialOperationPageing, Model.CommonCustomViewTablePaging)
+
+    </div>
+</div>
+
+
+

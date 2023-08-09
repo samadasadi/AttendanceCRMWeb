@@ -21,7 +21,6 @@ namespace ViewModel.Common
     {
         public Guid Id { get; set; }
         public bool IsDeleted { get; set; }
-        public Guid MedicalCenterId { get; set; }
         public DateTime ModifiedDate { get; set; }
 
 
@@ -57,23 +56,6 @@ namespace ViewModel.Common
         [Display(ResourceType = typeof(Md), Name = "WebSite")]
         [UIHint("HorizentalTextBox")]
         public string WebSite { get; set; }
-
-
-
-
-
-        [DisplayName("شناسه ملی")]
-        [UIHint("HorizentalTextBox")]
-        public string NationalID { get; set; }
-        [DisplayName("کد اقتصادی")]
-        [UIHint("HorizentalTextBox")]
-        public string EconomicCode { get; set; }
-        [DisplayName("شماره ثبت")]
-        [UIHint("HorizentalTextBox")]
-        public string RegistrationNumber { get; set; }
-        [DisplayName("کد پستی")]
-        [UIHint("HorizentalTextBox")]
-        public string PostalCode { get; set; }
 
 
 
@@ -132,10 +114,6 @@ namespace ViewModel.Common
         [UIHint("HorizentalTextBox")]
         public string Asanak_ApiKey { get; set; }
 
-        //سایر
-        [Display(ResourceType = typeof(Md), Name = "NumberStatus")]
-        public bool NumberStatus { get; set; }
-
         //[DisplayName("شماره شروع")]
         [Display(ResourceType = typeof(Md), Name = "StartNumber")]
 
@@ -143,21 +121,6 @@ namespace ViewModel.Common
         public Nullable<int> StartNumber { get; set; }
         [Display(ResourceType = typeof(Md), Name = "ChangeCostBase")]
         public bool ChangeCostBase { get; set; }
-
-        [UIHint("HorizentalDropdwonR")]
-        [Display(ResourceType = typeof(Md), Name = "PositionTeethId")]
-
-        //[DisplayName("استاندارد موقعیت دندان ها")]
-        //Iranian=1
-        //America Ul-LL=2
-        //America T1~32=3
-        public Nullable<int> PositionTeethId { get; set; }
-
-
-        //متن تعهد بیمار
-        [Display(ResourceType = typeof(Md), Name = "patientsCommitment")]
-        [UIHint("HorizentalTextArea")]
-        public string Description { get; set; }
 
         [Display(Name = "آدرس آی پی")]
         [UIHint("HorizentalTextBox")]
@@ -174,20 +137,6 @@ namespace ViewModel.Common
 
         [UIHint("HorizentalNumberTextBox")]
         public Nullable<float> appAwardDrPercent { get; set; }
-        [Display(ResourceType = typeof(Md), Name = "appToothQtyLock")]
-
-        [UIHint("HorizentalCheckBox")]
-        public bool appToothQtyLock { get; set; }
-
-        [Display(ResourceType = typeof(Md), Name = "publication")]
-        [UIHint("HorizentalNumberTextBox")]
-        public Nullable<int> appver { get; set; }
-
-        //تنظیمات پیامک
-        //وقت ملاقات
-        [Display(ResourceType = typeof(Md), Name = "VisitTime")]
-        [UIHint("HorizentalTextBox")]
-        public int? appVisitSmsTime { get; set; }
 
 
         [UIHint("HorizentalTextBox")]
@@ -308,41 +257,7 @@ namespace ViewModel.Common
         [Display(ResourceType = typeof(Md), Name = "VisitInterval")]
         public int? VisitInterval { get; set; }
 
-        [UIHint("HorizentalNumberTextBox")]
-        [Display(ResourceType = typeof(Md), Name = "OpeningHour")]
-        public int? OpeningHour { get; set; }
 
-        [UIHint("HorizentalNumberTextBox")]
-        [Display(ResourceType = typeof(Md), Name = "ClosingHour")]
-        public int? ClosingHour { get; set; }
-
-
-
-
-        [UIHint("HorizentalCheckBox")]
-        public bool appRollPrinter_ShowTotalPrice { get; set; }
-        [UIHint("HorizentalCheckBox")]
-        public bool appRollPrinter_ShowRemainPrice { get; set; }
-
-
-        [UIHint("HorizentalCheckBox")]
-        public bool appRollPrinterActive { get; set; }
-
-        [UIHint("HorizentalCheckBox")]
-        public bool appRollPrinterPage1 { get; set; }
-        [UIHint("HorizentalCheckBox")]
-        public bool appRollPrinterPage2 { get; set; }
-        [UIHint("HorizentalCheckBox")]
-        public bool appRollPrinterPage3 { get; set; }
-        [UIHint("HorizentalNumberTextBox")]
-        [Display(Name = "شماره پایانه پذیرنده اینترنتی")]
-        public string PazirandeNumber { get; set; }
-        [UIHint("HorizentalTextBox")]
-        [Display(Name = "نام کاربری")]
-        public string PayUserName { get; set; }
-        [UIHint("HorizentalPassword")]
-        [Display(Name = "رمز عبور")]
-        public string PayPassword { get; set; }
         [UIHint("HorizentalTextArea")]
         [Display(Name = "توضیحات")]
         public string Comment { get; set; }
@@ -353,10 +268,6 @@ namespace ViewModel.Common
         public string appHostPort { get; set; }
 
 
-
-        //[Display(Name = "نام مرکز")]
-        //public Guid MedicalCenterIdForPort { get; set; }
-        //public List<NormalJsonClass> lstMedicalCenterListForPort { get; set; }
 
 
         //Add By Samad
@@ -399,28 +310,6 @@ namespace ViewModel.Common
 
 
 
-        /// <summary>
-        /// رنگ روز فعلی در وقت ملاقات
-        /// </summary>
-        public string ColorCurrentDayVisitTime { get; set; }
-
-        /// <summary>
-        /// رنگ روز حضور پزشک در وقت ملاقات
-        /// </summary>
-        public string ColorPresenceDayVisitTime { get; set; }
-
-        /// <summary>
-        /// رنگ روز عدم حضور پزشک در وقت ملاقات
-        /// </summary>
-        public string ColorNotPresenceDayVisitTime { get; set; }
-
-
-        /// <summary>
-        /// رنگ روزهای تعطیل مرکز
-        /// </summary>
-        public string HolidayColor { get; set; }
-
-
         //شماره دهی بیماران
         public string appDocNoStart { get; set; }
 
@@ -434,19 +323,6 @@ namespace ViewModel.Common
 
 
 
-
-
-        #region Responsive-Mobin
-        //[UIHint("HorizentalDropdwonR")]
-        [Display(Name = "نام پرینتر")]
-        [UIHint("HorizentalDropdwonR")]
-        #endregion
-        public string appRollPrinterName { get; set; }
-        public List<NormalJsonClass> appRollPrinterList { get; set; }
-
-
-        [UIHint("HorizentalCheckBox")]
-        public bool appRollPrinterView { get; set; }
 
 
 
@@ -520,48 +396,10 @@ namespace ViewModel.Common
 
 
 
-
-        [Display(ResourceType = typeof(Md), Name = "AvanakUserName")]
-        [UIHint("HorizentalTextBox")]
-        public string Avanak_Username { get; set; }
-
-        [Display(ResourceType = typeof(Md), Name = "AvanakPassword")]
-        [UIHint("HorizentalTextBox")]
-        public string Avanak_Password { get; set; }
-
-
-
-
-
-
-
-
-        [Display(ResourceType = typeof(Md), Name = "Avanak_ServerId")]
-        [UIHint("HorizentalDropdwonR")]
-        public string Avanak_ServerId { get; set; }
-        public List<NormalJsonClass> Avanak_ServerList { get; set; }
-
-        /// <summary>
-        /// نمایش ماشین حساب زایمان
-        /// </summary>
-        public bool IsDisplayDeliveryCalculator { get; set; }
         [Display(Name = "ضریب ارزشیابی رند شود")]
         [UIHint("HorizentalCheckBox")]
         public bool P_UseRoundedPercent { get; set; }
 
-        /// <summary>
-        /// کد پرداخت
-        /// </summary>
-        [UIHint("HorizentalTextBox")]
-        [Display(Name = "کد پرداخت")]
-        public string PaymentId { get; set; }
-
-        /// <summary>
-        /// شماره حساب
-        /// </summary>
-        [UIHint("HorizentalTextBox")]
-        [Display(Name = "شماره حساب")]
-        public string InvoiceNo { get; set; }
 
         /// <summary>
         /// نام درگاه پرداخت
@@ -585,15 +423,11 @@ namespace ViewModel.Common
         [Display(Name = "کد مرکز")]
         public string TNCreatorType { get; set; }
 
-        public bool IsRequireNationalCodeInSavePatients { get; set; }
 
 
         public string Salamat_AuthToken { get; set; }
         public DateTime? Salamat_AuthTokenDate { get; set; }
 
-        public bool IsRequireSponsorNameInSavePatients { get; set; }
-
-        public bool IsNameDoctorInPrinterHararatiAnd3Bargi { get; set; }
 
 
 
@@ -633,10 +467,6 @@ namespace ViewModel.Common
         [Display(Name = "فعال سازی پنل 2")]
         public bool Faraz_Enable { get; set; }
 
-        [UIHint("HorizentalCheckBox")]
-        [Display(Name = "عدم نمایش درمان ها در فیش پرینت حرارتی")]
-        public bool ShowTreatmentInThermalPrinter { get; set; }
-
         public string KeyCodeHash { get; set; }
 
 
@@ -664,7 +494,6 @@ namespace ViewModel.Common
         [UIHint("HorizentalNumberTextBox")]
         public int AutoSendMessageTime { get; set; }
 
-        public PatientPaymentSentType appSendPaySMSSortType { get; set; }
 
 
     }

@@ -1,0 +1,440 @@
+﻿.page-container {
+    background: #f0f2f7;
+    overflow: hidden;
+    padding-top: 20px;
+    min-height: 800px;
+    margin-bottom: -26px;
+}
+
+.col-container .col-right {
+    padding: 0 15px;
+    width: 230px;
+    box-sizing: border-box;
+}
+
+.col-container .col-left {
+    box-sizing: border-box;
+}
+
+[dir=rtl] .col-container {
+    margin-right: 230px;
+}
+
+[dir=ltr] .col-container {
+    margin-left: 230px;
+}
+
+[dir=rtl] .col-container .col-right {
+    margin-right: -230px;
+}
+
+[dir=ltr] .col-container .col-right {
+    margin-left: -230px;
+}
+
+[dir=rtl] .col-container .col-left {
+    width: 100%;
+    padding-left: 15px;
+}
+
+[dir=ltr] .col-container .col-left {
+    width: 100%;
+    padding-right: 15px;
+}
+
+.page-head {
+    height: 60px;
+    line-height: 60px;
+    padding: 0 20px;
+    border-bottom: solid 1px #eee;
+    box-shadow: 0 0px 1px #ddd;
+    position: relative;
+}
+
+.page-head-title {
+    font-size: 17px;
+    display: inline-block;
+    padding: 0 5px;
+}
+
+.page-head-date {
+    padding: 0 10px;
+    cursor: default;
+    font-size: 11px;
+    height: 25px;
+    line-height: 25px;
+    margin: 17px 0 0;
+}
+
+
+
+.user-profile-cover {
+    width: 176px;
+    height: 176px;
+    background: #fff;
+    box-shadow: 0 2px 4px #ddd;
+    padding: 12px;
+    position: relative;
+}
+
+    .user-profile-cover img {
+        width: inherit;
+        height: inherit;
+        border: solid 1px #fff;
+    }
+
+    .user-profile-cover .edit-profile {
+        position: absolute;
+        background: rgba(0,0,0,0.6);
+        color: #fff;
+        padding: 5px;
+        font-size: 10px;
+        bottom: 20px;
+        opacity: 0;
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
+    .user-profile-cover:hover .edit-profile {
+        opacity: 1;
+    }
+
+    .user-profile-cover:hover .ChatstatusOption {
+        background-color: #f1f1f1;
+    }
+
+[dir=rtl] .user-profile-cover .edit-profile {
+    right: 20px;
+}
+
+    [dir=rtl] .user-profile-cover .edit-profile i {
+        margin-left: 5px;
+    }
+
+[dir=ltr] .user-profile-cover .edit-profile {
+    left: 20px;
+}
+
+    [dir=ltr] .user-profile-cover .edit-profile i {
+        margin-right: 5px;
+    }
+
+.user-profile-name {
+    font-size: 20px;
+    margin-top: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.user-profile-amount{
+        font-size: 12px;
+    margin-top: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.user-profile-email {
+    margin-top: 5px;
+    font-size: 10px;
+    display: block;
+}
+
+.user-profile-group {
+    margin-top: 10px;
+}
+
+    .user-profile-group div {
+        background: #e4e4e4;
+        display: inline-block;
+        padding: 5px;
+        margin-top: 5px;
+        cursor: default;
+    }
+
+[dir=rtl] .user-profile-group div {
+    margin-left: 5px;
+}
+
+[dir=ltr] .user-profile-group div {
+    margin-right: 5px;
+}
+
+.user-profile-edit {
+    background: white;
+    line-height: 27px;
+    margin: 15px 0 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px #ddd;
+    cursor: pointer;
+    color: #666;
+    transition: all 0.3s;
+    display: block;
+}
+
+    .user-profile-edit:hover {
+        color: #000;
+        box-shadow: 0 2px 4px #aaa;
+    }
+
+
+.page-main-card {
+    background: #fff;
+    box-shadow: 0 2px 4px #ddd;
+    padding: 5px 15px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+    .page-main-card.col-2 .ravesh-input-cover {
+        width: 50%;
+        min-height: 60px;
+    }
+
+.page-main-subtitle {
+    font-size: 12px;
+    border-bottom: solid 1px #ddd;
+    line-height: 40px;
+}
+
+.page-main-tab {
+    background: #fff;
+    box-shadow: 0 2px 4px #ddd;
+    color: gray;
+    overflow: hidden;
+    padding: 0 20px;
+    margin-bottom: 15px;
+}
+
+    .page-main-tab .tab-item {
+        position: relative;
+        line-height: 50px;
+        font-size: 11px;
+        min-width: 50px;
+        padding: 0 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: background 300ms;
+    }
+
+        .page-main-tab .tab-item:hover {
+            background-color: #f0f0f0;
+            color: black;
+        }
+
+        .page-main-tab .tab-item.active {
+            cursor: default;
+            background-color: #fff;
+            color: black;
+        }
+
+        .page-main-tab .tab-item > div {
+            height: 4px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .page-main-tab .tab-item.active > div {
+            background: #4CAF50;
+        }
+
+
+
+
+
+.user-log-container .user-log {
+    padding: 10px;
+    background: white;
+    height: 40px;
+    border-bottom: solid 1px #eee;
+    box-sizing: content-box;
+}
+
+    .user-log-container .user-log:last-of-type {
+        border-bottom: none;
+    }
+
+    .user-log-container .user-log a {
+        color: #06C;
+        cursor: pointer;
+    }
+
+    .user-log-container .user-log .logicon {
+        height: 32px;
+        width: 32px;
+        margin: 4px;
+        text-align: center;
+        color: white;
+        font-size: 12pt;
+        line-height: 32px;
+        background-color: gray;
+    }
+
+    .user-log-container .user-log .logtitle {
+        padding-top: 8px;
+        overflow: hidden;
+        line-height: 13px;
+        font-size: 11px;
+    }
+
+    .user-log-container .user-log .logusername {
+        margin-top: 4px;
+        display: inline-block;
+        font-size: 7pt;
+        color: #999;
+    }
+
+    .user-log-container .user-log .logdate {
+        margin: 15px;
+        color: gray;
+        font-size: 10px;
+    }
+
+
+[dir=rtl] .user-log-container .user-log .logicon {
+    margin-left: 15px;
+}
+
+[dir=ltr] .user-log-container .user-log .logicon {
+    margin-right: 15px;
+}
+
+.user-comment-more,
+.user-log-more {
+    border: solid 1px #ddd;
+    text-align: center;
+    line-height: 30px;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+    .user-comment-more:hover,
+    .user-log-more:hover {
+        background: #f5f5f5;
+    }
+
+.user-comment-empty,
+.user-log-empty {
+    text-align: center;
+    margin: 100px 0;
+}
+
+    .user-comment-empty div,
+    .user-log-empty div {
+        background: url(/pages/FormBuilder/images/empty-box.png);
+        width: 150px;
+        height: 145px;
+        opacity: 0.1;
+        display: inline-block;
+    }
+
+    .user-comment-empty span,
+    .user-log-empty span {
+        margin-top: 16px;
+        font-size: 14px;
+        color: #555;
+        display: block;
+    }
+
+
+
+.user-comment-container .user-comment {
+    clear: both;
+    border-bottom: solid 1px #eee;
+    padding: 10px;
+    min-height: 42px;
+}
+
+    .user-comment-container .user-comment a {
+        color: #06C;
+        cursor: pointer;
+    }
+
+    .user-comment-container .user-comment:last-of-type {
+        border-bottom: none;
+    }
+
+    .user-comment-container .user-comment img {
+        width: 32px;
+        height: 32px;
+        margin: 4px;
+    }
+
+    .user-comment-container .user-comment .message-container .time-comment {
+        color: gray;
+        margin: 15px 15px;
+        font-size: 10px;
+    }
+
+    .user-comment-container .user-comment .message-container .message-comment {
+        font-size: 12px;
+        padding: 5px 0 7px;
+    }
+
+    .user-comment-container .user-comment .message-container .username-comment {
+        font-size: 10px;
+        color: #999;
+    }
+
+[dir=rtl] .user-comment-container .user-comment .message-container {
+    margin-right: 50px;
+}
+
+[dir=ltr] .user-comment-container .user-comment .message-container {
+    margin-left: 50px;
+}
+
+
+
+@media (max-width: 768px) {
+    .col-container,
+    .col-container .col-right {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+        .col-container .col-left {
+            padding-left: 15px !important;
+            padding-right: 15px !important;
+        }
+
+    .page-main-card.col-2 .ravesh-input-cover {
+        width: 100%;
+    }
+}
+
+
+
+.pstrength-barParent {
+    border: 1px solid #ddd !important;
+    height: 9px !important;
+    width: 198px;
+    clear: both;
+    border-top-width: 0 !important;
+    margin-bottom: 5px;
+}
+
+.option-city {
+    border-bottom: solid 1px #ddd;
+    padding: 5px 10px 7px;
+    min-height: 25px;
+}
+
+    .option-city .title {
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.7;
+    }
+
+    .option-city .parent-name {
+        font-size: 10px;
+    }
+
+    .option-city .number {
+        color: #bbb;
+    }

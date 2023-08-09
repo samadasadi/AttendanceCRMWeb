@@ -1,0 +1,336 @@
+﻿
+.ivr-icon42 {
+    color: #616161;
+}
+
+/*-----ico other----*/
+.callerid-icon-state{position: absolute;display: block;left: 0px;bottom: 0px;font-size: 12pt;text-shadow: black 0px 0px 2px;-moz-text-shadow: black 0px 0px 2px;-webkit-text-shadow: black 0px 0px 2px;}
+
+
+/*.ivr-icon-clock {background-position: -16px -114px;height:16px;width:16px;}*/
+.ivr-icon-status{font-family: 'Font Awesome 5 Pro';font-weight:900;width:11px;height:11px;margin:2px;display: inline-block;font-size: 10px;}
+.ivr-icon-status.ico-0:before{content: "\f111";color: #9E9E9E;}
+.ivr-icon-status.ico-1:before{content: "\f111";color: #4CAF50;}
+.ivr-icon-status.ico-2:before{content: "\f111";color: #E91E63;}
+.ivr-icon-status.ico-3:before{content: "\f111";color: #FF9800;}
+
+
+.boxIvrUtility {
+width: 275px;
+min-height: 310px;
+position: absolute;
+top: 47px;
+/*left: 1135px;*/
+background: white;
+border: 1px solid #CCC;
+padding: 5px;
+z-index: 1;
+box-shadow: 0 3px 4px 0px #CCC;
+-moz-box-shadow: 0 3px 4px 0px #CCC;
+-webkit-box-shadow: 0 3px 4px 0px #CCC;
+}
+.boxIvrUtility:after, .boxIvrUtility:before {
+bottom: 100%;
+border: solid transparent;
+content: " ";
+height: 0;
+width: 0;
+position: absolute;
+pointer-events: none;
+}
+
+.boxIvrUtility:after {
+border-color: rgba(255, 255, 255, 0);
+border-bottom-color: white;
+border-width: 10px;
+margin-left: -10px;
+}
+.boxIvrUtility:before {
+border-color: rgba(221, 221, 221, 0);
+border-bottom-color: #CCC;
+border-width: 11px;
+margin-left: -11px;
+}
+.boxIvrUtility-rtl {direction: rtl;text-align: right;font-family: BKoodakBold, 'B Koodak', tahoma;}
+.boxIvrUtility-ltr {direction: ltr;text-align: left;}
+.boxIvrUtility-rtl:after {left:20px;}
+.boxIvrUtility-rtl:before {left:20px;}
+.boxIvrUtility-ltr:after {right:20px;}
+.boxIvrUtility-ltr:before {right:20px;}
+
+
+.Qdivuserline {
+clear: both;
+overflow: hidden;
+margin-bottom: 4px;
+min-height: 34px;
+}
+
+.Qdivuserline .itemuserline {
+width: 48%;
+height: 30px;
+margin: 2px;
+float: right;
+border-radius:3px;
+-moz-border-radius:3px;
+-webkit-border-radius:3px;
+}/*
+.Qdivuserline .itemuserline.select {
+background-color:#428bca !important;
+}*/
+.Qdivuserline .itemuserline.th-bgcolor .ivrstatusOption{
+background-color:#fff;
+}
+.Qdivuserline .itemuserline.th-bgcolor .ivrextnumber{
+color:#fff;
+}
+.Qdivuserline .itemuserline.th-bgcolor .btnSetTelCaller{
+color:#fff;
+}
+.Qdivuserline .itemuserline .btnSetTelCaller{
+margin: 6px;
+float: right;
+font-size: 14pt;
+color:#bebebe;
+cursor:pointer;
+}
+.Qdivuserline .itemuserline:not(.th-bgcolor){background-color: #EEE;}
+.Qdivuserline .itemuserline:hover:not(.th-bgcolor){background-color:#ddd}
+
+.Qdivuserline .ivrstatusOption {
+float: left;
+border-radius: 3px;
+-moz-border-radius:3px;
+background-color: #AEAEAE;
+padding: 2px;
+margin: 8px 5px;
+cursor:pointer;
+}
+.Qdivuserline .ivrstatusOption:hover {background-color: #999;}
+    .Qdivuserline .ivrextnumber {
+        float: left;
+        font-weight: bold;
+        font-size: 11pt;
+        margin: 8px 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 57px;
+    }
+.popupIvrStatus,.popupIvrStatusDashboard {
+    position: absolute;
+background-color: white;
+border: solid 1px gray;
+z-index: 1;
+overflow: hidden;
+width: 50px;
+line-height: 15px;
+    font-size: 11px;
+    font-weight: normal;
+}
+.popupIvrStatus span,.popupIvrStatusDashboard span{top: 3px;position: relative;}
+
+.QdivIvrButton {
+overflow: hidden;
+border-radius:4px;-moz-border-radius:4px;-webkit-border-radius:4px;
+}
+.QdivIvrButton .ItemIvrButton{
+background: #e7e7e7;
+height: 37px;
+width: 33%;
+float: right;
+text-align: center;
+cursor:pointer;
+}
+.QdivIvrButton .ItemIvrButton.select,.QdivIvrButton .ItemIvrButton:hover{
+background: #cccbcb;
+}
+.ItemIvrButton i {
+font-size: 13pt;
+display: inline-block;
+margin: 11px 0;
+}
+.QdivIvrButton .ItemIvrButton.select i {color:gray !important;}
+
+
+.QdivIvrcontent {
+height: 280px;
+margin-bottom: 5px;
+}
+.QtabCallerId {overflow: hidden;}
+.QtabCallerId .ItemTabcallerid {
+height: 25px;
+float: right;
+text-align: center;
+cursor:pointer;
+border:solid 1px #fff;
+border-bottom: solid 1px #D6D6D6;
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
+-moz-border-top-left-radius: 5px;
+-moz-border-top-right-radius: 5px;
+-webkit-border-top-left-radius: 5px;
+-webkit-border-top-right-radius: 5px;
+}
+.QtabCallerId .ItemTabcallerid.selected{
+border: solid 1px #D6D6D6;
+border-bottom: none;
+background-color:#fff !important;
+cursor: default;
+}
+.QtabCallerId .ItemTabcallerid:hover  {
+background-color: #f1f1f1;
+}
+.ItemTabcallerid i{
+display:inline-block;
+margin: 6px 0;
+font-size: 10pt;
+}
+.QtabCallerId .ItemTabcallerid.selected i {
+color:gray;
+}
+
+.QitemsCallerId {margin-top: 3px;height:252px;position: relative;overflow: hidden;}
+.ItemCallerid {height: 42px;padding: 4px;cursor:pointer;position:relative;}
+.ItemCallerid img {width: 40px;height: 40px;padding: 1px;}
+.ItemCallerid .btnFavorites {position: absolute;bottom: 5px;color: white;font-size: 10pt;text-shadow: 0px 0px 4px black;opacity: 0.6;-moz-opacity:0.6}
+.ItemCallerid .btnFavorites-rtl {left: 5px;}
+.ItemCallerid .btnFavorites-ltr {right: 5px;}
+.ItemCallerid .btnFavorites:hover,.ItemCallerid .btnFavorites.active{opacity: 1;-moz-opacity:1;color: #FFBD30;}
+.itemcalleridtitle{font-size: 12px;font-weight: bold;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+.itemcalleridnum {font-size: 11px;color: #8d8d8d;padding-top: 2px;}
+.itemcalleriddate {font-size: 10px;color: #8f8f8f;}
+.itemcalleridicon {position: absolute;bottom: 5px;font-size: 17px;}
+.isnewcall {font-size: 9pt;}
+.ItemCallerid:nth-child(odd) {background-color: #F0F0F0;}
+.ItemCallerid:hover .itemcalleridtitle a{color:white}
+.ItemCallerid:hover .itemcalleridnum{color: #ECECEC;}
+.ItemCallerid:hover .itemcalleriddate{color: #C5C0A2;}
+.ItemCallerid:hover .itemcalleridicon{color: #fff !important;}
+.ItemCallerid:hover {transition: background-color 350ms linear;-moz-transition: background-color 350ms linear;-webkit-transition: background-color 350ms linear;}
+
+.QItemsContent_3 {padding: 5px;}
+.IvrNumLcd {
+height: 40px;
+line-height: 40px;
+margin-bottom: 4px;
+font-size: 24px;
+padding: 0 5px;
+text-align: left;
+border: none;
+width: 221px;
+outline: none;
+float: left;
+border: solid 1px #C4C4C4;
+border-right: none;
+-moz-border-top-left-radius: 3px;
+-moz-border-bottom-left-radius: 3px;
+-webkit-border-top-left-radius: 3px;
+-webkit-border-bottom-left-radius: 3px;
+}
+.IvrNumLcd.error {
+background-color: #FFDADA;
+}
+.IvrNumBackspace {
+    line-height: 39px;
+    font-size: 27px;
+    height: 40px;
+    width: 32px;
+    float: left;
+    border: solid 1px #C4C4C4;
+    border-left: none;
+    cursor: pointer;
+    -moz-border-top-right-radius: 3px;
+    -moz-border-bottom-right-radius: 3px;
+    -webkit-border-top-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+}
+.IvrNumBackspace span{
+        padding: 9px;
+    color: #8c8c8c;
+}
+/*.IvrNumBackspace:hover {
+background: -webkit-gradient( linear, left top, left bottom, color-stop(0.05, #eee), color-stop(1, #F7F7F7) );
+background: -moz-linear-gradient( center top, #eee 5%, #F7F7F7 100% );
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#eee, endColorstr='#F7F7F7');
+background-color: #eee;
+}
+.IvrNumBackspace span {
+background-image: url('../images/ivr.png');
+background-position: -74px -84px;
+width: 20px;
+height: 14px;
+display: block;
+margin: 14px 7px;
+}
+.IvrNumBackspace:hover span {
+background-position: -95px -84px;
+}*/
+.IvrNumPlc {
+margin-bottom: 4px;
+clear: both;
+overflow: hidden;
+}
+.IvrNumBtnCall {
+background-color: #02B802;
+color: white;
+font-family: Arial;
+font-size: 15px;
+font-weight: bold;
+font-style: normal;
+height: 38px;
+line-height: 38px;
+text-align: center;
+cursor: pointer;
+border-radius: 3px;
+}
+.IvrNumBtnCall:hover {
+background-color: #02A002;
+}
+.IvrNumItem {
+width: 33%;
+float: left;
+text-align: center;
+height: 47PX;
+cursor:pointer;
+}
+.IvrNumItem div {
+background-color: #EBEBEB;
+margin: 1px;
+height: 45px;
+border-radius:5px;
+-moz-border-radius:5px;
+-webkit-border-radius:5px;
+}
+.IvrNumItem b {
+display: block;
+font-size: 9pt;
+padding-top: 14px;
+}
+.IvrNumItem span {
+font-size: 6pt;
+color: #A3A3A3;
+}
+.IvrNumItem div:hover {
+color:#fff;
+transition: background-color 200ms linear;
+-moz-transition: background-color 200ms linear;
+-webkit-transition: background-color 200ms linear;
+}
+.IvrNumItem div:active,.IvrNumItem.active div{
+color: #999;
+background-color: #464646 !important;
+}
+.IvrNumItem:active span,.IvrNumItem.active span{color: #525252;}
+
+.boxIvrUtility-rtl .itemcalleridtitle {font-size: 17px;}
+.boxIvrUtility-rtl .itemcalleridnum {font-size: 13px;}
+.boxIvrUtility-rtl .itemcalleridicon {left:46px;}
+.boxIvrUtility-rtl .itemcalleriddate {font-size: 11px;}
+.boxIvrUtility-rtl .Qdivuserline .ivrextnumber {font-size: 17px;direction: ltr;text-align: left;}
+.boxIvrUtility-rtl .IvrNumItem b {font-size: 17px;}
+.boxIvrUtility-rtl .IvrNumBtnCall {font-family: BKoodakBold, 'B Koodak', tahoma;font-size: 13pt;}
+
+.boxIvrUtility-ltr .itemcalleridicon {right:46px;}
+.Qdivuserline .itemuserline.oneLine{width:99%;}
+.Qdivuserline .itemuserline.oneLine .ivrextnumber{width:70%;}

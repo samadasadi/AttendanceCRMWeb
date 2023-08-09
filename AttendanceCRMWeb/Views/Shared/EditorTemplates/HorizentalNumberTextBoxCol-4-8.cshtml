@@ -1,0 +1,33 @@
+﻿@model object
+@{
+    var placeholder = string.Empty;
+    var isRadonly = false;
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("placeholder"))
+    {
+        placeholder = ViewData.ModelMetadata.AdditionalValues["placeholder"] as string;
+    }
+    //isReadOnly
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("isReadOnly"))
+    {
+        isRadonly = (bool)ViewData.ModelMetadata.AdditionalValues["isReadOnly"];
+    }
+    var name = (ViewData.ModelMetadata).PropertyName;
+    var required = ViewData.ModelMetadata.IsRequired;
+  
+}
+<div class="form-group row  @string.Format("{0}",required?"rqd":"")">
+    @Html.LabelFor(model => model, htmlAttributes: new { @class = "text-AlignBySoftWare col-md-4" })
+    <div class="col-sm-8">
+        @if (isRadonly)
+        {
+            @Html.MyHelper().TreasuryTextBoxFor(model => model, TextBoxType.Number, new { @readonly = "readonly" })
+        }
+        else
+        {
+            @Html.MyHelper().TreasuryTextBoxFor(model => model, TextBoxType.Number)
+        }
+
+
+        @Html.ValidationMessageFor(model => model, "", new { @class = "text-danger" })
+    </div>
+</div>

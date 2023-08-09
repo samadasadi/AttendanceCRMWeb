@@ -1,0 +1,211 @@
+﻿
+.wizard-content {
+border: solid 1px #bbb;
+border-radius: 3px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px; 
+}
+        .wizard-content fieldset { border:none; margin:0;padding:0}
+        .wizard-content fieldset .field{ padding: 10px 10px !important;}
+        .wizard-content .title-wizard-step { font-size: 15px;margin: 0px;color: #000;text-shadow: 1px 1px 1px #fff;font-weight: bold;background-color: rgb(248, 248, 248);border-bottom: solid 1px #ddd;border-top: solid 1px #fff;line-height: 40px;padding: 0 10px;}
+
+        .wizard-content button:hover, .prev:hover, .next:hover { background-color:#000; text-decoration:none;}
+
+        .wizard-content #steps { margin: 80px 0 0 0 }
+        
+        .wizard-content .btnWizard{
+                margin: 0 5px;
+                background: whiteSmoke;
+                background-image: -webkit-gradient(linear,left top,left bottom,from(whiteSmoke),to(#F1F1F1));
+                background-image: -webkit-linear-gradient(top,whiteSmoke,#F1F1F1);
+                background-image: -moz-linear-gradient(top,whiteSmoke,#F1F1F1);
+                background-image: -ms-linear-gradient(top,whiteSmoke,#F1F1F1);
+                background-image: -o-linear-gradient(top,whiteSmoke,#F1F1F1);
+                background-image: linear-gradient(top,whiteSmoke,#F1F1F1);
+                border: 1px solid gainsboro;
+                border-radius: 2px;
+                color: #444;
+                cursor: pointer;
+                font-size: 11px;
+                font-weight: bold;
+                height: 27px;
+                line-height: 25px;
+                min-width: 73px;
+                outline: none;
+                padding: 2px 1px 0px 4px;
+                text-align: center;
+                transition: all .218s;
+                -moz-border-radius: 2px;
+                -moz-transition: all .218s;
+                -moz-user-select: none;
+                -o-transition: all .218s;
+                -webkit-border-radius: 2px;
+                -webkit-transition: all .218s;
+                -webkit-user-select: none;
+                display: inline-block;
+        }
+        .wizard-content .btnWizard:hover{
+                background: #F8F8F8;
+                background-image: -webkit-gradient(linear,left top,left bottom,from(#F8F8F8),to(#F1F1F1));
+                background-image: -webkit-linear-gradient(top,#F8F8F8,#F1F1F1);
+                background-image: -moz-linear-gradient(top,#F8F8F8,#F1F1F1);
+                background-image: -ms-linear-gradient(top,#F8F8F8,#F1F1F1);
+                background-image: -o-linear-gradient(top,#F8F8F8,#F1F1F1);
+                background-image: linear-gradient(top,#F8F8F8,#F1F1F1);
+                border: 1px solid #C6C6C6;
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                color: #222;
+                transition: all 0s;
+                -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+                -moz-transition: all 0s;
+                -o-transition: all 0s;
+                -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+                -webkit-transition: all 0s;
+                z-index: 80;
+        }
+        .wizardButtonPlace {
+                border-top: solid 1px #ddd;
+                padding: 10px;
+                background-image: -webkit-gradient(linear,left top,left bottom,from(#f9f9f9),to(#fff));
+                background-image: -webkit-linear-gradient(top,#f9f9f9,#fff);
+                background-image: -moz-linear-gradient(top,#f9f9f9,#fff);
+                background-image: -ms-linear-gradient(top,#f9f9f9,#fff);
+                background-image: -o-linear-gradient(top,#f9f9f9,#fff);
+                background-image: linear-gradient(top,#f9f9f9,#fff); 
+                clear: both;
+                height: 32px;
+        }
+        .wizardButtonPlace_relative {height:50px;clear:both;}
+        
+        /*style:1*/
+.steps {
+    list-style:none;
+    width:100%;
+    overflow:hidden;
+    margin:0px;
+    padding:0px;
+}
+.steps li {
+    color: #b0b1b3;
+    font-size: 16px !important;
+    padding: 10px !important;
+    
+    transition: all .3s;
+    -moz-transition: all .3s;
+    -webkit-transition: all .3s;
+    -o-transition: all .3s;
+    cursor:default;
+}
+.steps li span {
+    font-size:11px; display:block;
+}
+.steps li.current {
+    color:#000;
+}
+
+        /*style:2*/
+.breadcrumb-ltr,.breadcrumb-rtl {
+    list-style:none;
+    width:100%;
+    overflow:hidden;
+    margin:0px;
+    padding:0px;
+}
+.breadcrumb-ltr li,.breadcrumb-rtl li {
+    background: #eee;
+    font-size: 15px !important;
+        color: #b0b1b3; 
+    padding: 10px !important;
+         transition: all .3s;
+    -moz-transition: all .3s;
+    -webkit-transition: all .3s;
+    -o-transition: all .3s;
+    cursor:default;
+}
+.breadcrumb-ltr li.current:after {
+    border-top: 18px solid transparent;
+    border-bottom: 18px solid transparent;
+    border-left: 6px solid #666;
+    content: ' ';
+    position: absolute;
+    top: 0;
+    right: -6px;
+}
+.breadcrumb-rtl li.current:after {
+    border-top: 18px solid transparent;
+    border-bottom: 18px solid transparent;
+    border-right: 6px solid #666;
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: -6px;
+}
+.breadcrumb-ltr li.current,.breadcrumb-rtl li.current {
+    background: #666;
+    color: #eee;
+    position: relative;
+}
+.breadcrumb-ltr li:last-child:after,.breadcrumb-rtl li:last-child:after {
+    border: none;
+}
+
+
+        /*style:3*/
+.circleWizard
+{
+    list-style:none;
+    width:100%;
+    overflow:hidden;
+    margin:0px;
+    padding:0px;
+}
+.circleWizard li 
+{
+    min-width: 140px;
+}
+.circleWizard li *
+{
+     transition: all 1s;
+    -moz-transition: all 1s;
+    -webkit-transition: all 1s;
+    -o-transition: all .3s;
+    cursor:default;
+}
+.circleWizard li .number {
+background-color: #ddd;
+display: inline-block;
+border-radius: 20px;
+-moz-border-radius: 20px;
+-webkit-border-radius: 20px;
+width: 35px;
+height: 35px;
+line-height: 35px;
+text-align: center;
+margin: 2px;
+color: #999;
+font-size: 13pt;
+}
+.circleWizard li .titleStep {
+padding: 5px 40px 0 40px;
+font-size: 10pt;
+font-weight: bold;
+color:#aaa;
+}
+.circleWizard li .desc {
+font-size: 8pt; 
+color:#ccc;
+}
+.circleWizard li.current .desc {color: gray;}
+.circleWizard li.current .titleStep {color:#555}
+.circleWizard li.current .number {color:#fff;background-color:Gray}
+
+/*style:4*/
+.circleWizard li .titleStepOnly {
+padding: 12px 40px 0 40px;
+font-size: 10pt;
+font-weight: bold;
+color:#aaa;
+}
+.circleWizard li.current .titleStepOnly {color:#555}
+
+

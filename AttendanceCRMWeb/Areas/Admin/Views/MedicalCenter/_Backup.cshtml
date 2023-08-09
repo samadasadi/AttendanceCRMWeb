@@ -1,0 +1,70 @@
+﻿@using ViewModel.BasicInfo
+@model ResultModel<List<ViewModel.Common.BackUpVm>>
+
+
+<input type="hidden" value="@(string.Format("{0}", Model.error?"true":"false"))" id="_modelError" />
+<input type="hidden" value="@Model.message" id="_modelMessage" />
+@if (Model != null && Model.model != null && Model.model.Count > 0)
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>نام فایل</th>
+                <th>تاریخ</th>
+                <th>حجم فایل</th>
+                <th>کاربر</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int _row = 0;
+                foreach (var item in Model.model)
+                {
+                    _row++;
+                    <tr>
+                        <th scope="row">@_row</th>
+                        <th>@item.FileName</th>
+                        <td style="direction:ltr;">@item.ModifiedDateStr - @item.ModifiedDate.ToShortTimeString()</td>
+                        <td>@item.FileSizeStr</td>
+                        <td>@item.Username</td>
+                        <td><a href="#" class="btn btn-danger" onclick="DeleteBackUp('@item.Id');"><i class="fa fa-remove"></i>@Resources.Md.remove</a></td>
+                        <td>
+                            @if (item.Type == 1)
+                                {
+                                    <a href="/Admin/MedicalCenter/DownloadMedia3?id=@item.Id" class="btn btn-primary"><i class="fa fa-download"></i> @Resources.Md.Download</a>
+                                }
+                                else if (item.Type == 2 && item.ModifiedDate.Date >= new DateTime(2023, 03, 05))
+                                {
+                                    <a href="/Admin/MedicalCenter/DownloadMedia3?id=@item.Id" class="btn btn-primary"><i class="fa fa-download"></i> @Resources.Md.Download</a>
+                                }
+                          
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+}
+else
+{
+    @Html.Partial("RecordsNotFoundToDisplay")
+}
+
+
+
+<script>
+    $(function () {
+        var _msg = $("#_modelMessage").val();
+        if (_msg != null && _msg != undefined && _msg != '') {
+            if ($("#_modelError").val() == 'true' || $("#_modelError").val() == 'True') {
+                AlertDialog($("#_modelMessage").val(), '', 'error');
+            }
+            else {
+                AlertDialog($("#_modelMessage").val());
+            }
+        }
+    })
+</script>

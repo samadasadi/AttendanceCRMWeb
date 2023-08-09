@@ -1,0 +1,35 @@
+﻿
+@model ViewModel.BasicInfo.CostVm
+
+
+<section class="content">
+    <form id="CostFrm" class="col-md-12 form-horizontal">
+        <div class="col-md-12">
+            @if (Model != null)
+            {
+                @Html.HiddenFor(m => m.Id)
+            }
+            @Html.HiddenFor(m => m.PersonID)
+            @Html.HiddenFor(m => m.UserType)
+            @Html.HiddenFor(m => m.CostCode)
+
+
+            @Html.EditorFor(m => m.DateEn)
+            @Html.EditorFor(m => m.Price)
+            <span style="color:red;margin-right: 95px;">
+                عدد منفی را برای مبلغ به این صورت وارد کنید : -9,000,000
+            </span>
+            @Html.EditorFor(m => m.Coment)
+
+        </div>
+    </form>
+</section>
+
+
+<script>
+
+    $(function () {
+        MinaDent.Common.AjaxInitialization();
+    });
+
+</script>

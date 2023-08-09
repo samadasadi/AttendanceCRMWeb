@@ -1,0 +1,90 @@
+﻿
+@using AttendanceCRMWeb.Helpers
+@using Utility.HtmlHelpers
+@*@model WebUI.Areas.BasicInfo.Models.MedicalCenterGrid*@
+@{
+    ViewBag.Title = "تنظیمات | تهیه نسخه پشتیبان";
+    Layout = Utility.Utitlies.VaribleForName.AddressLayoutMasterNew;
+}
+
+
+
+
+    <div class="card">
+        <div class="card-body">
+            <div class="form-group  row">
+                <p class="col-md-12 text-danger" style="font-size:12px;">
+                    <span class="text-info">مهم* : </span>
+                    برای امنیت بیشتر اطلاعات خود، حتما
+                    فایلهای بکاپ و پوشه عکس های درمانی را در یک فلش،
+                    هارد اکسترنال یا سیستم دیگر ذخیره فرمایید. در صورت نیاز برای آموزش این مورد میتوانید با کارشناسان مربوطه در ارتباط باشید.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header border-0">
+            <h3 class="card-title">
+                تهیه نسخه پشتیبان
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="col-md-12">
+
+                <div class="form-group col-md-6">
+                    <div class="card">
+                        @*<div class="card-header border-0"><h6 class="card-title"><i class="fas fa-database"></i> پشتیبان گیری از بانک اطلاعاتی</h6></div>*@
+                        <div class="card-body p-2">
+                            <label class="control-label col-form-label col-md-3 text-right" for="Title">حجم دیتابیس :</label>
+                            <p><span class="text-muted text-bold float-left p-2" style="font-size:12px;">@ViewBag.DatabaseInfo.Name - @ViewBag.DatabaseInfo.Size MB</span> </p>
+
+                            <div class="col-md-12 mt-5">
+                                <a class="btn btn-primary" href="@Url.Action("CreateBackup","MedicalCenter", new { Area = "Admin", type = 1})">
+                                    <i class="fas fa-database"></i> پشتیبانی بانک اطلاعاتی
+                                </a>
+                                <a class="float-left" href="javascript:void(0);">پشتیبان گیری از بانک اطلاعاتی</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <div class="card">
+                        @*<div class="card-header border-0"><h6 class="card-title"><i class="fas fa-images"></i> پشتیبان گیری از تصاویر و ضمائم</h6></div>*@
+                        <div class="card-body p-2">
+                            <label class="control-label col-form-label col-md-3 text-right" for="Title">حجم دامنه :</label>
+                            <p><span class="text-muted text-bold float-left p-2 " style="font-size:12px;">Media - @ViewBag.DirecotrySize MB</span> </p>
+
+                            <div class="col-md-12 mt-5">
+                                <a class="btn btn-primary" href="@Url.Action("CreateBackup","MedicalCenter", new { Area = "Admin", type = 2})">
+                                    <i class="fas fa-images"></i> پشتیبانی اسناد
+                                </a>
+                                <a class="float-left" href="javascript:void(0);">پشتیبان گیری از تصاویر و ضمائم</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        function FormatLink(cellValue, options, rowObject) {
+            var o = "<a href=" + '/Admin/MedicalCenter/CreateBackUp' + "/" + cellValue + "  class='fa fa-edit Mercury-icon' title='ویرایش' >" + ' ' + "<a/>";
+            o += "<a href=" + '/Admin/MedicalCenter/BackupList' + "/" + cellValue + " >دریافت نسخه پشتیبان دیتابیس</a>";
+            o += "<a href='' >دریافت نسخه پشتیبان فایل</a>";
+            return o;
+        }
+    </script>
+}
+
+
+

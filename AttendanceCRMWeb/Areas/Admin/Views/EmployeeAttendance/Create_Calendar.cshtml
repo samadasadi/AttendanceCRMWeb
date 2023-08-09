@@ -1,0 +1,76 @@
+﻿@using Utility
+@using System
+@using System.Collections.Generic
+@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@using ViewModel.UserManagement.Attendance;
+@model  Utility.Utitlies.viewModel<CalendarVm>
+
+@{
+
+}
+
+<form id="CalendarFrm" class="col-md-12 form-horizontal">
+    <div class="col-md-12">
+
+        @if (Model != null)
+        {
+            @Html.HiddenFor(m => m.T_model.ID)
+        }
+        <div class="col-md-6">
+            @*@Html.EditorFor(x => x.T_model.CalendarName)*@
+            @Html.EditorFor(x => x.T_model.YearsNumber)
+
+            <div class="form-group row">
+                <label class="control-label col-form-label col-md-3 text-right" for="YearsNumber">روزهای تعطیل</label>
+                <div class="col-md-9 text-right">
+                    <div class="col-md-6">
+                        @Html.EditorFor(x => x.T_model.Saturday)
+                        @Html.EditorFor(x => x.T_model.Sunday)
+                        @Html.EditorFor(x => x.T_model.Monday)
+                        @Html.EditorFor(x => x.T_model.Tuseday)
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(x => x.T_model.Wednesday)
+                        @Html.EditorFor(x => x.T_model.Thursday)
+                        @Html.EditorFor(x => x.T_model.Friday)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group row">
+                <label class="control-label col-form-label col-md-3 text-right" for="YearsNumber">رمضان</label>
+                <div class="col-md-9 text-right">
+                    @Html.EditorFor(x => x.T_model.RamazanStartDate)
+                    @Html.EditorFor(x => x.T_model.RamazanEndDate)
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <div class="row" style="float:left;margin-left:10px;">
+            <div style="float:left;padding:5px;min-width: 135px;">
+                <a class="btn btn-block bg-gradient-secondary btn-flat OperationButton" onclick="CreateCalendars()">
+                    <i class="fa fa-plus"></i>
+                    مورد جدید
+                </a>
+            </div>
+            <div style="float:left;padding:5px;min-width: 135px;">
+                <a class="btn btn-block bg-gradient-success btn-flat OperationButton" onclick="Save_Calendar()">
+                    <i class="fa fa-save"></i>
+                    ذخیره تقویم کاری
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+
+
+
+</script>
+

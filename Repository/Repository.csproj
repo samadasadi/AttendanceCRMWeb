@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -104,6 +105,7 @@
     <Compile Include="IWebHelper.cs" />
     <Compile Include="Model\ApplicationMenu\PubMenuDefault.cs" />
     <Compile Include="Model\Attendance\Calendar.cs" />
+    <Compile Include="Model\Attendance\DeviceGroup.cs" />
     <Compile Include="Model\Attendance\EmployeeAccounting.cs" />
     <Compile Include="Model\Attendance\FingerTemplate.cs" />
     <Compile Include="Model\Attendance\JobTime.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="Model\Chat\ChatHistoryType.cs" />
     <Compile Include="Model\Chat\TChat.cs" />
     <Compile Include="Model\Coding.cs" />
+    <Compile Include="Model\Common\BackUp.cs" />
     <Compile Include="Model\Common\GenericAttribute.cs" />
     <Compile Include="Model\Common\GenericAttributeDefault.cs" />
     <Compile Include="Model\Cost_Incoming.cs" />

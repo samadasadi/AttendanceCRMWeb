@@ -1,0 +1,914 @@
+﻿
+.POP3Page {
+    margin: 15px 25px;
+    position: relative;
+}
+
+#Pop3Div {
+    min-width: 510px;
+}
+
+@media screen and (max-width: 1100px) {
+    .EmailSubject {
+        max-width: 164px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}
+
+.Pop3Div_LTR {
+    margin-left: 210px;
+    font-family: Tahoma, Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+}
+
+.Pop3Div_RTL {
+    margin-right: 210px;
+    font-family: BKoodakBold,'B Koodak',tahoma;
+}
+
+.Pop3Div_LTR .POP3Items {
+    width: 175px;
+    margin-left: -200px;
+}
+
+.Pop3Div_RTL .POP3Items {
+    width: 175px;
+    margin-right: -200px;
+}
+
+.POP3Items .ImageEmail {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 15px;
+    /*margin-top: -2px;*/
+}
+
+
+.POP3Items .sendEmail {
+    text-align: center;
+    background-color: #d9534f;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 19px;
+    cursor: pointer;
+    border-radius: 3px;
+    /*margin-right: 10px;
+    margin-left: 10px;*/
+    width: 175px;
+    height: 40px;
+    line-height: 40px;
+}
+
+    .POP3Items .sendEmail:hover {
+        background-color: #FA7773;
+    }
+
+
+.POP3Items .EmailType {
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    /*margin-right: 10px;
+    margin-left: 10px;*/
+    width: 164px;
+    font-size: 13px;
+    border-radius: 3px;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-top: 3px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #7A7A7A;
+}
+
+    .POP3Items .EmailType:hover {
+        background-color: #428bca;
+        color: white;
+        transition: all .3s;
+        -moz-transition: all .3s;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+    }
+
+/*.POP3Items .EmailType:active {
+            position: relative;
+            top: 1px;
+        }*/
+
+.POP3Items .selected {
+    background-color: #428bca!important;
+    color: #fff!important;
+}
+
+.POP3Items .groupsEmail {
+    font-size: 17px;
+    color: #444;
+    margin: 15px 0 5px;
+    padding: 5px;
+    cursor: default;
+    height: 20px;
+}
+
+    .POP3Items .groupsEmail:hover {
+        background-color: #eee;
+    }
+
+.POP3Items .addGroups {
+    cursor: pointer;
+    width: 20px;
+    display: none;
+    font-size: 14px;
+    margin-top: 3px;
+    width: 20px;
+}
+
+    .POP3Items .addGroups:hover {
+        color: #AAA;
+    }
+
+    .POP3Items .addGroups:active {
+        position: relative;
+        top: 1px;
+    }
+
+.saveEditGroup {
+    border: thin solid #AAA;
+    padding: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: #00AC07;
+    color: #fff;
+    width: 52px;
+    text-align: center;
+    border-radius: 3px;
+    display: none;
+}
+
+    .saveEditGroup:active {
+        position: relative;
+        top: 1px;
+    }
+
+.POP3Items .Group {
+    clear: both;
+    height: 40px;
+    line-height: 40px;
+    cursor: pointer;
+    /*margin-right: 10px;
+    margin-left: 10px;*/
+    width: 164px;
+    font-size: 13px;
+    border-radius: 3px;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-top: 3px;
+    color: #7A7A7A;
+}
+
+    .POP3Items .Group:hover {
+        background-color: #428bca;
+        color: white;
+        transition: all .3s;
+        -moz-transition: all .3s;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+    }
+
+.POP3Items .newGroupDiv {
+    height: 25px;
+    clear: both;
+}
+
+.POP3Items .EditGroupDiv {
+    height: 25px;
+    clear: both;
+}
+
+.Group .DeleteGroup {
+    margin-top: 11px;
+}
+
+    .Group .DeleteGroup:hover {
+        background-color: #F0F0F0;
+        border-radius: 2px;
+    }
+
+    .Group .DeleteGroup:active {
+        position: relative;
+        top: 1px;
+    }
+
+.Group .EditGroup {
+    margin-top: 11px;
+}
+
+    .Group .EditGroup:hover {
+        background-color: #F0F0F0;
+        border-radius: 2px;
+    }
+
+    .Group .EditGroup:active {
+        position: relative;
+        top: 1px;
+    }
+
+.DivEmail {
+    min-height: 500px;
+    width: 100%;
+}
+
+.EmailHeader {
+    border-bottom: thin solid #EEEEEE;
+    height: 25px;
+    clear: both;
+    padding-top: 13px;
+    padding-right: 5px;
+    padding-bottom: 13px;
+    padding-left: 5px;
+}
+
+.EmailItemSelected {
+    background-color: #9DB0B9!important;
+    font-weight: bold;
+    color: #fff;
+}
+
+
+.EmailDetail {
+    display: none;
+    padding: 9px;
+    /*border: thin solid #EEEEEE;*/
+    padding-bottom: 20px;
+    /*background-color: #FDFCDC;*/
+    /*direction: ltr;*/
+    float: right;
+    width: 98%;
+    overflow: auto;
+}
+
+.WaitLoadEmail {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.EmailSubject {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.EmailCheckBox {
+    margin: 6px;
+}
+
+.starEmail {
+    font-size: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    line-height: 24px;
+}
+
+.StarSelected {
+    color: #FFC107;
+}
+
+.EmailsManagment {
+    height: 38px;
+    padding: 2px 2px 0;
+    background-color: #ddd;
+    color: #555;
+}
+
+.AllEmailManage {
+    border: solid 1px #BDBDBD;
+    border-radius: 3px;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top: 4px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: #fff;
+}
+
+    .AllEmailManage .downEmailManage {
+        font-size: 15px;
+        margin-right: 3px;
+        margin-left: 3px;
+        margin-top: -1px;
+        cursor: pointer;
+    }
+
+.managmentItems {
+    position: absolute;
+    background-color: #fff;
+    line-height: 27px;
+    z-index: 99999;
+    top: 34px;
+    border: 1px solid #BDBDBD;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    display: none;
+}
+
+    .managmentItems .mItem {
+        padding-right: 10px;
+        padding-left: 10px;
+        cursor: pointer;
+        color: #888;
+    }
+
+        .managmentItems .mItem:hover {
+            background-color: #F5F5F5;
+        }
+
+.unReadMail {
+    background-color: #F7F7FF;
+    font-weight: bold;
+}
+
+.readMail {
+    background-color: #FFF;
+}
+
+.allEmailArshivDelete {
+    border: solid thin #BDBDBD;
+    border-radius: 3px;
+    margin-top: 4px;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: none;
+}
+
+    .allEmailArshivDelete .deleteMail {
+          background-color: #FFF;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 15px;
+    border-left: thin solid #BDBDBD;
+    border-right: thin solid #BDBDBD;
+    margin-left: -1px;
+    margin-right: -1px;
+    cursor: pointer;
+    }
+
+        .allEmailArshivDelete .deleteMail:active {
+            position: relative;
+            top: 1px;
+        }
+
+    .allEmailArshivDelete .archiveMail {
+        background-color: #FFF;
+        padding-right: 15px;
+        padding-left: 15px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-size: 15px;
+        border-left: thin solid #BDBDBD;
+        border-right: thin solid #BDBDBD;
+        margin-left: -1px;
+        margin-right: -1px;
+        cursor: pointer;
+    }
+
+        .allEmailArshivDelete .archiveMail:active {
+            position: relative;
+            top: 1px;
+        }
+
+.groupEmailManage {
+    border: solid thin #BDBDBD;
+    border-radius: 3px;
+    padding-right: 3px;
+    padding-left: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-top: 4px;
+    margin-left: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    display: none;
+    background-color: #fff;
+}
+
+    .groupEmailManage .downGroupManageImage {
+        font-size: 18px;
+        margin-right: 5px;
+        margin-left: 5px;
+        margin-top: 1px;
+    }
+
+    .groupEmailManage .downGroupManage {
+        font-size: 15px;
+        margin-right: 5px;
+        margin-left: 5px;
+        margin-top: -1px;
+    }
+
+.groupEmailItems {
+    position: absolute;
+    background-color: #fff;
+    line-height: 27px;
+    z-index: 99999;
+    top: 34px;
+    border: 1px solid #BDBDBD;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    display: none;
+}
+
+.Pop3Div_LTR .groupEmailItems {
+    left: 370px;
+}
+
+.Pop3Div_RTL .groupEmailItems {
+    right: 370px;
+}
+
+.groupEmailItems .gItem {
+    padding-right: 10px;
+    padding-left: 10px;
+    cursor: pointer;
+    color: #888;
+    min-width: 100px;
+}
+
+    .groupEmailItems .gItem:hover {
+        background-color: #F5F5F5;
+    }
+
+.Delete {
+    background: url('../images/GmailIcon.png') no-repeat 0 -17px;
+    width: 21px;
+    height: 21px;
+}
+
+.EmailSaprator {
+    border-top: solid 1px #BDBDBD;
+    margin: 15px 0 10px;
+}
+
+
+
+.allEmailRightLeft {
+    border: solid thin #BDBDBD;
+    border-radius: 3px;
+    margin-top: 4px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: #FFF;
+    font-size: 13px;
+}
+
+    .allEmailRightLeft .LeftEmail {
+        padding-right: 15px;
+        line-height: 28px;
+        padding-left: 15px;
+        padding-bottom: 5px;
+        border-left: thin solid #BDBDBD;
+        border-right: thin solid #BDBDBD;
+        margin-left: -1px;
+        margin-right: -1px;
+        cursor: pointer;
+        height: 21px;
+        float: right;
+        /*font-weight: bold;*/
+    }
+
+        .allEmailRightLeft .LeftEmail:active {
+            position: relative;
+            top: 1px;
+        }
+
+    .allEmailRightLeft .RightEmail {
+        padding-right: 15px;
+        padding-left: 15px;
+        line-height: 28px;
+        padding-bottom: 5px;
+        border-left: thin solid #BDBDBD;
+        border-right: thin solid #BDBDBD;
+        margin-left: -1px;
+        margin-right: -1px;
+        cursor: pointer;
+        height: 21px;
+        float: right;
+        /*font-weight: bold;*/
+    }
+
+        .allEmailRightLeft .RightEmail:active {
+            position: relative;
+            top: 1px;
+        }
+
+.DivUCGroup {
+    text-align: center;
+}
+
+.DialogButton {
+    text-align: center;
+}
+
+.EmailSelect {
+    background-color: #fffdad!important;
+}
+
+.RefreshMails {
+       border: solid thin #BDBDBD;
+    border-radius: 3px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 1px;
+    margin-top: 4px;
+    margin-left: 30px;
+    margin-right: 30px;
+    background-color: #fff!important;
+    width: 43px;
+    height: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+}
+
+    .RefreshMails:active {
+        position: relative;
+        top: 1px;
+    }
+
+.EmailHeaderText {
+    /*width: 94%;*/
+    height: 49px;
+    margin-top: -12px;
+    cursor: pointer;
+}
+
+.GroupMainText {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.EmailAttachment {
+    line-height: 20px;
+}
+
+.MessageError {
+    color: red;
+    font-weight: bold;
+}
+
+
+.EmailAttach a {
+    text-decoration: none;
+}
+
+
+
+
+
+.TotalCount {
+    margin-top: 13px;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: #888;
+}
+
+.ListGroups {
+    border: 1px solid #DDD;
+    margin-bottom: -13px;
+    margin-top: -1px;
+    height: 315px;
+    background-color: #F1F1F1;
+    overflow-y: auto;
+    font-family: BKoodakBold,'B Koodak',tahoma;
+}
+
+    .ListGroups .icon {
+        margin-right: 5px;
+        margin-left: 5px;
+        width: 16px;
+        height: 16px;
+        background: url('../images/todo.png') no-repeat;
+        background-position: -45px -45px!important;
+    }
+
+    .ListGroups .ItemContentDiv {
+        width: 90%;
+        min-height: 19px;
+        color: #6D6D6D;
+    }
+
+    .ListGroups .GroupItemLiDiv {
+        border-top: 1px solid #FFF;
+        border-left: 1px solid #FFF;
+        border-right: 1px solid #FFF;
+        min-height: 18px;
+        min-width: 150px;
+        height: 40px;
+        background-color: #fefefe;
+        border-bottom: solid 1px #ddd;
+        line-height: 40px;
+        color: #444;
+    }
+
+
+
+.BackMail {
+    border: solid 1px #BDBDBD;
+    border-radius: 3px;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 3px;
+    padding-bottom: 2px;
+    margin-top: 4px;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: #fff;
+    font-size: 20px;
+    display: none;
+    cursor: pointer;
+}
+
+    .BackMail:active {
+        position: relative;
+        top: 1px;
+    }
+
+.EmailWait {
+    margin-top: 11px;
+    background: url('../images/movewait.gif') no-repeat;
+    width: 30px;
+    height: 22px;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: none;
+}
+
+.AddGroupBox {
+    background-color: #f1f1f1;
+    border: solid 1px #e0e0e0;
+    padding: 5px;
+    height: 30px;
+    line-height: 30px;
+    color: #444;
+}
+
+    .AddGroupBox span {
+        margin: 0 6px;
+    }
+
+    .AddGroupBox input[type=text], .invoice-folder-list input[type=text] {
+        width: 140px;
+        background-color: white;
+        padding: 5px;
+        height: 18px;
+        border: solid 1px #ccc;
+    }
+
+    .AddGroupBox .saveNewGroup:hover {
+        background-color: #2BD63F;
+    }
+
+    .AddGroupBox .saveNewGroup {
+        background-color: #00C417;
+        cursor: pointer;
+        color: white;
+        padding: 0 5px;
+        margin: 0 5px;
+        text-align: center;
+        width: 37px;
+        border-radius: 2px;
+    }
+
+.icon-ellipsis-vertical {
+    cursor: url('../images/openhand.cur'),default;
+    width: 20px!important;
+    text-align: center;
+    font-size: 20px;
+    color: #999;
+}
+
+    .icon-ellipsis-vertical:before {
+        content: "\f142";
+    }
+
+.ListGroups .icon-times {
+    margin: 0 5px;
+    color: #bbb;
+    cursor: pointer;
+}
+
+    .ListGroups .icon-times:hover {
+        color: #3F3F3F;
+    }
+
+.ListGroups .EditGroupTxt {
+    width: 150px;
+    background-color: white;
+    padding: 5px;
+    height: 18px;
+    border: solid 1px #ccc;
+    margin-top: 5px;
+    font-family: BKoodakBold,'B Koodak',tahoma;
+}
+
+.ListGroups .DeleteGroup {
+    display: none;
+}
+
+.POP3Error {
+    border: 1px solid #F00;
+    background-color: #FFF2F2;
+}
+
+.EmailFrom {
+    font-size: 10px;
+    font-weight: normal;
+    padding: 8px;
+}
+
+.EmailFromTxt {
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #757474;
+    direction: ltr;
+}
+
+.EmailFrom .HostFromName {
+    background-color: #8CE49A!important;
+    border: 1px solid #10AC36;
+    margin-top: -4px;
+    width: 49px;
+    font-size: 10px;
+    border-radius: 3px;
+    text-align: center;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.EmailType .NumberCountUnRead {
+    min-width: 14px;
+    height: 15px;
+    background-color: #999;
+    text-align: center;
+    line-height: 15px;
+    margin: 12px 5px;
+    color: white;
+    padding: 1px 2px;
+    border-radius: 3px;
+    font-size: 12px;
+    display: none;
+}
+
+.POP3Items .EmailType:hover .NumberCountUnRead, .selected .NumberCountUnRead {
+    color: #428bca;
+    background-color: white;
+}
+
+/*------------------------------------------------------------------------*/
+.invoice-list-head-button.single {
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+
+.invoice-list-head-button {
+    color: #555;
+    font-size: 12px;
+    cursor: pointer;
+    min-width: 40px;
+    transition: all .3s;
+    -moz-transition: all .3s;
+    background-color: white;
+    margin: 1px 5px;
+    text-align: center;
+    height: 26px;
+    line-height: 28px;
+    border: solid 1px #BDBDBD;
+    margin-top: -2px;
+}
+
+.invoice-popupmenu {
+    color: #444;
+    position: absolute;
+    z-index: 1;
+    float: left;
+    min-width: 170px;
+    margin: 2px 0 0;
+    list-style: none;
+    background-color: white;
+    border: 1px solid #CCC;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    display: none;
+    min-width: 80px;
+    top: 78px;
+}
+
+.Pop3Div_LTR .invoice-popupmenu {
+    right: -2px;
+}
+
+.Pop3Div_RTL .invoice-popupmenu {
+    left: -2px;
+}
+
+.ForRepImg {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.rowMnu:active {
+    position: relative;
+    top: 1px;
+}
+
+.invoice-popupmenu .rowMnu {
+    line-height: 25px;
+    /*padding: 0 5px;*/
+    cursor: pointer;
+    overflow: hidden;
+    margin: 5px;
+}
+
+    .invoice-popupmenu .rowMnu:hover {
+        background-color: #f1f1f1;
+    }
+
+
+.CusPic {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #AFAFAF;
+    margin-top: -4px;
+}
+
+.CusDiv {
+        height: 17px;
+    width: 30px;
+    border: 1px solid #AFAFAF;
+    margin-top: -4px;
+    font-size: 17px;
+    color: #FFF;
+    background-color: #C3DBE4;
+    text-align: center;
+    text-transform: capitalize;
+    padding-top: 8px;
+    padding-bottom: 5px;
+}
+.GroupItemLiDiv .subject {
+    min-width: 180px;
+    height: 39px;
+}
+.invoice-list-customer {
+    font-size: 17px;
+    color: #777;
+    padding: 0px 10px;
+    margin-top: -5px;
+    cursor: pointer;
+    text-decoration: none !important;
+    position: relative;
+    opacity: 0;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+}
+.EmailHeaderText:hover .invoice-list-customer {
+    opacity: 1;
+}
+.EmailHeaderText .icon-user-plus {
+  color: #4CAF50;
+}

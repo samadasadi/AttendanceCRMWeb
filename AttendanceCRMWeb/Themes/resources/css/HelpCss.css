@@ -1,0 +1,424 @@
+﻿/*container*/
+.help-overlay {
+    background-color: rgba(0, 0, 0, 0.05);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 998;
+}
+
+.help-container {
+    position: fixed;
+    z-index: 1001;
+    width: 250px;
+    background-color: #FFF;
+    top: 0;
+    bottom: 0;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.8);
+    -moz-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.8);
+    -webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.8);
+    -moz-transition: all 300ms;
+    -webkit-transition: all 300ms;
+    transition: all 300ms;
+}
+
+    .help-container img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .help-container.rtl {
+        left: -250px;
+    }
+
+    .help-container.ltr {
+        right: -250px;
+    }
+
+    .help-container.rtl.expand {
+        -moz-transform: translateX(250px);
+        -webkit-transform: translateX(250px);
+        transform: translateX(250px);
+    }
+
+    .help-container.ltr.expand {
+        -moz-transform: translateX(-250px);
+        -webkit-transform: translateX(-250px);
+        transform: translateX(-250px);
+    }
+
+/*tab*/
+.help-tab-wrapper {
+    height: 44px;
+    background-color: #D6D6D6;
+    border-bottom: solid 1px #C1C1C1;
+    text-align: center;
+}
+
+    .help-tab-wrapper i {
+        color: #8F8F8F;
+        font-size: 38px;
+        display: inline-block;
+        margin: 3px 5px;
+        cursor: pointer;
+    }
+
+        .help-tab-wrapper i.selected {
+            color: #000;
+            cursor: default;
+        }
+
+        .help-tab-wrapper i.disabled {
+            color: #bbb;
+            cursor: default;
+        }
+
+        .help-tab-wrapper i:hover:not(.selected):not(.disabled) {
+            color: #666;
+            -moz-animation: pulse .5s;
+            -webkit-animation: pulse .5s;
+            animation: pulse .5s;
+        }
+
+/*panel*/
+.help-container .panel-help {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.panel-help-search {
+    height: 36px;
+    background-color: #F7F7F7;
+    border-bottom: solid 1px #EEE;
+    padding-top: 8px;
+}
+
+.help-text-search {
+    height: 26px;
+    border: solid 1px #DDD;
+    background-color: #FFF;
+    width: 230px;
+    margin: auto;
+}
+
+    .help-text-search i {
+        width: 30px;
+        display: inline-block;
+        text-align: center;
+        font-size: 14px;
+        line-height: 24px;
+    }
+
+    .help-text-search input {
+        border: none;
+        height: 24px;
+        width: 190px;
+        line-height: 24px;
+        padding: 0 5px;
+        font-family: tahoma;
+    }
+
+.panel-help-help .help-text-search i {
+    color: #33B5E5;
+}
+
+.panel-help-faq .help-text-search i {
+    color: #EA8C22;
+}
+
+.panel-help-wrapper {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+.panel-help-video .panel-help-wrapper {
+    top: 0;
+}
+
+.panel-help-title {
+    height: 30px;
+    color: #FFF;
+    line-height: 30px;
+    font-size: 13px;
+    padding: 0 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: none;
+}
+
+.panel-help-wrapper.showtitle .panel-help-content {
+    top: 30px;
+}
+
+
+.panel-help-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 30px;
+    overflow: hidden;
+}
+
+    .panel-help-content .ps-scrollbar-y-rail, .panel-help-content .ps-scrollbar-y {
+        width: 5px;
+    }
+
+.panel-help-footer {
+    height: 29px;
+    background-color: #D6D6D6;
+    border-top: solid 1px #C1C1C1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    line-height: 30px;
+    padding: 0 15px;
+    cursor: pointer;
+}
+
+    .panel-help-footer:hover {
+        background-color: #DDD;
+        color: #444;
+    }
+
+    .panel-help-footer i {
+        font-size: 17px;
+    }
+
+.panel-help-help .panel-help-footer i {
+    color: #2FA2CD;
+}
+
+.panel-help-faq .panel-help-footer i {
+    color: #DF7600;
+}
+
+.panel-help-video .panel-help-footer i {
+    color: #DB0000;
+}
+
+/*section item*/
+.panel-help-section-item {
+    padding: 10px;
+    cursor: pointer;
+    border-top: solid 1px #fff;
+    border-bottom: solid 1px #fff;
+    -moz-transition: all 300ms;
+    -webkit-transition: all 300ms;
+    transition: all 300ms;
+}
+
+    .panel-help-section-item:nth-child(even) {
+        background-color: #FAFAFA;
+    }
+
+    .panel-help-section-item:hover {
+        background: #eaeaea;
+    }
+
+    .panel-help-section-item .question, .panel-help-section-item .title {
+        font-size: 13px;
+        text-align: justify;
+        line-height: 15px;
+        position: relative;
+    }
+
+    .panel-help-section-item.selected {
+        border-top: solid 1px #DDD;
+        border-bottom: solid 1px #DDD;
+        box-shadow: inset 0px 2px 2px #BBB;
+    }
+
+    .panel-help-section-item .answer {
+        display: none;
+        font-size: 13px;
+        text-align: justify;
+        line-height: 15px;
+        color: #9B1100;
+        margin-top: 5px;
+    }
+
+    .panel-help-section-item .bullet {
+        width: 8px;
+        height: 8px;
+        margin-top: 3px;
+        border-radius: 5px;
+    }
+
+.panel-help-faq .panel-help-section-item .bullet {
+    background-color: #EA8C22;
+}
+
+.panel-help-help .panel-help-section-item .bullet {
+    background-color: #33B5E5;
+}
+
+.panel-help-video .panel-help-section-item .bullet {
+    background-color: #DB0000;
+}
+
+.panel-help-section-item i {
+    font-size: 14px;
+}
+
+.help-container.rtl .panel-help-section-item .bullet, .help-container.rtl .panel-help-section-item i {
+    margin-left: 5px;
+}
+
+.help-container.ltr .panel-help-section-item .bullet, .help-container.ltr .panel-help-section-item i {
+    margin-right: 5px;
+}
+
+.panel-help-section-item:hover .show-help-dialog {
+    display: block;
+}
+
+.show-help-dialog {
+    position: absolute;
+    margin: -3px !important;
+    bottom: 0;
+    cursor: pointer;
+    display: none;
+}
+
+    .show-help-dialog:hover {
+        -moz-animation: pulse .5s;
+        -webkit-animation: pulse .5s;
+        animation: pulse .5s;
+    }
+
+.help-container.rtl .show-help-dialog {
+    left: 0;
+}
+
+.help-container.ltr .show-help-dialog {
+    right: 0;
+}
+
+.help-video-screen {
+    margin: 10px auto;
+}
+
+    .help-video-screen img, .help-video-screen {
+        width: 200px;
+        height: 200px;
+        position: relative;
+        cursor: pointer;
+    }
+
+.help-video-play {
+    background: url(../images/play.png) no-repeat center center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    opacity: 0.8;
+}
+
+    .help-video-play:hover {
+        opacity: 1;
+    }
+
+.dialog-help-video {
+    width: 570px;
+    margin: auto;
+}
+
+/*img in help content*/
+.help-content-img-wrapper {
+    position: relative;
+}
+
+    .help-content-img-wrapper:hover .cover i {
+        color: #000;
+    }
+
+    .help-content-img-wrapper .cover {
+    }
+
+        .help-content-img-wrapper .cover i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%,-50%);
+            color: rgba(0, 0, 0, 0.2);
+            font-size: 25px;
+        }
+
+.help-ravesh-dialog img {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+.wait-help {
+    background: url(../images/Ballsline.gif) no-repeat;
+    width: 60px;
+    height: 5px;
+    margin: 5px auto;
+}
+
+div.box div.title .btnHelp {
+    cursor: pointer;
+    color: #999;
+    font-size: 12px;
+  margin: 12px 15px 11px 15px ;
+}
+
+.CategorizedReportItem{
+  background: white;
+  color: rgb(100, 100, 100);
+  cursor: pointer;
+  border-bottom: solid 1px rgb(228, 228, 228);
+  line-height: 20px;
+  min-height: 20px;
+  padding: 3px;
+  border: solid 1px #E5E5E5;
+  margin: 3px;
+  transition: all .7s;
+}
+.CategorizedReportItem:hover{
+      background-color: rgb(237, 237, 237);
+    
+}
+div.box div.title .btnReport.en{
+    margin-left: 15px!important;
+}
+div.box div.title .btnReport.fa{
+     margin-right: 15px!important;
+}
+div.box div.title .btnReport {
+   display: inline-block;
+  cursor: pointer;
+  color: #999;
+  font-size: 12px;
+  margin: 11px 0px 10px 0px;
+  padding-top: 1px;
+}
+div.box div.title .btnReport :hover,
+    div.box div.title .btnHelp:hover {
+        color: black;
+    }
+
+
+    .help-ravesh-dialog {
+line-height: 25px;
+}
+
+    .panel-help-tour .panel-help-section-item .bullet {
+    background-color: #8BC34A;
+}

@@ -49,7 +49,6 @@ namespace ViewModel.Message
         }
 
         public bool IsDeleted { get; set; }
-        public Guid MedicalCenterId { get; set; }
         public DateTime ModifiedDate { get; set; }
 
         [UIHint("HorizentalTextArea")]

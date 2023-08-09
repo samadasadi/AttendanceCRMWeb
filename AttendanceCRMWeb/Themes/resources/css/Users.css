@@ -1,0 +1,932 @@
+﻿body {
+}
+
+.Temp {
+    display: none;
+}
+
+.page-title-contain {
+    height: 60px;
+    line-height: 60px;
+    border-bottom: solid 1px #E0E0E0;
+    margin: 0 25px 10px;
+    position: relative;
+}
+
+.page-title {
+    font-size: 25px;
+    font-family: BKoodakBold,'B Koodak',tahoma;
+}
+.body-ltr .page-title {
+    font-size: 25px;
+    font-family: tahoma;
+}
+
+.page-icon {
+    font-size: 29px;
+    padding: 0 5px;
+}
+
+.page-utility-contain {
+    height: 25px;
+    line-height: 25px;
+    bottom: 2px;
+    margin-top: 33px;
+    position: inherit;
+}
+
+.page-date {
+    background-color: #B8B8B8;
+    color: white;
+    padding: 0 10px;
+    cursor: default;
+    font-family: tahoma;
+    white-space: nowrap;
+}
+
+.Message {
+    position: absolute;
+    z-index: 2;
+    margin-top: 20px;
+}
+
+.DivForScroll {
+    clear: both;
+    font-family: BKoodakBold, 'B Koodak', tahoma;
+    /*height: 450px;*/
+    /*overflow-x: hidden;
+    overflow-y: scroll;*/
+    overflow:hidden;
+    direction: ltr;
+    border: 1px solid #CBCBCB;
+}
+.body-ltr .DivForScroll {
+    font-family: tahoma;
+}
+
+.UsersListDiv {
+    /*height: 290px;*/
+}
+
+    .UsersListDiv .DeActiveUser {
+        filter: grayscale(1);
+        -webkit-filter: grayscale(1);
+        background-color: #EEE!important;
+    }
+
+.UsersDiv {
+    border: 1px solid #E4E4E4;
+    padding: 5px;
+    margin: 20px;
+    width: 155px;
+    height: 160px;
+    text-align: center;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+div.form div.fields div.field {
+    border: none!important;
+}
+
+  
+
+    div.form div.fields div.field div.input input {
+        border: 1px solid #CECECE!important;
+    }
+
+.Userhover {
+    box-shadow: 5px 5px 17px rgba(0, 0, 0, 0.3);
+    position: relative;
+    top: 2px;
+}
+
+.UsersDiv .UserManege {
+    font-size: 14px;
+    display: none;
+    width: 154px;
+    position: absolute;
+}
+
+.ActiveUser{
+    color: #00CC00;
+}
+
+.UsersDiv .UserPic {
+    margin-top: 10px;
+}
+
+    .UsersDiv .UserPic .Pic {
+        border-radius: 50%;
+        width: 110px;
+        height: 110px;
+    }
+
+.UsersDiv .UserName {
+    font-weight: bold;
+    font-size: 15px;
+    margin-top: 12px;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.UsersDiv .UserCode {
+    font-size: 10px;
+    color: #969696;
+}
+
+.HeaderSearchDiv {
+    height: 38px;
+}
+
+.UsersHeaderDiv {
+    border: 1px solid #CFCFCF;
+    height: 12px;
+    padding: 12px;
+    background-color: #EEE;
+    font-family: BKoodakBold, 'B Koodak', tahoma;
+}
+.body-ltr .UsersHeaderDiv {
+    font-family:  tahoma;
+}
+
+    .UsersHeaderDiv .AddUser {
+        font-size: 21px;
+        line-height: 16px;
+        cursor: pointer;
+        color: #4CAF50;
+    }
+
+        .UsersHeaderDiv .AddUser:active {
+            position: relative;
+            top: 1px;
+        }
+
+    .UsersHeaderDiv .CountUser {
+        font-size: 14px;
+        color: #5386A3;
+    }
+
+    .UsersHeaderDiv .UserTypeDiv {
+      font-size: 21px;
+    line-height: 15px;
+    margin-right: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    color: #888;
+    }
+
+        .UsersHeaderDiv .UserTypeDiv:active {
+            position: relative;
+            top: 1px;
+        }
+
+    .UsersHeaderDiv .SearchUserIcon {
+        font-size: 16px;
+        margin-top: -2px;
+        cursor: pointer;
+        color: #888;
+    }
+
+.UserSearchDiv {
+    border: 1px solid #CFCFCF;
+    height: 12px;
+    padding: 12px;
+    background-color: #EEE;
+    display: none;
+}
+
+    .UserSearchDiv .HideSearchDiv {
+        font-size: 18px;
+        margin-top: -2px;
+        cursor: pointer;
+        color: #888;
+    }
+
+    .UserSearchDiv .UserSearch {
+        font-size: 18px;
+        margin-top: -3px;
+        cursor: pointer;
+        color: #888;
+    }
+
+        .UserSearchDiv .UserSearch:active {
+            position: relative;
+            top: 1px;
+        }
+
+    .UserSearchDiv .SearchTxt {
+        height: 20px;
+        margin-top: -7px;
+        margin-right: 10px;
+        margin-left: 10px;
+        border: none;
+        padding: 3px 5px 3px 5px;
+        width: 350px;
+        background-color: #EEE;
+        font-size: 12px;
+        font-family: Tahoma, Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+        color: #5A5A5A;
+    }
+
+.UIDiv {
+    display: none;
+}
+
+    .UIDiv .UserInfoDiv {
+        padding: 5px;
+    }
+
+    .UIDiv .UserInfo {
+        padding: 10px;
+    }
+/*
+    .UIDiv .UserPic_LTR {
+        margin-left: -165px;
+    }
+
+    .UIDiv .UserPic_RTL {
+        margin-right: -165px;
+    }
+
+    .UIDiv .UserInfo_LTR {
+        margin-left: 185px;
+    }
+
+    .UIDiv .UserInfo_RTL {
+        margin-right: 185px;
+    }
+
+    .UIDiv .UserInfoDiv .UserInfo {
+        width: 95%;
+    }*/
+
+
+
+.wizard-content fieldset .field {
+    padding: 10px 0px !important;
+}
+
+.UIDiv .UserInfoDiv .UserPicDiv {
+    text-align: center;
+    padding: 15px;
+}
+
+    .UIDiv .UserInfoDiv .UserPicDiv .PicDivShow {
+        padding: 7px;
+        border: 1px solid #D5D5D5;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        width: 162px;
+        height: 162px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+        .UIDiv .UserInfoDiv .UserPicDiv .PicDivShow .PicDiv {
+            border: 1px solid #D5D5D5;
+            position: relative;
+            overflow: hidden;
+            width: 160px;
+            height: 160px;
+        }
+
+        .UIDiv .UserInfoDiv .UserPicDiv .PicDivShow .UserImg {
+            /*display: none;*/
+            width: 160px;
+            height: 160px;
+        }
+
+.UIDiv .UserInfoDiv .ChangePicDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+
+    .UIDiv .UserInfoDiv .ChangePicDiv .ChangeUserPic {
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+
+    .UIDiv .UserInfoDiv .ChangePicDiv .DeleteUserPic {
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+/*////////////////////////////////////////////////////////////////////////////////////////////////  Profile*/
+.UP {
+    margin: 25px 25px 10px;
+}
+
+    .UP .UserProfileDiv {
+        min-width: 395px;
+    }
+
+        .UP .UserProfileDiv .UPUserProfile {
+            width: 98%;
+        }
+
+            .UP .UserProfileDiv .UPUserProfile .UPHeader {
+                height: 38px;
+                border-bottom: 4px solid #369;
+                font-family: BKoodakBold,'B Koodak',tahoma;
+            }
+            .body-ltr .UP .UserProfileDiv .UPUserProfile .UPHeader {
+                font-family: tahoma;
+            }
+
+                .UP .UserProfileDiv .UPUserProfile .UPHeader .UPHeaderItem {
+                    font-size: 14px;
+                    padding: 14px;
+                    color: #999999;
+                    padding-left: 30px;
+                    padding-right: 30px;
+                    cursor: pointer;
+                }
+
+                    .UP .UserProfileDiv .UPUserProfile .UPHeader .UPHeaderItem:hover {
+                        color: #FFF;
+                        background-color: #369;
+                    }
+
+.UPActive {
+    color: #FFF!important;
+    background-color: #369!important;
+    /*box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.23);*/
+}
+
+.UP .UserProfileDiv .UPUserProfile .UPDiv {
+    background-color: #F1F1F1;
+    height: 450px;
+}
+
+.UP .UserProfileDiv .UPUserPicDiv {
+    margin-left: -300px;
+    margin-top: 10px;
+}
+
+.UP .UserPic_LTR {
+    margin-left: -300px;
+}
+
+.UP .UserPic_RTL {
+    margin-right: -300px;
+}
+
+.UP .UserInfo_LTR {
+    margin-left: 300px;
+}
+
+.UP .UserInfo_RTL {
+    margin-right: 300px;
+}
+
+.UP .UPUserInfo {
+    text-align: center;
+    width: 289px;
+}
+
+.UPUserInfo .PicDiv {
+    border: 1px solid #D5D5D5;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    width: 180px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    .UPUserInfo .PicDiv .UserImg {
+        width: 160px;
+        height: 160px;
+        margin: 10px;
+    }
+
+.UPUserInfo .ChangePicDiv {
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.UPUserInfo .UI {
+    height: 18px;
+    padding: 13px;
+    font-size: 16px;
+    font-family: BKoodakBold,'B Koodak',tahoma;
+}
+.body-ltr .UPUserInfo .UI {
+    font-family: tahoma;
+}
+    .UPUserInfo .UI:nth-child(odd) {
+        background-color: rgb(231, 231, 231);
+    }
+/*////////////////////////////////////////////////////////////////////////////////////////////////  End Profile*/
+
+
+
+
+
+.container-manage-user {
+    border: solid 1px #EEE;
+    margin: 20px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.manage-user-item {
+    font-size: 9pt;
+    font-family: tahoma;
+    background-color: #FFF;
+    border: solid 1px #DDD;
+    box-shadow: 0px 3px 2px #DFDFDF;
+    margin: 20px;
+    cursor: pointer;
+}
+
+    .manage-user-item:hover:not(.fullview) {
+        background-color: #FFFFD8;
+        transform: translateY(-2px);
+        box-shadow: 0px 3px 2px #A7A7A7;
+    }
+
+    .manage-user-item:active:not(.fullview) {
+        background-color: #fff;
+    }
+
+    .manage-user-item img {
+        width: 120px;
+        height: 120px;
+        margin: 20px 25px 10px;
+        border-radius: 50%;
+    }
+
+    .manage-user-item .user-name {
+        text-align: center;
+        font-weight: bold;
+        font-size: 12pt;
+        font-family: BKoodakBold,'B Koodak',tahoma;
+    }
+
+    .body-ltr .manage-user-item .user-name {
+        font-family: tahoma;
+    }
+
+    .manage-user-item .user-code {
+        font-size: 9pt;
+        text-align: center;
+        color: #808080;
+    }
+
+.manage-user-item, .user-item-normal {
+    width: 170px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btndelete-user {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 10pt;
+    opacity: 0;
+}
+
+.btnAccept-user {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    font-size: 15pt;
+    opacity: 0;
+}
+
+.manage-user-item:hover .btndelete-user {
+    opacity: 1;
+}
+
+.manage-user-item:hover .btnAccept-user {
+    opacity: 1;
+}
+
+.manage-user-item.deleted {
+    -webkit-animation: hinge 2s ease-in-out;
+    animation: hinge 2s ease-in-out;
+}
+
+.manage-user-item.notdelete {
+    -webkit-animation: shake 1s ease-in-out;
+    animation: shake 1s ease-in-out;
+}
+
+.manage-user-item .fadeInRight {
+    -webkit-animation: fadeInRight 1s ease-in-out;
+    animation: fadeInRight 1s ease-in-out;
+}
+
+.manage-user-item .fadeInLeft {
+    -webkit-animation: fadeInLeft 0.7s ease-in-out;
+    animation: fadeInLeft 0.7s ease-in-out;
+}
+
+.user-button {
+    font-size: 12px;
+    cursor: pointer;
+    background-color: #AFAFAF;
+    height: 26px;
+    line-height: 25px;
+    text-align: center;
+    color: #FFF;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    margin: 18px 5px 0;
+    padding: 0 8px;
+    min-width: 50px;
+}
+
+    .user-button:hover {
+        opacity: 0.9;
+    }
+
+    .user-button.blue {
+        background-color: #428BCA;
+    }
+
+    .user-button.green {
+        background-color: #00B83B;
+    }
+
+    .user-button.red {
+        background-color: #D9534F;
+    }
+
+/*full view*/
+.manage-user-item.fullview {
+    cursor: default;
+    position: fixed !important;
+    box-shadow: 0 2px 5px #303030;
+}
+
+.manage-user-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #000;
+    opacity: 0;
+}
+
+.fullview .user-item-normal {
+    transform: translateY(40px);
+    -moz-transform: translateY(40px);
+    -webkit-transform: translateY(40px);
+}
+
+.user-rating-container {
+    position: absolute;
+    top: 25px;
+    height: 30px;
+    width: 120px;
+}
+
+.body-rtl .user-rating-container {
+    left: 27px;
+}
+
+.body-ltr .user-rating-container {
+    right: 27px;
+}
+
+.user-rating-container i {
+    font-size: 19px;
+    margin: 1px;
+    color: #999;
+    float: left;
+}
+
+    .user-rating-container i.icon-star {
+        color: #FFC107;
+    }
+
+.user-property-container {
+   top: 75px;
+    width: 350px;
+    height: 302px;
+    position: absolute;
+    font-family: BKoodakBold,'B Koodak',tahoma;
+    font-size: 15px;
+    overflow-y: auto;
+}
+
+.body-rtl .user-property-container {
+    left: 200px;
+     
+}
+
+.body-ltr .user-property-container {
+    right: 200px;
+     font-family:tahoma;
+}
+
+.user-property {
+    clear: both;
+    line-height: 26px;
+}
+.body-rtl .user-property {
+    line-height: 23px;
+}
+    .user-property .name {
+        width: 100px;
+    }
+
+.user-group-tag {
+    background-color: #AAA;
+    border-radius: 2px;
+    padding: 0 5px;
+    color: #FFF;
+    font-size: 8pt;
+}
+
+.body-rtl .user-group-tag {
+    margin: 5px 0 0 5px;
+}
+
+.body-ltr .user-group-tag {
+    margin: 5px 5px 0 0;
+}
+
+.user-buttons {
+    bottom: 0;
+    left: 20px;
+    right: 20px;
+    height: 60px;
+    position: absolute;
+    border-top: solid 1px #CCC;
+}
+
+.user-full-name {
+    font-size: 25px;
+    margin: 20px 60px;
+}
+
+/*animate*/
+.animated-user {
+    -webkit-transition: all 0.8s;
+    -moz-transition: all 0.8s;
+    transition: all 0.8s;
+}
+
+@-webkit-keyframes hinge {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+        -webkit-transform-origin: top left;
+        transform-origin: top left;
+        -webkit-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
+    }
+
+    20%, 60% {
+        -webkit-transform: rotate(80deg);
+        transform: rotate(80deg);
+        -webkit-transform-origin: top left;
+        transform-origin: top left;
+        -webkit-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
+    }
+
+    40% {
+        -webkit-transform: rotate(60deg);
+        transform: rotate(60deg);
+        -webkit-transform-origin: top left;
+        transform-origin: top left;
+        -webkit-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
+    }
+
+    80% {
+        -webkit-transform: rotate(60deg) translateY(0);
+        transform: rotate(60deg) translateY(0);
+        -webkit-transform-origin: top left;
+        transform-origin: top left;
+        -webkit-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
+        opacity: 1;
+    }
+
+    100% {
+        -webkit-transform: translateY(700px);
+        transform: translateY(700px);
+        opacity: 0;
+    }
+}
+
+@keyframes hinge {
+    0% {
+        -webkit-transform: rotate(0);
+        -ms-transform: rotate(0);
+        transform: rotate(0);
+        -webkit-transform-origin: top left;
+        -ms-transform-origin: top left;
+        transform-origin: top left;
+        -webkit-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
+    }
+
+    20%, 60% {
+        -webkit-transform: rotate(80deg);
+        -ms-transform: rotate(80deg);
+        transform: rotate(80deg);
+        -webkit-transform-origin: top left;
+        -ms-transform-origin: top left;
+        transform-origin: top left;
+        -webkit-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
+    }
+
+    40% {
+        -webkit-transform: rotate(60deg);
+        -ms-transform: rotate(60deg);
+        transform: rotate(60deg);
+        -webkit-transform-origin: top left;
+        -ms-transform-origin: top left;
+        transform-origin: top left;
+        -webkit-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
+    }
+
+    80% {
+        -webkit-transform: rotate(60deg) translateY(0);
+        -ms-transform: rotate(60deg) translateY(0);
+        transform: rotate(60deg) translateY(0);
+        -webkit-transform-origin: top left;
+        -ms-transform-origin: top left;
+        transform-origin: top left;
+        -webkit-animation-timing-function: ease-in-out;
+        animation-timing-function: ease-in-out;
+        opacity: 1;
+    }
+
+    100% {
+        -webkit-transform: translateY(700px);
+        -ms-transform: translateY(700px);
+        transform: translateY(700px);
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes shake {
+    0%, 100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+
+    10%, 30%, 50%, 70%, 90% {
+        -webkit-transform: translateX(-10px);
+        transform: translateX(-10px);
+    }
+
+    20%, 40%, 60%, 80% {
+        -webkit-transform: translateX(10px);
+        transform: translateX(10px);
+    }
+}
+
+@keyframes shake {
+    0%, 100% {
+        -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+    }
+
+    10%, 30%, 50%, 70%, 90% {
+        -webkit-transform: translateX(-10px);
+        -ms-transform: translateX(-10px);
+        transform: translateX(-10px);
+    }
+
+    20%, 40%, 60%, 80% {
+        -webkit-transform: translateX(10px);
+        -ms-transform: translateX(10px);
+        transform: translateX(10px);
+    }
+}
+
+@-webkit-keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateX(-20px);
+        transform: translateX(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateX(-20px);
+        -ms-transform: translateX(-20px);
+        transform: translateX(-20px);
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+        -ms-transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+
+.error {
+    background: #FBE3E4!important;
+    border-top: 1px solid #e1b2b3!important;
+    border-left: 1px solid #e1b2b3!important;
+    border-right: 1px solid #FBC2C4!important;
+    border-bottom: 1px solid #FBC2C4!important;
+}
+
+.DivNameGroupCustomer {
+    display: none;
+}
+
+.UPUserInfo .UI .UILable {
+    width: 105px;
+}
+
+.user-rating {
+    position: absolute;
+    height: 30px;
+    width: 120px;
+}
+
+.body-rtl .user-rating {
+    left: 27px;
+}
+
+.body-ltr .user-rating {
+    right: 27px;
+}
+
+.user-rating i {
+    font-size: 23px;
+    margin: 1px;
+    color: #999;
+    float: left;
+}
+
+    .user-rating i.icon-star {
+        color: #e1ac0a;
+    }
+
+.UserActive {
+    border-radius: 4px;
+    background-color: #40CA47;
+    text-align: center;
+    padding: 5px;
+    margin-top: -4px;
+    min-width: 32px;
+    color: #fff;
+}
+
+.UserDeAcrive {
+    border-radius: 4px;
+    background-color: #B3B3B3;
+    text-align: center;
+    padding: 5px;
+    margin-top: -4px;
+    width: 32px;
+    color: #fff;
+}
+
+.GroupCustomerLbl {
+    display: none;
+}
+
+.rblAssignDiv {
+    margin-top: -10px!important;
+    margin-right: -10px!important;
+    margin-right: -10px!important;
+}
+
+#CustomerName {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.SelectCustomerDiv {
+    padding: 5px;
+    margin-top: -5px;
+}
+
+.lblErrorSelectExportMode {
+    font-size: 10pt;
+    color: red;
+}
+.lblDoneSelectExportMode {
+    color: #4D9B4D!important;
+}
+
+.body-ltr  #showPass{
+        margin: 0 5px !important;
+}

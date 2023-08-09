@@ -1,0 +1,73 @@
+﻿@using ViewModel.UserManagement.Attendance;
+
+@model  Utility.Utitlies.viewModel<TransactionRequestVm>
+@{
+    var formSecurity = (ViewModel.Security.FormSecurity)ViewBag.FormSecurity;
+}
+
+
+<table class="table table-hover text-nowrap" style="overflow-x:auto;">
+    <thead>
+        <tr>
+            <th>عملیات</th>
+            <th>تایید</th>
+            <th>پرسنل</th>
+            <th>تاریخ درخواست</th>
+            <th>ساعت درخواست</th>
+            <th>مرخصی</th>
+            <th>درخواست</th>
+            <th>از تاریخ</th>
+            <th>از ساعت</th>
+            <th>تا تاریخ</th>
+            <th>تا ساعت</th>
+            <th>وضعیت</th>
+            <th>تایید کننده</th>
+            <th>تاریخ تایید</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model.TLists)
+            {
+                var _color = item.ReqStatus == 2 ? "#28a745" : (item.ReqStatus == 3 ? "#dc3545" : "#000000");
+                <tr>
+                    <td>
+                        <a onclick="EditTransReq('@item.Id')" class="fa fa-edit" title="ویرایش"></a>
+                        <a onclick="DeleteTransReq('@item.Id')" class="fa fa-trash" title="حذف"></a>
+                    </td>
+                    <td style="min-width:120px;">
+                        <div class="form-group">
+                            <div class="row" style="float:right;">
+                                <div style="float:left;padding:5px;min-width: 45px;">
+                                    <button class="btn btn-block bg-gradient-success btn-flat" onclick="TransactionRequestStatus('@item.Id', '1')">تایید</button>
+                                </div>
+                                <div style="float:left;padding:5px;min-width: 45px;">
+                                    <button class="btn btn-block bg-gradient-danger btn-flat" onclick="TransactionRequestStatus('@item.Id', '2')">لغو</button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>@item.Person_Name</td>
+                    <td>@item.ModifiedDateStr</td>
+                    <td>@item.ModifiedDateStr_Time</td>
+                    <td>@item.ReqTypeStr</td>
+                    <td>@item.Transaction_Name</td>
+                    <td>@item.FromDateRequestStr</td>
+                    <td>@item.FromDateRequestStr_Time</td>
+                    <td>@item.ToDateRequestStr</td>
+                    <td>@item.ToDateRequestStr_Time</td>
+                    <td style="color:@_color">@item.ReqStatusStr</td>
+                    <td>@item.ReqAnsDateStr</td>
+                    <td>@item.AccepterName</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+@Html.Partial(Utility.Utitlies.VaribleForName.NamePartialOperationPageing, Model.CommonCustomViewTablePaging)
+
+
+
+

@@ -1,0 +1,193 @@
+﻿@using ViewModel.UserManagement.Attendance
+@model System.Collections.Generic.List<ShiftMonth>
+@{
+    var _jobtimeList = (List<JobTimeVm>)ViewData["JobTimeList"];
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    <table class="table table-bordered text-center" id="tblShiftWork">
+        <tbody>
+            @foreach (var month in Model)
+            {
+                <tr>
+                    <td style=" background-color: #f3f3f3;">@month.name</td>
+                    @foreach (var item in month.shiftMonth_Days)
+                    {
+                        var _backcolor = "";
+                        var _forecolor = "";
+                        if (item.IsVacation)
+                        {
+                            _backcolor = "#df0000";
+                            _forecolor = "#FFFFFF";
+                        }
+                        else
+                        {
+                            _forecolor = "#000000";
+                            if (item.JobTime == 0)
+                            {
+                                _backcolor = "#FFECB3";
+                            }
+                            else if (item.IsRamazan)
+                            {
+                                _backcolor = "#FFDCEDC8";
+                            }
+                            else
+                            {
+                                _backcolor = "#ffffff";
+                            }
+                        }
+
+                        <td style="min-width: 100px;background-color: @_backcolor" data-id="@item.DateEn.Date">
+                            @*<div class="fc-event-title" style="color:@_forecolor">@item.name</div>*@
+                            <div class="fc-event-title" style="font-size: 10px; color: @_forecolor" title="@item.JobTimeName">@item.DateFa</div>
+                            <div class="fc-event-title" style="font-size: 8px; color: #565656" title="@item.JobTimeName">@item.JobTimeName</div>
+                            <div class="row">
+                                <input type="checkbox" id="checkboxPrimary1" @(item.IsVacation == true ? " checked " : "") onclick="ChangeVcation('@item.DateEn')">
+                                &nbsp;
+                                <div for="checkboxPrimary1" style="font-size:10px; color:@_forecolor">تعطیل</div>
+                            </div>
+
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="menu">
+        <a class="dropdown-item" href="#" onclick="ChangeVcation_Menu();">تعطیل</a>
+
+        @if (_jobtimeList != null && _jobtimeList.Count > 0)
+        {
+            foreach (var item in _jobtimeList)
+            {
+                <a class="dropdown-item" href="#" onclick="ChangeJobTimeForDays_Menu('@item.Id');">@item.JobTimeName</a>
+            }
+            @*<a class="dropdown-item" href="#" onclick="ddddddd();">Something else here</a>*@
+        }
+
+    </div>
+    <style>
+        #menu {
+            display: none;
+        }
+
+        #dropdownMenuButton {
+            position: absolute;
+            display: none;
+        }
+    </style>
+
+    <script>
+
+        var _currentDate = '';
+
+        var _LoadCalendar = document.getElementById('LoadCalendar');
+
+        $("td").on('contextmenu', function (e) {
+            $('td').css('box-shadow', 'none');
+            var _top = e.pageY - 320;
+            var _left = e.pageX + _LoadCalendar.scrollLeft;
+
+
+            $(this).css('box-shadow', 'inset 1px 1px 0px 0px red, inset -1px -1px 0px 0px red');
+            
+            _currentDate = $(this).data("id");
+            $("#menu").css({
+                display: "block",
+                top: _top,
+                left: _left,
+            });
+            return false; //blocks default Webbrowser right click menu
+
+        });
+
+        $("body").on("click", function () {
+            if ($("#menu").css('display') == 'block') {
+                $(" #menu ").hide();
+            }
+            $('td').css('box-shadow', 'none');
+        });
+
+        $("#menu a").on("click", function () {
+            $(this).parent().hide();
+        });
+
+
+        function ChangeVcation_Menu() {
+            ChangeVcation(_currentDate);
+        }
+        function ChangeJobTimeForDays_Menu(jobTimeId) {
+            ChangeJobTimeForDays(_currentDate, jobTimeId);
+        }
+    </script>
+}
+
+
+
+
+
+@*<div id="contextMenu" class="dropdown clearfix">
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
+            <li>
+                <a tabindex="-1" href="#">Action 1</a>
+            </li>
+            <li>
+                <a tabindex="-1" href="#">Action 2</a>
+            </li>
+            <li>
+                <a tabindex="-1" href="#">Some More Actions</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a tabindex="-1" href="#">Final Action</a>
+            </li>
+        </ul>
+    </div>
+    <style>
+        #contextMenu {
+            position: absolute;
+            display: none;
+        }
+
+        .wrap {
+            width: 90%;
+            display: block;
+            margin: 0 auto;
+        }
+
+        table {
+            border: 1px solid rgba(221, 221, 221, 1);
+        }
+
+        tr:nth-child(even) {
+            background: #F5F5F5
+        }
+
+        tr {
+            position: relative;
+        }
+
+            tr:hover {
+                background: #c9e8f7;
+                position: relative;
+            }
+    </style>
+    <script>
+        $(function () {
+            var $contextMenu = $("#contextMenu");
+            $("body").on("contextmenu", "table tr", function (e) {
+                $contextMenu.css({
+                    display: "block",
+                    left: e.pageX,
+                    top: e.pageY - 320
+                });
+                
+                return false;
+            });
+            $('html').click(function () { $contextMenu.hide(); });
+            $("#contextMenu a").click(function (e) { var f = $(this);  });
+        });
+    </script>*@

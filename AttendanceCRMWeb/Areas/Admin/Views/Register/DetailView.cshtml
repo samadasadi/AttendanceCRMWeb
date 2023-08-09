@@ -1,0 +1,794 @@
+﻿@model ViewModel.UserManagement.UserVm
+@*@using Utility.Utitlies*@
+@{
+    ViewBag.Title = Model.GetFullName() + " - " + Model.EmployeeID;
+    Layout = Utility.Utitlies.VaribleForName.AddressLayoutMasterNew;
+}
+@using Utility.HtmlHelpers
+@section styles
+{
+    <style>
+        .headercontent {
+            border: 1px solid #E2E2E2;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            box-shadow: 0 0 1px 1px #FAFAFA;
+            -moz-box-shadow: 0 0 1px 1px #FAFAFA;
+            margin-bottom: 15px;
+            /*background-color: white;*/
+        }
+
+        .headerRight {
+            /*border: 1px solid #F9F9F9;*/
+            /*background-color: #F9F9F9;*/
+            border-bottom: 1px solid #EBEBEB;
+            border-radius: 4px 4px 0 0;
+            -moz-border-radius: 4px 4px 0 0;
+            -webkit-border-radius: 4px 4px 0 0;
+            height: 40px;
+            padding-left: 8px;
+            padding-right: 7px;
+            padding-top: 0;
+            padding-bottom: 7px;
+        }
+
+        .btnEdit {
+            width: 70px;
+            height: 14px;
+            margin: 0 2px;
+            font-weight: normal;
+            border: 1px solid #E1E1E1;
+            white-space: nowrap;
+            text-align: center;
+            outline: medium none;
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+            padding: 5px 6px 7px 6px;
+            background-image: none;
+            background-color: #F3F3F3;
+            border-radius: 2px;
+            height: 28px;
+            margin-top: 0;
+            min-width: 50px;
+            cursor: pointer;
+            color: #000;
+            font-family: Tahoma,Lucida Grande,Verdana,Lucida Sans Regular,Lucida Sans Unicode,Arial,sans-serif;
+            font-size: 11px;
+            display: inline-block;
+            position: relative;
+            line-height: normal;
+            vertical-align: middle;
+            overflow: visible;
+        }
+
+        .btnPreview {
+            background-color: #39b7ac !important;
+            color: #fff !important;
+            border: 1px solid #39b7ac !important;
+        }
+
+        .btnDelete {
+            background-color: #D14836 !important;
+            background-image: -webkit-linear-gradient(top,#DD4B39,#D14836) !important;
+            color: white !important;
+            border: 1px solid transparent !important;
+        }
+
+        .purple.btn {
+            color: #FFFFFF;
+            background-color: #8e5fa2;
+            width: 63px;
+            height: 28px;
+            padding: 0px 4px 0px 4px;
+        }
+
+        .imageProfile {
+            height: 80px;
+            width: 80px;
+            box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.5);
+        }
+    </style>
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $('[data-toggle="pill"]').click(function (e) {
+
+            e.preventDefault();
+            var tab = this;
+            var $this = $(tab), targ = $this.attr('href'), id = $this.attr("data-id");
+            var _url = "";
+            if (targ == "#tab_1") {
+                $this.tab('show');
+            }
+            else if (targ == "#tab_2") {
+                $this.tab('show');
+                $(targ).html("لطفاً منتظر بمانید...");
+                _url = "/Admin/Register/GetTreatmentList";
+            }
+            else if (targ == "#tab_3") {
+                $this.tab('show');
+                $(targ).html("لطفاً منتظر بمانید...");
+                _url = "/Admin/Register/GetCostList";
+            }
+            else if (targ == "#tab_4") {
+                $this.tab('show');
+                $(targ).html("لطفاً منتظر بمانید...");
+                _url = "/Admin/Register/GetDoctorDoingReport";
+            }
+            else if (targ == "#tab_5") {
+                $this.tab('show');
+                $(targ).html("لطفاً منتظر بمانید...");
+                _url = "/Admin/Register/PatientAccount";
+            }
+            else if (targ == "#tab_6") {
+                $this.tab('show');
+                $(targ).html("لطفاً منتظر بمانید...");
+                _url = "/Admin/Register/PersonelAccount_Index";
+            }
+
+            if (targ == "#tab_2" || targ == "#tab_3" || targ == "#tab_4" || targ == "#tab_5" || targ == "#tab_6") {
+                $("#tab_2").html("");
+                $.ajax({
+                    type: "GET",
+                    url: _url,
+                    data: { Id: $("#Id").val(), UserType: $("#UserType").val() },
+                    beforeSend: function () {
+                        showWait();
+                    },
+                    success: function (result) {
+
+                        $(targ).html(result);
+                    },
+                    complete: function () {
+                        hideWait();
+                    },
+                    error: function (err) {
+                        hideWait();
+                    }
+                });
+            }
+        });
+
+        function refreshPersonelReport() {
+            $('#tab_4').html("لطفاً منتظر بمانید...");
+           var _url = "/Admin/Register/GetDoctorDoingReport";
+            $.ajax({
+                type: "GET",
+                url: _url,
+                ModelaIdta: { Id: $("#Id").val(), UserType: $("#UserType").val() },
+                beforeSend: function () {
+                    showWait();
+                },
+                success: function (result) {
+
+                    $('#tab_4').html(result);
+                },
+                complete: function () {
+                    hideWait();
+                },
+                error: function (err) {
+                    hideWait();
+                }
+            });
+        }
+
+        function delD(userId) {
+
+            if (!confirm("آیا از حذف کاربر اطمینان دارید")) return;
+            $.ajax({
+                url: "/Admin/Register/Delete",
+                type: 'GET',
+                scriptCharset: "utf-16",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-16",
+                data: { id: userId },
+                success: function (res) {
+
+                    window.location.href = '@Url.Action("Index", "Register")';
+                }, error: function () {
+                    //AlertDialog("متاسفانه عملیات با موفقیت انجام نشد", "خطا", 'error');
+                }
+            });
+        }
+
+        function operationAjaxFor_Ava(url, idTextSearch, idComboSelectCount, page, firstPage) {
+
+
+            window.AjaxCallAction("GET", url, { Search: $("#" + idTextSearch).val(), PageNum: page, PageSize: $("#" + idComboSelectCount).val(), FirstPage: firstPage, Id: $("#Id").val() }, true, function (result) {
+
+                var fnName = 'successCallBack' + '_' + idTextSearch;
+                window[fnName](result, page);
+            }, true);
+        }
+
+        function AddNewCost() {
+
+            InitModal('ثبت مورد جدید', '/Admin/Register/AddCost', {
+                PersonID: $("#Id").val(), UserType: $("#UserType").val()
+            }, function () { Add_Cost() });
+        }
+
+        function Add_Cost() {
+
+
+            var _price = $("#Price").val();
+                if (_price != null && _price != "" && _price != undefined) {
+
+                    $.post("/Admin/Register/SaveCost", $("#CostFrm").serialize()).done(
+                        function (result) {
+
+                            if (result == true) {
+                                $("#Price").val('');
+                                $("#modalMain").modal('hide');
+                                RefreshCostList();
+                                AlertDialog("با موفقیت ثبت شد", "موفق");
+                            }
+                            else {
+                                AlertDialog("ثبت انجام نشد", "خطا", "error");
+                            }
+                        });
+
+                } else {
+                    alert("مبلغ را وارد نمایید");
+                    return false;
+                }
+        }
+
+        function RefreshCostList() {
+
+            window.AjaxCallAction("GET", '/Admin/Register/P_GetCostList', { Id: $("#Id").val(), Search: '', PageNum: '1', PageSize: '10', FirstPage: '1' }, true,
+                function (result) {
+
+                    var fnName = 'successCallBack' + '_' + 'txtSearch';
+                    window[fnName](result, '1');
+                }, true);
+        }
+
+        function EditItem(id) {
+
+            InitModal('ثبت مورد جدید', '/Admin/Register/AddCost', {
+                PersonID: $("#Id").val(), UserType: $("#UserType").val(), Id: id
+            }, function () {Add_Cost()});
+        }
+
+        function DeleteItem(id) {
+
+            if (confirm("آیا از حذف اطمینان خاطر دارید"))
+                window.AjaxCallAction("GET", "/Admin/Register/DeleteRow", { Id: id, PersonID: $("#Id").val() }, true,
+                    function (result) {
+
+                        if (result == true) {
+                            $("#Price").val('');
+                            $("#modalMain").modal('hide');
+                            RefreshCostList();
+                            AlertDialog("حذف با موفقیت انجام شد", "موفق");
+                        }
+                        else {
+                            AlertDialog("عملیات انجام نشد", "خطا", "error");
+                        }
+                });
+        }
+
+        function CalcPatientAccount() {
+
+            $("#ReportView").html('');
+            $("#PatientAccountResult").html('');
+            AjaxCallAction("GET", "/Admin/Register/CalcPatientAccount", $("#PatientAccountFrm").serialize(), true, function (res) {
+
+                $("#PatientAccountResult").html(res);
+            }, true);
+        }
+
+        function ShowReport() {
+            $("#PatientAccountResult").html('');
+            $.ajax({
+                type: "Get",
+                url: "/Report/StaticReport/PrintPatientAccount",
+                data: $("#PatientAccountFrm").serialize(),
+                beforeSend: function () {
+                    showWait();
+                },
+                success: function (data, textStatus, request) {
+
+                    $("#ReportView").html(data);
+                },
+                complete: function () {
+                    hideWait();
+                }
+            });
+            return false;
+        }
+
+
+        function SaveHoghogh() {
+
+
+            var _personMonth = $("#personAccountingFilter_PersonelSalariMonth").val();
+
+            if (_personMonth == '' || _personMonth == null || _personMonth == undefined) {
+                AlertDialog('ماه را انتخاب نمایید', '', 'error');
+                return;
+            }
+
+            AjaxCallAction("GET", "/Admin/Register/SavePersonelAccount", $("#PatientAccountFrm").serialize(), true, function (res) {
+
+                if (!res.Error) {
+                    AlertDialog('با موفقیت ذخیره شد', '', 'success');
+                }
+                else {
+                    AlertDialog(res.Message, '', 'error');
+                }
+            }, true);
+        }
+
+
+        function ReloadPersonelAccount(id) {
+            AjaxCallAction("GET", "/Admin/Register/PersonelAccount_Index", { Id: id, page: 1, FirstPage: 1 }, true, function (res) {
+
+                if (!res.error) {
+                    $("#tab_6").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true);
+        }
+        function operationAjaxFor_PersonelAccount(url, idTextSearch, idComboSelectCount, page, firstPage) {
+
+            var ids = [];
+            ids = $("#Types").val() == null ? 0 : $("#Types").val();
+            if (ids == 0) {
+                ids = [];
+            }
+
+            var _id = '@Model.Id';
+
+            window.AjaxCallAction("POST", url, { Search: $("#" + idTextSearch).val(), PageNum: page, PageSize: $("#" + idComboSelectCount).val(), FirstPage: firstPage, Types: ids, Id: _id}, true, function (result) {
+
+                var fnName = 'successCallBack' + '_' + idTextSearch;
+                window[fnName](result, page);
+            }, true);
+        }
+        function PrintPersonAccounting(id) {
+            $("#ReportView").html('');
+            $.ajax({
+                type: "Get",
+                url: "/Report/StaticReport/ShowPatientAccountDetail",
+                data: { Id: id },
+                beforeSend: function () {
+                    showWait();
+                },
+                success: function (data, textStatus, request) {
+
+                    $("#ReportViewDetail").html(data);
+                },
+                complete: function () {
+                    hideWait();
+                }
+            });
+            return false;
+
+
+
+        }
+        function DeletePersonelAccount(id, userId) {
+
+            AjaxCallAction("GET", "/Admin/Register/DeletePersonelAccount", { Id: id }, true, function (res) {
+
+                if (!res.Error) {
+                    AlertDialog('حذف با موفقیت انجام شد', '', 'success');
+                    ReloadPersonelAccount(userId);
+                }
+                else {
+                    AlertDialog(res.Message, '', 'error');
+                }
+
+            }, true);
+        }
+        function SavePersonelAccount_Cost(id, doctorId) {
+
+            AjaxCallAction("GET", "/Admin/Register/SavePersonelAccount_Cost", { EmployeeAccountId: id, PersonID: doctorId }, true, function (res) {
+
+                if (!res.Error) {
+                    AlertDialog('بارگزاری با موفقیت انجام شد', '', 'success');
+                }
+                else {
+                    AlertDialog(res.Message, '', 'error');
+                }
+
+            }, true);
+        }
+        function SavePersonelAccount_CostIncoming(id, doctorId) {
+
+            AjaxCallAction("GET", "/Admin/Register/SavePersonelAccount_CostIncoming", { EmployeeAccountId: id, PersonID: doctorId }, true, function (res) {
+
+                if (!res.Error) {
+                    AlertDialog('بارگزاری با موفقیت انجام شد', '', 'success');
+                    ReloadPersonelAccount(doctorId);
+                }
+                else {
+                    AlertDialog(res.Message, '', 'error');
+                }
+
+            }, true);
+        }
+
+    </script>
+}
+
+
+
+
+
+@*@HtmlExtenstions.TitleAndSiteMap("کاربران", "کاربران", "جزئیات")*@
+@*@using (Html.BsPanel("کاربران", colorPanel: ColorPanel.Success))
+{*@
+    <div class="card">
+        <div class="card-body p-2">
+
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.UserType)
+            <div class="headerCell">
+                <div class="headercontent">
+                    <div class="headerRight">
+                        <div style="margin: 5px;padding-right: 0!important;padding: 0;display: inline;float: right!important;white-space: nowrap;">
+                            <div class="btnEdit" onclick="window.location.href='/Admin/Register/Edit/@Model.Id';">ویرایش</div>
+
+                            <div class="btnDelete btnEdit" onclick="delD('@Model.Id')">حذف</div>
+                            @if (Service.Consts.Public.CurrentUser.IsAttendance)
+                            {
+                                <div onclick="TransactionReauestUser('@Model.Id');" class="btnPreview btnEdit" style="min-width: 100px;">مرخصی/ماموریت</div>
+                            }
+                            @if (Service.Consts.Public.CurrentUser.IsTaminPrescription)
+                            {
+                                <div onclick="GetTwoStepDoctorSession('@Model.Id');" class="btnPreview btnEdit" style="min-width: 130px;">تایید دو مرحله ای پزشک</div>
+                            }
+
+                        </div>
+                        <div style="padding-top: 12px;float: left!important;white-space: nowrap; font-size: 106%;font-weight: bold;padding-bottom: 4px;">کد پرسنلی : @Model.EmployeeID</div>
+                    </div>
+                    <div class="pfileHeaderArrow"></div>
+                    <div style="margin-top: 10px;margin-right: 20px;margin-left: 10px;overflow: hidden;">
+                        <div style="float: right!important;white-space: nowrap;">
+                            <div style="width: 65px!important;height: 65px!important;margin-left: 15px;margin-bottom: 50px;-webkit-border-radius: 6px!important;">
+
+                                @if (Model.ImgPath == null)
+                                {
+                                    if (Model.IsMale)
+                                    {
+                                        <img src="~/Content/Image/Male.png" style="width:65px;height: 65px;  border: 1px solid #e2e2e2; border-radius: 2px!important; padding:3px;">
+                                    }
+                                    else if (!Model.IsMale)
+                                    {
+                                        <img src="~/Content/Image/Female.png" style="width:65px;height: 65px;  border: 1px solid #e2e2e2; border-radius: 2px!important; padding:3px;">
+                                    }
+                                    else
+                                    {
+                                        <img src="/Content/Image/people.png" style="width:65px;height: 65px;  border: 1px solid #e2e2e2; border-radius: 2px!important; padding:3px;">
+                                    }
+                                }
+                                else
+                                {
+                                    <a target="_blank" href="@Model.ImgPath"><img src="@Model.ImgPath" style="width:65px;height: 65px;  border: 0px solid #e2e2e2; border-radius: 4px!important;"></a>
+                                }
+                            </div>
+                        </div>
+                        <div style="width: 65%;float: right;padding-bottom: 5px;line-height: 25px;">
+                            <div style="padding-right: 10px;">
+                                <div>
+                                    <span id="head_cus_name" style="white-space: nowrap;display: inline-block;font-size: 15px;padding-right: 6px;font-weight: bold;"> @Model.Name @Model.Family </span>
+                                </div>
+                                <div><span id="head_cus_title">@Model.NationalCode</span></div>
+                                <div id="head_cus_activity"></div>
+                                <div><a id="head_cus_company" class="nolink" cus_code2="" tag="1"></a></div>
+                            </div>
+                            <div class="description" style="margin-top: 10px;"></div>
+                            <div class="contant_group">
+                            </div>
+                        </div>
+
+                        <div style="text-align: left;line-height: 23px;overflow: hidden;">
+                            <div style="clear: both; float: left;">
+                                @if (!string.IsNullOrEmpty(Model.UserType))
+                                {
+                                    <b>@Resources.Md.UserType &nbsp;:&nbsp;</b> @Model.UserTypeName
+                                }
+                            </div>
+                            <div style="clear: both; float: left;" class="mailbox-subject">
+                                @if (!string.IsNullOrEmpty(Model.MobileNumber))
+                                {
+                                    <b>@Resources.Md.MobileNumber &nbsp;:&nbsp;</b> @Model.MobileNumber
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profileInfoWrapper"></div>
+                </div>
+            </div>
+
+
+            <div class="card card-secondary  card-outline-tabs">
+                <div class="card-header p-0 border-bottom-0">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="pill" href="#tab_1" role="tab" aria-selected="true">
+                                <i class="fa fa-user zoom_icon" style="font-size: 14px; margin: 0px;"></i>&nbsp;&nbsp;اطلاعات پایه
+                            </a>
+                        </li>
+                        @if (Model.UserType == "0120201" || Model.UserType == "0120202")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#tab_2" role="tab" aria-selected="false">
+                                    <i class="fa fa-heartbeat zoom_icon" style="font-size: 14px; margin: 0px;"></i>&nbsp;&nbsp;درمان ها
+                                </a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href="#tab_3" role="tab" aria-selected="false">
+                                <i class="fa fa-credit-card zoom_icon" style="font-size: 14px; margin: 0px;"></i>&nbsp;&nbsp;پرداختی ها
+                            </a>
+                        </li>
+                        @if (Model.UserType == "0120201" || Model.UserType == "0120202")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#tab_4" role="tab" aria-selected="false">
+                                    <i class="fa fa-industry zoom_icon" style="font-size: 14px; margin: 0px;"></i>&nbsp;&nbsp;گزارش عملکرد
+                                </a>
+                            </li>
+                        }
+                        @if (Service.Consts.Public.CurrentUser.IsAttendance)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#tab_5" role="tab" aria-selected="false">
+                                    <i class="fa fa-credit-card zoom_icon" style="font-size: 14px; margin: 0px;"></i>&nbsp;&nbsp;محاسبه حقوق پرسنل
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="pill" href="#tab_6" role="tab" aria-selected="false">
+                                    <i class="fa fa-credit-card zoom_icon" style="font-size: 14px; margin: 0px;"></i>&nbsp;&nbsp;لیست حقوق پرسنل
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="tab_1" role="tabpanel">
+                            <div class="col-md-12">
+                                <div class="CustomFieldsSystem" id="BasicInfo" style="display: block;">
+                                    <div class="ContactPanel col2">
+                                        <div class="ContactInputWidget">
+                                            <div class="blockHeader resolutionHigh">اطلاعات پرسنل</div>
+                                        </div>
+                                        <div>
+                                            @if (!string.IsNullOrEmpty(Model.FatherName))
+                                            {
+                                                <div field_group="0" in_group="24">
+                                                    <div class="contantinfo_container ">@Resources.Md.FatherName</div>
+                                                    <div class="contantinfoval_container" style="direction:rtl;">@Model.FatherName</div>
+                                                </div>
+                                            }
+                                            @if (!string.IsNullOrEmpty(Model.UserType))
+                                            {
+                                                <div field_group="0" in_group="24">
+                                                    <div class="contantinfo_container ">@Resources.Md.UserType</div>
+                                                    <div class="contantinfoval_container" style="direction:rtl;">@Model.UserTypeName</div>
+                                                </div>
+                                            }
+                                            @if (!string.IsNullOrEmpty(Model.Education))
+                                            {
+                                                <div field_group="0" in_group="24">
+                                                    <div class="contantinfo_container ">@Resources.Md.Education</div>
+                                                    <div class="contantinfoval_container" style="direction:rtl;">@Model.EducationName</div>
+                                                </div>
+                                            }
+                                            @if (!string.IsNullOrEmpty(Model.PlaceofBirth))
+                                            {
+                                                <div field_group="0" in_group="24">
+                                                    <div class="contantinfo_container ">@Resources.Md.PlaceofBirth</div>
+                                                    <div class="contantinfoval_container" style="direction:rtl;">@Model.PlaceofBirth</div>
+                                                </div>
+                                            }
+                                            @if (Model.DateBirthEn.HasValue)
+                                            {
+                                                <div field_group="0" in_group="24">
+                                                    <div class="contantinfo_container ">@Resources.Md.DateofBirth</div>
+                                                    <div class="contantinfoval_container" style="direction:rtl;">@Model.DateBirthEnStrPersian</div>
+                                                </div>
+                                            }
+
+                                            <div field_group="0" in_group="24">
+                                                <div class="contantinfo_container ">@Resources.Md.IsMale</div>
+                                                <div class="contantinfoval_container" style="direction:rtl;">
+                                                    @if (Model.IsMale)
+                                                    {<text>مرد</text> }
+                                                else
+                                                {<text>زن</text>}
+                                                </div>
+                                            </div>
+
+                                            <div field_group="0" in_group="24">
+                                                <div class="contantinfo_container ">@Resources.Md.Married</div>
+                                                <div class="contantinfoval_container" style="direction:rtl;">
+                                                    @if (Model.Married)
+                                                    {<text>متاهل</text> }
+                                                else
+                                                {<text>مجرد</text>}
+                                                </div>
+                                            </div>
+
+
+
+                                            <div field_group="0" in_group="24">
+                                                <div class="contantinfo_container ">@Resources.Md.Status</div>
+                                                <div class="contantinfoval_container" style="direction:rtl;">
+                                                    @if (Model.EmployeeActive)
+                                                    {<text>فعال</text> }
+                                                else
+                                                {<text>غیر فعال</text>}
+                                                </div>
+                                            </div>
+
+
+
+                                            @if (Model.FromValidityDate.HasValue)
+                                            {
+                                                <div field_group="0" in_group="24">
+                                                    <div class="contantinfo_container ">تاریخ اعتبار، از :</div>
+                                                    <div class="contantinfoval_container" style="direction:rtl;">@Model.FromValidityDateStr</div>
+                                                </div>
+                                            }
+                                            @if (Model.ToValidityDate.HasValue)
+                                            {
+                                                <div field_group="0" in_group="24">
+                                                    <div class="contantinfo_container ">تاریخ اعتبار، تا :</div>
+                                                    <div class="contantinfoval_container" style="direction:rtl;">@Model.ToValidityDateStr</div>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="ContactPanel col2">
+                                        <div class="ContactInputWidget">
+                                            <div class="blockHeader resolutionHigh">اطلاعات تماس</div>
+                                        </div>
+                                        <div>
+                                            @if (!string.IsNullOrEmpty(Model.MobileNumber))
+                                            {
+                                                <div field_group="0" in_group="24">
+                                                    <div class="contantinfo_container ">@Resources.Md.MobileNumber</div>
+                                                    <div class="contantinfoval_container" style="direction:rtl;">@Model.MobileNumber</div>
+                                                </div>
+                                            }
+                                            @if (!string.IsNullOrEmpty(Model.PhoneNo))
+                                            {
+                                                <div field_group="0" in_group="24">
+                                                    <div class="contantinfo_container ">@Resources.Md.Phone</div>
+                                                    <div class="contantinfoval_container" style="direction:rtl;">@Model.PhoneNo</div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="ContactPanel col2">
+                                        <div class="ContactInputWidget">
+                                            <div class="blockHeader resolutionHigh">آدرس پرسنل</div>
+                                        </div>
+                                        <div class="ContactPanel col2">
+                                            @if (!string.IsNullOrEmpty(Model.Address))
+                                            {
+                                                <div field_group="0" in_group="24">
+                                                    <div class="contantinfo_container ">@Resources.Md.Address</div>
+                                                    <div class="contantinfoval_container" style="direction:rtl;word-break: break-word;">@Model.Address</div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab_2" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="tab_3" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="tab_4" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="tab_5" role="tabpanel"></div>
+                        <div class="tab-pane fade" id="tab_6" role="tabpanel"></div>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+
+        </div>
+    </div>
+
+
+<script>
+
+
+    function TransactionReauestUser(userId) {
+
+        InitModal('', '/Admin/EmployeeAttendance/Create_EmployeeTransReq', { PersonelId: userId }, function () { Save_TransReq() });
+    }
+    function Save_TransReq() {
+
+        var _PersonID = $("#T_model_PersonID").val();
+        var _Transaction_Id = $("#T_model_Transaction_Id").val();
+        var _Comment = $("#T_model_Comment").val();
+
+        var _TimeFrom_Value = $("#T_model_TimeFrom_Value").val();
+        var _TimeTo_Value = $("#T_model_TimeTo_Value").val();
+
+        if (document.getElementById('TransactionReqType_ReqHour').checked == true && (_TimeFrom_Value == "" || _TimeFrom_Value == null || _TimeFrom_Value == undefined || _TimeTo_Value == "" || _TimeTo_Value == null || _TimeTo_Value == undefined)) {
+            AlertDialog('لطفا ساعت را وارد نمایید', '', 'error');
+            return;
+        }
+
+        if (_Transaction_Id == "" || _Transaction_Id == null || _Transaction_Id == undefined) {
+            AlertDialog('لطفا درخواست را انتخاب نمایید', '', 'error');
+            return;
+        }
+        if (_Comment == "" || _Comment == null || _Comment == undefined) {
+            AlertDialog('لطفا توضیحات را وارد نمایید', '', 'error');
+            return;
+        }
+        if (_PersonID == "" || _PersonID == null || _PersonID == undefined) {
+            AlertDialog('لطفا پرسنل را انتخاب نمایید', '', 'error')
+        } else {
+
+            AjaxCallAction("POST", "/Admin/EmployeeAttendance/Save_TransReq", $("#TransReqFrmEmployee").serialize(), true, function (res) {
+
+                if (!res.Error) {
+                    CloseModal();
+                    AlertDialog('درخواست با موفقیت ثبت شد', '', 'success');
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true);
+
+        }
+    }
+
+
+
+    function GetTwoStepDoctorSession(_doctorId) {
+        //var _doctorId = $("#Id").val();
+        AjaxCallAction("GET", "/Admin/Register/GetDoctorSession", { Id: _doctorId }, true, function (res) {
+
+            if (res) {
+                if (!res.error) {
+                    if (res.info.isTwoStep) {
+
+                        InitModal('کد تایید ارسال شده به شماره همراه پزشک', '/Admin/Register/SalamatGetTwoStepVerificationCode', { Id: _doctorId }, function () { CreateSession() });
+
+                    }
+                    else {
+                        AlertDialog('اعتبار سنجی پزشک دومرحله ای نمی باشد', "خطا", 'info');
+                    }
+                }
+                else {
+                    AlertDialog(res.message, "خطا", 'error');
+                }
+            }
+        }, true);
+
+        return false;
+    }
+    function CreateSession() {
+        AjaxCallAction("GET", "/Admin/Register/SaveDoctorSession", $("#SalamatGetTwoStepVerificationCode").serialize(), true, function (res) {
+            if (res) {
+                if (!res.error) {
+                    $("#modalMain").modal('hide');
+                    AlertDialog("عملیات با موفقیت انجام شد");
+                }
+                else {
+                    AlertDialog(res.message, "خطا", 'error');
+                }
+            }
+        }, true);
+    }
+
+
+
+</script>
+
+

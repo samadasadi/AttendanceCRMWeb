@@ -1,4 +1,4 @@
-﻿using Persia;
+﻿//using Persia;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -532,13 +532,13 @@ namespace Utility
             var farsiDay = Convert.ToString(jc.GetDayOfMonth(convDate));
             return farsiDay;
         }
-        public static string PersianDateString(DateTime d)
-        {
-            Persia.SunDate faIR = new SunDate();
-            faIR = Persia.Calendar.ConvertToPersian(d);
-            var s = faIR.Weekday;
-            return s;
-        }
+        //public static string PersianDateString(DateTime d)
+        //{
+        //    Persia.SunDate faIR = new SunDate();
+        //    faIR = Persia.Calendar.ConvertToPersian(d);
+        //    var s = faIR.Weekday;
+        //    return s;
+        //}
 
 
         public static string GetPersianDayName(DateTime value)

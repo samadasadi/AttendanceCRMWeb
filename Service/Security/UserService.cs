@@ -252,22 +252,20 @@ namespace Service.Security
 
 
                 var _keyCode = _strSplit[0];
-                var _hashedKeyCode = EncDec.Encrypt(_keyCode);
-                var _query = string.Format(@" EXEC sp_SaveKeyCode @Key_Code = N'{0}' ", _hashedKeyCode);
-                await _repo.ExecuteSqlCommand(_query);
-
-                var _savedKeyCode = (await _repo.RunQuery_Str("select KeyCodeHash from tbl_Application"));
-
-                if (!string.IsNullOrEmpty(_savedKeyCode))
-                {
-                    var _dehashedKeyCode = EncDec.Decrypt(_savedKeyCode);
-                    if (_dehashedKeyCode != _keyCode)
-                        return new LoginResult
-                        {
-                            KeyCode = _keyCode,
-                            LoginResultStatus = LoginResultStatus.KeyCodeIsNotValidWithDatabase
-                        };
-                }
+                //var _hashedKeyCode = EncDec.Encrypt(_keyCode);
+                //var _query = string.Format(@" EXEC sp_SaveKeyCode @Key_Code = N'{0}' ", _hashedKeyCode);
+                //await _repo.ExecuteSqlCommand(_query);
+                //var _savedKeyCode = (await _repo.RunQuery_Str("select KeyCodeHash from tbl_Application"));
+                //if (!string.IsNullOrEmpty(_savedKeyCode))
+                //{
+                //    var _dehashedKeyCode = EncDec.Decrypt(_savedKeyCode);
+                //    if (_dehashedKeyCode != _keyCode)
+                //        return new LoginResult
+                //        {
+                //            KeyCode = _keyCode,
+                //            LoginResultStatus = LoginResultStatus.KeyCodeIsNotValidWithDatabase
+                //        };
+                //}
 
 
                 userVm.DatabaseName = DatabaseName;
@@ -357,23 +355,9 @@ namespace Service.Security
         public async Task<List<MenuVm>> GetAllMenuVm(UserLogin user)
         {
 
-            var temp = (await _menuRepo.GetAll()).ToList();
-
-            //var lstMenuMedicalCenter = await this.GetAllMenuVmForMedicalCenter(user, temp);
-
-            //temp = (from z in temp
-            //                 where user.AvailableRoleGuid.Contains(z.RoleId)
-            //                 select z).ToList();
-
+            var temp = (await _menuRepo.Get(x=>x.IsDeleted == false)).ToList();
 
             temp = temp.Where(x => user.AvailableRoleGuid.Contains(x.RoleId) || x.RoleId == Guid.Empty).ToList();
-
-            ////گزارشات
-            //childMenu.Add(await _menuRepo.Find(Guid.Parse("46404D17-DBAB-E521-8368-8289F27083A4")));
-
-            //var parent = from z in temp
-            //             where childMenu.Any(m => m.ParentId == z.Id)
-            //             select z;
 
             if (!user.IsBasicallyKit)
             {
@@ -508,11 +492,8 @@ namespace Service.Security
                         }
                         break;
                     case "حسابداری پیشرفته":
-                        if (user.IsAccountingKit)
-                        {
                             TempList.Add(item);
                             TempList.AddRange(parrentlist);
-                        }
                         break;
                     default:
                         TempList.Add(item);
@@ -614,7 +595,7 @@ namespace Service.Security
         {
             if (user.UserName == "admin")
             {
-                return await _roleRepo.GetAll();
+                return await _roleRepo.Get(x=>x.IsDeleted == false);
             }
             else
             {

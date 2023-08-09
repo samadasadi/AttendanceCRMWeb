@@ -122,7 +122,7 @@ namespace Utility.Utitlies
         {
             get
             {
-                return "~/Views/Shared/AdminResonsiveUpdate/_Layout.cshtml";
+                return "~/Views/Shared/_Layout.cshtml";
             }
         }
         #endregion

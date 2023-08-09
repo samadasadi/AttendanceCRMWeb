@@ -14,28 +14,27 @@ using System.Threading.Tasks;
 using Utility.PublicEnum;
 using Utility;
 using ViewModel.Common;
+using ViewModel.Report;
 
 namespace Service.Common
 {
     public interface IGeneralSettingService
     {
-        Task<GeneralSettingVm> GetGeneralSettingVm();
-        Task<GeneralSettingVm> GetSmsSettingVm();
-        Task<bool> CheckPatientImages();
-        Task<bool> CheckPatientPayments();
         Task<bool> CheckTheraphies();
-        Task<bool> CheckVisitTimeShowAndRequest();
+        Task<bool> CheckPatientImages();
+        Task<GeneralSetting> GetSingle();
         Task<bool> checkAlarmBackupDate();
-
-
+        Task<bool> CheckPatientPayments();
+        Task<GeneralSettingVm> GetSmsSettingVm();
+        Task<bool> CheckVisitTimeShowAndRequest();
+        Task<GeneralSettingVm> GetGeneralSettingVm();
+        Task<InformationGlobalReport> GetInfoGlobal();
+        System.Threading.Tasks.Task DeleteImgSetting();
+        List<NormalJsonClass> GetPaymentNameEnumList();
         System.Threading.Tasks.Task updateGeneralSettingWithBackUpDate();
-        System.Threading.Tasks.Task SaveGeneralSetting(GeneralSettingVm model, string serverPath, string LocalPath);
-        System.Threading.Tasks.Task DeleteImgSetting(Guid MediacalId);
         System.Threading.Tasks.Task SaveSmsSetting(GeneralSettingVm model);
         System.Threading.Tasks.Task SaveAvaSetting(GeneralSettingVm model);
-
-        Task<GeneralSetting> GetSingle();
-        List<NormalJsonClass> GetPaymentNameEnumList();
+        System.Threading.Tasks.Task SaveGeneralSetting(GeneralSettingVm model, string serverPath, string LocalPath);
     }
     public class GeneralSettingService : IGeneralSettingService
     {
@@ -82,6 +81,20 @@ namespace Service.Common
                 }
                 return model;
             }
+        }
+        public async Task<InformationGlobalReport> GetInfoGlobal()
+        {
+            var generalSetting = await _repo.First(m => m.IsDeleted == false);
+            var model = new InformationGlobalReport
+            {
+                Name = generalSetting.NameClinic,
+                NameEn = generalSetting.Title,
+                Address = generalSetting.Address,
+                Fax = generalSetting.Fax,
+                Tell = generalSetting.Phone,
+                Appmoneyunit = generalSetting.appmoneyunit
+            };
+            return model;
         }
         public async Task<GeneralSettingVm> GetSmsSettingVm()
         {
@@ -183,20 +196,14 @@ namespace Service.Common
                 {
                     setting.lengthPhone = model.lengthPhone;
                     setting.NameClinic = model.NameClinic;
-                    setting.NumberStatus = model.NumberStatus;
-                    setting.appDocNoIsIdentity = model.NumberStatus;
+
                     setting.Phone = model.Phone;
                     setting.Mobile = model.Mobile;
-                    setting.PositionTeethId = model.PositionTeethId;
                     setting.StartNumber = model.StartNumber;
                     setting.TimeReminder = model.TimeReminder;
                     setting.Title = model.Title;
                     setting.WebSite = model.WebSite;
 
-                    setting.RegistrationNumber = model.RegistrationNumber;
-                    setting.EconomicCode = model.EconomicCode;
-                    setting.NationalID = model.NationalID;
-                    setting.PostalCode = model.PostalCode;
 
                     setting.Address = model.Address;
                     setting.Appointment = model.Appointment;
@@ -206,37 +213,15 @@ namespace Service.Common
                     setting.CityCode = model.CityCode;
                     setting.Log = model.Log;
                     setting.CountryCode = model.CountryCode;
-                    setting.Description = model.Description;
-                    setting.appCommitText = model.Description;
-                    //setting.DiactiveList = model.DiactiveList;
                     setting.Email = model.Email;
                     setting.Fax = model.Fax;
                     setting.IsDeleted = false;
                     setting.ModifiedDate = DateTime.Now;
-                    setting.appToothQtyLock = model.appToothQtyLock;
-                    setting.appver = model.appver;
                     setting.appAwardDrPercent = model.appAwardDrPercent;
                     setting.appAwardPercent = model.appAwardPercent;
                     setting.VisitInterval = model.VisitInterval;
-                    setting.OpeningHour = model.OpeningHour;
-                    setting.ClosingHour = model.ClosingHour;
-                    setting.appRollPrinterView = model.appRollPrinterView;
-                    setting.appRollPrinterName = model.appRollPrinterName;
-                    setting.appRollPrinterPage1 = model.appRollPrinterPage1;
-                    setting.appRollPrinterPage2 = model.appRollPrinterPage2;
-                    setting.appRollPrinterPage3 = model.appRollPrinterPage3;
-                    setting.appRollPrinter_ShowRemainPrice = model.appRollPrinter_ShowRemainPrice;
-                    setting.appRollPrinter_ShowTotalPrice = model.appRollPrinter_ShowTotalPrice;
-                    setting.appRollPrinterActive = model.appRollPrinterActive;
-                    setting.PazirandeNumber = model.PazirandeNumber;
-                    setting.PayUserName = model.PayUserName;
-                    setting.PayPassword = model.PayPassword;
                     setting.Comment = model.Comment;
                     setting.appExpireAlarmDay = model.appExpireAlarmDay;
-                    setting.ColorCurrentDayVisitTime = model.ColorCurrentDayVisitTime;
-                    setting.ColorNotPresenceDayVisitTime = model.ColorNotPresenceDayVisitTime;
-                    setting.ColorPresenceDayVisitTime = model.ColorPresenceDayVisitTime;
-                    setting.HolidayColor = model.HolidayColor;
                     setting.appmoneyunit = model.appmoneyunit;
                     setting.appshowassistname = model.appshowassistname;
                     setting.appshowdocname = model.appshowdocname;
@@ -245,14 +230,7 @@ namespace Service.Common
                     setting.appHostIp = model.appHostIp;
                     setting.appHostPort = model.appHostPort;
                     setting.IsShowAlarmTypeSickness = model.IsShowAlarmTypeSickness;
-                    setting.IsDisplayDeliveryCalculator = model.IsDisplayDeliveryCalculator;
-                    setting.PaymentId = model.PaymentId;
-                    setting.InvoiceNo = model.InvoiceNo;
                     setting.PaymentName = model.PaymentName;
-                    setting.IsRequireNationalCodeInSavePatients = model.IsRequireNationalCodeInSavePatients;
-                    setting.IsRequireSponsorNameInSavePatients = model.IsRequireSponsorNameInSavePatients;
-                    setting.IsNameDoctorInPrinterHararatiAnd3Bargi = model.IsNameDoctorInPrinterHararatiAnd3Bargi;
-                    setting.ShowTreatmentInThermalPrinter = model.ShowTreatmentInThermalPrinter;
                     await _repo.Update(setting);
                 }
             }
@@ -275,7 +253,6 @@ namespace Service.Common
                 sms.appSmsWebUN = model.appSmsWebUN;
                 sms.appSmsWebPW = model.appSmsWebPW;
                 sms.appSmsWebPN = model.appSmsWebPN;
-                sms.appVisitSmsTime = model.appVisitSmsTime;
                 sms.appBirthDateSmsTime = model.appBirthDateSmsTime;
                 sms.appCheckAlarmSMS = model.appCheckAlarmSMS;
                 sms.appSendPaySMS = model.appSendPaySMS;
@@ -304,8 +281,6 @@ namespace Service.Common
                 sms.Faraz_Enable = model.Faraz_Enable;
                 sms.Asanak_Enable = model.Asanak_Enable;
 
-                sms.appSendPaySMSSortType = model.appSendPaySMSSortType;
-
                 await _repo.Update(sms);
 
 
@@ -329,20 +304,15 @@ namespace Service.Common
             var sms = (await _repo.Get(m => !m.IsDeleted)).FirstOrDefault();
 
             sms.appCareAlarmSMS = model.appCareAlarmSMS;
-            sms.appVisitSmsTime = model.appVisitSmsTime;
             sms.appCheckAlarmPatSMS = model.appCheckAlarmPatSMS;
             sms.appCheckAlarmSMS = model.appCheckAlarmSMS;
             sms.appBirthDateSmsTime = model.appBirthDateSmsTime;
             sms.appSmsWelcome = model.appSmsWelcome;
             sms.appSendPaySMS = model.appSendPaySMS;
 
-            sms.Avanak_Username = model.Avanak_Username;
-            sms.Avanak_Password = model.Avanak_Password;
-            sms.Avanak_ServerId = model.Avanak_ServerId;
-
             await _repo.Update(sms);
         }
-        public async System.Threading.Tasks.Task DeleteImgSetting(Guid MediacalId)
+        public async System.Threading.Tasks.Task DeleteImgSetting()
         {
             var setting = (await _repo.Get(m => !m.IsDeleted)).FirstOrDefault();
             setting.FileId = null;

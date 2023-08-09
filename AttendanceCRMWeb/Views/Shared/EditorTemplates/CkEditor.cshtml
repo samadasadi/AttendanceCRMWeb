@@ -1,0 +1,38 @@
+﻿@model string
+@{
+    var placeholder = string.Empty;
+    var ltr = false;
+    var required = ViewData.ModelMetadata.IsRequired;
+    var name = (ViewData.ModelMetadata).PropertyName;
+}
+
+<script src="~/ckeditor/ckeditor.js"></script>
+<script src="~/ckeditor/ckfinder/ckfinder.js"></script>
+<script src="~/ckeditor/adapters/jquery.js"></script>
+
+@*<label class="control-label col-form-label col-md-3" for="Mobile">: متن </label>*@
+<div class="form-group  @string.Format("{0}",required?"rqd":"")" style="padding:10px;width: auto;">
+
+    <textarea length="0" cols="20" id="@name" name="@name" rows="2" style="visibility: hidden; display: none;">
+           @Model
+       </textarea>
+
+</div>
+
+
+<script type="text/javascript">
+
+    $(function() {
+        var name =  '@name';
+        // $(name).ckeditor();
+        //// ckeditor.setupCKEditor(null, '/ckfinder/');
+        // window.CKEDITOR.setupCKEditor(null, '/ckfinder/');
+        var neditor = CKEDITOR.replace(name, { allowedContent: true, contentsLangDirection: 'rtl', startupFocus: true }, {
+            allowedExtensions: "7z,aiff,asf,avi,bmp,csv,doc,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xml,zip"
+        }            
+    );        
+        CKFinder.setupCKEditor(neditor, '/ckeditor/ckfinder/');
+    });
+
+</script>
+

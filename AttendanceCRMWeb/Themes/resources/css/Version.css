@@ -1,0 +1,279 @@
+﻿.VersionDiv, VersionListDiv {
+    font-family: Tahoma;
+    font-size: 11px;
+    clear: both;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+    .VersionDiv pre, .VersionListDiv pre {
+        font-family: Tahoma;
+        font-size: 11px;
+        line-height: 25px;
+        padding: 0 20px;
+    }
+
+    .VersionDiv .VersionInfoItemName, .VersionListDiv .VersionInfoItemName {
+       font-weight: bold;
+    border-bottom: 1px solid #e2e2e2;
+    padding-bottom: 15px;
+    font-size: 16px;
+        margin-bottom: 15px;
+          color: #4a4949;
+    }
+  .VersionListDiv  .VersionFacilities{
+      margin-top:40px
+  }
+
+    .VersionDiv .Version {
+        border: thin solid #8BC2D8;
+        min-height: 20px;
+    }
+
+        .VersionDiv .Version .VersionHeader {
+            background-color: #F7F7F7;
+            border-bottom: thin solid #DAE5E9;
+            min-height: 27px;
+        }
+
+            .VersionDiv .Version .VersionHeader .VersionInfo {
+                padding: 8px 10px 10px 10px;
+                cursor: pointer;
+                width: 92.7%;
+            }
+
+                .VersionDiv .Version .VersionHeader .VersionInfo .VersionName {
+                    padding-right: 50px;
+                    padding-left: 50px;
+                }
+
+        .VersionDiv .Version .Info {
+            display: none;
+            clear: both;
+        }
+
+
+        .VersionListDiv .Version .VersionChanges .VersionChangesName, .VersionListDiv .Version .VersionFacilities, .VersionListDiv .Version .VersionFacilities .VersionFacilitiesName, .VersionDiv .Version .VersionBugs, .VersionDiv .Version .VersionChanges, .VersionDiv .Version .VersionChanges .VersionChangesName, .VersionDiv .Version .VersionFacilities, .VersionDiv .Version .VersionFacilities .VersionFacilitiesName {
+            padding: 5px 10px 5px 10px;
+            clear: both;
+        }
+
+
+
+        .VersionDiv .Version .ui-icon {
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: 2px;
+        }
+
+        .VersionDiv .Version .Delete {
+            transition: all 0.7s;
+            border-style: none solid none solid;
+            border-width: 1px;
+            border-color: #F0F0F0;
+            margin-top: 1px;
+            padding-top: 1px;
+            width: 28px;
+            height: 24px;
+            color: #FFF;
+            cursor: pointer;
+        }
+
+            .VersionDiv .Version .Delete:active {
+                position: relative;
+                top: 1px;
+            }
+
+            .VersionDiv .Version .Delete:hover {
+                background-color: #C9DBE3;
+            }
+
+
+        .VersionDiv .Version .Edit {
+            transition: all 0.7s;
+            border-style: none solid none solid;
+            border-width: 1px;
+            border-color: #F0F0F0;
+            margin-top: 1px;
+            padding-top: 1px;
+            width: 28px;
+            height: 24px;
+            color: #FFF;
+            cursor: pointer;
+            margin-left: -1px;
+            margin-right: -1px;
+        }
+
+            .VersionDiv .Version .Edit:active {
+                position: relative;
+                top: 1px;
+            }
+
+            .VersionDiv .Version .Edit:hover {
+                background-color: #C9DBE3;
+            }
+
+/*____________________________________________________________________________________*/
+
+.ui-dialog .VersionInfo {
+    padding: 1px;
+    border: 1px solid #B3B3B3;
+    margin-bottom: 5px;
+    height: 26px;
+}
+
+    .ui-dialog .VersionInfo .lblUCVersion {
+        float: right;
+        padding: 6px;
+        width: 53px;
+    }
+
+    .ui-dialog .VersionInfo .input {
+        padding: 3px 5px 4px 5px;
+        float: right;
+        background: #FFF;
+        border: 1px solid #BDBDBD;
+        color: #000;
+        font-family: Tahoma,Lucida Grande,Verdana,Lucida Sans Regular,Lucida Sans Unicode,Arial,sans-serif;
+        font-size: 11px;
+    }
+
+.DivUCVersion .divVersionBugs, .DivUCVersion .divVersionChange, .DivUCVersion .divVersionfeatures {
+    border: 1px solid #B3B3B3;
+    height: 150px;
+    padding-right: 26px;
+    overflow-y: scroll;
+}
+
+
+
+.DivUCVersion .headerVersionItem {
+    border-bottom: solid #CCC;
+    border-top: 1px solid #CCC;
+    height: 17px;
+    background-color: #F1F1F1;
+}
+
+    .DivUCVersion .headerVersionItem .headerName {
+        float: right;
+        padding-top: 2px;
+        padding-right: 5px;
+        font-weight: bold;
+    }
+
+.DivUCVersion .new {
+    height: 16px;
+    background-color: #EBF0F1;
+    border-right: thin solid #CCC;
+    border-left: thin solid #CCC;
+    border-bottom: thin solid #CCC;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+    .DivUCVersion .new .newName {
+        float: left;
+        padding-top: 1px;
+        font-size: 11px;
+        color: #5C915E;
+        cursor: pointer;
+    }
+
+.Item {
+    padding-right: 5px;
+    padding-left: 5px;
+    background-color: #F2F3F5;
+}
+
+    .Item .txtItem {
+        width: 93%;
+        text-align: right;
+    }
+
+    .Item .Delete {
+        border: thin solid #888;
+        margin-top: 2px;
+        padding-left: 3px;
+        padding-right: 3px;
+        padding-top: 8px;
+        padding-bottom: 9px;
+    }
+
+        .Item .Delete:active {
+            position: relative;
+            top: 1px;
+        }
+
+        .Item .Delete:hover {
+            background-color: #C9DBE3;
+        }
+
+.NewVersionDiv {
+    font-family: Tahoma;
+    font-size: 11px;
+    clear: both;
+    margin-right: 15px;
+    margin-left: 15px;
+    padding-top: 6px;
+    padding-right: 30px;
+    padding-left: 30px;
+    height: 20px;
+    background-color: #E1E6E7;
+    border: thin solid #83979E;
+}
+
+    .NewVersionDiv .NewVersion {
+        cursor: pointer;
+        font-weight: bold;
+        color: #6D6C6C;
+    }
+
+        .NewVersionDiv .NewVersion:active {
+            position: relative;
+            top: 1px;
+        }
+/*____________________________________________________________________________________*/
+
+
+
+
+.VersionListDiv .Version {
+    min-height: 20px;
+}
+.VersionDate b , .VersionName b{
+    padding:0 10px;
+}
+
+    .VersionListDiv .Version .VersionHeader {
+        min-height: 27px;
+        border-bottom: thin solid #ACACAC;
+        background-color: #F7F7F7;
+    }
+
+        .VersionListDiv .Version .VersionHeader .VersionInfo {
+            padding: 8px 10px 10px 10px;
+            width: 92.7%;
+        }
+
+            .VersionListDiv .Version .VersionHeader .VersionInfo .VersionName {
+                padding-right: 50px;
+                padding-left: 50px;
+            }
+
+    .VersionListDiv .Version .Info {
+       clear: both;
+margin-bottom: 30px;
+padding: 18px 13px;
+    }
+
+
+
+    .VersionListDiv .Version .VersionBugs .VersionBugsName, .VersionListDiv .Version .VersionChanges, .VersionListDiv .Version .VersionBugs, .VersionDiv .Version .VersionBugs .VersionBugsName {
+        padding: 0px 20px 0px 20px;
+        clear: both;
+    }

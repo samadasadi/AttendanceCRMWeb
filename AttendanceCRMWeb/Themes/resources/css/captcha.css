@@ -1,0 +1,51 @@
+#captcha  {
+	padding:10px;
+	margin-top:10px;
+}
+#captcha  .clr{clear:both}
+
+#captcha  #bgSlider {
+	width:164px;
+	height:22px;
+	background:transparent url('../images/sprites.png') no-repeat 0 -22px;
+	float:left
+}
+
+#captcha  #Slider {
+	width:48px;
+	height:22px;
+	background:transparent url('../images/sprites.png') no-repeat -32px 0;
+	cursor:e-resize
+}
+
+#captcha  #Icons {
+	float:left;
+	width:16px;
+	height:16px;
+	background:transparent url('../images/sprites.png') no-repeat 0 0;
+	margin-top:3px;
+	margin-left:10px;
+}
+
+#captcha  #TxtStatus {
+	width:202px;
+	margin-top:7px;
+	text-align:center;
+	font-family:Verdana;
+	font-size:10px;
+	clear:both
+}
+
+/** States **/
+#captcha  .dropSuccess {
+	color:#568E2F
+}
+#captcha  .dropError {
+	color:#bb2828
+}
+
+.chptawidth
+{
+width: 250px;
+direction: ltr;
+}

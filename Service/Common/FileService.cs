@@ -63,6 +63,7 @@ namespace Service.BasicInfo
         public async Task<FileVm> Find(Guid Id)
         {
             var file = await _repo.Find(Id);
+            if (file == null) return new FileVm();
             Mapping.GenericMapping<Repository.Model.File, FileVm>.CreateMapping();
             var model = Mapping.GenericMapping<Repository.Model.File, FileVm>.Map(file);
             return model;

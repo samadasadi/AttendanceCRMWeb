@@ -1,0 +1,22 @@
+﻿
+@using AttendanceCRMWeb.Helpers
+@{
+    ViewBag.Title = "Index";
+    Layout = Utility.Utitlies.VaribleForName.AddressLayoutMasterNew;
+    var medicalCenter = (Guid)ViewBag.MedicalCenterId;
+}
+
+
+@using (Html.MyHelper().Panel(" لیست  بک آپ"))
+{
+    <a class="btn btn-info" href="/Admin/MedicalCenter/CreateBackUp?MedicalCenterId=@medicalCenter" >ثبت مورد جدید</a>
+    <div class="" style="direction: rtl; margin-top: 10px;">
+        
+    </div>
+}
+<script type="text/javascript">
+    function FormatLink(cellValue, options, rowObject) {
+        var o = "<a href=" + '@Url.Action("DownloadFile")'+cellValue + "   title='دریافت فایل' class='fa fa-cloud-download' target='_blank' download>" + '  ' + "<a/>";
+        return o;
+    }
+</script>

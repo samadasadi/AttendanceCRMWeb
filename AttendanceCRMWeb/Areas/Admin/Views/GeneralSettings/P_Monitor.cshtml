@@ -1,0 +1,10 @@
+﻿
+@model ViewModel.Common.GeneralSettingVm
+@using Utility.HtmlHelpers
+
+@using (Html.CreateDivForBootstrap())
+{
+    @Html.EditorFor(m => m.lengthPhone)
+    @Html.EditorFor(m => m.CountryCode)
+    @Html.EditorFor(m => m.CityCode)
+}

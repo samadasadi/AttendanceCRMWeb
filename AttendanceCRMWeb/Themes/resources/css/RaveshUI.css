@@ -1,0 +1,879 @@
+﻿/*input---------------------*/
+
+.ravesh-link {
+    color: #06C;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 11px;
+}
+
+    .ravesh-link:hover {
+        text-decoration: underline;
+    }
+
+.ravesh-no-break {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ravesh-button {
+    text-align: center;
+    border-radius: 2px;
+    padding: 7px 10px;
+    cursor: pointer;
+    font-size: 11px !important;
+    border: none;
+    color: gray;
+    background-color: #eee;
+    outline: none;
+    line-height: 20px;
+    margin: 0 5px;
+    user-select: none;
+    min-width: auto;
+    font-weight: normal;
+    height: auto;
+    text-shadow: none;
+}
+
+    .ravesh-button:hover {
+        background-color: #e5e5e5;
+        color: #444;
+    }
+
+    .ravesh-button.submit {
+        background-color: #42a2eb;
+        color: white;
+    }
+
+        .ravesh-button.submit:hover {
+            background-color: #439bde;
+            color: white;
+        }
+
+    .ravesh-button.save {
+        background: #4CAF50;
+        color: white;
+    }
+
+        .ravesh-button.save:hover {
+            background-color: #49a64d;
+            color: white;
+        }
+
+    .ravesh-button.dark {
+        background: #607D8B;
+        color: white;
+    }
+
+        .ravesh-button.dark:hover {
+            background-color: #546E7A;
+            color: white;
+        }
+
+    .ravesh-button.red {
+        background: #F44336;
+        color: white;
+    }
+
+        .ravesh-button.red:hover {
+            background: #e63b2f;
+            color: white;
+        }
+
+    .ravesh-button:disabled {
+        opacity: 0.5;
+        cursor: default;
+    }
+
+[dir=rtl] .ravesh-button i {
+    font-size: 15px;
+    margin-left: 7px;
+    float: right;
+}
+
+[dir=ltr] .ravesh-button i {
+    font-size: 15px;
+    margin-right: 7px;
+    float: left;
+}
+
+.ravesh-button-linear {
+    text-align: center;
+    border-radius: 2px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 11px !important;
+    color: #777;
+    background-color: #fff;
+    outline: none;
+    line-height: 20px;
+    margin: 0 5px;
+    border: solid 1px #777;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+    .ravesh-button-linear.active,
+    .ravesh-button-linear:hover {
+        background: #f9f9f9;
+        color: #000;
+    }
+
+    .ravesh-button-linear.red {
+        border-color: #DD4B39;
+        color: #DD4B39;
+    }
+
+    .ravesh-button-linear.has-icon {
+        width: 34px;
+        padding: 0;
+        height: 34px;
+        text-align: center;
+        line-height: 34px;
+        font-size: 14px !important;
+    }
+
+.ravesh-input {
+    padding: 7px 5px;
+    border: 1px solid #DDD;
+    font-size: 11px;
+    box-sizing: border-box;
+}
+
+    .ravesh-input:disabled {
+        background: #f1f1f1;
+        border: solid 1px #ccc;
+        cursor: default;
+    }
+
+    .ravesh-input.error {
+        border: solid 1px #F44336;
+        outline: none;
+    }
+
+.ravesh-label {
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.ravesh-input-cover {
+    margin-bottom: 15px;
+    margin-top: 5px;
+    display: block;
+    width: 100%;
+}
+
+    .ravesh-input-cover .ravesh-label {
+        display: block;
+        margin-bottom: 7px;
+    }
+
+    .ravesh-input-cover.side-label .ravesh-label {
+        min-width: 100px;
+        line-height: 25px;
+    }
+
+    .ravesh-input-cover.col-1-2 {
+        width: 50%;
+    }
+
+[dir=rtl] .ravesh-input-cover {
+    float: right;
+}
+
+[dir=ltr] .ravesh-input-cover {
+    float: left;
+}
+
+
+.ravesh-checkbox-cover {
+    padding: 4px 0;
+    line-height: 15px;
+    display: block;
+}
+
+    .ravesh-checkbox-cover input {
+        margin: 0;
+        padding: 0;
+    }
+
+    .ravesh-checkbox-cover span {
+        margin: 0 5px 0 5px;
+        cursor: pointer;
+        font-size: 11px;
+    }
+
+
+
+/*scroll bar---------------------*/
+.ravesh-scrollbar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.ravesh-scrollbar::-webkit-scrollbar-track {
+    background: #f0f2f7;
+}
+
+.ravesh-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #c6c6c6;
+}
+
+    .ravesh-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+    }
+
+
+/*dialog---------------------*/
+body.ravesh-dialog-opened {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.ravesh-dialog-overlay {
+    background: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    cursor: pointer;
+}
+
+.ravesh-dialog {
+    position: relative;
+    background: #fff;
+    margin: auto;
+    box-shadow: 0 0 4px;
+    transition: width .5s,height .5s;
+    cursor: default;
+    overflow: hidden;
+}
+
+    [dir=rtl] .ravesh-dialog > .head {
+        padding: 0 15px 0 100px;
+    }
+    [dir=rtl] .ravesh-dialog > .head .icon-close{
+        margin-left: -85px;
+    }
+    [dir=rtl] .ravesh-dialog > .head .icon-collapse,
+    [dir=rtl] .ravesh-dialog > .head .icon-expand{
+        margin-left: -40px;
+    }
+    
+    [dir=ltr] .ravesh-dialog > .head {
+        padding: 0 100px 0 15px;
+    }
+    [dir=ltr] .ravesh-dialog > .head .icon-close{
+        margin-right: -85px;
+    }
+    [dir=ltr] .ravesh-dialog > .head .icon-collapse,
+    [dir=ltr] .ravesh-dialog > .head .icon-expand{
+        margin-right: -40px;
+    }
+
+    .ravesh-dialog > .head {
+        /*border-bottom: solid 1px #c4c4c4;
+        background: #f5f5f5;*/
+        overflow: hidden;
+    }
+
+        .ravesh-dialog > .head .icon {
+            margin: 20px;
+            font-size: 24px;
+        }
+
+    .ravesh-dialog.no-icon > .head .icon {
+        display:none;
+    }
+
+    .ravesh-dialog > .head .detail {
+        display: none;
+        font-size: 11px;
+        margin-top: 8px;
+        color: gray;
+    }
+
+    .ravesh-dialog > .head.has-detail .detail {
+        display: block;
+    }
+
+    .ravesh-dialog > .head.has-detail .title {
+        line-height: 1;
+        margin-top: 16px;
+    }
+
+    .ravesh-dialog > .head .title-cover {
+        display: inline-block;
+    }
+
+    .ravesh-dialog > .head .title {
+        font-size: 16px;
+        line-height: 64px;
+    }
+
+    .ravesh-dialog > .head .action-icon {
+        color: #999;
+        font-size: 22px;
+        margin-left: 20px;
+        width: 32px;
+        height: 32px;
+        text-align: center;
+        margin: 16px 2px;
+        line-height: 34px;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: transform 0.5s cubic-bezier(.16,.81,.32,1),background 500ms;
+    }
+
+        .ravesh-dialog > .head .action-icon:hover {
+            background: #dfdfdf;
+            color: gray;
+        }
+
+    .ravesh-dialog > .head .icon-expand,
+    .ravesh-dialog > .head .icon-collapse {
+        font-size: 20px;
+    }
+
+    .ravesh-dialog > .head .icon-close:hover {
+        transform: rotate(180deg);
+    }
+
+    .ravesh-dialog > .head .icon-collapse,
+    .ravesh-dialog > .head .icon-expand {
+        display: none;
+    }
+
+    .ravesh-dialog.is-maximum {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .ravesh-dialog.allow-maximum > .head .icon-expand {
+        display: block;
+    }
+
+    .ravesh-dialog.allow-maximum.is-maximum > .head .icon-collapse {
+        display: block;
+    }
+
+    .ravesh-dialog.allow-maximum.is-maximum > .head .icon-expand {
+        display: none;
+    }
+
+
+
+
+
+
+.ravesh-dialog .content-scroll {
+    transition: width .5s,height .5s;
+}
+
+.ravesh-dialog .content-cover {
+    position: relative;
+}
+
+.ravesh-dialog.has-footer .content-cover {
+    padding-bottom: 64px;
+}
+
+.ravesh-dialog.has-footer .footer {
+    display: block;
+}
+
+.ravesh-dialog .footer {
+    /*border-top: solid 1px #c4c4c4;*/
+    background: white;
+    overflow: hidden;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 64px;
+    display: none;
+    padding: 0 7.5px;
+}
+
+    .ravesh-dialog .footer .float {
+        float: right;
+    }
+
+    .ravesh-dialog .footer .float-rev {
+        float: left;
+    }
+
+    .ravesh-dialog .footer .ravesh-button {
+        margin: 15px 7.5px;
+        min-width: 40px;
+    }
+
+    .ravesh-dialog .footer .frm-footer {
+        padding: 0 !important;
+    }
+
+        .ravesh-dialog .footer .frm-footer .ravesh-button {
+            float: right;
+        }
+
+        .ravesh-dialog .footer .frm-footer .form-design-page-footer {
+            display: block;
+        }
+
+.ravesh-dialog .spinner-cover {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    top: 65px;
+    display: flex;
+    background: white;
+    z-index: 1;
+}
+
+    .ravesh-dialog .spinner-cover.is-transparent {
+        background: none;
+    }
+
+    .ravesh-dialog .spinner-cover .spinner {
+        margin: auto;
+    }
+
+
+/*animation dialog------*/
+.ravesh-dialog-overlay.fadeIn {
+    -webkit-animation: rvc-fadeIn 0.5s;
+    animation: rvc-fadeIn 0.5s;
+}
+
+.ravesh-dialog-overlay.fadeOut {
+    -webkit-animation: rvc-fadeOut 0.5s;
+    animation: rvc-fadeOut 0.5s;
+    animation-fill-mode: forwards;
+}
+
+.ravesh-dialog.transitionIn {
+    -webkit-animation: rvc-comingIn 0.5s ease;
+    animation: rvc-comingIn 0.5s ease;
+}
+
+    .ravesh-dialog.transitionIn > .head {
+        -webkit-animation: rvc-slideDown 0.7s cubic-bezier(0.7,0,0.3,1);
+        animation: rvc-slideDown 0.7s cubic-bezier(0.7,0,0.3,1);
+    }
+
+        .ravesh-dialog.transitionIn > .head .title,
+        .ravesh-dialog.transitionIn > .head .detail {
+            -webkit-animation: rvc-slideIn 1s cubic-bezier(.16,.81,.32,1) both;
+            animation: rvc-slideIn 1s cubic-bezier(.16,.81,.32,1) both;
+        }
+
+        .ravesh-dialog.transitionIn > .head .action-icon,
+        .ravesh-dialog.transitionIn > .head .icon {
+            -webkit-animation: rvc-revealIn 1.2s cubic-bezier(0.7,0,0.3,1);
+            animation: rvc-revealIn 1.2s cubic-bezier(0.7,0,0.3,1);
+        }
+
+    .ravesh-dialog.transitionIn > .head {
+        -webkit-animation-delay: 0.0s;
+        animation-delay: 0.0s;
+    }
+
+        .ravesh-dialog.transitionIn > .head .title {
+            -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+        }
+
+        .ravesh-dialog.transitionIn > .head .detail {
+            -webkit-animation-delay: 0.5s;
+            animation-delay: 0.5s;
+        }
+
+
+/* ANIMATIONS */
+@-webkit-keyframes rvc-comingIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px) perspective( 600px ) rotateX( 10deg );
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0) perspective( 600px ) rotateX( 0 );
+    }
+}
+
+@keyframes rvc-comingIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px) perspective( 600px ) rotateX( 10deg );
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0) perspective( 600px ) rotateX( 0 );
+    }
+}
+
+@-webkit-keyframes rvc-fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes rvc-fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes rvc-fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes rvc-fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes rvc-slideIn {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateX(-50px);
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+    }
+}
+
+@keyframes rvc-slideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@-webkit-keyframes rvc-slideDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(1,0) translateY(-40px);
+        -webkit-transform-origin: center top;
+    }
+}
+
+@keyframes rvc-slideDown {
+    0% {
+        opacity: 0;
+        transform: scale(1,0) translateY(-40px);
+        transform-origin: center top;
+    }
+}
+
+@-webkit-keyframes rvc-revealIn {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale3d(0.3,0.3,1);
+    }
+}
+
+@keyframes rvc-revealIn {
+    0% {
+        opacity: 0;
+        transform: scale3d(0.3,0.3,1);
+    }
+}
+
+/*-modal-----------------------------------------------------*/
+.ravesh-modal {
+    text-align: center;
+    vertical-align: middle;
+    padding: 30px 20px 15px;
+    font-size: 14px;
+    line-height: 30px;
+}
+
+    .ravesh-modal i {
+        margin: 0 5px;
+    }
+
+
+.ravesh-prompt {
+    padding: 0 15px 5px;
+}
+
+    .ravesh-prompt input {
+        width: 100%;
+    }
+
+/*-toast-----------------------------------------------------*/
+
+.ravesh-toast-container {
+    position: fixed;
+    top: 50px;
+    z-index: 10000002;
+}
+
+[dir=rtl] .ravesh-toast-container {
+    right: 30px;
+}
+
+[dir=ltr] .ravesh-toast-container {
+    left: 30px;
+}
+
+.ravesh-toast {
+    background: black;
+    width: 300px;
+    margin-bottom: 7px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    color: white;
+    box-shadow: 0 8px 8px -5px rgba(0,0,0,.5);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+    .ravesh-toast.success {
+        background: #74b574;
+    }
+
+        .ravesh-toast.success:hover {
+            background: #51a351;
+        }
+
+    .ravesh-toast.info {
+        background: #57a9c1;
+    }
+
+        .ravesh-toast.info:hover {
+            background: #2f96b4;
+        }
+
+    .ravesh-toast.warning {
+        background: #f9a938;
+    }
+
+        .ravesh-toast.warning:hover {
+            background: #f89406;
+        }
+
+    .ravesh-toast.error {
+        background: #ca5e59;
+    }
+
+        .ravesh-toast.error:hover {
+            background: #bd362f;
+        }
+
+    .ravesh-toast .toast-content {
+        margin: 15px;
+    }
+
+    .ravesh-toast .toast-progress {
+        position: absolute;
+        bottom: 0;
+        height: 4px;
+        background: rgba(0,0,0,0.3);
+    }
+
+[dir=rtl] .ravesh-toast .toast-progress {
+    right: 0;
+}
+
+[dir=ltr] .ravesh-toast .toast-progress {
+    left: 0;
+}
+
+.ravesh-toast .toast-icon {
+    float: right;
+    font-size: 24px;
+    margin: 2px 0 15px 15px;
+}
+
+[dir=ltr] .ravesh-toast .toast-icon {
+    float: left;
+    margin: 2px 15px 15px 0;
+}
+
+.ravesh-toast .toast-title {
+    font-size: 16px;
+}
+
+.ravesh-toast .toast-message {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 5px;
+}
+
+
+
+.ravesh-toast.fadeOut {
+    -webkit-animation: rvc-fadeOut .7s ease both;
+    animation: rvc-fadeOut .7s ease both;
+}
+
+.ravesh-toast.bounceInLeft {
+    -webkit-animation: rvc-bounceInLeft .7s ease-in-out both;
+    animation: rvc-bounceInLeft .7s ease-in-out both;
+}
+
+    .ravesh-toast.bounceInLeft .toast-title,
+    .ravesh-toast.bounceInLeft .toast-message {
+        -webkit-animation: rvc-slideIn 1s cubic-bezier(.16,.81,.32,1) both;
+        animation: rvc-slideIn 1s cubic-bezier(.16,.81,.32,1) both;
+    }
+
+    .ravesh-toast.bounceInLeft .toast-title {
+        -webkit-animation-delay: 0.4s;
+        animation-delay: 0.4s;
+    }
+
+    .ravesh-toast.bounceInLeft .toast-message {
+        -webkit-animation-delay: 0.5s;
+        animation-delay: 0.5s;
+    }
+
+    .ravesh-toast.bounceInLeft .toast-icon {
+        -webkit-animation: rvc-revealIn .8s cubic-bezier(0.7,0,0.3,1);
+        animation: rvc-revealIn .8s cubic-bezier(0.7,0,0.3,1);
+    }
+
+@keyframes rvc-bounceInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(280px);
+    }
+
+    50% {
+        transform: translateX(-20px);
+    }
+
+    70% {
+        transform: translateX(10px);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@-webkit-keyframes rvc-bounceInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(280px);
+    }
+
+    50% {
+        transform: translateX(-20px);
+    }
+
+    70% {
+        transform: translateX(10px);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+/*-spinner------------------------------------*/
+.spinner {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: solid 2px;
+    border-radius: 100%;
+    animation: spinner 1s infinite linear;
+    border-color: rgba(0, 0, 0, .1);
+    border-top-color: rgb(0, 0, 0);
+}
+
+    .spinner.small {
+        width: 16px;
+        height: 16px;
+    }
+
+    .spinner.large {
+        width: 48px;
+        height: 48px;
+    }
+
+    .spinner.white {
+        border-color: rgba(255, 255, 255, .1);
+        border-top-color: rgb(255, 255, 255);
+    }
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/*tooltip-----------------*/
+.ravesh-tips {
+    background: rgba(0,0,0,0.6);
+    color: white;
+    font-size: 11px;
+    line-height: 18px;
+    border-radius: 3px;
+    max-width: 160px;
+    min-width: 45px;
+    box-sizing: border-box;
+    display: inline-block;
+    z-index: 1;
+}
+
+    .ravesh-tips:after {
+        position: absolute;
+        bottom: -7px;
+        left: 50%;
+        margin-left: -7px;
+        width: 0;
+        border-top: 7px solid rgba(0,0,0,0.6);
+        border-right: 7px solid transparent;
+        border-left: 7px solid transparent;
+        content: " ";
+        font-size: 0;
+        line-height: 0;
+    }

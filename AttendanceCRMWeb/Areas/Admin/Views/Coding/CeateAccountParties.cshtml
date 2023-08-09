@@ -1,0 +1,23 @@
+﻿@using System.Web.Mvc
+@model ViewModel.Common.CodingVm
+@{
+    var codeParent = ViewBag.ParentCode;
+    var _isCenterMedical = Service.Consts.Public.CurrentUser.IsCenterActivityType == true ? 1 : 0;
+}
+
+
+
+<form class="form-horizontal" id="CeateAccountParties_Frm">
+
+    @Html.HiddenFor(m => m.Parent)
+    @Html.HiddenFor(m => m.code)
+
+    <div class="col-md-12">
+
+            @Html.EditorFor(m => m.name)
+            @Html.EditorFor(m => m.CodeActive)
+
+    </div>
+
+</form>
+

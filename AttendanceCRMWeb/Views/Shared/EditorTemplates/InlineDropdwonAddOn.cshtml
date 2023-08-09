@@ -1,0 +1,13 @@
+﻿@model Guid
+
+<div class="input-group">
+    <div class="input-group-addon">
+        @Html.LabelFor(model => model)
+    </div>
+    @Html.DropDownListFor(model => model, (SelectList)ViewData[ViewData.ModelMetadata.PropertyName], "--", new { @class = "form-control chzn-select" })
+
+        <div class="required">
+            @Html.ValidationMessageFor(model => model, "", new { @class = "text-danger" })
+        </div>
+
+</div>

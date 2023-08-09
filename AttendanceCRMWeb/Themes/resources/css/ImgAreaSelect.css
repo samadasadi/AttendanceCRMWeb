@@ -1,0 +1,22 @@
+
+.imgareaselect-border1 {background: url('../images/border-v.gif') repeat-y left top;}
+.imgareaselect-border2 {background: url('../images/border-h.gif') repeat-x left top;}
+.imgareaselect-border3 {background: url('../images/border-v.gif') repeat-y right top;}
+.imgareaselect-border4 {background: url('../images/border-h.gif') repeat-x left bottom;}
+.imgareaselect-border1, .imgareaselect-border2,.imgareaselect-border3, .imgareaselect-border4 {filter: alpha(opacity=50);opacity: 0.5;}
+.imgareaselect-handle {background-color: #fff;border: solid 1px #000;filter: alpha(opacity=50);opacity: 0.5;}
+.imgareaselect-outer {background-color: #000;filter: alpha(opacity=50);opacity: 0.5;}
+.imgareaselect-selection {}
+
+/*---------------------------------------------*/
+
+.imagearea-button-wrapper {position: absolute;left: 0;right: 0;bottom: 0;background-color: #F7F7F7;margin: 0 !important;padding: 10px 20px !important;border-top: solid 1px #DDD;}
+.imagearea-source-wrapper {width: 380px;height: 380px;box-shadow: 0px 1px 2px #CCC;-webkit-box-shadow: 0px 1px 2px #CCC;border: solid 1px #bbb;margin: 5px 3px;text-align:center;display:table-cell;vertical-align:middle;position:relative;}
+.imagearea-preview-wrapper {float: left;margin: 5px 0;text-align: center;line-height: 23px;}
+.imagearea-preview-wrapper a {color: #428BCA;}
+.imagearea-preview-wrapper .preview {width: 185px;height: 185px;border: solid 1px #BBB;overflow: hidden;position: relative;direction: ltr;text-align: left;}
+.imagearea-source-wrapper img {max-width: 380px;max-height: 380px;}
+.imagearea-drophere {position: absolute;left: 0;top: 0;right: 0;bottom: 0;background-color: #FFF;z-index: 1;opacity: 0.8;filter: alpha(opacity=80);color: #ddd;font-size: 35px;text-align: center;border: dashed;margin: 3px;padding-top: 170px;}
+.imagearea-overlay {position: absolute;left: 0;top: 0;right: 0;bottom: 0;cursor:wait;z-index: 2;}
+.imagearea-progress {position: absolute;top: -6px;left: 0;right: 0;height: 5px;border-top: solid 1px #DDD;}
+.imagearea-progress-bar {height: 4px;float: left;-webkit-transition: all 300ms;}

@@ -1,0 +1,25 @@
+﻿
+
+@model long?
+@{
+    var placeholder = string.Empty;
+
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("placeholder"))
+    {
+        placeholder = ViewData.ModelMetadata.AdditionalValues["placeholder"] as string;
+    }
+    var name = (ViewData.ModelMetadata).PropertyName;
+    var required = ViewData.ModelMetadata.IsRequired;
+}
+<div class="form-group  row @string.Format("{0}",required?"rqd":"")">
+    @Html.LabelFor(model => model, htmlAttributes: new { @class = "control-label col-form-label col-md-5", @style = "left: 38px;top: 6px;" })
+    <div class="col-sm-7" style="width: 140px;
+    top: -20px;
+    left: -20px;">
+        @Html.MyHelper().TreasuryTextBoxFor(model => model, TextBoxType.Currency)
+        @if (required)
+        {
+            <span class="field-validation-valid text-danger" data-valmsg-for="@string.Format("{0}Str",name)" data-valmsg-replace="true"></span>
+        }
+    </div>
+</div>

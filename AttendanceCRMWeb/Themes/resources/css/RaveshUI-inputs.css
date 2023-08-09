@@ -1,0 +1,1514 @@
+/*-mini dialog------------------------------------*/
+.ravesh-mini-dialog-overlay {
+    z-index: 10000000;
+    background: rgba(255,255,255,0.8);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    cursor: pointer;
+}
+
+.ravesh-mini-dialog {
+    position: relative;
+    background: #fff;
+    box-shadow: 0 5px 10px 0px #ddd;
+    border: solid 1px #c1c1c1;
+    transition: width .5s,height .5s;
+    cursor: default;
+    min-height: 30%;
+    max-height: 100%;
+    width: 70%;
+    overflow: hidden;
+    margin: auto;
+    padding-top: 60px;
+    font-family: 'IRANSansWeb',Tahoma;
+}
+
+    .ravesh-mini-dialog .ravesh-header {
+        height: 60px;
+        margin-top: -60px;
+        line-height: 60px;
+        padding: 0 20px;
+        font-size: 16px;
+        text-align: right;
+    }
+
+    .ravesh-mini-dialog .ravesh-close-btn {
+        background: url(../../../pages/formbuilder/images/icon-close.png) no-repeat;
+        background-size: 16px 16px;
+        width: 16px;
+        height: 16px;
+        float: left;
+        margin: 20px 0;
+        opacity: 0.4;
+        cursor: pointer;
+    }
+
+        .ravesh-mini-dialog .ravesh-close-btn:hover {
+            opacity: 1;
+        }
+
+    .ravesh-mini-dialog .ravesh-content-scroll {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+/*-time picker------------------------------------*/
+.ravesh-time-picker {
+    background: white;
+    user-select: none;
+    min-width: 220px;
+    display: inline-block;
+}
+
+    .ravesh-time-picker * {
+        box-sizing: content-box;
+    }
+
+    .ravesh-time-picker .preview {
+        height: 60px;
+        line-height: 60px;
+        font-size: 30px;
+        text-align: center;
+        color: gray;
+    }
+
+        .ravesh-time-picker .preview .hour:hover,
+        .ravesh-time-picker .preview .min:hover,
+        .ravesh-time-picker .preview .hour.active,
+        .ravesh-time-picker .preview .min.active {
+            color: #03A9F4;
+        }
+
+        .ravesh-time-picker .preview .hour,
+        .ravesh-time-picker .preview .min {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+    .ravesh-time-picker .cancel {
+        color: gray;
+        text-align: center;
+        font-size: 11px;
+        line-height: 25px;
+        cursor: pointer;
+    }
+
+        .ravesh-time-picker .cancel span:hover {
+            text-decoration: underline;
+            color: #03A9F4;
+        }
+
+    .ravesh-time-picker .clock-container, .ravesh-time-picker .clock-containerDigital {
+        height: 205px;
+        padding: 30px 15px 15px;
+        background: #f2f2f2;
+        position: relative;
+        touch-action: none;
+    }
+
+        .ravesh-time-picker .clock-container.digital {
+            height: 0px;
+            padding: 0px;
+        }
+
+    .ravesh-time-picker .clock-containerDigital {
+        height: 60px;
+        text-align: center;
+        padding: 23px 15px 0px;
+        direction: ltr;
+    }
+
+        .ravesh-time-picker .clock-containerDigital .timeHourDigital, .ravesh-time-picker .clock-containerDigital .timeMinDigital {
+            width: 37px;
+            height: 33px;
+            border: 0;
+            font-size: 30px;
+            margin: 0 5px;
+            font-family: 'IRANSansWeb',Tahoma;
+            text-align: center;
+        }
+
+    .ravesh-time-picker .clock {
+        width: 190px;
+        height: 190px;
+        background: white;
+        margin: auto;
+        border-radius: 50%;
+        position: relative;
+        overflow: hidden;
+        cursor: move;
+    }
+
+        .ravesh-time-picker .clock .num {
+            text-align: center;
+            width: 100%;
+            position: absolute;
+            height: 23px;
+            line-height: 23px;
+            top: 85px;
+            font-size: 15px;
+            color: #666;
+        }
+
+        .ravesh-time-picker .clock .handle-bar {
+            transform-origin: bottom;
+            background: #03A9F4;
+            position: absolute;
+            bottom: 95px;
+            left: 95px;
+            width: 2px;
+            height: 80px;
+        }
+
+        .ravesh-time-picker .clock .handle {
+            background: #03A9F4;
+            position: absolute;
+            width: 27px;
+            height: 27px;
+            line-height: 27px;
+            border-radius: 50%;
+            top: 83px;
+            left: 83px;
+            color: white;
+            text-align: center;
+            font-size: 15px;
+        }
+
+    .ravesh-time-picker .pm-btn,
+    .ravesh-time-picker .am-btn {
+        position: absolute;
+        bottom: 15px;
+        font-size: 12px;
+        width: 25px;
+        height: 25px;
+        line-height: 25px;
+        border-radius: 50%;
+        padding: 2px;
+        text-align: center;
+        cursor: pointer;
+        background: white;
+        color: gray;
+    }
+
+        .ravesh-time-picker .pm-btn.digital,
+        .ravesh-time-picker .am-btn.digital {
+            top: -57px
+        }
+
+        .ravesh-time-picker .pm-btn.active,
+        .ravesh-time-picker .am-btn.active {
+            background: #03A9F4;
+            color: white;
+        }
+
+    .ravesh-time-picker.dir-rtl .am-btn {
+        right: 15px;
+    }
+
+    .ravesh-time-picker.dir-rtl .pm-btn {
+        left: 15px;
+    }
+
+    .ravesh-time-picker.dir-ltr .am-btn {
+        left: 15px;
+    }
+
+    .ravesh-time-picker.dir-ltr .pm-btn {
+        right: 15px;
+    }
+
+
+/*-drop down------------------------------------*/
+.ravesh-dropdown {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    max-width: 100% !important;
+    background: #fff;
+    border: 1px solid #e1e1e1;
+    box-sizing: border-box;
+    height: 35px;
+}
+
+    .ravesh-dropdown.dir-rtl {
+        direction: rtl;
+        text-align: right;
+    }
+
+    .ravesh-dropdown.dir-ltr {
+        direction: ltr;
+        text-align: left;
+    }
+
+    .ravesh-dropdown input[type="text"] {
+        font-size: 11px;
+        box-sizing: border-box;
+        width: 100%;
+        height: 35px;
+        position: relative;
+        padding: 5px 7px;
+        outline: none;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        color: inherit;
+    }
+
+    .ravesh-dropdown.active {
+        background-color: #fdfdfd;
+        border: 1px solid #03A9F4;
+    }
+
+        .ravesh-dropdown.active input[type="text"] {
+            cursor: text;
+        }
+
+            .ravesh-dropdown.active input[type="text"]:read-only {
+                cursor: pointer;
+            }
+
+    .ravesh-dropdown.disabled {
+        background: #f1f1f1;
+        border: solid 1px #ccc;
+        color: gray;
+        cursor: default !important;
+    }
+
+    .ravesh-dropdown.dir-rtl input[type="text"] {
+        padding-left: 25px;
+    }
+
+    .ravesh-dropdown.dir-ltr input[type="text"] {
+        padding-right: 25px;
+    }
+
+    .ravesh-dropdown.disabled .arrow:after {
+        border-top-color: gray;
+    }
+
+    .ravesh-dropdown.no-arrow input[type="text"] {
+        padding: 5px 7px;
+        cursor: text;
+    }
+
+    .ravesh-dropdown .arrow {
+        position: absolute;
+        top: 0;
+        width: 25px;
+        height: 35px;
+        border-color: #000;
+    }
+
+        .ravesh-dropdown .arrow:after {
+            margin: 15px 8px;
+            content: ' ';
+            border-top: 6px solid black;
+            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-top-color: inherit;
+        }
+
+    .ravesh-dropdown.dir-rtl .arrow {
+        left: 0;
+    }
+
+    .ravesh-dropdown.dir-ltr .arrow {
+        right: 0;
+    }
+
+.ravesh-dropdown-menu {
+    position: absolute;
+    z-index: 10000001;
+    min-width: 50px;
+    background-color: #ffffff;
+    border: 1px solid #03A9F4;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-shadow: 0px 1px 1px rgba(0,0,0,0.2);
+}
+
+    .ravesh-dropdown-menu.open {
+        -webkit-animation: rvc-comingIn 0.2s ease;
+        animation: rvc-comingIn 0.2s ease;
+    }
+
+    .ravesh-dropdown-menu .option-group {
+        background: #eee;
+        font-size: 11px;
+        padding: 10px 5px;
+        cursor: default;
+    }
+
+    .ravesh-dropdown-menu .option {
+        font-size: 11px;
+        cursor: pointer;
+    }
+
+        .ravesh-dropdown-menu .option:active,
+        .ravesh-dropdown-menu .option:hover,
+        .ravesh-dropdown-menu .option:hover .single-line {
+            background: #03A9F4 !important;
+            color: white !important;
+        }
+
+        .ravesh-dropdown-menu .option.selected {
+            background: #f9f9f9;
+            color: #000;
+        }
+
+        .ravesh-dropdown-menu .option .single-line {
+            display: inline-block;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            line-height: 30px;
+            padding: 0 7px;
+        }
+
+        .ravesh-dropdown-menu .option .picture-and-detail {
+            overflow: hidden;
+        }
+
+            .ravesh-dropdown-menu .option .picture-and-detail .picture {
+                width: 30px;
+                height: 30px;
+                margin: 7px 10px;
+                border-radius: 50%;
+                background: #e5e5e5;
+                line-height: 30px;
+                text-align: center;
+                color: gray;
+                font-size: 13px;
+            }
+
+
+            .ravesh-dropdown-menu .option .picture-and-detail .title {
+                margin-top: 11px;
+                color: #444;
+                font-weight: bold;
+            }
+
+            .ravesh-dropdown-menu .option .picture-and-detail .detail {
+                margin-top: 2px;
+                color: #aaa;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                line-height: 13px;
+            }
+
+        .ravesh-dropdown-menu .option:hover .picture-and-detail .detail,
+        .ravesh-dropdown-menu .option:hover .picture-and-detail .title {
+            color: #fff;
+        }
+
+
+        .ravesh-dropdown-menu .option .title-and-detail {
+            overflow: hidden;
+            height: 40px;
+            padding: 0 10px;
+            line-height: 1;
+        }
+
+            .ravesh-dropdown-menu .option .title-and-detail .title {
+                margin-top: 9px;
+                color: #444;
+                font-weight: bold;
+            }
+
+            .ravesh-dropdown-menu .option .title-and-detail .detail {
+                margin-top: 2px;
+                color: #aaa;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                line-height: 13px;
+            }
+
+        .ravesh-dropdown-menu .option:hover .title-and-detail .detail,
+        .ravesh-dropdown-menu .option:hover .title-and-detail .title {
+            color: #fff;
+        }
+
+
+    .ravesh-dropdown-menu .option-product {
+        height: 70px;
+        overflow: hidden;
+    }
+
+        .ravesh-dropdown-menu .option-product .picture {
+            width: 50px;
+            height: 50px;
+            margin: 10px 13px;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        .ravesh-dropdown-menu .option-product .title {
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 15px;
+            overflow: hidden;
+            white-space: nowrap;
+            line-height: 13px;
+        }
+
+        .ravesh-dropdown-menu .option-product .detail {
+            margin-top: 3px;
+            color: #aaaaaa;
+        }
+
+        .ravesh-dropdown-menu .option-product .price {
+            margin-top: 8px;
+            color: #DD4B39;
+            font-size: 12px;
+        }
+
+        .ravesh-dropdown-menu .option-product .picture i {
+            font-size: 19px;
+        }
+
+    .ravesh-dropdown-menu .option:hover .option-product .detail,
+    .ravesh-dropdown-menu .option:hover .option-product .price,
+    .ravesh-dropdown-menu .option:hover .option-product .title {
+        color: #fff;
+    }
+
+    .ravesh-dropdown-menu .option-sales .price {
+        margin-top: 3px;
+        color: #DD4B39;
+        font-size: 12px;
+    }
+
+    .ravesh-dropdown-menu .option-sales {
+        height: 55px;
+        overflow: hidden;
+        padding: 5px 10px;
+        box-sizing: border-box;
+    }
+
+        .ravesh-dropdown-menu .option-sales .title {
+            font-weight: bold;
+            margin-top: 3px;
+            overflow: hidden;
+            white-space: nowrap;
+            line-height: 13px;
+        }
+
+        .ravesh-dropdown-menu .option-sales .detail {
+            color: #aaa;
+            margin-top: 4px;
+        }
+
+    .ravesh-dropdown-menu .option:hover .option-sales .detail,
+    .ravesh-dropdown-menu .option:hover .option-sales .price,
+    .ravesh-dropdown-menu .option:hover .option-sales .title {
+        color: #fff;
+    }
+
+
+.ravesh-dropdown .loading {
+    position: absolute;
+    top: 0;
+    margin: 7px 7px 0;
+    background: none !important;
+}
+
+.ravesh-dropdown.dir-rtl .loading {
+    left: 0;
+}
+
+.ravesh-dropdown.dir-ltr .loading {
+    right: 0;
+}
+
+.ravesh-multi-selector {
+    max-width: 100%;
+    min-height: 35px;
+    padding: 0 5px 5px;
+    cursor: pointer;
+}
+
+    .ravesh-multi-selector .item {
+        display: inline-block;
+        background: #ededed;
+        border-radius: 7px;
+        line-height: 1;
+    }
+
+        .ravesh-multi-selector .item span {
+            margin-top: 5px;
+            display: inline-block;
+        }
+
+        .ravesh-multi-selector .item i {
+            padding: 5px;
+        }
+
+[dir=rtl] .ravesh-multi-selector .item {
+    margin: 5px 0 0 5px;
+}
+
+    [dir=rtl] .ravesh-multi-selector .item span {
+        margin-left: 5px;
+    }
+
+[dir=ltr] .ravesh-multi-selector .item {
+    margin: 5px 5px 0 0;
+}
+
+    [dir=ltr] .ravesh-multi-selector .item span {
+        margin-right: 5px;
+    }
+
+/*- drill down -------------------------------------*/
+.ravesh-drill-down {
+    height: 290px;
+    box-sizing: border-box;
+}
+
+    .ravesh-drill-down .drill-down-option {
+        height: 30px;
+        line-height: 30px;
+        font-size: 11px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+[dir=rtl] .ravesh-drill-down .drill-down-option.hasChild {
+    padding: 0 0 0 30px;
+}
+
+[dir=ltr] .ravesh-drill-down .drill-down-option.hasChild {
+    padding: 0 30px 0 0;
+}
+
+.ravesh-drill-down .drill-down-option-child {
+    width: 30px;
+    height: 30px;
+}
+
+[dir=rtl] .ravesh-drill-down .drill-down-option-child {
+    float: left;
+    margin-left: -30px;
+}
+
+[dir=ltr] .ravesh-drill-down .drill-down-option-child {
+    float: right;
+    margin-right: -30px;
+}
+
+.ravesh-drill-down .drill-down-option-child span {
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    margin: 12px 13px;
+    width: 0;
+    height: 0;
+    display: block;
+}
+
+[dir=rtl] .ravesh-drill-down .drill-down-option-child span {
+    border-right: 5px solid black;
+    border-left: none;
+}
+
+[dir=ltr] .ravesh-drill-down .drill-down-option-child span {
+    border-left: 5px solid black;
+    border-right: none;
+}
+
+.ravesh-drill-down .drill-down-option-child:hover {
+    background: #03A9F4 !important;
+}
+
+[dir=rtl] .ravesh-drill-down .drill-down-option-child:hover span {
+    border-right-color: white;
+}
+
+[dir=ltr] .ravesh-drill-down .drill-down-option-child:hover span {
+    border-left-color: white;
+}
+
+.ravesh-drill-down .drill-down-option-title {
+    padding: 0 7px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: #222;
+}
+
+[dir=rtl] .ravesh-drill-down .drill-down-option-title {
+    float: right;
+}
+
+[dir=ltr] .ravesh-drill-down .drill-down-option-title {
+    float: left;
+}
+
+.ravesh-drill-down .drill-down-option-title:hover {
+    background: #03A9F4 !important;
+    color: white !important;
+}
+
+.ravesh-drill-down-panel-title {
+    font-size: 11px;
+    font-weight: bold;
+    cursor: default;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 12px 7px 9px;
+}
+
+.has-breadcrumb .ravesh-drill-down-panel-title {
+    padding: 5px 7px 7px;
+}
+
+.ravesh-drill-down-panel-head {
+    border-bottom: solid 1px #eee;
+    background: #f7f7f7;
+    box-sizing: border-box;
+}
+
+.ravesh-drill-down-breadcrumb {
+    display: inline-block;
+    font-size: 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+[dir=rtl] .ravesh-drill-down-breadcrumb {
+    padding: 8px 7px 2px 2px;
+}
+
+[dir=ltr] .ravesh-drill-down-breadcrumb {
+    padding: 8px 2px 2px 7px;
+}
+
+/*menu-----------------*/
+.ravesh-menu {
+    position: absolute;
+    z-index: 10000002;
+    min-width: 50px;
+    background-color: white;
+    border: 1px solid #CCC;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+    .ravesh-menu.open {
+        -webkit-animation: rvc-comingIn 0.2s ease;
+        animation: rvc-comingIn 0.2s ease;
+    }
+
+    .ravesh-menu .option {
+        line-height: 45px;
+        height: 45px;
+        overflow: hidden;
+        font-size: 12px;
+        color: #444;
+        cursor: pointer;
+        transition: background .3s;
+        display: block;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+        .ravesh-menu .option:hover {
+            background: #f9f9f9;
+            color: #000;
+        }
+
+        .ravesh-menu .option span {
+            margin: 0 18px;
+        }
+
+        .ravesh-menu .option i {
+            font-size: 16px;
+            color: gray;
+            width: 20px;
+            text-align: center;
+            text-decoration: none;
+            min-height: 10px;
+        }
+
+[dir=rtl] .ravesh-menu .option i {
+    margin-left: 0;
+    margin-right: 15px;
+}
+
+[dir=rtl] .ravesh-menu .option span {
+    margin-left: 30px;
+}
+
+[dir=ltr] .ravesh-menu .option span {
+    margin-right: 30px;
+}
+
+[dir=ltr] .ravesh-menu .option i {
+    margin-right: 0;
+    margin-left: 15px;
+}
+
+.ravesh-menu .line {
+    border-bottom: solid 1px #ddd;
+}
+
+
+/*-text editor------------------------------------*/
+
+.ravesh-editor {
+    display: inline-block;
+    border: solid 1px #e1e1e1;
+    min-width: 200px;
+    background: white;
+    position: relative;
+    width: inherit;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+    .ravesh-editor.active {
+        border: solid 1px #03A9F4;
+    }
+
+    .ravesh-editor .ravesh-editor-toolbar {
+        overflow: hidden;
+        box-shadow: 0 0px 5px 0px rgba(0,0,0,0.5);
+    }
+
+        .ravesh-editor .ravesh-editor-toolbar .split {
+            height: 26px;
+            text-align: center;
+            line-height: 36px;
+            border-right: solid 1px #d8d8d8;
+            margin: 5px;
+        }
+
+        .ravesh-editor .ravesh-editor-toolbar .item {
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 0;
+        }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.active,
+            .ravesh-editor:not(.disabled) .ravesh-editor-toolbar .item:hover:not(.disable) {
+                background: #f1f1f1;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item div {
+                background: url('../../../Pages/FormBuilder/images/editor-icons.png') no-repeat;
+                background-size: 48px 60px;
+                width: 12px;
+                height: 12px;
+                margin: 12px;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.disable {
+                opacity: 0.3;
+                cursor: default;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.bold div {
+                background-position: 0 0;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.italic div {
+                background-position: -12px 0;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.justifyleft div {
+                background-position: -24px 0;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.justifyright div {
+                background-position: -36px 0;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.justifycenter div {
+                background-position: 0 -12px;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.strikethrough div {
+                background-position: -12px -12px;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.emoticon div {
+                background-position: -24px -12px;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.color div {
+                background-position: -36px -12px;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.undo div {
+                background-position: 0 -24px;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.redo div {
+                background-position: -12px -24px;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.underline div {
+                background-position: -24px -24px;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.fontsize div {
+                background-position: -36px -24px;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.table div {
+                background-position: 0 -36px;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.link div {
+                background-position: -12px -36px;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.image div {
+                background-position: -24px -36px;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.html div {
+                background-position: -36px -36px;
+            }
+
+            .ravesh-editor .ravesh-editor-toolbar .item.full div {
+                background-position: 0 -48px;
+            }
+
+    .ravesh-editor.full-screen .ravesh-editor-toolbar .item.full div {
+        background-position: -12px -48px;
+    }
+
+[dir=rtl] .ravesh-editor .ravesh-editor-toolbar .split,
+[dir=rtl] .ravesh-editor .ravesh-editor-toolbar .item {
+    float: right;
+}
+
+[dir=ltr] .ravesh-editor .ravesh-editor-toolbar .split,
+[dir=ltr] .ravesh-editor .ravesh-editor-toolbar .item {
+    float: left;
+}
+
+.ravesh-editor.disabled .ravesh-editor-toolbar .item {
+    opacity: 0.3;
+    cursor: default;
+    outline: none;
+}
+
+.ravesh-editor-subtoolbar {
+    border-top: solid 1px #e1e1e1;
+}
+
+    .ravesh-editor-subtoolbar .custom-icon {
+        height: 36px;
+        cursor: pointer;
+        transition: background 0.3s;
+        margin: 0;
+        display: inline-block;
+        line-height: 36px;
+        text-align: center;
+        padding: 0 5px;
+        font-size: 8pt;
+    }
+
+        .ravesh-editor-subtoolbar .custom-icon i {
+            font-size: 15px;
+        }
+
+        .ravesh-editor-subtoolbar .custom-icon span {
+            position: relative;
+            top: -2px;
+        }
+
+[dir=rtl] .ravesh-editor-subtoolbar .custom-icon span {
+    padding-right: 8px;
+}
+
+[dir=ltr] .ravesh-editor-subtoolbar .custom-icon span {
+    padding-left: 8px;
+}
+
+.ravesh-editor.html-editor .ravesh-editor-subtoolbar .custom-icon {
+    opacity: 0.3;
+    cursor: default;
+    outline: none;
+}
+
+.ravesh-editor-subtoolbar .custom-icon.active,
+.ravesh-editor:not(.disabled) .ravesh-editor-subtoolbar .custom-icon:hover:not(.disable) {
+    background: #f1f1f1;
+}
+
+.ravesh-editor .ravesh-editor-content-html {
+    outline: none;
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 5px 7px;
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    border: none;
+    direction: ltr;
+    text-align: left;
+    margin-top: 5px;
+    display: none;
+}
+
+.ravesh-editor.html-editor .ravesh-editor-content-html {
+    display: block;
+}
+
+.ravesh-editor.html-editor .ravesh-editor-content {
+    display: none;
+}
+
+.ravesh-editor.disabled .ravesh-editor-content {
+    cursor: default;
+}
+
+.ravesh-editor.full-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: auto;
+    z-index: 9999;
+}
+
+    .ravesh-editor.full-screen .ravesh-editor-content-html,
+    .ravesh-editor.full-screen .ravesh-editor-content {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 80px;
+        max-height: none;
+    }
+
+.ravesh-editor .ravesh-editor-content {
+    outline: none;
+    line-height: 1.5;
+    padding: 5px 7px;
+    color: #222;
+    max-height: 500px;
+    overflow: auto;
+    cursor: text;
+    margin-top: 5px;
+}
+
+    .ravesh-editor .ravesh-editor-content iframe {
+        background: #ddd;
+    }
+
+.ravesh-editor-menu .menu-emoticon {
+    width: 150px;
+    box-sizing: content-box;
+}
+
+    .ravesh-editor-menu .menu-emoticon span {
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        font-size: 18px;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+        user-select: none;
+    }
+
+        .ravesh-editor-menu .menu-emoticon span:hover {
+            background: #f1f1f1;
+        }
+
+.ravesh-editor-menu .menu-color {
+    width: 150px;
+    box-sizing: content-box;
+}
+
+    .ravesh-editor-menu .menu-color span {
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+        font-size: 18px;
+        text-align: center;
+        cursor: pointer;
+        user-select: none;
+        margin: 3px;
+        box-sizing: border-box;
+    }
+
+        .ravesh-editor-menu .menu-color span:hover {
+            border: solid 2px black;
+        }
+
+    .ravesh-editor-menu .menu-color .color-button {
+        width: 50%;
+        float: right;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+        margin-bottom: 2px;
+        background: #f1f1f1;
+        color: #999;
+        transition: all 300ms;
+    }
+
+        .ravesh-editor-menu .menu-color .color-button.active,
+        .ravesh-editor-menu .menu-color .color-button:hover {
+            background: #fff;
+            color: #000;
+            font-weight: bold;
+        }
+
+.ravesh-editor-menu .menu-fontsize {
+    text-align: center;
+}
+
+    .ravesh-editor-menu .menu-fontsize div:hover {
+        background: #f1f1f1;
+    }
+
+    .ravesh-editor-menu .menu-fontsize div {
+        cursor: pointer;
+    }
+
+.ravesh-editor-menu .menu-table {
+    width: 181px;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+    .ravesh-editor-menu .menu-table .size-hint {
+        direction: ltr;
+        font-size: 12px;
+        text-align: center;
+        line-height: 23px;
+    }
+
+    .ravesh-editor-menu .menu-table .square {
+        width: 18px;
+        height: 18px;
+        float: left;
+        cursor: pointer;
+    }
+
+        .ravesh-editor-menu .menu-table .square:after {
+            content: '';
+            border: solid 1px #ccc;
+            width: 15px;
+            height: 15px;
+            display: block;
+        }
+
+        .ravesh-editor-menu .menu-table .square.hover:after {
+            border-color: #03a9f4;
+        }
+
+.menu-fields-selector {
+    min-width: 200px;
+    max-width: 300px;
+    max-height: 350px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+    .menu-fields-selector .selector-head {
+        background: #eee;
+        padding: 10px 10px;
+        cursor: default;
+    }
+
+    .menu-fields-selector .selector-row,
+    .menu-fields-selector .selector-row-section {
+        padding: 7px 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+        .menu-fields-selector .selector-row,
+        .menu-fields-selector .selector-row-section.allow {
+            cursor: pointer;
+        }
+
+    .menu-fields-selector .selector-row-section {
+        font-weight: bold;
+    }
+
+        .menu-fields-selector .selector-row:hover,
+        .menu-fields-selector .selector-row-section.allow:hover {
+            background: #03A9F4;
+            color: #fff;
+        }
+
+/*-date picker------------------------------------*/
+.ravesh-date-picker {
+    background: #fff;
+    padding: 6px;
+}
+
+    .ravesh-date-picker .ui-datepicker-header {
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        font-size: 13px;
+        padding: 0 0 6px;
+        background: white;
+        border: none;
+        box-sizing: content-box;
+        width: 100%;
+    }
+
+        .ravesh-date-picker .ui-datepicker-header .ui-datepicker-title {
+            margin: 0 40px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            .ravesh-date-picker .ui-datepicker-header .ui-datepicker-title:not(.disable):hover {
+                background: #eaeaea;
+            }
+
+            .ravesh-date-picker .ui-datepicker-header .ui-datepicker-title.disable {
+                cursor: default;
+                color: #999;
+                user-select: none;
+            }
+
+
+        .ravesh-date-picker .ui-datepicker-header .ui-datepicker-prev,
+        .ravesh-date-picker .ui-datepicker-header .ui-datepicker-next {
+            width: 30px;
+            height: 30px;
+            display: block;
+            cursor: pointer;
+            border-radius: 50% !important;
+            transition: background 0.3s;
+        }
+
+            .ravesh-date-picker .ui-datepicker-header .ui-datepicker-prev:hover,
+            .ravesh-date-picker .ui-datepicker-header .ui-datepicker-next:hover {
+                background: #eaeaea;
+            }
+
+.lang-fa .ravesh-date-picker .ui-datepicker-header .ui-datepicker-prev {
+    float: right;
+}
+
+.lang-fa .ravesh-date-picker .ui-datepicker-header .ui-datepicker-next {
+    float: left;
+}
+
+.lang-en .ravesh-date-picker .ui-datepicker-header .ui-datepicker-prev {
+    float: left;
+}
+
+.lang-en .ravesh-date-picker .ui-datepicker-header .ui-datepicker-next {
+    float: right;
+}
+
+.ravesh-date-picker .ui-datepicker-header .ui-datepicker-prev .ui-icon,
+.ravesh-date-picker .ui-datepicker-header .ui-datepicker-next .ui-icon {
+    background: url('../../../pages/FormBuilder/images/DatePicker-icon.png') no-repeat;
+    background-size: 24px 12px;
+    width: 12px;
+    height: 12px;
+    display: block;
+    margin: 9px;
+    padding: 0;
+    position: unset;
+}
+
+.lang-fa .ravesh-date-picker .ui-datepicker-header .ui-datepicker-prev .ui-icon {
+    background-position: -12px 0;
+}
+
+.lang-en .ravesh-date-picker .ui-datepicker-header .ui-datepicker-next .ui-icon {
+    background-position: -12px 0;
+}
+
+
+.ravesh-date-picker .ui-datepicker-header .ui-datepicker-prev .ui-icon:before,
+.ravesh-date-picker .ui-datepicker-header .ui-datepicker-next .ui-icon:before {
+    content: '';
+}
+
+.ravesh-date-picker .ui-widget {
+    background: white;
+    font-family: 'IRANSansWeb',Tahoma;
+    border: none;
+    color: #444;
+    font-size: 12px;
+    width: auto;
+}
+
+.ravesh-date-picker .ui-datepicker-calendar {
+    width: 100%;
+    text-align: center;
+    font-size: 11px;
+    border-collapse: collapse;
+}
+
+    .ravesh-date-picker .ui-datepicker-calendar thead tr {
+        background: #f5f5f5;
+    }
+
+        .ravesh-date-picker .ui-datepicker-calendar thead tr th {
+            padding: 10px 6px;
+        }
+
+    .ravesh-date-picker .ui-datepicker-calendar .ui-state-default {
+        text-decoration: none;
+        color: #666;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        display: inline-block;
+        margin: 3px;
+        border-radius: 50%;
+        transition: background 0.3s, color 0.3s;
+        padding: 0;
+    }
+
+        .ravesh-date-picker .ui-datepicker-calendar .ui-state-default.ui-state-active {
+            background-color: #03A9F4 !important;
+            color: #fff !important;
+            box-shadow: none;
+        }
+
+        .ravesh-date-picker .ui-datepicker-calendar .ui-state-default:hover,
+        .ravesh-date-picker .ui-datepicker-calendar .ui-state-default.ui-state-highlight {
+            background: #eaeaea;
+            color: #000;
+        }
+
+    .ravesh-date-picker .ui-datepicker-calendar .holidayCalendar .ui-state-default {
+        color: #DD4B39;
+    }
+
+.ravesh-date-picker .ravesh-date-picker-month .month {
+    width: 33%;
+    font-size: 13px;
+    text-align: center;
+    cursor: pointer;
+    margin: 5px 0;
+}
+
+    .ravesh-date-picker .ravesh-date-picker-month .month span {
+        transition: background 0.3s;
+        margin: 0 5px;
+        display: block;
+        padding: 5px;
+        border-radius: 50px;
+    }
+
+    .ravesh-date-picker .ravesh-date-picker-month .month.current span,
+    .ravesh-date-picker .ravesh-date-picker-month .month:hover span {
+        background: #eaeaea;
+    }
+
+    .ravesh-date-picker .ravesh-date-picker-month .month.active span {
+        background: #03A9F4;
+        color: #fff;
+    }
+
+
+.ravesh-date-picker .ravesh-date-picker-year .year {
+    width: 33%;
+    font-size: 13px;
+    text-align: center;
+    cursor: pointer;
+    margin: 5px 0;
+    float: left;
+}
+
+    .ravesh-date-picker .ravesh-date-picker-year .year span {
+        transition: background 0.3s;
+        margin: 0 5px;
+        display: block;
+        padding: 5px;
+        border-radius: 50px;
+    }
+
+    .ravesh-date-picker .ravesh-date-picker-year .year.current span,
+    .ravesh-date-picker .ravesh-date-picker-year .year:hover span {
+        background: #eaeaea;
+    }
+
+    .ravesh-date-picker .ravesh-date-picker-year .year.active span {
+        background: #03A9F4;
+        color: #fff;
+    }
+
+/*-spinner------------------------------------*/
+.spinner2 {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: solid 2px;
+    border-radius: 100%;
+    animation: spinner2 1s infinite linear;
+    border-color: rgba(0, 0, 0, .1);
+    border-top-color: rgb(0, 0, 0);
+}
+
+    .spinner2.small {
+        width: 16px;
+        height: 16px;
+    }
+
+    .spinner2.large {
+        width: 48px;
+        height: 48px;
+    }
+
+@keyframes spinner2 {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+.rvc-comingIn {
+    -webkit-animation: rvc-comingIn 0.2s ease;
+    animation: rvc-comingIn 0.2s ease;
+}
+
+@-webkit-keyframes rvc-comingIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px) perspective( 600px ) rotateX( 10deg );
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0) perspective( 600px ) rotateX( 0 );
+    }
+}
+
+@keyframes rvc-comingIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px) perspective( 600px ) rotateX( 10deg );
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0) perspective( 600px ) rotateX( 0 );
+    }
+}
+
+
+
+.customer-quick-search-dialog {
+    min-height: 500px;
+}
+
+.customer-quick-search-dialog-head {
+    border-bottom: solid 1px #c4c4c4;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+    z-index: 1;
+    position: relative;
+}
+
+    .customer-quick-search-dialog-head input {
+        border: 0;
+        outline: 0;
+        font-size: 12px;
+        width: 300px;
+        padding: 0;
+        margin: 0;
+        height: 50px;
+    }
+
+    .customer-quick-search-dialog-head i {
+        font-size: 20px;
+        margin: 15px;
+    }
+
+[dir=rtl] .customer-quick-search-dialog-head i {
+    margin-left: 10px;
+}
+
+[dir=ltr] .customer-quick-search-dialog-head i {
+    margin-right: 10px;
+}
+
+.customer-quick-search-dialog .search-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.3);
+}
+
+    .customer-quick-search-dialog .search-loading .spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -15px 0 0 -15px;
+    }
+
+.customer-quick-search-dialog table {
+    width: 100%;
+}
+
+    .customer-quick-search-dialog table tr:nth-child(even) {
+        background: #f9f9f9;
+    }
+
+.customer-quick-search-dialog tr .icon-user {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    background: #e6e6e6;
+    margin: 10px;
+    border-radius: 50%;
+    line-height: 50px;
+    text-align: center;
+    font-size: 20px;
+    color: #9CA9B3;
+}
+
+.customer-quick-search-dialog tr .picture {
+    margin: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.customer-quick-search-dialog tr .title {
+    font-size: 14px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 230px;
+    line-height: 1.7;
+}
+
+.customer-quick-search-dialog tr .detail {
+    font-size: 12px;
+    color: #999;
+}

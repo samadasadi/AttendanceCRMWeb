@@ -1,0 +1,290 @@
+﻿
+@using ViewModel.Common
+@using System.Web.Mvc;
+@using Utility.HtmlHelpers
+@model IEnumerable<ViewModel.Common.CodingVm>
+@{
+    ViewBag.Title = "تنظیمات | کدینگ سیستم";
+    Layout = Utility.Utitlies.VaribleForName.AddressLayoutMasterNew;
+    var categoryID = ViewBag.CatId;
+    var modell = Model.FirstOrDefault(m => m.code.StartsWith("018"));
+}
+
+@section styles
+{
+    <style>
+        .modal-dialog {
+            max-width: 60%;
+        }
+
+            .modal-dialog modal-lg {
+                max-width: 60%;
+            }
+    </style>
+    <link rel="stylesheet" type="text/css" href="~/assets/global/plugins/jstree/dist/themes/default/style.min.css" />
+    <link href="~/assets/admin/layout/css/custom-rtl.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/admin/pages/css/todo-rtl.css" rel="stylesheet" type="text/css" />
+}
+
+<div class="row">
+
+    <div class="col-md-12">
+        <div id="custom-tabs-two-tabContent">
+            <div class="tab-pane fade active show" id="tab1" role="tabpanel">
+                <div id="UnregisteredAccountingClients_Fiter"></div>
+                <div id="UnregisteredAccountingClients_Result"></div>
+            </div>
+
+            <div class="tab-pane fade" id="tab2" role="tabpanel">
+                <div id="RegisteredAccountingClients_Fiter"></div>
+                <div id="RegisteredAccountingClients_Result"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header border-0">
+                <div class="d-flex justify-content-between">
+                    <h6 class="card-title">@Resources.Md.Coding</h6>
+                </div>
+            </div>
+            <div class="card-body p-1" style="overflow-x: auto; height: 500px; ">
+
+                <div class="todo-ui ">
+                    <div class="todo-sidebar">
+                        <div class="portlet light">
+                            <div class="portlet-body">
+                                <div id="tree_1" class="tree-demo">
+                                    <ul>
+                                        @foreach (var item in Model.Where(m => m.level == 2 ))
+                                        {
+                                            if (item.code != "023")
+                                            {
+                                                @MvcHtmlString.Create(OrderedList(item, Model.Where(m => m.level != 1)))
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <input type="hidden" id="parentCode">
+            <div class="card-header">
+                <h6 class="card-title text-info" id="parentCodeStr">@Resources.Md.Coding</h6>
+
+            </div>
+
+            <div class="card-body" id="GridListid" style="overflow-y:auto;height:500px;">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@functions{
+    public String OrderedList(CodingVm user, IEnumerable<CodingVm> list)
+    {
+        if (list.Any(m => m.level == user.level + 1 && m.code.StartsWith(user.code)))
+        {
+            var res = "<li id='" + user.code + "'>";
+            res += "<a data-id= \"" + user.code + "\" onclick=\"ShowGrid('" + user.code + "','" + user.name + "')\" >";
+            res += user.code + " - " + user.name;
+            res += "";
+            res += "</a>";
+            res += "<ul>";
+            foreach (var itemSub1 in list.Where(m => m.level == user.level + 1 && ((user.code == "030") ? m.code.StartsWith("03") : m.code.StartsWith(user.code))))
+            {
+                res += OrderedList(itemSub1, list);
+            }
+            res += "</ul>";
+            res += "</li>";
+            return res;
+        }
+
+        else
+        {
+            var res2 = "";
+            res2 += "<li id='" + user.code + "'>";
+            res2 += "<a  onclick=\"ShowGrid('" + user.code + "','" + user.name + "')\" >";
+            res2 += user.code + " - " + user.name;
+            res2 += "</a>";
+
+            res2 += "</li>";
+            return res2;
+        }
+
+    }
+    public String show(CodingVm user, IEnumerable<CodingVm> list)
+    {
+        if (user == null) return "";
+        var res = "<li id='" + user.code + "'>";
+        res += "<a data-id= \"" + user.code + "\" onclick=\"ShowGrid('" + user.code + "','" + user.name + "')\" >";
+        res += user.name;
+        res += "";
+        res += "</a>";
+        res += "<ul>";
+        foreach (var itemSub1 in list.Where(m => m.level == user.level + 1 && m.code.StartsWith(user.code)))
+        {
+            res += "<li id='" + itemSub1.code + "'>";
+            res += "<a data-id= \"" + itemSub1.code + "\" onclick=\"ShowGrid('" + itemSub1.code + "','" + itemSub1.name + "')\" >";
+            res += itemSub1.name;
+            res += "";
+            res += "</a>";
+            res += "<ul>";
+            foreach (var itemSub2 in list.Where(m => m.level == itemSub1.level + 1 && m.code.StartsWith(itemSub1.code)))
+            {
+                res += "<li id='" + itemSub2.code + "'>";
+                res += "<a data-id= \"" + itemSub2.code + "\" onclick=\"ShowGrid('" + itemSub2.code + "','" + itemSub1.name + "')\" >";
+                res += itemSub2.name;
+                res += "";
+                res += "</a>";
+                res += "<ul>";
+
+                res += "</ul>";
+                res += "</li>";
+
+            }
+            res += "</ul>";
+            res += "</li>";
+        }
+        res += "</ul>";
+        res += "</li>";
+        return res;
+    }
+
+    public String showForm(CodingVm user, IEnumerable<CodingVm> list)
+    {
+        var res = "<li id='" + user.code + "'>";
+        res += "<a data-id= \"" + user.code + "\" onclick=\"ShowGrid('" + user.code + "','" + user.name + "')\" >";
+        res += user.name;
+        res += "";
+        res += "</a>";
+        res += "<ul>";
+        foreach (var itemSub1 in list.Where(m => m.level == user.level + 1 && m.code.StartsWith(user.code)))
+        {
+            res += "<li id='" + itemSub1.code + "'>";
+            res += "<a data-id= \"" + itemSub1.code + "\" onclick=\"ShowGrid('" + itemSub1.code + "','" + user.name + "')\" >";
+            res += itemSub1.name;
+            res += "";
+            res += "</a>";
+            res += "<ul>";
+
+            res += "</ul>";
+            res += "</li>";
+        }
+        res += "</ul>";
+        res += "</li>";
+        return res;
+    }
+}
+
+@section scripts
+{
+    <script type="text/javascript">
+
+    $(function () {
+        $('#tree_1').jstree({
+            "core": {
+                "themes": {
+                    "responsive": false
+                }
+            },
+            "types": {
+                "default": {
+                    "icon": "fa fa-folder icon-state-warning icon-lg"
+                },
+                "file": {
+                    "icon": "fa fa-file icon-state-warning icon-lg"
+                }
+            },
+            "plugins": ["types"],
+            'core': {
+                'check_callback': true
+            }
+
+        });
+    });
+    function ShowGrid(code, name) {
+
+        $('#tree_1').jstree('open_node', code);
+        //ShowGrid
+        $('#parentCode').val(code);
+        document.getElementById("parentCodeStr").innerHTML = name;
+        $.ajax({
+            beforeSend: function () {
+                showWait();
+            },
+            url: "/Admin/Coding/GridList",
+            type: 'GET',
+            scriptCharset: "utf-16",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-16",
+            data: { code: code },
+            success: function (res) {
+
+                $("#GridListid").html(res);
+                hideWait();
+            }, error: function () {
+                AlertDialog("متاسفانه عملیات با موفقیت انجام نشد", "خطا", 'error');
+                hideWait();
+            }
+        });
+    }
+    function FormatLinkCoding(cellValue, options, rowObject) {
+
+        if (cellValue.startsWith("030")) {
+            var o = "<a onclick=\"MinaDent.Coding.EditDivForDiscount('" + cellValue + "')\"  class='fa fa-edit Mercury-icon' title='ویرایش'  >" + '' + "<a/>  ";
+            return o;
+        }
+        else {
+            var o = "<a onclick=\"MinaDent.Coding.EditDiv('" + cellValue + "')\"  class='fa fa-edit Mercury-icon' title='ویرایش'  >" + '' + "<a/>  ";
+            return o;
+        }
+    }
+
+    //$("#iiiii").click(function () {
+    //
+    //    var id = jQuery('#RtlGrid').jqGrid('getGridParam', 'selrow');
+    //    $('#tree_1').jstree(true).delete_node($('#tree_1').find("[id='" + id + "']"))
+    //})
+
+
+            function FormatLink(cellValue, options, rowObject) {
+                var o = "<a onclick=\"MinaDent.Coding.ShowDivProfile('" + cellValue + "','" + true + "')\"  class='fa fa-edit Mercury-icon' title='x'  >" + '' + "<a/>  ";
+                return o;
+            }
+
+
+
+
+    </script>
+
+
+
+        <script>
+            function FormatLinkInsuranceCoding(cellValue, options, rowObject) {
+                //تایپ رو از سل ولیو بدم
+                var o = "<a onclick=\"MinaDent.Coding.ShowModalInsurance('" + cellValue + "','" + rowObject[6] + "','" + rowObject[5] + "','" + true + "')\"  class='fa fa-edit Mercury-icon' title='ویرایش'  >" + '' + "<a/>  ";
+                return o;
+            }
+            function FormatLinkInsuranceDocCoding(cellValue, options, rowObject) {
+                //تایپ رو از سل ولیو بدم
+                var o = "<a onclick=\"MinaDent.Coding.ShowModalInsurance('" + cellValue + "','" + rowObject[5] + "','" + rowObject[4] + "','" + true + "')\"  class='fa fa-edit Mercury-icon' title='ویرایش'  >" + '' + "<a/>  ";
+                return o;
+            }
+        </script>
+
+
+}

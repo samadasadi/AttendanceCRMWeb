@@ -28,11 +28,12 @@ namespace Repository.Model
 
         [Column(TypeName = "smalldatetime")]
         public DateTime? DatetimeIO { get; set; }
+        public DateTime? DatetimeIOMain { get; set; }
 
         public int? AttStatus { get; set; }
 
         public DateTime ModifiedDate { get; set; }
-        public Guid MedicalCenterId { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public int? VerifyMethod { get; set; }

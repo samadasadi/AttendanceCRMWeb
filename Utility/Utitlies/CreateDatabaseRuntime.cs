@@ -234,37 +234,5 @@ namespace Utility.Utitlies
             }
         }
 
-        public static void ExecSPSql(Guid medicalCenterId, string connectionString)
-        {
-            try
-            {
-                var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(connectionString);
-
-                var databaseName = sqlConnectionStringBuilder.InitialCatalog;
-
-                sqlConnectionStringBuilder.InitialCatalog = databaseName;
-
-                using (var sqlConnection = new SqlConnection(sqlConnectionStringBuilder.ConnectionString))
-                {
-                    sqlConnection.Open();
-
-                    using (var sqlCommand = sqlConnection.CreateCommand())
-                    {
-                        sqlCommand.CommandType = CommandType.StoredProcedure;
-                        sqlCommand.CommandText = "UpdateMedicalCenterId";
-                        SqlParameter param;
-
-                        param = sqlCommand.Parameters.Add("@MedicalCenterId", SqlDbType.UniqueIdentifier);
-                        param.Value = medicalCenterId;
-
-                        sqlCommand.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
     }
 }

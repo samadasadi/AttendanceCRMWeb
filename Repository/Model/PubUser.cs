@@ -75,7 +75,6 @@ namespace Repository.Model
             }
         }
 
-        public bool empContarctWithNM { get; set; }
         public bool? IsUserActive { get; set; }
 
         /// <summary>

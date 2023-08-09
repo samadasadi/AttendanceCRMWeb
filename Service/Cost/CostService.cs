@@ -16,6 +16,7 @@ using Utility.Utitlies;
 using Utility;
 using ViewModel.BasicInfo;
 using ViewModel.UserManagement.Attendance;
+using ViewModel.Cost;
 
 namespace Service.Cost
 {
@@ -24,7 +25,7 @@ namespace Service.Cost
         Task<Tbl_Cost> SaveCost(CostVm model);
         Task<DataModel> Delete(Guid Id);
         Task<Tbl_Cost> CheckCompanyAccount(CostVm model);
-
+        Task<List<MedicalCenterCostReport>> GetMedicalCenterCostReport(ViewModel.ReportParameter parameter);
         Task<IEnumerable<CostVm>> GetAll(FilterModelCost model);
 
         Task<int> CountAll_GetAll(FilterModelCost model);
@@ -244,6 +245,23 @@ namespace Service.Cost
         }
 
 
+        public async Task<List<MedicalCenterCostReport>> GetMedicalCenterCostReport(ViewModel.ReportParameter parameter)
+        {
+            //هزینه ها
+            var _query = @"  EXEC	[dbo].[SP_Costing]
+                            		@StrCostCode = " + (!string.IsNullOrEmpty(parameter.CostCode) ? "'" + parameter.CostCode + "'" : "NULL") + @",
+                            		@FromDate = N'" + parameter.FromDate.Date + @"',
+                            		@toDate = N'" + parameter.ToDate.Date + @"',
+                            		@person = " + (!string.IsNullOrEmpty(parameter.costPersonID) ? ("'" + parameter.costPersonID + "'") : "Null");
+
+            var lstResult = (await _repo.RunQuery<MedicalCenterCostReport>(_query)).ToList();
+
+            var _res = lstResult;
+
+            parameter.ImagePath = await GetGeneralSettingLogo();
+
+            return _res.Where(m => m.CostCodeDesc != string.Empty).ToList();
+        }
 
         public async Task<IEnumerable<CostVm>> GetAll(FilterModelCost model)
         {

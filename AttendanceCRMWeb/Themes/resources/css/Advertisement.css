@@ -1,0 +1,393 @@
+﻿.Advertisement .labeTablighat {
+    font-weight: normal!important;
+    color: #707070;
+    margin-top: 4px;
+    margin-left: 5px;
+    margin-right: 5px;
+    clear: both;
+}
+
+.Advertisement .AddNew {
+    margin-top: 5px!important;
+}
+
+.Advertisement .UnsubscribeAdver {
+    padding-top: 5px;
+}
+
+.Advertisement .DivUnsubscribeText {
+    margin-right: 5px;
+    margin-left: 5px;
+    width: 100%;
+    display: none;
+}
+
+.Advertisement .CustomerGroups {
+    clear: both;
+    padding-top: 10px;
+    padding-left: 100px;
+    padding-right: 100px;
+    line-height: 2;
+}
+
+.Advertisement .SubGroupDiv {
+    display: inline-block;
+    padding-right: 50px;
+    padding-left: 50px;
+    white-space: nowrap;
+}
+
+.Advertisement .SubGroupDivHidden {
+    display: none;
+}
+
+.Advertisement .GroupDiv {
+    clear: both;
+    height: 25px;
+}
+
+.Advertisement .NameGroup {
+    margin-right: 10px;
+    margin-left: 10px;
+    min-width: 200px;
+}
+
+.Advertisement .DeleteGroup {
+    color: red;
+}
+
+.Advertisement .AdvertisementList {
+    clear: both;
+    margin-top: 30px;
+    display: none;
+    border-radius: 3px;
+    border: 1px solid #DBDBDB;
+    width: 99%!important;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 10px;
+    padding-top: 11px;
+    padding-bottom: 0px;
+    padding-right: 2px;
+    padding-left: 2px;
+    background-color: #F7F7F7;
+}
+
+.Advertisement .ItemContentDiv {
+    width: 88%;
+    min-height: 19px;
+    color: #6D6D6D;
+}
+
+.Advertisement .DivGroup {
+    border-radius: 3px;
+    border: 1px solid #DBDBDB;
+    width: 99%!important;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 2px;
+    padding-left: 2px;
+}
+
+.Advertisement .SelectGroupAdver {
+    cursor: pointer;
+    font-weight: 100!important;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+    .Advertisement .SelectGroupAdver:active {
+        position: relative;
+        top: 1px;
+    }
+
+.Advertisement .SelectGroups {
+    font-weight: bold;
+    background-color: #DFECF5;
+    height: 23px;
+    margin-top: -5px;
+    margin-right: -2px;
+    margin-left: -2px;
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-bottom-color: #DBDBDB;
+    margin-bottom: 10px;
+}
+
+.Advertisement .AdverSortType {
+    border: 1px solid #D3D3D3;
+    background: #FAFAFA;
+    font-weight: normal;
+    color: #555;
+    border-radius: 3px;
+    width: 150px;
+    height: 28px;
+    margin-right: 20px;
+    margin-left: 20px;
+    font-size: 12px;
+    font-family: Tahoma, Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+}
+
+.Advertisement .Bold {
+    font-weight: bold;
+    color: #3C3C3C!important;
+    background-color: #D1F099!important;
+}
+
+.Advertisement .DivSearchCustomer {
+    width: 35%!important;
+    background: #F7F7F7;
+    border: 1px solid #CDCDCD;
+    border-radius: 2px;
+    box-shadow: 0 2px 2px -2px #CCC;
+    padding: 3px;
+    margin-right: auto;
+    margin-left: auto;
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+.Advertisement .NameCustomer {
+    padding-left: 30px;
+    padding-right: 30px;
+    font-weight: bold;
+    color: #7E7E7E;
+}
+
+.Advertisement .SelectCustomer {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-right: 20px;
+    padding-left: 20px;
+    font-size: 12px;
+    width: 100%;
+}
+
+.Advertisement .btnSearcCustomer {
+    margin-top: -2px;
+    margin-right: 30px;
+    margin-left: 30px;
+    padding: 4px 9px;
+    background-image: linear-gradient(to bottom,#FFF,#E6E6E6);
+    box-shadow: 1px 1px #AAA;
+    border-style: solid solid none solid;
+    border-width: 1px;
+    border-color: #E6E6E6;
+    cursor: pointer;
+    border-radius: 3px;
+    color: #7A7A7A;
+    height: 14px;
+}
+
+    .Advertisement .btnSearcCustomer:active {
+        position: relative;
+        top: 1px;
+    }
+
+.Advertisement .BeforSearchCustomer {
+    padding-top: 20px;
+    color: #C20000;
+    text-align: center;
+}
+
+.Advertisement .Saprator {
+    clear: both;
+    margin-right: auto;
+    margin-left: auto;
+    width: 99%;
+    border-style: none none solid none;
+    border-width: thin;
+    border-color: #CCC;
+}
+
+.Advertisement .DivEmail {
+    padding-top: 6px;
+    padding-right: 21px;
+    padding-left: 21px;
+}
+
+.Advertisement .txtEmailSearch {
+    padding-top: 3px;
+    color: #707070;
+}
+
+.Advertisement .EmailBox {
+    direction: ltr;
+    text-align: center;
+    font-family: Tahoma;
+    font-size: 8pt;
+    width: 200px;
+    border: solid 1px #AAA;
+    border-radius: 3px;
+    height: 17px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.Advertisement .DivReport {
+    border-radius: 3px;
+    border: 1px solid #B4B4B4;
+    width: 96%!important;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 2px;
+    padding-left: 2px;
+    display: none;
+}
+
+.Advertisement .SelectDetails {
+    font-weight: bold;
+    background-color: #DFECF5;
+    height: 23px;
+    margin-top: -5px;
+    margin-right: -2px;
+    margin-left: -2px;
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-bottom-color: #DBDBDB;
+    margin-bottom: 10px;
+}
+/*__________________________________________________________________________________________________*/
+.Advertisement .icon_grippy {
+    cursor: url('../images/openhand.cur'),default;
+    padding-top: 2px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.Advertisement .icon_grippy {
+    background-position: -45px -45px!important;
+}
+
+.Advertisement .AdvertisementItemLiDiv {
+    border-top: 1px solid #FFF;
+    border-left: 1px solid #FFF;
+    border-right: 1px solid #FFF;
+    border-bottom: 1px solid #E8E8E8;
+    font-size: 11px;
+    margin: 0;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    color: #919191;
+    min-height: 17px;
+    min-width: 150px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+    .Advertisement .AdvertisementItemLiDiv:hover {
+        background-color: #FFC;
+    }
+
+.Advertisement .GroupItemLiDiv {
+    border-top: 1px solid #FFF;
+    border-left: 1px solid #FFF;
+    border-right: 1px solid #FFF;
+    border-bottom: 1px solid #E8E8E8;
+    font-size: 11px;
+    margin: 0;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+    color: #919191;
+    min-height: 17px;
+    min-width: 150px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+    .Advertisement .GroupItemLiDiv:hover {
+        background-color: #FFC;
+    }
+
+.Advertisement .icon {
+    margin-right: 5px;
+    margin-left: 5px;
+    width: 16px;
+    height: 16px;
+    background: url('../images/todo.png') no-repeat;
+}
+
+.Advertisement .Chart {
+    border: thin solid #CCCCCC;
+    direction: ltr;
+    border-radius: 4px;
+    margin-top: 10px;
+    display: none;
+}
+
+.Advertisement .HeaderChart {
+    font-weight: bold;
+    background-color: #DFECF5;
+    height: 23px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+    padding-top: 7px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+    border-bottom-color: #DBDBDB;
+    margin-bottom: 10px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.Advertisement .TabChartDiv {
+    border: thin solid #CCC;
+    float: right;
+    width: 24.81%;
+    height: 25px;
+    font-family: Tahoma, Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+    font-size: 12px;
+    padding-top: 6px;
+    text-align: center;
+    background-color: #DFECF5;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.Advertisement .SelectTabChartDiv {
+    background-color: #95AABD;
+    color: #FFF;
+}
+
+.Advertisement .ChartDisplay {
+    display: none;
+}
+
+.Advertisement .AdvertizementTab {
+    display: none;
+}
+
+.Advertisement .RadioEmailStatus {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.Advertisement .labeEmailStatus {
+    font-weight: normal!important;
+    color: #707070;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    clear: both;
+}

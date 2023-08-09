@@ -347,14 +347,12 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        [CustomAutorizeFilter(Role = new[] { EnumRole.ChangePassword })]
         public ActionResult ChangePassword()
         {
             return View(new ViewModel.Security.ChangePasswordViewModel());
         }
 
         [HttpPost]
-        [CustomAutorizeFilter(Role = new[] { EnumRole.ChangePassword })]
         public async Task<ActionResult> ChangePassword(ViewModel.Security.ChangePasswordViewModel model)
         {
             var res = await _service.ChangePasswordAsync(model.OldPassword, model.NewPassword);
@@ -382,7 +380,6 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
             return PartialView();
         }
 
-        [CustomAutorizeFilter(Role = new[] { EnumRole.ChangePassword })]
         public ActionResult ResetPassword(Guid userId)
         {
             UserVm model = new UserVm() { Id = userId };
@@ -390,7 +387,6 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [CustomAutorizeFilter(Role = new[] { EnumRole.ChangePassword })]
         public async Task<ActionResult> ResetPassword(UserVm model)
         {
             await _service.ResetPasswordAsync(model.Id, model.Password);
@@ -468,7 +464,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
                 var list2 = await _costService.GetDoctorCostList(model);
 
                 list2.CommonCustomViewTablePaging = list2.FillPageingData(list2.TLists.Count(),
-                    urlData: "/UserManagement/Register/P_GetCostList",
+                    urlData: "/Admin/Register/P_GetCostList",
                     _selectCount,
                     await _costService.CountAll_DoctorCostList(model),
                     "",
@@ -558,10 +554,10 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
                     urlData: model.UrlData,
                     _selectCount,
                     list2.CountAll_TLists,
-                    "/UserManagement/EmployeeAttendance/DeletePersonelAccount",
+                    "/Admin/EmployeeAttendance/DeletePersonelAccount",
                     urlEdit: "",
                     tableIdDiv: "divListsTransReq",
-                    urlDeleteRows: "/UserManagement/EmployeeAttendance/DeletePersonelAccount",
+                    urlDeleteRows: "/Admin/EmployeeAttendance/DeletePersonelAccount",
                     functionWillGoForPageing: "operationAjaxFor_PersonelAccount", firstPage: model.FirstPage);
 
                 return list2;
@@ -573,7 +569,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         }
         public async Task<ActionResult> PersonelAccount_Index(UserVm entity)
         {
-            var model = await PrepareAction_PersonelAccount(new UserVm { Id = entity.Id, PageNum = 1, UrlData = "/UserManagement/Register/P_PersonelAccount", PageSize = _selectCount, FirstPage = 1 });
+            var model = await PrepareAction_PersonelAccount(new UserVm { Id = entity.Id, PageNum = 1, UrlData = "/Admin/Register/P_PersonelAccount", PageSize = _selectCount, FirstPage = 1 });
             return Json(this.RenderPartialToString("PersonelAccount_Index", model), JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
@@ -582,7 +578,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         {
             try
             {
-                model.UrlData = "/UserManagement/Register/P_PersonelAccount";
+                model.UrlData = "/Admin/Register/P_PersonelAccount";
                 return Json(this.RenderPartialToString("P_PersonelAccount", (await PrepareAction_PersonelAccount(model))), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

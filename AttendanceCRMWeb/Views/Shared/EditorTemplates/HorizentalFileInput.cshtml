@@ -1,0 +1,51 @@
+﻿@model Guid?
+@{
+    var placeholder = string.Empty;
+
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("placeholder"))
+    {
+        placeholder = ViewData.ModelMetadata.AdditionalValues["placeholder"] as string;
+    }
+    var name = (ViewData.ModelMetadata).PropertyName;
+    var required = ViewData.ModelMetadata.IsRequired;
+}
+
+<div class="form-group  row @string.Format("{0}",required?"rqd":"")">
+    @Html.LabelFor(model => model, htmlAttributes: new { @class = "control-label col-form-label col-md-3" })
+    <div class="col-sm-9">
+        <div style="position:relative;">
+            <a class='btn btn-primary btn-file' href='javascript:;'>
+                بارگزاری فایل ...
+                <input type="file" name="file" size="40" onchange='DisplaySelectedFileName(this);'>
+
+            </a>
+            <span class="getFile">
+                @*<a href="@Url.Action("Download", "Base",new{path=Model,Area=""})" >
+                دریافت فایل
+            </a>*@
+                @if (Model.HasValue)
+                {
+                    <img src="@Url.Action("ShowImage", "File", new { Area = "", id = Model })" />
+                }
+            </span>
+
+
+            &nbsp;
+            <span class='label label-info' id="upload-file-info-@name"></span>
+            <i id="remove-@name" class="file-info-i hidden fa fa-remove text-danger"></i>
+        </div>
+        @Html.ValidationMessageFor(model => model)
+    </div>
+</div>
+<script type="text/javascript">
+    function DisplaySelectedFileName(obj) {
+        
+        $("#upload-file-info-@name").html($(obj).val());
+        $("#remove-@name").removeClass("hidden");
+    }
+
+    $("#remove-@name").click(function () {
+        $("#upload-file-info-@name").html("");
+        $("#remove-@name").addClass("hidden");
+    });
+</script>

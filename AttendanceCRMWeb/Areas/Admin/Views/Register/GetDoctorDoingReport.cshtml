@@ -1,0 +1,422 @@
+﻿@model ViewModel.BasicInfo.DoctorDoingReport
+@using Utility.Utitlies
+@{
+    string[] _colors = { "primary", "success", "yellow", "danger" };
+    string[] _color_span = { "light-blue", "green", "yellow", "red" };
+}
+
+<style>
+    .btn {
+        border: 0;
+        box-shadow: none;
+    }
+
+        .btn btn-default {
+            background: transparent;
+        }
+
+        .btn :hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+</style>
+
+<section class="content">
+    <div class="row">
+        <div class="col-md-12 card card-danger card-outline">
+            <div class="card-header with-border">
+                <h3 class="card-title">گزارش کلی</h3>
+                <div class="card-tools pull-right">
+                    @*<button type="button" class="btn btn-default btn-sm" data-widget="collapse" onclick="refreshPersonelReport()">
+                            <i class="fa fa-refresh"></i>تازه سازی
+                        </button>*@
+                    <button type="button" class="btn btn-info btn-block btn-flat" onclick="refreshPersonelReport()"><i class="fa fa-history"></i>&nbsp;&nbsp; تازه سازی</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="description-block">
+                            <span class="description-percentage text-"><i class=""></i> </span>
+                            <h5 class="description-header" style="margin-bottom: 14px;">@string.Format("{0:#,0}", Model.doctorWorkLog.Total_Count)</h5>
+                            <span class="description-text text-green">تعداد کل درمان ها</span>
+
+                            <div style="margin-top:15px;">
+                                <p class="text-muted" style="font-size:10px;">تعداد بیماران : <span class="description-text text-aqua">@string.Format("{0:#,0}", Model.doctorWorkLog.PatientCount)</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="description-block border-right">
+                            <span class="description-percentage text-green"><i class=""></i> </span>
+                            <h5 class="description-header" style="margin-bottom: 14px;">@string.Format("{0:#,0}", Model.doctorWorkLog.TotalRealPrice)</h5>
+                            <span class="description-text text-red">کل کارکرد</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="description-block border-right">
+                            <span class="description-percentage text-yellow"><i class=""></i> </span>
+                            <h5 class="description-header" style="margin-bottom: 14px;">@string.Format("{0:#,0}", Model.doctorWorkLog.TotalPrices)</h5>
+                            <span class="description-text text-blue">هزینه درمان</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="description-block border-right">
+                            <span class="description-percentage text-"><i class=""></i> </span>
+                            <h5 class="description-header" style="margin-bottom: 14px;">@string.Format("{0:#,0}", Model.doctorWorkLog.TotalRecevied)</h5>
+                            <span class="description-text text-green">کل دریافتی</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="col-sm-4 col-xs-6">
+                    <div class="description-block">
+                        <span class="description-percentage text-green"><i class=""></i>@Model.doctorWorkLog.Center_Total_Count_Percent.ToString().Replace("/", ".")%</span>
+                        <div class="progress progress-xs">
+                            <div class="progress-bar progress-bar-green" style="width: @Model.doctorWorkLog.Center_Total_Count_Percent.ToString().Replace("/",".")%"></div>
+                        </div>
+                        <span class="description-text text-green">درصد از کل تعداد درمان ها</span>
+                        <div style="margin-top:15px;">
+                            <p class="text-muted" style="font-size:10px;">مجموع کل درمان های مجموعه : <span class="description-text text-aqua">@string.Format("{0:#,0}", Model.doctorWorkLog.Center_Total_Count)</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-xs-6">
+                    <div class="description-block">
+                        <span class="description-percentage text-red"><i class=""></i>@Model.doctorWorkLog.Center_Total_RealPrice_Percent.ToString().Replace("/", ".")%</span>
+                        <div class="progress progress-xs">
+                            <div class="progress-bar progress-bar-red" style="width: @Model.doctorWorkLog.Center_Total_RealPrice_Percent.ToString().Replace("/",".")%"></div>
+                        </div>
+                        <span class="description-text text-red">درصد از کل کارکرد</span>
+                        <div style="margin-top:15px;">
+                            <p class="text-muted" style="font-size:10px;">مجموع کل کارکرد مجموعه : <span class="description-text text-aqua">@string.Format("{0:#,0}", Model.doctorWorkLog.Center_Total_RealPrice)</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-xs-6">
+                    <div class="description-block">
+                        <span class="description-percentage text-blue"><i class=""></i>@Model.doctorWorkLog.Center_Total_Price_Percent.ToString().Replace("/", ".")%</span>
+                        <div class="progress progress-xs">
+                            <div class="progress-bar progress-bar-blue" style="width: @Model.doctorWorkLog.Center_Total_Price_Percent.ToString().Replace("/",".")%"></div>
+                        </div>
+                        <span class="description-text text-blue">درصد از کل هزینه درمان</span>
+                        <div style="margin-top:15px;">
+                            <p class="text-muted" style="font-size:10px;">مجموع کل هزینه درمان مجموعه : <span class="description-text text-aqua">@string.Format("{0:#,0}", Model.doctorWorkLog.Center_Total_Price)</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-12 card card-danger card-outline">
+            <div class="card-header">
+                <i class="fa fa-bar-chart-o"></i>
+                <h3 class="card-title">کارکرد پزشک</h3>
+                <div class="card-tools pull-right">
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-6 col-md-4 text-center">
+                        <div class="description-block">
+                            <span class="description-percentage text-green"><i class=""></i> </span>
+                            <h5 class="description-header" style="margin-bottom: 14px;">@Model.doctorWorkLog.Total_PercentOfTotalPriceStr</h5>
+                            <span class="description-text text-yellow">سهم کارکرد</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-4 text-center">
+                        <div class="description-block border-right">
+                            <span class="description-percentage text-red"><i class=""></i> </span>
+                            <h5 class="description-header" style="margin-bottom: 14px;">@Model.doctorWorkLog.Total_NetShareStr</h5>
+                            <span class="description-text text-blue">سهم کارکرد با احتساب تخفیف</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-4 text-center">
+                        <div class="description-block border-right">
+                            <span class="description-percentage text-"><i class=""></i> </span>
+                            <h5 class="description-header" style="margin-bottom: 14px;direction: ltr;">@string.Format("{0:#,0}", ((Model.doctorWorkLog.NetShare_P + Model.doctorWorkLog.NetShare_F) - Model.doctorWorkLog.TotalRecevied))</h5>
+                            <span class="description-text text-green">مانده</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 card card-danger card-outline">
+            <div class="card-header">
+                <i class="fa fa-bar-chart-o"></i>
+
+                <h3 class="card-title">دریافتی از بیمار</h3>
+
+                <div class="card-tools pull-right">
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-xs-6 col-md-4 text-center">
+                        <div class="description-block">
+                            <span class="description-percentage text-green"><i class=""></i> </span>
+                            <h5 class="description-header" style="margin-bottom: 14px;">@string.Format("{0:#,0}", Model.doctorWorkLog.Total_MatabReceived)</h5>
+                            <span class="description-text text-yellow">دریافتی مطب</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-4 text-center">
+                        <div class="description-block border-right">
+                            <span class="description-percentage text-red"><i class=""></i> </span>
+                            <h5 class="description-header" style="margin-bottom: 14px;">@string.Format("{0:#,0}", Model.doctorWorkLog.Percent_of_Total_MatabReceived)</h5>
+                            <span class="description-text text-blue">سهم کارکرد از دریافتی مطب</span>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-4 text-center">
+                        <div class="description-block border-right">
+                            <span class="description-percentage text-"><i class=""></i> </span>
+                            <h5 class="description-header" style="margin-bottom: 14px;direction: ltr;">@string.Format("{0:#,0}", (Model.doctorWorkLog.Percent_of_Total_MatabReceived - Model.doctorWorkLog.TotalRecevied))</h5>
+                            <span class="description-text text-green">مانده</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 card card-danger card-outline">
+            <div class="card-header">
+                <h3 class="card-title">کارکرد بر اساس سرفصل درمان</h3>
+            </div>
+            <div class="card-body no-padding">
+                <div class="col-md-9" style="border-left: 1px solid hsl(0, 0%, 90%);border-top: 1px solid #f3f3f3;padding-bottom:20px;">
+                    <table class="table table-condensed table-bordered" style="margin-top: -1px;">
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>عنوان</th>
+                            <th style="width: 60px">تعداد</th>
+                            <th style="width: 120px">مجموع هزینه</th>
+                            <th style="width: 110px">تخفیف</th>
+                            <th style="width: 110px">سهم بیمه</th>
+                            <th style="width: 120px">مبلغ کارکرد</th>
+                            <th>میزان</th>
+                        </tr>
+                        @if (Model != null && Model.ReportPerDoingCode != null && Model.ReportPerDoingCode.Count() > 0)
+                        {
+                            var index = 1;
+                            var indexColor = 0;
+                            foreach (var item in Model.ReportPerDoingCode)
+                            {
+                                if (indexColor > 3) { indexColor = 0; }
+                                var _color_percent = _colors[indexColor];
+                                var _color_spanback = _color_span[indexColor];
+                                <tr>
+                                    <td class="text-aqua">@index.</td>
+                                    <td>@item.DoingCodeStr</td>
+                                    <td><span class="">@string.Format("{0:#,0}", item.Count)</span></td>
+                                    <td><span class="">@string.Format("{0:#,0}", item.RealPrice)</span></td>
+                                    <td style="direction: ltr; text-align: end;"><span class="">@string.Format("{0:#,0}", item.Discount)</span></td>
+                                    <td><span class="">@string.Format("{0:#,0}", item.InsurancePrice)</span></td>
+                                    <td><span class="">@string.Format("{0:#,0}", item.Price)</span></td>
+                                    <td style="text-align:center;">
+                                        <span class="description-percentage text-@_color_percent" style="font-size: 10px;"><i class=""></i>@item.RealPrice_Percent.ToString().Replace("/", ".")%</span>
+                                        <div class="progress progress-xs">
+                                            <div class="progress-bar progress-bar-@_color_percent" style="width: @item.RealPrice_Percent.ToString().Replace("/",".")%"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                index++;
+                                indexColor++;
+                            }
+                            <tr>
+                                <td>#&nbsp;&nbsp;مجموع</td>
+                                <td></td>
+                                <td><span class="description-text text-red">@string.Format("{0:#,0}", Model.ReportPerDoingCode.Sum(x => x.Count))</span></td>
+                                <td><span class="description-text text-green">@string.Format("{0:#,0}", Model.ReportPerDoingCode.Sum(x => x.RealPrice))</span></td>
+                                <td><span class="description-text text-green">@string.Format("{0:#,0}", Model.ReportPerDoingCode.Sum(x => x.Discount))</span></td>
+                                <td><span class="description-text text-green">@string.Format("{0:#,0}", Model.ReportPerDoingCode.Sum(x => x.InsurancePrice))</span></td>
+                                <td><span class="description-text text-green">@string.Format("{0:#,0}", Model.ReportPerDoingCode.Sum(x => x.Price))</span></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+                <div class="col-md-3" style="border-top: 1px solid #f3f3f3;padding-top:20px;">
+                    @if (Model != null && Model.ReportPerDoingCode != null && Model.ReportPerDoingCode.Count() > 0)
+                    {
+                        <div class="chart-responsive">
+                            <canvas id="pieChart" height="310"></canvas>
+                        </div>
+                        var indexColor = 0;
+                        <ul class="chart-legend clearfix" style="margin-right:25%;">
+                            @foreach (var item in Model.ReportPerDoingCode)
+                            {
+                                if (indexColor > 3) { indexColor = 0; }
+                                var _color_percent = _colors[indexColor];
+                                <li><i class="fa fa-circle-o text-@_color_percent"></i>&nbsp; @item.DoingCodeStr - <span class="description-percentage text-@_color_percent" style="font-size: 10px;"><i class=""></i>@item.RealPrice_Percent.ToString().Replace("/", ".")%</span></li>
+                                indexColor++;
+                            }
+                        </ul>
+                    }
+                </div>
+
+            </div>
+            <!-- /.card-body -->
+        </div>
+
+
+        <div class="col-md-12 card card-danger card-outline">
+            <div class="card-header">
+                <h3 class="card-title">کارکرد پزشک بر اساس شرح درمان</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body no-padding">
+                <table class="table table-condensed">
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th style="width: 200px">سرفصل درمان</th>
+                        <th style="width: 300px">شرح درمان</th>
+                        <th style="width: 80px">تعداد</th>
+                        <th style="width: 150px">مبلغ کارکرد</th>
+                        <th>پیشرفت</th>
+                        <th style="width: 60px">درصد</th>
+                    </tr>
+
+                    @if (Model != null && Model.ReportPerDoingChildCode != null && Model.ReportPerDoingChildCode.Count() > 0)
+                    {
+                        var index = 1;
+                        var indexColor = 0;
+                        foreach (var item in Model.ReportPerDoingChildCode)
+                        {
+                            if (indexColor > 3) { indexColor = 0; }
+                            var _color_percent = _colors[indexColor];
+                            var _color_spanback = _color_span[indexColor];
+                            <tr>
+                                <td>@index.</td>
+                                <td>@item.DoingCodeStr</td>
+                                <td>@item.DoingChildCodeStr</td>
+                                <td><span class="">@string.Format("{0:#,0}", item.Count)</span></td>
+                                <td><span class="">@string.Format("{0:#,0}", item.RealPrice)</span></td>
+                                <td>
+                                    <div class="progress progress-xs">
+                                        <div class="progress-bar progress-bar-@_color_percent" style="width: @item.RealPrice_Percent.ToString().Replace("/",".")%"></div>
+                                    </div>
+                                </td>
+                                <td><span class="badge bg-@_color_spanback">@item.RealPrice_Percent.ToString().Replace("/", ".")%</span></td>
+                            </tr>
+                            index++;
+                            indexColor++;
+                        }
+                    }
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+
+
+    </div>
+</section>
+
+
+<script>
+    // -------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
+    //var pieChart = new Chart(pieChartCanvas);
+
+    var colors = ["#ec2c2c", "#3c763d", "#f39c12", "#a94442" ];
+    var PieData = [];
+
+
+    var _labels = [];
+    var _data = [];
+    var _backgroundColor = [];
+
+
+
+    var model = '@Html.Raw(Json.Encode(Model.ReportPerDoingCode))';
+    var data = JSON.parse(model);
+
+    var _i_color = 0;
+    var i = 0;
+    for (i = 0; i < data.length; i++) {
+        if (_i_color > 3) { _i_color = 0; }
+        //var myJSON = '{value: ' + data[i].RealPrice_Percent + ', color: \'' + colors[_i_color] + '\', highlight: \'' + colors[_i_color] + '\', label: \'' + data[i].DoingCodeStr + '\' }';
+        //PieData_1.push(myJSON);
+
+        _backgroundColor.push(colors[_i_color]);
+        _labels.push(data[i].DoingCodeStr);
+        _data.push(data[i].RealPrice_Percent);
+
+        //PieData.push({
+        //    value: data[i].RealPrice_Percent,
+        //    color: colors[_i_color],
+        //    highlight: colors[_i_color],
+        //    label: data[i].DoingCodeStr
+        //});
+
+        _i_color++;
+    }
+    var donutData3 = {
+        labels: _labels,
+        datasets: [
+            {
+                data: _data,
+                backgroundColor: _backgroundColor,
+            }
+        ]
+    }
+
+
+
+    var pieOptions = {
+        // Boolean - Whether we should show a stroke on each segment
+        segmentShowStroke: true,
+        // String - The colour of each segment stroke
+        segmentStrokeColor: '#fff',
+        // Number - The width of each segment stroke
+        segmentStrokeWidth: 1,
+        // Number - The percentage of the chart that we cut out of the middle
+        percentageInnerCutout: 50, // This is 0 for Pie charts
+        // Number - Amount of animation steps
+        animationSteps: 100,
+        // String - Animation easing effect
+        animationEasing: 'easeOutBounce',
+        // Boolean - Whether we animate the rotation of the Doughnut
+        animateRotate: true,
+        // Boolean - Whether we animate scaling the Doughnut from the centre
+        animateScale: false,
+        // Boolean - whether to make the chart responsive to window resizing
+        responsive: true,
+        // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+        maintainAspectRatio: false,
+        // String - A legend template
+        legendTemplate: '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
+        // String - A tooltip template
+        tooltipTemplate: '<%=value %> <%=label%>'
+    };
+    var pieOptions = {
+        maintainAspectRatio: false,
+        responsive: true,
+        onClick: function (res, conf) {}
+    }
+    // Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    //pieChart.Doughnut(PieData, pieOptions);
+    var donutData2 = {
+        labels: [
+            'Chrome',
+            'IE',
+            'FireFox',
+            'Safari',
+            'Opera',
+            'Navigator',
+        ],
+        datasets: [
+            {
+                data: [700, 500, 400, 600, 300, 100],
+                backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+            }
+        ]
+    }
+    new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: donutData3,
+        options: pieOptions
+    })
+</script>

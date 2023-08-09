@@ -1,0 +1,31 @@
+﻿
+
+@model  ViewModel.UserManagement.UserVm
+
+
+
+
+
+<form id="SalamatGetTwoStepVerificationCode" class="form-horizontal">
+    <div class="center-block form-horizontal">
+
+        @Html.HiddenFor(x => x.Id)
+
+        <div class="col-md-12">
+            <div class="col-md-6">
+                @Html.EditorFor(m => m.OTP)
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,207 @@
+﻿@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@using Utility.HtmlHelpers
+@model  ViewModel.ReportParameter
+
+@{
+    ViewBag.Title = "صورت وضعیت طرف های حساب";
+    Layout = Utility.Utitlies.VaribleForName.AddressLayoutMasterNew;
+    //Create By Mobin
+    var codeAssistant = "0" + ((int)Utility.PublicEnum.CodingEnum.Assistant).ToString();
+    //Create By Mobin
+    var companyCode = "0" + ((int)Utility.PublicEnum.CodingEnum.Company).ToString();
+    //SalaryDoctor
+    var salaryDoctor = "0" + ((int)Utility.PublicEnum.CodingEnum.DoctorsRights).ToString();
+    //SalaryDasyar
+    var salaryDasyar = "0" + ((int)Utility.PublicEnum.CodingEnum.StaffSalaries).ToString();
+}
+
+
+
+@*@HtmlExtenstions.TitleAndSiteMap("صورت وضعیت طرف های حساب", "گزارشات", "گزارشات حسابداری", "صورت وضعیت طرف های حساب")*@
+@using (Html.BsPanelWithCloseAndMinimize("صورت وضعیت طرف های حساب"))
+{
+    <form class="row form-horizontal" id="reportParameter">
+        <div class="col-md-12">
+
+
+            @using (Html.CreateDivForBootstrap())
+            {
+                using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "5"))
+                {
+                    @Html.EditorFor(m => m.FromDate)
+                }
+                using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "5"))
+                {
+                    @Html.EditorFor(m => m.ToDate)
+                }
+            }
+            @using (Html.CreateDivForBootstrap())
+            {
+                using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "5"))
+                {
+                    @Html.EditorFor(m => m.costPersonID)
+                }
+                using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "5"))
+                {
+                    <div>
+
+                        <input id="rbCompany" name="costInCode" type="radio" value="@companyCode" checked="checked">
+                        <label for="rbCompany">@Resources.Md.companies</label>
+                        &nbsp;&nbsp;
+                        <input id="rbDoc" name="costInCode" type="radio" value="@salaryDoctor">
+                        <label for="rbDoc">@Resources.Md.insuranceEmployeeID</label>
+                        &nbsp;&nbsp;
+                        <input id="rbPersonel" name="costInCode" type="radio" value="@salaryDasyar">
+                        <label for="rbPersonel">@Resources.Md.Personnel</label>
+
+                    </div>
+                }
+            }
+
+        </div>
+
+
+    </form>
+    @Html.Partial("ShowReportButtonPartial")
+}
+
+
+@Html.Partial("P_Report_Area", viewData: new ViewDataDictionary {
+{ Utility.PublicEnum.EnumForReportAreaView.UrlReport.ToString(), "GetCompanyAccount" },
+{ Utility.PublicEnum.EnumForReportAreaView.ShowScriptFromDateAndToDate.ToString(), true },
+{ Utility.PublicEnum.EnumForReportAreaView.SetConfigureDateComponent.ToString(), true },
+{ Utility.PublicEnum.EnumForReportAreaView.SetAttributeForDivReportView.ToString(), true },
+{ Utility.PublicEnum.EnumForReportAreaView.ShowNotification.ToString(), true } })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<style>
+        .stiMenuParent {
+            overflow: hidden;
+            min-width: 100px;
+            position: absolute;
+        }
+    </style>
+
+    <br />
+    <div class="col-md-12 center-block">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green-haze">
+                    <span class="caption-subject bold uppercase">صورت وضعیت طرف های حساب</span>
+                </div>
+            </div>
+            <br />
+            <div class="portlet-body">
+                <form class="row" id="reportParameter">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <br />
+                            <br />
+
+                        </div>
+
+                        <div class="col-md-4">
+                        </div>
+
+
+                        <div class="col-md-8" style="margin:10px;"><hr style="border:solid;border-color:#f3f3f3;margin:0px auto;" /></div>
+                        <div class="col-md-8">
+                            <div class="col-md-2" style="float:left;">
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="ReportArea" style="clear: both;direction: ltr">
+
+    </div>*@
+
+<script type="text/javascript">
+    @*$(document).ready(function () {
+        $("#FromDate").val($("#FromDateStr").val());
+        $("#ToDate").val($("#ToDateStr").val());
+    });
+
+    $(function () {
+        $("#FromDateStr").change(function () {
+
+            $("#FromDate").val(this.value);
+        });
+        $("#ToDateStr").change(function () {
+
+            $("#ToDate").val(this.value);
+        });
+    });
+
+    function ShowReport() {
+
+        $.ajax({
+            type: "Get",
+            url: "@Url.Action("GetCompanyAccount", "StaticReport",new {Arae="Report"})",
+            data: $("#reportParameter").serialize(),
+            beforeSend: function () {
+                showWait();
+            },
+            success: function (data, textStatus, request) {
+                $("#ReportArea").html(data);
+            },
+            complete: function () {
+                hideWait();
+            }
+        });
+        return false;
+    }*@
+
+
+    $("#rbDoc").change(function () {
+
+        FillCity("0120202", "costPersonID");
+    });
+
+    $("#rbPersonel").change(function () {
+
+        FillCity("@codeAssistant", "costPersonID");
+    });
+
+    $("#rbCompany").change(function () {
+
+        FillCity("015010302", "costPersonID");
+    });
+
+    function FillCity(id, selectId, selectedvalue) {
+        if (id !== "" && id != null) {
+            var data = { parentId: id, selected: selectedvalue };
+            FillSelectByAjax("@Url.Action("GetCompanyAccountListName")", selectId, data, true, true);
+
+            document.getElementById(selectId).value = selectedvalue;
+        }
+    }
+
+</script>

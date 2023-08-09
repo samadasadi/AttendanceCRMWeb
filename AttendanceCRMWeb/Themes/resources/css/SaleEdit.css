@@ -1,0 +1,1128 @@
+﻿
+.SaleTitleEdit {
+    background-image: unset !important;
+    margin: 0px !important;
+    background-color: #fff !important;
+    border-bottom: solid 1px #E5E5E5;
+    position: relative;
+    min-height: 120px;
+    padding: 24px !important;
+}
+
+.divSaleMainEdit {
+    background-color: #f7f7f7;
+    padding: 18px 16px 14px 14px;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border-color: #f0f2f7;
+    height: 568px;
+}
+
+[dir=ltr] .divSaleMainEdit {
+    padding-left: 0;
+    padding-right: 15px;
+}
+
+.actionsContent {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+    height: 100%;
+    min-height: 48px;
+}
+
+.actions {
+    float: left;
+    text-align: left;
+    display: block;
+    white-space: nowrap;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+[dir=ltr] .actions {
+    float: right;
+    text-align: right;
+}
+
+.actions .stateActions {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.stateActions input {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.descriptionHead {
+    float: right;
+    display: flex;
+}
+
+[dir=ltr] .descriptionHead {
+    float: left;
+}
+
+.descriptionHead span {
+    display: inline;
+    color: #26292c;
+    word-break: break-word;
+    padding-top: 8px;
+}
+
+[dir=ltr] .descriptionHead span {
+    padding-top: 0;
+}
+
+.descriptionHead span .title {
+    word-wrap: break-word;
+    word-break: normal;
+    line-height: 32px;
+    font-size: 23px;
+    color: #26292c;
+}
+
+.valueRelatedItemsContent {
+    display: inline-block;
+    padding-top: 13px;
+    width: 100%;
+    height: 100%;
+    clear: both;
+}
+
+    .valueRelatedItemsContent * {
+        display: inline-block;
+        font-size: 12.5px;
+    }
+
+    .valueRelatedItemsContent .icon-user {
+        padding-right: 15px;
+    }
+
+[dir=ltr] .valueRelatedItemsContent .icon-user {
+    padding-left: 15px;
+}
+
+.SaleEditPrice {
+    padding-right: 1px;
+    padding-left: 4px;
+    font-family: Tahoma_faNum;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 18px;
+    line-height: 20px;
+    vertical-align: bottom;
+    color: #26292c;
+    cursor: default;
+}
+
+[dir=ltr] .SaleEditPrice {
+    padding-right: 4px;
+    padding-left: 1px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+}
+
+.SaleEditProduct {
+    padding: 0 10px;
+    color: #317ae2;
+    cursor: pointer;
+    float: left;
+    display: none;
+}
+
+[dir=rtl] .SaleEditProduct {
+    font-family: Tahoma_faNum;
+}
+
+[dir=ltr] .SaleEditProduct {
+    float: right;
+}
+
+.SaleEditUSer {
+    cursor: default;
+    padding: 0 4px;
+}
+
+/*---------------------------------------------------------------------*/
+#EditSaleStage {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    flex-flow: row nowrap;
+    border-radius: 2px;
+    table-layout: fixed;
+    height: 24px;
+    width: 100%;
+    min-width: 240px;
+    box-sizing: border-box;
+    margin-top: 23px;
+}
+
+.EditSaleSolt {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: #e5e5e5;
+    color: #747678;
+    cursor: pointer;
+    font-size: 13px;
+    text-align: center;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    margin-right: -6px;
+    margin-left: 0;
+    -webkit-clip-path: polygon(calc(100% - 2px) 0,calc(100% - 8px) 50%,calc(100% - 2px) 100%,6px 100%,0 50%,6px 0);
+    clip-path: polygon(calc(100% - 2px) 0,calc(100% - 8px) 50%,calc(100% - 2px) 100%,6px 100%,0 50%,6px 0);
+}
+
+[dir=ltr] .EditSaleSolt {
+    margin-left: -6px;
+    margin-right: 0;
+    -webkit-clip-path: polygon(calc(100% - 6px) 0,100% 50%,calc(100% - 6px) 100%,2px 100%,8px 50%,2px 0);
+    clip-path: polygon(calc(100% - 6px) 0,100% 50%,calc(100% - 6px) 100%,2px 100%,8px 50%,2px 0);
+}
+
+.EditSaleSolt:first-of-type {
+    margin-right: 0;
+    border-radius: 0 2px 2px 0;
+    -webkit-clip-path: polygon(100% 0,100% 50%,100% 100%,6px 100%,0 50%,6px 0);
+    clip-path: polygon(100% 0,100% 50%,100% 100%,6px 100%,0 50%,6px 0);
+}
+
+[dir=ltr] .EditSaleSolt:first-of-type {
+    margin-left: 0;
+    border-radius: 2px 0 0 2px;
+    -webkit-clip-path: polygon(0 0,calc(100% - 6px) 0,100% 50%,calc(100% - 6px) 100%,0 100%);
+    clip-path: polygon(0 0,calc(100% - 6px) 0,100% 50%,calc(100% - 6px) 100%,0 100%);
+}
+
+.EditSaleSolt:last-of-type {
+    border-radius: 2px 0 0 2px;
+    -webkit-clip-path: polygon(0 0,calc(100% - 2px) 0,calc(100% - 8px) 50%,calc(100% - 2px) 100%, 0 100%);
+    clip-path: polygon(0 0,calc(100% - 2px) 0,calc(100% - 8px) 50%,calc(100% - 2px) 100%, 0 100%);
+}
+
+[dir=ltr] .EditSaleSolt:last-of-type {
+    border-radius: 0 2px 2px 0;
+    -webkit-clip-path: polygon(100% 0,100% 100%,2px 100%,8px 50%,2px 0);
+    clip-path: polygon(100% 0,100% 100%,2px 100%,8px 50%,2px 0);
+}
+
+.EditSaleSolt:hover {
+    background-color: #dbe1f5;
+}
+
+.EditSaleSolt.EndSuccess:hover {
+    background-color: #08a7421c;
+}
+
+.EditSaleSolt.EndFail:hover {
+    background-color: #f443361f;
+}
+
+.viewMode .EditSaleSolt:hover {
+    background-color: #e7e7e7;
+}
+
+.EditSaleSolt:active {
+    background-color: #e7e7e7;
+}
+
+.EditSaleSolt.Selected {
+    background-color: #303F9F;
+    color: #fff;
+}
+
+    .EditSaleSolt.Selected:hover {
+        background-color: #566ce6;
+    }
+
+    .EditSaleSolt.Selected.Success {
+        background-color: #08a742;
+        color: #fff;
+    }
+
+        .EditSaleSolt.Selected.Success:hover {
+            background-color: #1cae51;
+        }
+
+    .EditSaleSolt.Selected.Fail {
+        background-color: #f44336;
+        color: #fff;
+    }
+
+        .EditSaleSolt.Selected.Fail:hover {
+            background-color: red;
+        }
+
+/*-------------------------------------------------------------------------*/
+
+.divSaleMainEdit > div {
+    display: inline-block;
+    vertical-align: top;
+    height: 565px;
+    overflow-y: auto;
+}
+
+.divSaleMainEdit .SaleEditCustomerInfo {
+    width: 27%;
+    background-color: #fff;
+}
+
+.divSaleMainEdit .SaleEditSpliter {
+    width: 11px;
+}
+
+.divSaleMainEdit .SaleEditTabHolder {
+    width: calc(73% - 21px);
+    background-color: #fff;
+}
+
+.divSaleMainEdit #EditSaleTab {
+    min-width: 766px;
+}
+
+.SaleEditCustomerHead span {
+    font-size: 17px;
+    display: inline-block;
+    padding: 20px 20px 16px 0;
+}
+
+.SaleEditCustomerHead i {
+    float: left;
+    padding: 23px;
+    cursor: pointer;
+}
+
+[dir=ltr] .SaleEditCustomerHead span {
+    padding: 20px 0 16px 20px;
+}
+
+[dir=ltr] .SaleEditCustomerHead i {
+    float: right;
+}
+
+.descriptionHead .icon-customer {
+    display: inline;
+    font-size: 48px;
+    padding-left: 10px;
+}
+
+.SaleEditCustomerHead {
+    border-bottom: 1px solid #eee;
+}
+
+[dir=ltr] .descriptionHead .icon-customer {
+    padding-right: 10px;
+    padding-left: 0;
+}
+
+.SaleEditCustFixDiv {
+    padding: 0 20px 20px 20px;
+}
+
+.SaleEditCustVarDiv {
+    padding: 20px 20px 0 20px;
+}
+
+.SaleEditCustFixDiv .spinner {
+    margin: 10px 41% 10px 41%;
+}
+
+.ShowCustInfoRow, .EditCustInfoRow, .EditSaleInfoRow {
+    padding-bottom: 5px;
+}
+
+.LblCustInfoEdit, .LblSaleInfoEdit {
+    display: block;
+    width: 99%;
+    color: rgba(38,41,44,.64);
+    font-size: 11.4px;
+    padding: 2px;
+    line-height: 27px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.TxtCustInfoEdit:not(.ravesh-multi-selector), .TxtSaleInfoEdit:not(.ravesh-multi-selector) {
+    width: 252px;
+    border: 1px solid #cbcccd;
+    border-radius: 3px;
+    padding: 5px 7px;
+    color: #26292c;
+    box-sizing: border-box;
+    line-height: 20px;
+    font-size: 12px;
+}
+
+.TxtCustInfoEdit:disabled, .TxtSaleInfoEdit:disabled {
+    background-color: #f7f7f7;
+    border-color: #cbcccd;
+    cursor: not-allowed;
+    box-shadow: inset 0 1px 2px #eee;
+}
+
+[dir=rtl] .TxtCustInfoEdit, [dir=rtl] .TxtSaleInfoEdit {
+    font-family: Tahoma_faNum;
+}
+
+.DrdLeadSourceType .TxtCustInfoEdit {
+    padding: 0 5px 5px;
+    min-height: 32px;
+}
+
+.SaleCustomerPic {
+    border-width: 0;
+    width: 48px;
+    height: 46px;
+    margin-left: 8px;
+    border-radius: 45px;
+    border: 0;
+    text-decoration: underline;
+}
+
+[dir=ltr] .SaleCustomerPic {
+    margin-right: 8px;
+    margin-left: 0;
+}
+
+#EditSaleWf {
+    color: #888;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 5px 1px;
+    direction: ltr;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 127px;
+    min-width: 127px;
+    direction: rtl;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+[dir=ltr] #EditSaleWf {
+    direction: ltr;
+}
+
+#EditSaleWf i {
+    padding: 0 10px;
+    color: #000;
+    font-size: 18px;
+    color: #317ae2;
+}
+
+/*Product-----------------------------------------------------------------------------*/
+
+#dialogFormEditSale .field {
+    border-bottom: 0 !important;
+}
+
+#hierarchybreadcrumb2EditSale {
+    margin-top: 6px;
+    padding-top: 9px;
+    width: 157px;
+    font-size: 11.4px;
+    font-family: Tahoma !important;
+}
+
+    #hierarchybreadcrumb2EditSale span:last-child {
+        font-size: 11.4px;
+        padding-top: 4px;
+    }
+
+    #hierarchybreadcrumb2EditSale .ui-icon-triangle-1-s {
+        font-size: 16px;
+        padding-top: 3px;
+    }
+
+.EditSaleLabel16 {
+    margin-top: 9px !important;
+}
+
+#EditSaleLabel3ss {
+    margin-top: 3px;
+}
+
+#dialogFormEditSale .buttons {
+    padding-right: 105px;
+    padding-left: 0px;
+}
+
+[dir=ltr] #dialogFormEditSale .buttons {
+    padding-left: 105px;
+    padding-right: 0px;
+}
+
+.DivProductItemEditSale button {
+    text-align: center;
+    font-size: 11.4px;
+    margin: 1px 0;
+    font-weight: normal;
+}
+
+#DrdStoreItemEditSale {
+    width: 194px;
+    font-size: 11.4px;
+}
+
+#DrdProductItemEditSale {
+    width: 193px;
+}
+
+#TxtPrice_bItemAddSale {
+    width: 80px;
+    font-size: 11.4px;
+}
+
+#EditSaleLabel21 {
+    margin-top: 5px;
+}
+
+#DrdOtpriceItemEditSale {
+    width: 193px;
+    margin-top: 5px;
+    font-size: 11.4px;
+}
+
+#EditSaleLabel22 {
+    margin-top: 3px;
+}
+
+#TxtPrice_sItemEditSale {
+    width: 177px;
+    margin: 5px 0 0 0;
+    font-size: 11.8px;
+    text-align: center;
+    background: #fff;
+    display: inline-block;
+    direction: ltr;
+}
+
+[dir=rtl] #TxtPrice_sItemEditSale {
+    font-family: Tahoma_faNum;
+}
+
+#TxtCountItemEditSale {
+    width: 177px;
+    font-size: 11.8px;
+    text-align: center;
+    background: #fff;
+    display: inline-block;
+    direction: ltr;
+}
+
+[dir=rtl] #TxtCountItemEditSale {
+    font-family: Tahoma_faNum;
+}
+
+#dialogFormEditSale .label span {
+    color: rgba(38,41,44,.64);
+}
+
+.EditSalePriceUnit, .EditSaleItemUnit {
+    display: inline-block;
+    font-size: 10px;
+    color: rgba(38,41,44,.64);
+    padding: 14px 10px 0 10px;
+}
+
+.EditSaleItemUnit {
+    padding-top: 10px;
+}
+
+.EditSaleDivTableProduct {
+    max-width: 650px;
+    position: relative;
+    border: solid 1px #C4C4C4;
+    font-size: 11px;
+    color: rgba(38,41,44,.64);
+    box-shadow: 0 0 5px #D5D5D5;
+    -moz-box-shadow: 0 0 5px #D5D5D5;
+    -webkit-box-shadow: 0 0 5px #D5D5D5;
+}
+
+[dir=rtl] .EditSaleDivTableProduct {
+    font-family: tahoma_fanum;
+}
+
+[dir=ltr] .EditSaleDivTableProduct {
+    margin: 10px 0 5px 36px;
+}
+
+.EditSaleDivTableProduct table {
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    .EditSaleDivTableProduct table tr, .EditSaleDivTableProduct table td.absolutetd {
+        background-color: White;
+        background-image: -webkit-linear-gradient(top,white,#F9F9F9);
+        background-image: -moz-linear-gradient(top,white,#F9F9F9);
+    }
+
+        .EditSaleDivTableProduct table tr:hover, .EditSaleDivTableProduct table tr.alternate:hover, .EditSaleDivTableProduct table td.absolutetd:hover {
+            background-image: none;
+            background-color: #ddd !important;
+            -webkit-transition: background-color 300ms linear;
+            -moz-transition: background-color 300ms linear;
+            -ms-transition: background-color 300ms linear;
+            -o-transition: background-color 300ms linear;
+            transition: background-color 300ms linear;
+        }
+
+    .EditSaleDivTableProduct table td {
+        border-right: solid 1px #EEE;
+        padding: 0 5px;
+        line-height: 20px;
+    }
+
+        .EditSaleDivTableProduct table th.center, .EditSaleDivTableProduct table td.center {
+            text-align: center;
+        }
+
+    .EditSaleDivTableProduct table th {
+        background-color: #E5E5E5 !important;
+        color: #000 !important;
+        height: 30px;
+        padding: 0 5px !important;
+        font-weight: normal;
+        background: #eeeeee;
+        border-right: 1px solid #cdcdcd;
+        border-bottom: 1px solid #cdcdcd;
+        user-select: none;
+    }
+
+    .EditSaleDivTableProduct table td {
+        padding: 5px;
+        user-select: none;
+    }
+
+.ProduvtDivEditSale .icon-cart-plus {
+    color: #747678;
+    font-size: 22px;
+}
+
+.ProduvtDivEditSale .field {
+    border-bottom: 0;
+}
+
+#tblDocItemEditSale .Crm-icon {
+    display: block;
+    cursor: pointer;
+}
+
+#LnkAddProductRowEdit {
+    float: right;
+    color: #317ae2;
+    font-size: 12px;
+    padding: 25px 5px;
+    line-height: 22px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+[dir=ltr] #LnkAddProductRowEdit {
+    float: left;
+}
+
+/*Tabs-----------------------------------------------------------------------------*/
+
+#EditSaleTab h5 {
+    margin: 0 !important;
+    padding: 0 15px !important;
+    border-bottom: 1px solid #eee !important;
+}
+
+#EditSaleTab .tab-item {
+    font-size: 11.5px;
+    cursor: pointer;
+    transition: background 300ms;
+    line-height: 50px;
+    padding: 3px 25px 0 25px;
+    display: table-cell;
+    position: relative;
+    user-select: none;
+    border: 0;
+    color: #6a6a6a;
+    font-weight: normal;
+}
+
+#EditSaleTab .active {
+    cursor: default !important;
+    background-color: #fff !important;
+}
+
+#EditSaleTab .tab-item.active > div {
+    background-color: #4CAF50;
+}
+
+#EditSaleTab .tab-item > div {
+    height: 4px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: inherit;
+}
+
+/*---------------------------------------------------------------------------------*/
+
+#box-EditSaleInfo > .EditSaleInfoCol {
+    display: inline-block;
+    vertical-align: top;
+    min-height: 295px;
+    max-height: 810px;
+    width: 380px;
+    padding: 20px 15px 0 15px;
+    box-sizing: border-box;
+    border: 0;
+}
+
+    #box-EditSaleInfo > .EditSaleInfoCol:first-child {
+        width: 390px;
+    }
+
+    #box-EditSaleInfo > .EditSaleInfoCol:nth-child(2) {
+        width: 370px;
+    }
+
+#TxtEditSaleForcastPrice, #TxtEditSaleForcastDate, #TxtEditSaleFinalPrice, #TxtEditSaleFinalDate {
+    text-align: left;
+    direction: ltr;
+}
+
+    #TxtEditSaleForcastPrice.error, #TxtEditSaleForcastDate.error {
+        border: solid 1px #F44336 !important;
+    }
+
+.DrdExtendedpropertis .TxtSaleInfoEdit, .DrdLeadGenration .TxtSaleInfoEdit {
+    padding: 0 5px 5px;
+    min-height: 32px;
+    border-radius: 3px;
+}
+
+.TxtIntroductionCust {
+    cursor: pointer !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
+}
+
+/* FileUploder-----------------------------------------------------------------------------------------*/
+
+#box-EditSaleFile {
+    padding: 0 10px 10px 10px;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+    min-height: 330px;
+}
+
+    #box-EditSaleFile .ravesh-file-upload {
+        background: white;
+        border: solid 1px #e1e1e1;
+        box-sizing: border-box;
+        overflow: hidden;
+        text-align: center;
+        padding: 0 7px 7px;
+        padding-bottom: 7px;
+        height: auto;
+        margin-top: 10px;
+    }
+
+        #box-EditSaleFile .ravesh-file-upload div:not(.spinner) {
+            background: url(../../../pages/formbuilder/images/icon-upload.png) 0px 0px no-repeat;
+            background-size: 35px 35px;
+            width: 35px;
+            height: 35px;
+            margin: 5px auto;
+            opacity: 0.3;
+        }
+
+        #box-EditSaleFile .ravesh-file-upload img {
+            width: 100%;
+            max-width: 600px;
+            margin: 1px auto 0 auto;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            user-drag: none;
+            -webkit-touch-callout: none;
+            display: block;
+        }
+
+        #box-EditSaleFile .ravesh-file-upload .ravesh-button {
+            display: inline-block;
+            margin: 7px 0 0 0 !important;
+        }
+
+        #box-EditSaleFile .ravesh-file-upload .drag-here {
+            color: inherit;
+        }
+
+        #box-EditSaleFile .ravesh-file-upload a {
+            text-decoration: underline;
+            color: inherit;
+        }
+
+        #box-EditSaleFile .ravesh-file-upload:not(.disabled).active div {
+            opacity: 0.9;
+            transform: scale(1.1);
+        }
+
+        #box-EditSaleFile .ravesh-file-upload:not(.disabled).active {
+            border-color: #03A9F4;
+            background: #fbfbfb;
+        }
+
+        #box-EditSaleFile .ravesh-file-upload.disabled {
+            background: #f1f1f1;
+            border: solid 1px #ccc;
+        }
+
+            #box-EditSaleFile .ravesh-file-upload.disabled a {
+                color: #aaa;
+                cursor: default;
+                text-decoration: none;
+            }
+
+            #box-EditSaleFile .ravesh-file-upload.disabled .drag-here {
+                display: none;
+            }
+
+    #box-EditSaleFile .SaleAddAttchment {
+        background-color: #fff;
+        padding: 7px 0 6px 0;
+        margin-top: 7px;
+        border-radius: 4px;
+        width: 150px;
+    }
+
+        #box-EditSaleFile .SaleAddAttchment > i {
+            color: #fff;
+            font-size: 18px;
+        }
+
+    #box-EditSaleFile:hover .SaleAddAttchment > i {
+        color: #666;
+    }
+
+    #box-EditSaleFile .SaleAddAttchment:hover {
+        background-color: #efefef;
+        cursor: pointer;
+    }
+
+    #box-EditSaleFile .spinner {
+        margin: 5px 0;
+    }
+
+#DivSaleEditFactor {
+    text-align: center;
+}
+
+    #DivSaleEditFactor .field-col3, #DivSaleEditFactor .rcrmZoom, #DivSaleEditFactor #LoadingFinfo {
+        display: none !important;
+    }
+
+    #DivSaleEditFactor .form {
+        padding: 0;
+    }
+
+    #DivSaleEditFactor #rcrm_document_main {
+        zoom: 1.15 !important;
+    }
+
+/* Factor -----------------------------------------------------------------------------------------------------*/
+#box-EditSaleFactor {
+    padding: 16px;
+}
+
+#TxtSaleEditFactor {
+    margin-bottom: 15px;
+}
+
+.SaleEdit_factor_type {
+    white-space: normal
+}
+
+[dir=rtl] #TxtSaleEditFactor a {
+    font-family: Tahoma_faNum;
+    font-size: 13px;
+}
+
+[dir=rtl] #TxtSaleEditFactor .TxtSelectItemComponent {
+    line-height: 23px;
+}
+
+/* Comments -----------------------------------------------------------------------------------------------------*/
+
+#SaleEdit_Comments .cCompViewComment {
+    min-height: 260px;
+}
+
+#SaleEdit_Comments .cCompMessageTools {
+    width: 55px;
+}
+
+    #SaleEdit_Comments .cCompMessageTools .icon-trash:hover {
+        font-weight: normal;
+    }
+
+#SaleEdit_Comments .cCompCommentTitle {
+    width: 97%;
+}
+
+/*----------------------------------------------------------------------------------------------------------------*/
+
+#SaleEdit_Reminder {
+    padding-top: 20px;
+}
+
+    #SaleEdit_Reminder .label span {
+        font-weight: normal;
+    }
+
+    #SaleEdit_Reminder #DivSchDataReminder {
+        min-height: unset !important;
+    }
+
+    #SaleEdit_Reminder .DivEditorRem + .field {
+        display: none !important;
+    }
+
+    #SaleEdit_Reminder .field {
+        border-bottom: 0;
+    }
+
+    #SaleEdit_Reminder .reminder_create > .field-col:first-child {
+        display: none;
+    }
+
+/*View -----------------------------------------------------------------------------------------------------------*/
+
+.viewMode #LnkAddProductRowEdit, .ravesh-dialog.viewMode .footer .submit,
+.ravesh-dialog.viewMode #tblDocItemEditSale > tbody > tr > th:nth-child(8), .ravesh-dialog.viewMode #tblDocItemEditSale > tbody > tr > th:nth-child(7),
+.ravesh-dialog.viewMode #tblDocItemEditSale > tbody > tr > td:nth-child(8), .ravesh-dialog.viewMode #tblDocItemEditSale > tbody > tr > td:nth-child(7),
+.divSaleMainEdit.viewMode .ravesh-dropdown .arrow, .divSaleMainEdit.viewMode .ravesh-file-upload > span:nth-child(5), .divSaleMainEdit.viewMode .SaleAddAttchment,
+.divSaleMainEdit.viewMode #TxtSaleEditFactor, .divSaleMainEdit.viewMode .LblEditSaleFactor {
+    display: none !important;
+}
+
+
+.viewMode #EditSaleStage .EditSaleSolt {
+    cursor: default !important;
+}
+
+.divSaleMainEdit.viewMode .EditSaleInfoRow, .divSaleMainEdit.viewMode .EditCustInfoRow, .divSaleMainEdit.viewMode .ShowCustInfoRow {
+    padding-bottom: 22px;
+}
+
+.divSaleMainEdit.viewMode .LblCustInfoEdit, .divSaleMainEdit.viewMode .LblSaleInfoEdit {
+    color: #000 !important;
+    font-weight: bold;
+    line-height: 15px;
+}
+
+.divSaleMainEdit.viewMode .ravesh-input, .divSaleMainEdit.viewMode input:not(.green_btn):not(.ui-button), .divSaleMainEdit.viewMode .ravesh-dropdown, .divSaleMainEdit.viewMode textarea {
+    pointer-events: none;
+    cursor: default;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    background-color: #fff;
+    box-shadow: unset;
+    color: rgb(38 41 44 / 64%);
+}
+
+.divSaleMainEdit.viewMode .ravesh-multi-selector .icon-close {
+    color: #ededed;
+    width: 0;
+    padding: 5px 3px;
+}
+
+[dir=rtl] .divSaleMainEdit.viewMode input[type=text] {
+    text-align: right !important;
+}
+
+.divSaleMainEdit.viewMode .ravesh-dropdown, .divSaleMainEdit.viewMode .ravesh-dropdown input[type=text] {
+    height: 20px;
+}
+
+
+.divSaleMainEdit.viewMode textarea {
+    padding: 5px !important;
+    border: 0 !important;
+}
+
+/*------------------------------------------------------------------------------------------------------------------------*/
+
+#ChangeWonMenu {
+    width: 100px;
+    user-select: none;
+    cursor: pointer;
+    margin: 0 11px;
+}
+
+    #ChangeWonMenu .icon-caret-down {
+        float: right;
+        padding: 0px 7px;
+    }
+
+[dir=ltr] #ChangeWonMenu .icon-caret-down {
+    float: left;
+}
+
+.viewMode #ChangeWonMenu {
+    display: none;
+}
+
+.ChangeWonMenu {
+    width: 115px;
+}
+
+    .ChangeWonMenu .icon-thumbs-up {
+        color: #87da27 !important;
+    }
+
+    .ChangeWonMenu .icon-thumbs-down {
+        color: #ff5722 !important;
+    }
+
+.EditSaleDescripDiv, .EditSaleFailDiv {
+    padding: 0 15px;
+}
+
+.divSaleMainEdit.viewMode .EditSaleFailContiner {
+    padding: 5px 0;
+}
+
+[dir=ltr] .EditSaleFailContiner {
+    float: left;
+}
+
+.EditSaleFailContiner .tag {
+    border: 1px solid #f1bfd0;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    display: block;
+    float: right;
+    padding: 6px 5px;
+    text-decoration: none;
+    background: #FBD8DB;
+    color: red;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-family: Tahoma_faNum;
+    font-size: 11px;
+    max-width: 440px;
+}
+
+    .EditSaleFailContiner .tag span {
+        word-wrap: break-word;
+    }
+
+#TxtEditSaleDescrip {
+    resize: none;
+    overflow: hidden;
+    height: 22px;
+    padding: 5px;
+    max-height: 100px;
+    width: 644px;
+    min-height: 60px;
+}
+
+#SaleTagDiv {
+    padding-top: 5px;
+    max-width: 600px;
+}
+
+div.tagsinput input {
+    padding: 5px 5px;
+    border: 1px solid #DDD;
+    font-size: 11px;
+    box-sizing: border-box;
+    width: 173px !important;
+    font-family: inherit;
+    font-size: 11.4px;
+    outline: 0px;
+}
+
+#SaleTagDiv #txt_sale_add_tag_tagsinput {
+    height: auto !important;
+    padding-bottom: 0 !important;
+}
+
+#SaleTagDiv .editSaleTag {
+    display: inline-block;
+    padding: 10px;
+}
+
+.descriptionHead .icon-tag {
+    display: inline;
+    margin: 16px 14px 0 14px;
+    padding-top: 3px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+[dir=rtl] #SaleTagDiv .tag {
+    padding: 8px 4px;
+    margin-top: 1px;
+}
+
+    [dir=rtl] #SaleTagDiv .tag span {
+        font-family: Tahoma_faNum;
+        font-size: 11px;
+    }
+
+#SaleTagViewDiv {
+    margin: 0 8px;
+}
+
+    #SaleTagViewDiv i {
+        padding: 4px 4px 0 0;
+        font-size: 12px;
+    }
+
+[dir=ltr] #SaleTagViewDiv i {
+    padding: 4px 0 0 4px;
+}
+
+.SaleTagView {
+    max-width: 600px;
+    overflow: hidden;
+    cursor: default;
+    font-family: Tahoma_faNum;
+    vertical-align: sub;
+    height: 19px;
+}
+
+.saleTagElem {
+    display: inline-block;
+    padding: 4px 6px;
+    border-radius: 5px;
+    margin: 0 4px;
+    font-size: 11px;
+    color: #2B5879;
+    background-color: #cee9ff;
+    border-color: #cee9ff;
+}

@@ -1,0 +1,87 @@
+﻿
+@using Utility.HtmlHelpers
+@using Utility.Utitlies
+@using ViewModel.UserManagement.Attendance;
+
+@model  viewModel<EmployeeAccountingVm>
+@{
+    var formSecurity = (ViewModel.Security.FormSecurity)ViewBag.FormSecurity;
+}
+
+
+<table class="table table-hover text-nowrap">
+    <thead>
+        <tr>
+            <th>عملیات</th>
+            @*<th>بارگزاری</th>*@
+            <th>ماه</th>
+            <th>از تاریخ</th>
+            <th>تا تاریخ</th>
+            <th>قابل پرداخت</th>
+
+            <th>پرداختی</th>
+            <th>مانده</th>
+
+            <th>وضعیت</th>
+            <th>کاربر</th>
+        </tr>
+    </thead>
+    <tbody>
+
+
+        @{
+            foreach (var item in Model.TLists)
+            {
+
+                var _color = item.UploadType == "cost" ? " text-green" : (item.UploadType == "cost_incoming" ? " text-red" : " text-blue");
+                <tr>
+                    <td style="vertical-align:middle; min-width:80px;">
+
+                        @*<a class="btn btn-app bg-info" onclick="PrintPersonAccounting('@item.Id')" style=" min-width: 50px; height: 50px"><i class="fas fa-print" style="font-size:14px;"></i> پرینت</a>*@
+
+                        @*<a class="btn btn-app bg-danger" onclick="DeletePersonelAccount('@item.Id')" style=" min-width: 50px; height: 50px"><i class="fas fa-trash" style="font-size:14px;"></i> حذف</a>*@
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary btn-flat" data-toggle="dropdown">عملیات</button>
+                            <button type="button" class="btn btn-secondary btn-flat dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu" role="menu">
+                                <a class="dropdown-item" href="#" onclick="PrintPersonAccounting('@item.Id')" style="color: #0dce00;"><i class="fas fa-print"></i>&nbsp;&nbsp;پرینت</a>
+                                <a class="dropdown-item" href="#" onclick="DeletePersonelAccount('@item.Id', '@item.PuUser_Id')" style="color: #ed0505;"><i class="fas fa-trash"></i>&nbsp;&nbsp;@Resources.Md.Delete</a>
+                                @if (!item.Uploaded)
+                                {
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" onclick="SavePersonelAccount_CostIncoming('@item.Id', '@item.PuUser_Id')"><i class="fas fa-upload"></i>&nbsp;&nbsp;بارگزاری در طرف حساب</a>
+                                    @*<a class="dropdown-item" href="#" onclick="SavePersonelAccount_Cost('@item.Id', '@item.PuUser_Id')"><i class="fas fa-upload"></i>&nbsp;&nbsp;بارگزاری در هزینه ها</a>*@
+                                }
+                            </div>
+                        </div>
+
+                    </td>
+
+                    <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.PersonelSalariMonthStr</a></td>
+                    <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.FromDateStr</a></td>
+                    <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.ToDateStr</a></td>
+                    <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@(((int)item.DataJson_Value.personAccounting.KhalesPardakhti).ToPrice())</a></td>
+                    <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@(((int)item.PayedPrice).ToPrice())</a></td>
+                    <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@(((int)item.RemainPrice).ToPrice())</a></td>
+                    <td class="mailbox-name @_color" style="vertical-align:middle; min-width:100px;"><a>@item.UploadTypeStr</a></td>
+                    <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.DoingName</a></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+@Html.Partial(VaribleForName.NamePartialOperationPageing, Model.CommonCustomViewTablePaging)
+
+
+<script>
+
+</script>
+
+
+
+

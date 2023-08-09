@@ -7,7 +7,7 @@ namespace Service.Security
 {
     public static class EncDec
     {
-        private static readonly string HashKey = AppSettings.HashKey;
+        private static readonly string HashKey = "!b@Spring@123";
 
         public static byte[] Encrypt(byte[] clearData, byte[] key, byte[] iv)
         {

@@ -16,7 +16,6 @@ namespace ViewModel.Chat
         }
         public int id { get; set; }
         public bool IsDeleted { get; set; }
-        public Guid MedicalCenterId { get; set; }
         public DateTime ModifiedDate { get; set; }
 
 

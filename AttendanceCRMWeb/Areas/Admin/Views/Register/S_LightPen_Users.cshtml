@@ -1,0 +1,305 @@
+﻿@model ViewModel.UserManagement.UserVm
+
+
+@using AttendanceCRMWeb.Helpers
+@{
+    Layout = null;
+}
+
+
+
+<script>
+    var canvas;
+    var context;
+    var canvasWidth = 874;
+    var canvasHeight = 480;
+    var drawingAreaWidth = 850; //canvas width
+    var drawingAreaHeight = 460; //canvas Height
+    var padding = 25;
+    var lineWidth = 8;
+    var colorPurple = "#cb3594";
+    var colorGreen = "#659b41";
+    var colorYellow = "#ffcf33";
+    var colorBrown = "#986928";
+    var clickX = new Array();
+    var clickY = new Array();
+    var clickColor = new Array();
+    var clickTool = new Array();
+    var clickSize = new Array();
+    var clickDrag = new Array();
+    var paint = false;
+    var curColor = colorPurple;
+    var curTool = "crayon";
+    var curSize = "normal";
+    var mediumStartX = 18;
+    var mediumStartY = 19;
+    var mediumImageWidth = 93;
+    var mediumImageHeight = 46;
+    var drawingAreaX = 11;//Padding right canvas
+    var drawingAreaY = 11;
+    var toolHotspotStartY = 23;
+    var toolHotspotHeight = 38;
+    var sizeHotspotStartY = 157;
+    var sizeHotspotHeight = 36;
+    var sizeHotspotWidthObject = new Object();
+    sizeHotspotWidthObject.huge = 39;
+    sizeHotspotWidthObject.large = 25;
+    sizeHotspotWidthObject.normal = 18;
+    sizeHotspotWidthObject.small = 16;
+    var totalLoadResources = 0;
+    var curLoadResNum = 0;
+
+
+    var DrawingTypes = "";
+    var Colors = "";
+
+    var _x = 0;
+    var _y = 0;
+
+    /**
+    * Calls the redraw function after all neccessary resources are loaded.
+    */
+    function resourceLoaded() {
+        if (++curLoadResNum >= totalLoadResources) {
+            redraw();
+        }
+    }
+
+    /**
+    * Creates a canvas element, loads images, adds events, and draws the canvas for the first time.
+    */
+    function prepareCanvas() {
+        // Create the canvas (Neccessary for IE because it doesn't know what a canvas element is)
+        var canvasDiv = document.getElementById('canvasDiv');
+        canvas = document.createElement('canvas');
+        canvas.setAttribute('width', canvasWidth);
+        canvas.setAttribute('height', canvasHeight);
+        canvas.setAttribute('id', 'can');
+        canvasDiv.appendChild(canvas);
+        if (typeof G_vmlCanvasManager != 'undefined') {
+            canvas = G_vmlCanvasManager.initElement(canvas);
+        }
+        context = canvas.getContext("2d"); // Grab the 2d canvas context
+        // Note: The above code is a workaround for IE 8 and lower. Otherwise we could have used:
+        //     context = document.getElementById('canvas').getContext("2d");
+
+
+        // Add mouse events
+        // ----------------
+        $('#can').mousedown(function (e) {
+            
+            checkResulution();
+            // Mouse down location
+            var mouseX = e.pageX - this.offsetLeft - _x;
+            var mouseY = e.pageY - this.offsetTop - _y;
+            curSize = $('#selSize').val();
+
+            if (mouseY > drawingAreaY && mouseY < drawingAreaY + drawingAreaHeight) {
+                // Mouse click location on drawing area
+            }
+            paint = true;
+            addClick(mouseX, mouseY, false);
+            redraw();
+        });
+
+        $('#can').mousemove(function (e) {
+            checkResulution();
+            if (paint == true) {
+                addClick(e.pageX - this.offsetLeft - _x, e.pageY - this.offsetTop - _y, true);
+                redraw();
+            }
+        });
+
+        $('#can').mouseup(function (e) {
+            paint = false;
+            redraw();
+        });
+
+        $('#can').mouseleave(function (e) {
+            paint = false;
+        });
+    }
+    function checkResulution() {
+        var _winWidth = $(window).width();
+        _x = 80;
+        _y = 95;
+    }
+
+    function addClick(x, y, dragging) {
+        clickX.push(x);
+        clickY.push(y);
+        clickTool.push(curTool);
+        clickColor.push(curColor);
+        clickSize.push(curSize);
+        clickDrag.push(dragging);
+    }
+
+    function clearCanvas() {
+        context.clearRect(0, 0, canvasWidth, canvasHeight);
+    }
+
+    /**
+    * Redraws the canvas.
+    */
+    function redraw() {
+        clearCanvas();
+
+        var locX;
+        var locY;
+        curTool = "marker";
+        if (DrawingTypes == "FreeDraw") {
+            Colors = document.getElementById("SelectColor").value;
+            colorPurple = "#" + Colors;
+
+            // Purple
+            locX = (curColor == colorPurple) ? 18 : 52;
+            locY = 19;
+
+            curColor = colorPurple;
+        }
+        else if (DrawingTypes == "Erase") {
+            curTool = "eraser";
+        } else {
+            alert("Error: Current Tool is undefined");
+        }
+
+        // curSize = "huge";
+        if (curSize == "small") {
+            locX = 467;
+        }
+        else if (curSize == "normal") {
+            locX = 450;
+        }
+        else if (curSize == "large") {
+            locX = 428;
+        }
+        else if (curSize == "huge") {
+            locX = 399;
+        }
+        locY = 189;
+        context.fillStyle = '#333333';
+        context.fill();
+
+        // Keep the drawing in the drawing area
+        context.save();
+        context.beginPath();
+        context.rect(drawingAreaX, drawingAreaY, drawingAreaWidth, drawingAreaHeight);
+        context.clip();
+
+        var radius;
+        var i = 0;
+        for (; i < clickX.length; i++) {
+
+            radius = clickSize[i];
+
+            context.beginPath();
+            if (clickDrag[i] && i) {
+                context.moveTo(clickX[i - 1], clickY[i - 1]);
+            } else {
+                context.moveTo(clickX[i], clickY[i]);
+            }
+            context.lineTo(clickX[i], clickY[i]);
+            context.closePath();
+
+            if (clickTool[i] == "eraser") {
+                context.strokeStyle = 'white';
+            } else {
+                context.strokeStyle = clickColor[i];
+            }
+            context.lineJoin = "round";
+            context.lineWidth = radius;
+            context.stroke();
+        }
+
+
+
+        context.restore();
+
+        if (curTool == "crayon") {
+            context.globalAlpha = 0.4; // No IE support
+            context.drawImage(crayonTextureImage, 0, 0, canvasWidth, canvasHeight);
+        }
+        context.globalAlpha = 1; // No IE support
+    }
+
+    function init(DrawType) {
+        DrawingTypes = DrawType;
+    }
+
+    function ClearAll() {
+        
+        //var m = confirm("Are you sure to clear All ");
+        //if (m) {
+        DrawingTypes = "ClearAll";
+
+        clickX.length = 0;
+        clickY.length = 0;
+        clickColor.length = 0;
+        clickTool.length = 0;
+        clickSize.length = 0;
+        clickDrag.length = 0;
+
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        init('FreeDraw');
+        //}
+    }
+</script>
+
+
+
+<body style="align-content:center;">
+
+    <input type="hidden" name="imageData" id="imageData" runat="server" />
+
+    <div style="float:left;width:80px;">
+
+        @*<div style="clear:both; width:100%;height:50px;" align="center" title="حذف"><img src="~/assets/lightPen/delete.png" onClick="DeleteDocument()" style="width:30px;height:30px;" /></div>*@
+        <div style="clear:both; width:100%;height:2px; margin-bottom:10px;" align="center"><div style="clear:both; width:70%;height:2px;background-color:#f3f3f3" align="center"></div></div>
+        <div style="clear:both; width:100%;height:35px;" align="center" title="جدید"><img src="~/assets/lightPen/new2.png" onClick="ClearAll()" style="width:20px;height:20px;" /></div>
+        <div style="clear:both; width:100%;height:35px;" align="center" title="رنگ قلم"><div class="btn-group"><input type="color" style="width:20px;" id="Current" name="Current" value="#000000" /></div><input class="Picke_color" style="width:60px;" value="000000" type="hidden" id="SelectColor"></div>
+        <div style="clear:both; width:100%;height:35px;" align="center" title="اندازه قلم">
+            <select id="selSize">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4" selected="selected">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="12">12</option>
+                <option value="14">14</option>
+                <option value="16">16</option>
+                <option value="20">20</option>
+                <option value="24">24</option>
+                <option value="32">32</option>
+                <option value="48">48</option>
+                <option value="64">64</option>
+            </select>
+        </div>
+        <div style="clear:both; width:100%;height:35px;" align="center" title="قلم"><img src="~/assets/lightPen/pen.png" onClick="init('FreeDraw')" style="width:20px;height:20px;" /></div>
+        <div style="clear:both; width:100%;height:35px;" align="center" title="پاکن"><img src="~/assets/lightPen/eraser.png" onClick="init('Erase')" style="width:20px;height:20px;" /></div>
+        <div style="clear:both; width:100%;height:2px; margin-bottom:10px;" align="center"><div style="clear:both; width:70%;height:2px;background-color:#f3f3f3" align="center"></div></div>
+        <div style="clear:both; width:100%;height:50px;" align="center" title="ذخیره"><img src="~/assets/lightPen/savefile.png" onClick="SaveLightPenBySess()" style="width:30px;height:30px;" /></div>
+
+    </div>
+    <div style="float:right;width:875px;">
+        <div id="canvasDiv" style="border: 2px solid #f3f3f3; width:100%;height:480px;"></div>
+    </div>
+
+</body>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        init('FreeDraw');
+        prepareCanvas();
+    });
+    $("#Current").change(function () {
+        var _color = $(this).val().replace('#', '');
+        $("#SelectColor").val(_color);
+    });
+</script>

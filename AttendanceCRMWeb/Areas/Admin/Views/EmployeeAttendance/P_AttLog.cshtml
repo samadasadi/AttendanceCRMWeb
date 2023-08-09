@@ -1,0 +1,45 @@
+﻿@using ViewModel.UserManagement.Attendance;
+
+@model  Utility.Utitlies.viewModel<TimeRecordVm>
+@{
+    var formSecurity = (ViewModel.Security.FormSecurity)ViewBag.FormSecurity;
+}
+
+
+    <table class="table table-hover text-nowrap">
+        <thead>
+            <tr>
+                <th>عملیات</th>
+                <th>پرسنل</th>
+                <th>روز</th>
+                <th>تاریخ</th>
+                <th>ساعت</th>
+                <th>تغییر یافته</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model.TLists)
+                {
+                    <tr>
+                        <td style="vertical-align:middle; min-width:100px;">
+                            <a onclick="EditAttLog('@item.RecordID')" class="fa fa-edit" title="ویرایش"></a>
+                            <a onclick="DeleteAttLog('@item.RecordID')" class="fa fa-trash" title="حذف"></a>
+                        </td>
+                        <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.Name</a></td>
+                        <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.DayNameStr</a></td>
+                        <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.DatetimeIOStr</a></td>
+                        <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.TimeStr</a></td>
+                        <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.ChangebyPersonStr</a></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+
+@Html.Partial(Utility.Utitlies.VaribleForName.NamePartialOperationPageing, Model.CommonCustomViewTablePaging)
+
+
+
+

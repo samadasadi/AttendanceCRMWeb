@@ -57,7 +57,7 @@ namespace Repository.Model
         public string CodeComments { get; set; }
 
         public bool? Assistance { get; set; }
-        public Guid MedicalCenterId { get; set; }
+
 
         //هزینه درمان
         public decimal? Fixedprice { get; set; }

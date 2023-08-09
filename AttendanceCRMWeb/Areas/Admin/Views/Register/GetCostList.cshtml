@@ -1,0 +1,103 @@
+﻿
+@using AttendanceCRMWeb.Helpers
+@using Utility.HtmlHelpers
+@using Utility.Utitlies
+@model  viewModel<ViewModel.BasicInfo.CostVm>
+
+
+
+    <div class="col-md-12  margin-bottom-10">
+        <a class="btn btn-block bg-gradient-success btn-flat" onclick="AddNewCost()">ثبت مورد جدید</a>
+    </div>
+
+
+    <div class="col-md-12 card card-danger card-outline">
+        <div class="card-header">
+            <i class="fa fa-bar-chart-o"></i>
+            <h3 class="card-title">کارکرد پزشک</h3>
+            <div class="card-tools pull-right">
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-xs-6 col-md-4 text-center">
+                    <div class="description-block">
+                        <span class="description-percentage text-green"><i class=""></i> </span>
+                        <h5 class="description-header" style="margin-bottom: 14px;">@string.Format("{0:#,0}", (Model.T_model.Total_Cost))</h5>
+                        <span class="description-text text-yellow">مجموع پرداختی</span>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4 text-center">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-red"><i class=""></i> </span>
+                        <h5 class="description-header" style="margin-bottom: 14px;">@string.Format("{0:#,0}", (Model.T_model.Total_CostIncoming))</h5>
+                        <span class="description-text text-blue">مجموع بدهکاری</span>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-md-4 text-center">
+                    <div class="description-block border-right">
+                        <span class="description-percentage text-"><i class=""></i> </span>
+                        <h5 class="description-header" style="margin-bottom: 14px;direction: ltr;">@string.Format("{0:#,0}", (Model.T_model.Total_Cost - Model.T_model.Total_CostIncoming))</h5>
+                        <span class="description-text text-green">مانده</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-danger card-outline" style="clear:both;">
+        <div class="card-header">
+            <h3 class="card-title">لیست پرداختی ها</h3>
+
+            <div class="card-tools">
+                <div class="input-group input-group-sm" style="width: 80px;float:left;">
+                    <select class="form-control" id="cboSelectCount" name="cboSelectCount" onchange="search_@Model.CommonCustomViewTablePaging.IdTextSearch ()" style="width:75px;height: 30px;margin-right: 5px;">
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+                <div class="input-group input-group-sm" style="width: 250px;float:left;">
+                    <input type="text" name="table_search" class="form-control pull-right" id="@Model.CommonCustomViewTablePaging.IdTextSearch" placeholder="جستجو">
+
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default" onclick="search_@Model.CommonCustomViewTablePaging.IdTextSearch ()"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="card-body table-responsive no-padding" id="@Model.CommonCustomViewTablePaging.TableIdDiv">
+            @Html.Partial("P_GetCostList", Model)
+        </div>
+    </div>
+
+
+
+<script>
+
+    $(function () {
+        $('.select2').select2()
+        //Enable iCheck plugin for checkboxes
+        //iCheck for checkbox and radio inputs
+        //$('.mailbox-messages input[type="checkbox"]').iCheck({
+        //    checkboxClass: 'icheckbox_flat-blue',
+        //    radioClass: 'iradio_flat-blue'
+        //});
+
+        //Enable check and uncheck all functionality
+        $(".checkbox-toggle").click(function () {
+            var clicks = $(this).data('clicks');
+            if (clicks) {
+                //Uncheck all checkboxes
+                $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
+                $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
+            } else {
+                //Check all checkboxes
+                $(".mailbox-messages input[type='checkbox']").iCheck("check");
+                $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
+            }
+            $(this).data("clicks", !clicks);
+        });
+    });
+</script>

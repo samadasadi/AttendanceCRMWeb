@@ -1,0 +1,234 @@
+﻿
+@model Utility.Utitlies.CommonCustomViewTablePaging
+@{
+    decimal countPage = 0;
+    Model.Page = Model.Page == 0 ? 1 : Model.Page;
+
+    Model.MessageConfirmDelete = string.IsNullOrEmpty(Model.MessageConfirmDelete) ? "آیا از حذف اطمینان خاطر دارید" : Model.MessageConfirmDelete;
+}
+
+<div class="col-md-4">
+    @if (Model.countModel > 0)
+    {
+        <span>
+            نمایش از @Model.countModel تا @Model.CountAll  @Model.TableName
+        </span>
+    }
+</div>
+
+<div class="col-md-8">
+    @if (Model.countModel > 0)
+    {
+        <!-- Pagination Html -->
+        decimal divForPaging = (decimal)Model.CountAll / Model.CurrentPageForAllCount;
+        countPage = Math.Ceiling(divForPaging);
+
+        <div class="text-center" id="@Model.PageingId">
+            <ul class="pagination pagination-small" style="margin-bottom: auto;">
+                @if (countPage > 1)
+                {
+                    <li name="Main" style="cursor:pointer;" id="id-@Model.PageingId-Left"><a><<</a></li>
+                    for (int i = 1; i <= countPage; i++)
+                    {
+                        if (i == 11) { break; }
+                        if (i == 1)
+                        {
+                            <li name="Main" style="cursor:pointer;" id="li-@Model.PageingId-@i" class="active"><a>@i.ToString()</a></li>
+                        }
+                        else
+                        {
+                            <li name="Main" style="cursor:pointer;" id="li-@Model.PageingId-@i"><a>@i.ToString()</a></li>
+                        }
+                    }
+                    <li name="Main" style="cursor:pointer;" id="li-@Model.PageingId-Right"><a>>></a></li>
+                }
+            </ul>
+        </div>
+    }
+</div>
+
+<script>
+    var _liId = "li-" + '@Model.PageingId-';
+    var lastPage = @Model.Page;
+
+    function successCallBack_@Model.IdTextSearch (result, page) {
+
+        RefreshGridHtml_@Model.IdTextSearch (result);
+        $("#@Model.PageingId > .pagination.pagination-small > li").removeClass("active");
+
+        lastPage = page;
+
+        @Model.FunctionTempForPageing
+    }
+
+    function setPagerAjaxTemp_@Model.IdTextSearch (text, page, SelectCount, firstPage) {
+
+        if (!window.isEmpty('@Model.FunctionWillGoForPageing')) {
+            @Model.FunctionWillGoForPageing ("@Model.UrlData", "@Model.IdTextSearch", "@Model.IdComboSelectCount", page, firstPage, successCallBack_@Model.IdTextSearch)
+        }
+        else setPagerAjax_@Model.IdTextSearch (text, page, SelectCount, firstPage);
+    }
+
+
+    function saveFirstPageing(first) {
+
+        var count = first;
+
+        $("#@Model.PageingId > .pagination.pagination-small > li").removeClass("active");
+
+        $("#@Model.PageingId a").each(function (i, data) {
+            if ($(this).text() != ">>" && $(this).text() != "<<") {
+                $(this).text(count);
+                $(this).parent().attr("id", _liId + count);
+                count++;
+            }
+        });
+
+
+        $("#" + _liId + lastPage + "").addClass("active");
+    }
+    $(document).ready(function () {
+
+        if (!window.isEmpty('@Model.Message')) AlertDialog("@Model.Message", '', 'success');
+         saveFirstPageing('@Model.FirstPage');
+    });
+    function RefreshGridHtml_@Model.IdTextSearch (res, id = '@Model.TableIdDiv') {
+
+        $("#" + id + "").html(res);
+    }
+
+    function RefreshCreateRegion(res, id = '@Model.DivIdForCreateAndUpdate') {
+
+        $("#" + id + "").html(res);
+        //setICheck("icheckbox_square-blue", "iradio_flat-blue", "20%");
+    }
+    function pagerShow(e) {
+        $(e).text(parseInt($(e).text()) + 10);
+        $(e).parent().attr("id", _liId + $(e).text());
+    }
+
+    function setPagerAjax_@Model.IdTextSearch (text, page, SelectCount, firstPage) {
+
+        window.AjaxCallAction("POST", "@Model.UrlData", { text: text, page: page, SelectCount: SelectCount, firstPage: firstPage }, true, function (result) {
+
+            successCallBack_@Model.IdTextSearch (result, page);
+        }, true);
+    }
+
+    $("#@Model.PageingId a").click(function () {
+        var firstLi = 0;
+        var text = $(this).text();
+        var countPage = '@countPage';
+        switch (text) {
+            case ">>":
+                $("#@Model.PageingId a").each(function (i, data) {
+
+                    if ($(this).text() != ">>" && $(this).text() != "<<") {
+                        if (((parseInt($(this).text()) + 10) <= parseInt(countPage))) pagerShow(this);
+                        else {
+                            $("#" + _liId +"Right").hide();
+                            pagerShow(this);
+                            $(this).hide();
+                        }
+                    }
+                });
+                break;
+            case "<<":
+                $("#" + _liId + "Right").show();
+                $("#@Model.PageingId a").each(function (i, data) {
+
+                    $(this).show();
+                    if ($(this).text() != ">>" && $(this).text() != "<<" && (parseInt($(this).text()) - 10) > 0) {
+                        $(this).text(parseInt($(this).text()) - 10);
+                        $(this).parent().attr("id", _liId + $(this).text());
+                    }
+                });
+                break;
+            default:
+                if (parseInt(text) > parseInt(countPage)) {
+                    AlertDialog("داده ای برای نمایش یافت نشد لطفا به صفحات قبل برگردید");
+                    return;
+                }
+                $("#@Model.PageingId a").each(function (i, data) {
+                    if ($(this).text() != ">>" && $(this).text() != "<<") { firstLi = parseInt($(this).text()); return false; }
+                });
+
+                setPagerAjaxTemp_@Model.IdTextSearch ($("#@Model.IdTextSearch").val(), parseInt(text), $('#@Model.IdComboSelectCount').val(), firstLi);
+                break;
+        }
+    });
+
+    function emptyTextBoxSearchAndComboBoxSelectCount_@Model.IdTextSearch () {
+        $("#@Model.IdTextSearch").val("");
+        $("#@Model.IdComboSelectCount").val($("#@Model.IdComboSelectCount option:first").val());
+    }
+
+    function deleteRow_@Model.IdTextSearch (id) {
+
+        if (window.isEmpty('@Model.FunctionWillGoForDelete')) {
+            if (confirm("@Model.MessageConfirmDelete"))
+                window.AjaxCallAction("POST", "@Model.UrlDelete", { id: id, SelectCount: window.isEmpty($('#@Model.IdComboSelectCount').val()) ? 10 : $('#@Model.IdComboSelectCount').val() }, true, function (result) {
+
+                    RefreshGridHtml_@Model.IdTextSearch (result);
+                    emptyTextBoxSearchAndComboBoxSelectCount_@Model.IdTextSearch ();
+                @Model.FunctionTempForDelete
+                });
+        }
+        else @Model.FunctionWillGoForDelete (id,"@Model.TableIdDiv","@Model.IdComboSelectCount","@Model.IdTextSearch")
+    }
+
+    function editRow_@Model.IdTextSearch (id) {
+
+
+        @*if ('@Model.IsHrefEditClick' == 'True') {
+            AjaxCallAction("GET", "@Model.UrlEdit", { id: id, SelectCount: $('#@Model.IdComboSelectCount').val() }, true, function (result) {
+
+                RefreshCreateRegion(result, '@Model.DivIdForCreateAndUpdate');
+
+                @Model.FunctionTempForEdit
+            });
+        }
+        else {
+            @Model.FunctionTempForEdit
+            document.location.href = "@Model.UrlEdit" + "?Id=" + id;
+        }*@
+
+         @Model.UrlEdit (id,"@Model.TableIdDiv","@Model.IdComboSelectCount","@Model.IdTextSearch")
+
+
+
+    }
+
+    function selectAll_@Model.IdTextSearch (e) {
+
+        $("input[name='chk_@Model.IdTextSearch']").prop('checked', $(e).prop('checked'));
+    }
+
+    function deleteRows_@Model.IdTextSearch () {
+
+        if (confirm("@Model.MessageConfirmDelete")) {
+            var selectedIDs = new Array();
+            $('input:checkbox.checkBox').each(function () {
+                if ($(this).prop('checked'))
+                    selectedIDs.push($(this).val());
+            });
+            if (selectedIDs.length > 0) {
+                window.AjaxCallAction("POST", "@Model.UrlDeleteRows", { ids: selectedIDs, SelectCount: window.isEmpty($('#@Model.IdComboSelectCount').val())?10:$('#@Model.IdComboSelectCount').val() }, true, function (result) {
+                    RefreshGridHtml_@Model.IdTextSearch (result);
+                    emptyTextBoxSearchAndComboBoxSelectCount_@Model.IdTextSearch ();
+
+                    @Model.FunctionTempForDeleteAll
+
+                });
+            }
+            else
+                alert("موردی را برای حذف انتخاب کنید");
+        }
+    }
+
+    function search_@Model.IdTextSearch () {
+
+        setPagerAjaxTemp_@Model.IdTextSearch ($("#@Model.IdTextSearch").val(), 1, $("#@Model.IdComboSelectCount").val(), 1);
+    }
+
+</script>

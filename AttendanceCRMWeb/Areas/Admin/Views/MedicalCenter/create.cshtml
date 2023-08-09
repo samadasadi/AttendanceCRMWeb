@@ -1,0 +1,47 @@
+﻿@using System
+@using System.Collections.Generic
+@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@model ViewModel.BasicInfo.MedicalCenterVm
+
+@{
+    Layout = "~/Views/Shared/_FormLayout.cshtml";
+}
+
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.MyHelper().Formtitle(Resources.Md.CenterClinic, PortletStyle.green))
+            {
+                using (Html.BeginForm())
+                {
+                    @Html.ValidationSummary(true)
+                    if (Model != null)
+                    {
+                        @Html.HiddenFor(m => m.Id)
+                    }
+                    <div class="col-md-12">@Html.EditorFor(m => m.Name)</div>
+                    <div class="col-md-12">@Html.EditorFor(m => m.ServerName)</div>
+                    <div class="col-md-12">@Html.EditorFor(m => m.DatebaseName)</div>
+                    <div class="col-md-12">@Html.EditorFor(m => m.DatabaseUser)</div>
+                   <div class="col-md-12">@Html.EditorFor(m => m.DatabasePassword)</div>
+
+                        
+                    
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-offset-3 col-md-9">
+                                @Html.MyHelper().Button(Resources.Md.Registration, ButtonType.Submit, ButtonStyle.Info, ButtonIconType.Save, new { style = "width:130px;float: right;" })
+                                @Html.MyHelper().CancelFormLink(Url.Action("Index", "MedicalCenter", new { Area = "Admin" }))
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+
+

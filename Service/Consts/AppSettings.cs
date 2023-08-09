@@ -15,7 +15,7 @@ namespace Service.Consts
 
         public static string BackUpPath
         {
-            get { return WebConfigurationManager.AppSettings["BackUpPath"]; }
+            get { return "/Backup"; }
         }
         public static string DynamicReportFolder
         {
@@ -45,7 +45,7 @@ namespace Service.Consts
 
         public static string ProfileFolder
         {
-            get { return WebConfigurationManager.AppSettings["ProfileFolder"]; }
+            get { return "/Media/Document/"; }
         }
         public static string CompanyId
         {
@@ -57,37 +57,37 @@ namespace Service.Consts
         }
         public static string UserImageFolder
         {
-            get { return WebConfigurationManager.AppSettings["UserImageFolder"]; }
+            get { return "/Media/Document/"; }
         }
         public static string LegalCustomerFolder
         {
-            get { return WebConfigurationManager.AppSettings["LegalCustomerFolder"]; }
+            get { return "/Media/Document/"; }
         }
         public static string RequestAtachment
         {
-            get { return WebConfigurationManager.AppSettings["RequestAtachmentFolder"]; }
+            get { return "/Media/Document/"; }
         }
 
         public static string SettingFolder
         {
-            get { return WebConfigurationManager.AppSettings["SettingFolder"]; }
+            get { return "/Media/Document/"; }
         }
         public static string DocumentFolder
         {
-            get { return WebConfigurationManager.AppSettings["DocumentFolder"]; }
+            get { return "/Media/Document/"; }
         }
         public static string PatientFolder
         {
-            get { return WebConfigurationManager.AppSettings["PatientFolder"]; }
+            get { return "/Media/Document/"; }
         }
         public static string ExcelFolder
         {
-            get { return WebConfigurationManager.AppSettings["ExcelFolder"]; }
+            get { return "/Media/Document/"; }
         }
 
         public static string DefaultLogo
         {
-            get { return WebConfigurationManager.AppSettings["DefaultLogo"]; }
+            get { return "/Media/Document/"; }
         }
 
         public static string SMSPanleUrl

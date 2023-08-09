@@ -1,0 +1,77 @@
+﻿
+
+@model  viewModel<ViewModel.BasicInfo.CostVm>
+@using Utility.Utitlies
+@using Utility.PublicEnum
+@using Service.Consts
+
+@{
+    var formSecurity = (ViewModel.Security.FormSecurity)ViewBag.FormSecurity;
+}
+
+
+
+<table class="table table-hover">
+    <tr>
+        <th>@Resources.Md.Operation</th>
+        <th>@Resources.Md.CostCode</th>
+        <th>@Resources.Md.Price</th>
+        <th>@Resources.Md.Date</th>
+        <th>@Resources.Md.Coment</th>
+        <th>@Resources.Md.Status</th>
+    </tr>
+    @foreach (var item in Model.TLists)
+    {
+        <tr>
+            <td>
+
+                @if (item.CostType != "CostIncoming")
+                {
+                    <a class="btn btn-danger btn-sm" href="#" onclick="DeleteItem('@item.Id')"><i class="fas fa-trash"></i></a>
+                    <a class="btn btn-info btn-sm" href="#" onclick="EditItem('@item.Id')"><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;ویرایش</a>
+                }
+            </td>
+            <td>@item.NameCoding</td>
+            <td><span class="">@item.PriceStr.ToPrice()</span></td>
+            <td>@item.date</td>
+            <td>@item.Coment</td>
+            <td>
+                @{
+                    if (item.CostType == "Cost")
+                    {
+                        <Text>پرداخت شده</Text>
+                    }
+                    else
+                    {
+                        <Text>بدهکاری</Text>
+                    }
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+
+
+
+
+
+
+
+@Html.Partial(VaribleForName.NamePartialOperationPageing, Model.CommonCustomViewTablePaging)
+
+
+
+<script>
+
+    $(function () {
+        $('.select2').select2()
+        //$('.mailbox-messages input[type="checkbox"]').iCheck({
+        //    checkboxClass: 'icheckbox_flat-blue',
+        //    radioClass: 'iradio_flat-blue'
+        //});
+    });
+</script>
+

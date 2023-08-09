@@ -48,9 +48,6 @@ namespace Service.UserManagement
         Task<UserVm> GetUuserVmForDetail(Guid? id);
         Task<DataModel> DeleteImgAsync(Guid id);
 
-        Task<List<NormalJsonClass>> DiseaseGroupAccessListAsync(string selected = null);
-
-
         Task<DataModel> Delete_QuickLinkAsync(QuickLinkVm entity);
         Task<DataModel> Save_QuickLinkAsync(QuickLinkVm entity);
         Task<List<QuickLinkVm>> Search_QuickLinkAsync(QuickLinkVm entity);
@@ -278,8 +275,6 @@ namespace Service.UserManagement
 
                     CanAddUser = await CanAddUserAsync(null),
 
-                    DiseaseGroupAccess = await DiseaseGroupAccessListAsync()
-
                 };
                 return model;
             }
@@ -318,9 +313,6 @@ namespace Service.UserManagement
                     var imgpath = await _fileService.GetPath(Id);
                     model.ImgPath = imgpath;
                 }
-
-
-                model.DiseaseGroupAccess = await DiseaseGroupAccessListAsync(model.DiseaseGroupAccessPatient);
 
 
                 var _personHoghogh = (await _repoPersonHoghogh.Get(x => x.PersonID == id.Value)).ToList().FirstOrDefault();
@@ -484,16 +476,6 @@ namespace Service.UserManagement
             }
 
 
-            if (model.DiseaseGroupAccessSelected != null && model.DiseaseGroupAccessSelected.Count() > 0)
-            {
-                var jsonSerializer = new JavaScriptSerializer();
-                model.DiseaseGroupAccessPatient = jsonSerializer.Serialize(model.DiseaseGroupAccessSelected);
-            }
-            else
-            {
-                model.DiseaseGroupAccessPatient = null;
-            }
-
 
             var _result = new PubUser();
             if (model.Id != Guid.Empty)
@@ -507,11 +489,9 @@ namespace Service.UserManagement
                     _result.Name = model.Name;
                     _result.EmployeeID = model.EmployeeID;
                     _result.UserId = Convert.ToInt32(model.EmployeeID);
-                    _result.PercentOfCost = model.PercentOfCost;
                     _result.TaxPercent = model.TaxPercent;
                     _result.Family = model.Family;
                     _result.PhoneNo = model.PhoneNo;
-                    _result.NezamCode = model.NezamCode;
                     _result.Address = model.Address;
                     _result.DateofBirth = model.DateBirthEn.ToString();
                     _result.DateBirthEn = model.DateBirthEn;
@@ -526,24 +506,17 @@ namespace Service.UserManagement
                     _result.CreatorId = Public.CurrentUser.Id;
                     _result.EmployeeActive = _result.UserName == "admin" ? true : model.EmployeeActive;
                     _result.MobileNumber = model.MobileNumber;
-                    _result.PercentOfPay = model.PercentOfPay;
-                    _result.PercentOfLaboratory = model.PercentOfLaboratory;
                     _result.ParentId = model.ParentId;
                     _result.FileId = model.FileId;
-                    _result.empIsAssistant = model.empIsAssistant;
                     _result.FromValidityDate = model.FromValidityDate;
                     _result.ToValidityDate = model.ToValidityDate;
                     _result.UserName = _result.UserName == "admin" ? "admin" : (!string.IsNullOrEmpty(model.UserName) ? model.UserName.Trim() : model.UserName);
                     _result.Password = !string.IsNullOrEmpty(model.Password) ? EncDec.Encrypt(model.Password) : null;
                     _result.IsUserActive = await CanAddUserAsync(model.Id) == true ? model.IsUserActive : false;
                     _result.NationalCode = model.NationalCode;
-                    _result.empContarctWithNM = model.empContarctWithNM;
                     _result.IsCallerActive = model.IsCallerActive;
                     _result.ModifiedDate = DateTime.Now;
                     _result.PrinterName = model.PrinterName;
-                    _result.DiseaseGroupAccessPatient = model.DiseaseGroupAccessPatient;
-                    _result.Salamat_Password = model.Salamat_Password;
-                    _result.Salamat_Username = model.Salamat_Username;
                     await _repo.Commit();
 
                     if (Public.CurrentUser.Id == model.Id)
@@ -628,8 +601,6 @@ namespace Service.UserManagement
                     _result.ToValidityDate = model.ToValidityDate;
                     _result.NationalCode = model.NationalCode;
                     _result.IsCallerActive = model.IsCallerActive;
-                    _result.Salamat_Password = model.Salamat_Password;
-                    _result.Salamat_Username = model.Salamat_Username;
                     _result.UserName = !string.IsNullOrEmpty(model.UserName) ? model.UserName.Trim() : model.UserName;
                     _result.EmployeeActive = model.Id == Guid.Empty ? true : model.EmployeeActive;
                     _result.UserId = Convert.ToInt32(model.EmployeeID);
@@ -797,32 +768,6 @@ namespace Service.UserManagement
             }
         }
 
-        public async Task<List<NormalJsonClass>> DiseaseGroupAccessListAsync(string selected = null)
-        {
-            if (!string.IsNullOrEmpty(selected))
-            {
-
-                var jsonSerializer = new JavaScriptSerializer();
-                var resSelected = jsonSerializer.Deserialize<List<string>>(selected);
-
-                var res = (await _repoCoding.GetAllChild("0" + ((int)CodingEnum.GroupPatient).ToString(), 1)).Select(m => new NormalJsonClass()
-                {
-                    Text = m.name,
-                    Value = m.code,
-                    Selected = resSelected.Contains(m.code)
-                }).ToList();
-                return res;
-            }
-            else
-            {
-                var res = (await _repoCoding.GetAllChild("0" + ((int)CodingEnum.GroupPatient).ToString(), 1)).Select(m => new NormalJsonClass()
-                {
-                    Text = m.name,
-                    Value = m.code
-                }).ToList();
-                return res;
-            }
-        }
 
         #region Quick Link
 

@@ -8,7 +8,6 @@ namespace ViewModel.Security
 {
     public class CustomerLogin
     {
-        public Guid MedicalCenterId { get; set; }
         public Guid CustomerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

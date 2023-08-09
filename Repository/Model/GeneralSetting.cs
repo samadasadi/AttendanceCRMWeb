@@ -50,7 +50,8 @@ namespace Repository.Model
         public Nullable<int> CountryCode { get; set; }
 
         //سایر
-        public bool? NumberStatus { get; set; }
+
+
         public Nullable<int> StartNumber { get; set; }
         [Column("appLockUnitPice")]
         public bool? ChangeCostBase { get; set; }

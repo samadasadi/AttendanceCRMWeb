@@ -1,0 +1,134 @@
+﻿
+@using System
+@using System.Collections.Generic
+@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@model ViewModel.UserManagement.UserGroupVm
+@{
+    var i = 0;
+}
+
+@using (Html.MyHelper().Formtitle(Resources.Md.MenusAccessManagement, PortletStyle.light))
+{
+    <div class="row">
+        @foreach (var groupname in Model.RoleList.GroupBy(m => m.groupName))
+        {
+
+            <div class="col-md-4">
+                <div class="portlet box grey-cascade">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-gift"></i>@groupname.Key
+                        </div>
+                        <div class="tools">
+                            <a href="javascript:;" class="collapse">
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="portlet-body form">
+                        <div class="form-body">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    
+                                    <select multiple="multiple" class="multi-select" id="SelectedRole@(i+1)" name="SelectedRole[]">
+                                        @foreach (var item in groupname)
+                                        {
+                                            <option id="@item.Id" value="@item.Id">@item.FaName </option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- END PORTLET-->
+            </div>
+            i++;
+        }
+    </div>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*@using System
+    @using System.Collections.Generic
+    @using AttendanceCRMWeb.Helpers
+    @using AttendanceCRMWeb.Helpers.Enum
+    @model ViewModel.UserManagement.UserGroupVm
+
+    <link rel="stylesheet" href="/netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link href="~/Scripts/build.css" rel="stylesheet" />
+    <div class="col-sm-6">
+        @using (Html.MyHelper().Formtitle(Resources.Md.MenusAccessManagement, PortletStyle.light))
+        {
+
+            <select id="SelectedRole" multiple="multiple" name="SelectedRole" >
+                @foreach (var item in Model.RoleList.GroupBy(m=>m.groupName))
+                {
+
+                    foreach (var item1 in Model.RoleList.Where(m => m.groupName == item.Key && m.ParentId == null))
+                    {
+                        <option value="@item1.Id" data-section="@item.Key/@item1.FaName">نمایش فرم @item1.FaName </option>
+
+                        if (Model.RoleList.Any(m => m.ParentId == item1.Id))
+                        {
+                            foreach (var child in Model.RoleList.Where(m => m.ParentId == item1.Id && m.groupName == item.Key))
+                            {
+                                <option value="@child.Id" data-section="@item1.FaName"> @child.FaName </option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="@item1.Id" data-section="@item.Key"> @item1.FaName </option>
+                        }
+
+                    }
+
+                }
+
+
+
+               @foreach (var groupname in Model.GroupBy(m => m.groupName))
+                {
+                    foreach (var item in groupname.Where(m => m.ParentId == null))
+                    {
+                        if (groupname.Any(m => m.ParentId == item.Id))
+                        {
+                            <option value="@item.Id" data-section="@item.groupName/@item.FaName">نمایش فرم @item.FaName </option>
+                            foreach (var child in groupname.Where(mbox => mbox.ParentId == item.Id))
+                            {
+                                <option value="@child.Id" data-section="@item.groupName/@item.FaName"> @child.FaName </option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="@item.Id" data-section="@item.groupName"> @item.FaName </option>
+                        }
+                    }
+                }
+
+            </select>
+        }
+
+    </div>*@
+
+
+

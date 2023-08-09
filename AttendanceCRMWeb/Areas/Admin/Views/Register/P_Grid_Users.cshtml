@@ -1,0 +1,89 @@
+﻿@model IEnumerable<ViewModel.UserManagement.UserVm>
+@*@using ViewModel.UserManagement
+    @model  Utility.Utitlies.viewModel<UserVm>*@
+
+@{
+    var formSecurity = (ViewModel.Security.FormSecurity)ViewBag.FormSecurity;
+}
+
+@if (Model != null && Model != null && Model.Count() > 0)
+{
+    <style>
+        .fa-li {
+            right: -4.14285714em;
+        }
+
+        .fa-ul li {
+            margin-bottom: 5px;
+        }
+    </style>
+
+
+    foreach (var item in Model)
+    {
+        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
+            <div class="info-box">
+                <a href="/Admin/Register/DetailView/@item.Id" class="">
+                    <img class="img-circle img-fluid elevation-1" src="@(string.Format("{0}", item.ImgPath??"~/Content/Image/noimage200.png"))" onerror="this.src='../../../Content/Image/noimage200.png'" alt="" style="width:50px; height:50px;">
+                    <div class="text-center mt-3"><b>@item.EmployeeID</b></div>
+                </a>
+
+                <div class="info-box-content">
+                    <div class="d-flex justify-content-between align-items-center ">
+                        <a href="/Admin/Register/DetailView/@item.Id" class="info-box-text mr-4 mb-2">  <b>@item.Name  @item.Family</b></a>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-tool " data-toggle="dropdown" aria-expanded="false">
+                                <i class="fa fa-ellipsis-v" style="font-size:14px;"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" role="menu" style="">
+                                @if (formSecurity.Update)
+                                {
+                                    <a href="/Admin/Register/Edit?id=@item.Id" class="dropdown-item"><i class="fas fa-edit text-success"></i>  ویرایش </a>
+                                }
+                                @if (formSecurity.Delete)
+                                {
+                                    <a href="javascript:;" onclick="DeleteModal('@item.Id')" class="dropdown-item"><i class="fas fa-trash text-danger"></i> حذف</a>
+                                }
+                                <a href="javascript:;" onclick="MinaDent.UserManagment.ShowDetailModal('@item.Id')" class="dropdown-item"><i class="fas fa-eye text-primary"></i> نمایش پروفایل</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center ">
+                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                            <li class="small"> <span class="fa-li"><i class="fas fa-lg fa-mobile"></i></span> موبایل: @item.MobileNumber </li>
+                            <li class="small"> <span class="fa-li"><i class="fas fa-lg fa-key"></i></span> نام کاربری: @item.UserName </li>
+                            <li class="small"> <span class="fa-li"><i class="fas fa-lg fa-user"></i></span> سمت شغلی: @item.UserTypeName </li>
+                        </ul>
+                        <div class="btn btn-sm p-0">
+                            @if (formSecurity.Update)
+                            {
+                                <label style="margin-bottom: 0px;">
+                                    <input @string.Format("{0}", item.EmployeeActive == true ? "Checked" : "")
+                                           class="icheck activeUser" data-checkbox="icheckbox_flat-green"
+                                           data-id="@item.Id" name="Married" type="checkbox" value="true">
+                                </label>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

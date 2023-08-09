@@ -1,0 +1,20 @@
+﻿@model object
+@{
+    var required = ViewData.ModelMetadata.IsRequired;
+}
+<div class="form-group  row @string.Format("{0}",required?"rqd":"")">
+    @Html.LabelFor(model => model, htmlAttributes: new { @class = "control-label col-form-label col-md-3" })
+    <div class="col-md-8" style="padding: 0px;top: -5px;">
+        @if (ViewData[ViewData.ModelMetadata.PropertyName] != null)
+        {
+            @Html.DropDownListFor(model => model, (SelectList)ViewData[ViewData.ModelMetadata.PropertyName], "--", new { @class = "form-control chzn-select", Multi = "Multiple" })
+
+        }
+        else
+        {
+            @Html.DropDownListFor(model => model, new List<SelectListItem>() { }, "--", new { @class = "form-control chzn-select" })
+
+        }
+        @Html.ValidationMessageFor(model => model, "", new { @class = "text-danger" })
+    </div>
+</div>

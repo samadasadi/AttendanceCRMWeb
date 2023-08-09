@@ -10,7 +10,6 @@ namespace ViewModel.UserManagement
     public class UserGroupVm
     {
         public Guid Id { get; set; }
-        public Guid MedicalCenterId { get; set; }
 
         [StringLength(100, ErrorMessage = "طول آیتم ورودی بیشتر از حد مجاز است")]
         [Required(ErrorMessage = "لطفا برای گروه کاربری یک نام فارسی انتخاب کنید")]

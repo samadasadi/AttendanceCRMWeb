@@ -20,6 +20,7 @@ namespace AttendanceCRMWeb.App_Start
     using Repository.iContext;
     using Repository.Infrastructure;
     using Service;
+    using Service.Attendance;
     using Service.Common;
     using Service.Cost;
     //using Service.Accounting;
@@ -70,6 +71,10 @@ namespace AttendanceCRMWeb.App_Start
                 kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
                 RegisterServices(kernel);
+
+                EngineContext.Create();
+                EngineContext.Replace(kernel);
+
                 return kernel;
             }
             catch
@@ -118,10 +123,13 @@ namespace AttendanceCRMWeb.App_Start
             kernel.Bind<IChatService>().To<ChatService>();
             kernel.Bind<IGeneralSettingService>().To<GeneralSettingService>();
             kernel.Bind<ICompanyAccountService>().To<CompanyAccountService>();
+            kernel.Bind<IUserGroupService>().To<UserGroupService>();
+            kernel.Bind<ICostService>().To<CostService>();
+            kernel.Bind<IMCenterService>().To<MCenterService>();
+            kernel.Bind<IDeviceInfoService>().To<DeviceInfoService>();
 
             //kernel.Bind<IScheduleTaskService>().To<TaskService>();
             //kernel.Bind<IScheduleTask>().To<QueuedMessagesSendTask>();
-
             //kernel.Bind<IDentRepository>().To<DentRepository>();
             //kernel.Bind<IWorkFlowRepository>().To<WorkFlowRepository>();
             //kernel.Bind<IAnnouncementsService>().To<AnnouncementsService>();
@@ -133,7 +141,6 @@ namespace AttendanceCRMWeb.App_Start
             //kernel.Bind<ICheckService>().To<CheckService>();
             //kernel.Bind<IClubService>().To<ClubService>();
             //kernel.Bind<ICommunicationService>().To<CommunicationService>();
-            //kernel.Bind<ICostService>().To<CostService>();
             //kernel.Bind<ICustomerClubService>().To<CustomerClubService>();
             //kernel.Bind<ICustomerDocumentService>().To<CustomerDocumentService>();
             //kernel.Bind<ICustomerInfoService>().To<CustomerInfoService>();
@@ -142,7 +149,6 @@ namespace AttendanceCRMWeb.App_Start
             //kernel.Bind<IHolidayService>().To<HolidayService>();
             //kernel.Bind<IInsuranceCashService>().To<InsuranceCashService>();
             //kernel.Bind<IInsuranceService>().To<InsuranceService>();
-            //kernel.Bind<IMCenterService>().To<MCenterService>();
             //kernel.Bind<IMedicalCenterService>().To<MedicalCenterService>();
             //kernel.Bind<IMultiInsertFormService>().To<MultiInsertFormService>();
             //kernel.Bind<INotebookService>().To<NotebookService>();
@@ -166,7 +172,6 @@ namespace AttendanceCRMWeb.App_Start
             //kernel.Bind<IRequestCustomerClubVisitTimeService>().To<RequestCustomerClubVisitTimeService>();
             //kernel.Bind<IScoringService>().To<ScoringService>();
             //kernel.Bind<IUserRateHistoryService>().To<UserRateHistoryService>();
-            //kernel.Bind<IUserGroupService>().To<UserGroupService>();
             //kernel.Bind<ISindhWarehouseService>().To<SindhWarehouseService>();
             //kernel.Bind<IWarehouseLogInService>().To<WarehouseLogInService>();
             //kernel.Bind<IWarehousesCodingService>().To<WarehousesCodingService>();
@@ -175,6 +180,7 @@ namespace AttendanceCRMWeb.App_Start
             //kernel.Bind<IAccountService>().To<AccountingService>();
             //kernel.Bind<IAccontingAssetService>().To<AccontingAssetService>();
             //kernel.Bind<IAdvancedChartDentService>().To<AdvancedChartDentService>();
+
 
             kernel.Bind<IScheduleTaskRunner>().To<ScheduleTaskRunner>();
             kernel.Bind<ITaskScheduler>().To<TaskManager>().InSingletonScope();

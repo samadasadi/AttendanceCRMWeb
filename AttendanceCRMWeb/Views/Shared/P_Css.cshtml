@@ -304,15 +304,10 @@
 <link href="~/Scripts/jquery-ui-1.11.2.custom/jquery-ui.css" rel="stylesheet" />
 <link href="~/Content/AdminResponsive3.0/plugins/toastr/toastr.min.css" rel="stylesheet" />
 
-
-<link href="@Url.Content("~/Content/Style/Site.css")" rel="stylesheet" />
-
+@*<link href="@Url.Content("~/Content/Style/Site.css")" rel="stylesheet" />*@
 
 <link href="~/Content/AdminResponsive3.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet" />
 <link href="~/Content/AdminResponsive3.0/MD.BootstrapPersianDateTimePicker-master-bs4/src/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
-
-
-
 
 <script src="~/Scripts/jquery.validate.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
@@ -320,8 +315,8 @@
 <script src="~/Scripts/View/UserManagment.js"></script>
 <script src="~/Scripts/View/Coding.js"></script>
 <script src="~/assets/global/plugins/jstree/dist/jstree.min.js"></script>
-<script src="~/assets/admin/pages/scripts/ui-tree.js"></script>
-<script src="~/Scripts/jquery.tmpl.js"></script>
+@*<script src="~/assets/admin/pages/scripts/ui-tree.js"></script>*@
+@*<script src="~/Scripts/jquery.tmpl.js"></script>*@
 <script type="text/x-jquery-tmpl" id="CallerId">
     <div class="row" id="${TelNumber}" onclick="Redirect(this.id);" data-customerId="${CustomerId}" target="_blank">
         @*<div class="col-md-12">*@
@@ -364,8 +359,6 @@
 </script>
 <input type="hidden" id="lastCallerDate" value="@DateTimeOperation.M2SWithTime(DateTime.Now)" />
 <input type="hidden" id="lastSmsDate" value="@DateTimeOperation.M2SWithTime(DateTime.Now)" />
-<script src="~/Scripts/View/SearchModal.js"></script>
-<script src="~/Scripts/View/WorkFlow.js"></script>
 
 <style>
     #toastsContainerBottomLeft {
@@ -462,7 +455,7 @@
         } else {
             var url = window.location.href;
             var arr = url.split("/");
-            window.location.href = arr[0] + '/BasicInfo/CustomerInfo/Detail/' + id;
+            window.location.href = arr[0] + '/Admin/CustomerInfo/Detail/' + id;
         }
     }
 
@@ -476,7 +469,7 @@
             }
             $.ajax({
                 type: "Get",
-                url: "/BasicInfo/CustomerInfo/QuickRegister",
+                url: "/Admin/CustomerInfo/QuickRegister",
                 data: { phoneNumber: phoneNumber, flag: isMobile },
                 beforeSend: function () {
                     showWait();
@@ -503,7 +496,7 @@
                                         if (_patientId != null && _patientId != undefined && _patientId != "") {
                                             $.ajax({
                                                 type: "Get",
-                                                url: '/BasicInfo/CustomerInfo/UpdatePatientPhoneNumber',
+                                                url: '/Admin/CustomerInfo/UpdatePatientPhoneNumber',
                                                 data: { patientId: _patientId, phone: $('#phoneNumber').val(), whereToAdd: $('#addToPhone').val() },
                                                 success: function (result) {
                                                     $('#callerHistory').hide();
@@ -527,7 +520,7 @@
                                             $("#CustomerBasicInfo_MobileNumber").val(_phoneNumber);
 
 
-                                        $.post("/BasicInfo/CustomerInfo/QuickCreate", $("#QuickFrm").serialize() + "&SelectCount=1&page=1",
+                                        $.post("/Admin/CustomerInfo/QuickCreate", $("#QuickFrm").serialize() + "&SelectCount=1&page=1",
                                             function (res) {
 
                                                 $('#callerHistory').hide();
@@ -554,7 +547,7 @@
 
     function RetrivePatientList() {
         $.ajax({
-            url: '/BasicInfo/CustomerInfo/RetrivePatientList',
+            url: '/Admin/CustomerInfo/RetrivePatientList',
             type: 'GET',
             success: function (result) {
                 if (result.length > 0) {

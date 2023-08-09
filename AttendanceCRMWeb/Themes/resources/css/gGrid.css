@@ -1,0 +1,310 @@
+﻿
+.gGridPage-container {
+    background: #f0f2f7;
+    min-height: 900px;
+    box-sizing: border-box;
+}
+
+.gGridPage-list {
+    position: relative;
+    overflow: hidden;
+}
+
+.gGridPage-list-bar-cover {
+    padding-bottom: 20px;
+    z-index: 1;
+}
+
+.gGridPage-list-bar {
+    border-bottom: solid 1px #d8d8d8;
+    box-shadow: 0 1px 3px #DDD;
+    background-color: #fff;
+    color: gray;
+    overflow: hidden;
+    padding: 0 20px;
+    height: 46px;
+}
+
+.gGridPage-list .gGridBtn-new {
+    cursor: pointer;
+    line-height: 32px;
+    height: 32px;
+    min-width: 80px;
+    margin-top: 7px;
+    background: #4CAF50;
+    border-radius: 2px;
+    font-size: 11px;
+    color: white;
+    text-align: center;
+    padding: 0 10px;
+}
+
+.gGridPage-list .gGridRows {
+    margin: 0 20px 100px;
+    background: white;
+    border: solid 1px #d8d8d8;
+    box-shadow: 0 2px 4px #ddd;
+}
+
+.gGridPage-list .gGridRow {
+    height: 40px;
+    overflow: hidden;
+    border-bottom: solid 1px #eee;
+    padding: 15px 20px;
+    cursor: default;
+    transition: background .3s;
+}
+
+.gGridPage-list .gGridRow .gGridIcon {
+        margin: 5px 0px 5px 15px;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        font-size: 15px;
+        line-height: 30px;
+        border-radius: 16px;
+        background-color:red;
+        color:#fff;
+    }
+
+    .gGridPage-list .gGridRow:hover .gGridEllipsis {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .gGridPage-list .gGridRow .gGridEllipsis {
+        margin: 5px 20px 5px 5px;
+        visibility: hidden;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        font-size: 12px;
+        line-height: 30px;
+        cursor: pointer;
+        opacity: 0;
+        transition: all .3s;
+        border-radius: 4px;
+        color: #607D8B;
+    }
+
+    .gGridPage-list .gGridRow .gGridEllipsis:hover {
+        background-color: #f2f2f2;
+    }
+
+    .gGridPage-list .gGridRow .gGridActive {
+        background-color: #f2f2f2 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .gGridPage-list .gGridRow .gGridDefault {
+        background: #607D8B;
+    }
+
+    .gGridPage-list .gGridRow .gGridDisable {
+        background: #C62828;
+    }
+
+    .gGridPage-list .gGridRow .gGridDefault, .gGridPage-list .gGridRow .gGridDisable {
+        font-size: 11px;
+        padding: 4px 7px;
+        color: white;
+        border-radius: 4px;
+        margin: 11px 3px;
+    }
+
+    .gGridPage-list .gGridRow .gGridTitle {
+        font-size: 15px;
+        margin-top: 2px;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .gGridPage-list .gGridRow .gGridInline-menu .gGridSplit {
+        border-right: solid 1px #ddd;
+        height: 15px;
+        display: inline-block;
+        position: relative;
+        top: 5px;
+    }
+
+    .gGridPage-list .gGridRow:hover .gGridInline-menu {
+        display: block;
+    }
+
+    .gGridPage-list .gGridRow .gGridInline-menu {
+        display: none;
+    }
+
+        .gGridPage-list .gGridRow .gGridInline-menu a:first-child {
+            padding-right: 0;
+        }
+
+        .gGridPage-list .gGridRow .gGridInline-menu a {
+            padding: 0 10px;
+        }
+
+.gGridRavesh-link {
+    color: #06C;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 11px;
+}
+
+.gGridPage-list .gGridRow .gGridInline-menu .gGridSplit {
+    border-right: solid 1px #fff; /*#ddd*/
+    height: 15px;
+    display: inline-block;
+    position: relative;
+    top: 5px;
+}
+
+.gGridPage-list .gGridRow:hover .gGridDetail {
+    display: none;
+}
+
+.gGridPage-list .gGridRow .gGridDetail {
+    font-size: 11px;
+    margin-top: 8px;
+    color: #999;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding-bottom: 5px;
+    padding-top: 1px;
+}
+
+.gGridPage-list .gGridFooter {
+    height: 40px;
+    line-height: 40px;
+    background: #f5f5f5;
+    padding: 0 20px;
+    font-size: 12px;
+    font-style: italic;
+    color: gray;
+    cursor: default;
+}
+
+.gGridRavesh-menu.gGridOpen {
+    -webkit-animation: rvc-comingIn 0.2s ease;
+    animation: rvc-comingIn 0.2s ease;
+}
+
+.gGridRavesh-menu {
+    position: absolute;
+    z-index: 10000002;
+    min-width: 50px;
+    background-color: white;
+    border: 1px solid #CCC;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    direction: ltr;
+}
+
+    .gGridRavesh-menu .gGridOption {
+        line-height: 45px;
+        height: 45px;
+        overflow: hidden;
+        font-size: 12px;
+        color: #444;
+        cursor: pointer;
+        transition: background .3s;
+        display: block;
+        text-decoration: none;
+    }
+
+        .gGridRavesh-menu .gGridOption:hover {
+            background: #f9f9f9;
+            color: #000;
+        }
+
+        .gGridRavesh-menu .gGridOption span {
+            margin: 0 18px;
+        }
+
+        .gGridRavesh-menu .gGridOption i {
+            font-size: 16px;
+            color: gray;
+            width: 20px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+    .gGridRavesh-menu .gGridLine {
+        border-bottom: solid 1px #ddd;
+    }
+
+[dir=rtl] .gGridFloat-left {
+    float: left;
+}
+
+[dir=ltr] .gGridFloat-left {
+    float: right;
+}
+
+[dir=rtl] .gGridFloat-right {
+    float: right;
+}
+
+[dir=ltr] .gGridFloat-right {
+    float: left;
+}
+
+[dir=rtl] .gGridRavesh-menu .gGridOption span {
+    margin-left: 30px;
+}
+
+[dir=ltr] .gGridRavesh-menu .gGridOption span {
+    margin-right: 30px;
+}
+
+[dir=rtl] .gGridRavesh-menu .gGridOption i {
+    margin-left: 0;
+    margin-right: 15px;
+}
+
+[dir=ltr] .gGridRavesh-menu .gGridOption i {
+    margin-right: 0;
+    margin-left: 15px;
+}
+
+
+.gGridPage-list-bar .gGridForm-list-search input {
+    border: 0;
+    outline: 0;
+    font-size: 12px;
+    width: 300px;
+    padding: 0;
+    margin: 0;
+    height: 45px;
+    margin: 0 15px;
+}
+
+.rcrmTempSearchMenu .gGridOption {
+    height:28px !important;
+    line-height:28px !important;
+}
+
+.gGridForm-type-search {
+    padding:17px 5px 15px 5px;
+    cursor:pointer;
+}
+
+.gGridForm-type-search:hover {
+    background-color:#eee;
+}
+
+.gGridForm-type-search * {
+    display:inline-block;
+    vertical-align:middle;
+    padding: 0 2px;
+}
+
+.gGridForm-type-search span {
+    padding-top:3px;
+}
+
+.gGridForm-list-search .icon-caret-down {
+    font-size:15px;
+    vertical-align:top;
+}

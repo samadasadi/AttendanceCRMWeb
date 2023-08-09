@@ -14,7 +14,6 @@ namespace ViewModel.BasicInfo
     {
         public Guid Id { get; set; }
         public bool IsDeleted { get; set; }
-        public Guid MedicalCenterId { get; set; }
         public DateTime ModifiedDate { get; set; }
         public int AutoID { get; set; }
 

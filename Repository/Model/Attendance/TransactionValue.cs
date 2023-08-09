@@ -13,7 +13,7 @@ namespace Repository.Model
         public Guid Id { get; set; }
 
         public DateTime ModifiedDate { get; set; }
-        public Guid MedicalCenterId { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public int TransType { get; set; }

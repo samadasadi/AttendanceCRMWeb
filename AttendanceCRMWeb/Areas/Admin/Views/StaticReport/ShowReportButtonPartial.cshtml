@@ -1,0 +1,9 @@
+﻿@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@using Utility.HtmlHelpers
+
+<div class="card-footer clearfix">
+    @Html.MyHelper().Button(Resources.Md.ShowReport, ButtonType.Button, ButtonStyle.Info, ButtonIconType.Print, new { onClick = "return ShowReport()", style = "width:130px;float:left;" })
+    @*<a href="javascript:void(0)" class="btn btn-sm btn-info float-left" onclick="return ShowReport()">@Resources.Md.ShowReport</a>*@
+    @*<a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">View All Orders</a>*@
+</div>

@@ -1,0 +1,159 @@
+﻿
+@using Utility.HtmlHelpers
+@model  ViewModel.UserManagement.Attendance.AttendanceVM
+@using Utility.Utitlies
+
+
+
+@using (Html.BsPanelWithCloseAndMinimize("محاسبه حقوق پرسنل"))
+{
+    <div class="CustomFieldsSystem" id="BasicInfo" style="display: block;">
+
+        <div class="col-md-12">
+            <div class="ContactPanel col2">
+                <div class="ContactInputWidget">
+                    <div class="blockHeader resolutionHigh">اطلاعات کارکرد</div>
+                </div>
+                <div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">تعداد روزهای کاری : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@(Model.listAttenDanceVm.Count())</div>
+                    </div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">تعداد روز کارکرد : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@(Model.listAttenDanceVm.Where(x => x.IsPresent == true && x.IsHoliday == false).ToList().Count().ToString())</div>
+                    </div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">ساعت کارکرد : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personInfoVm.TotalTimeHour</div>
+                    </div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">اضافه کار : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personInfoVm.TotalEzafeKariStr</div>
+                    </div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">تعداد روز غیبت : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personInfoVm.CountPresentDay</div>
+                    </div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">ساعت غیبت : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personInfoVm.TotalGheybatStr</div>
+                    </div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">تعداد روز مرخصی : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personInfoVm.Vacations_Day</div>
+                    </div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">ساعت مرخصی : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personInfoVm.Vacations_HourStr</div>
+                    </div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">تعداد روز ماموریت : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personInfoVm.Mission_Day</div>
+                    </div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">ساعت ماموریت : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personInfoVm.Mission_HourStr</div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="ContactPanel col2">
+                <div class="ContactInputWidget">
+                    <div class="blockHeader resolutionHigh">مزایا</div>
+                </div>
+                <div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">پایه حقوق : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personHoghogh.HoghoghePaye.ToPrice()</div>
+                    </div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">حق مسکن : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personHoghogh.HagheMaskan.ToPrice()</div>
+                    </div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">پاداش بهره وری : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personHoghogh.PadasheBahrevari.ToPrice()</div>
+                    </div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">بن کارگری : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personHoghogh.Bon.ToPrice()</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="ContactPanel col2">
+                <div class="ContactInputWidget">
+                    <div class="blockHeader resolutionHigh">کسورات</div>
+                </div>
+                <div class="ContactPanel col2">
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">هزینه ناهار : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personAccounting.Hazineh_Nahar.ToPrice()</div>
+                    </div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">هزینه صبحانه : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personAccounting.Hazineh_Sobhaneh.ToPrice()</div>
+                    </div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">ایاب و ذهاب : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personAccounting.Hazineh_AyaboZahab.ToPrice()</div>
+                    </div>
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">بیمه : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personAccounting.HazinehBimeh.ToPrice()</div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="ContactPanel col2">
+                <div class="ContactInputWidget">
+                    <div class="blockHeader resolutionHigh">مجموع</div>
+                </div>
+                <div class="ContactPanel col2">
+
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">مجموع مزایا : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personAccounting.Total_Mazaya.ToPrice()</div>
+                    </div>
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">مجموع کسورات : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personAccounting.Total_Kosorat.ToPrice()</div>
+                    </div>
+                    <div field_group="0" in_group="24">
+                        <div class="contantinfo_container ">مجموع پرداختی : </div>
+                        <div class="contantinfoval_container" style="direction:rtl;">@Model.personAccounting.KhalesPardakhti.ToPrice()</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+
+

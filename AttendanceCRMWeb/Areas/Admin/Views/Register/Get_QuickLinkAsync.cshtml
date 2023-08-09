@@ -1,0 +1,39 @@
+﻿
+@using Repository.Model
+@using ViewModel.UserManagement
+@model List<QuickLinkVm>
+
+@{
+    string[] _textcolor =  { "text-danger", "text-success", "text-primary", "text-warning" };
+    Random random = new Random();
+}
+
+@if (Model != null && Model.Count() > 0)
+{
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            int start2 = random.Next(0, _textcolor.Length);
+
+            <div class="col-6 col-sm-4 col-md-3 d-flex align-items-stretch">
+                <div class="info-box p-0" style="min-height:50px;height:60px;">
+                    <a href="@item.URLAddress" @item.LinkTargetStr class="info-box-icon mr-1" style="color:@item.IconColor; width:40px;"><i class="fa @item.Icon"></i></a>
+                    <div class="info-box-content">
+                        <div class="d-flex justify-content-between align-items-center ">
+                            <a href="@item.URLAddress" @item.LinkTargetStr class="info-box-text ml-1" style="width: 100%; color: @item.TextColor"> <b style="font-size:.675rem;">@item.Title</b></a>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-tool " data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-ellipsis-v" style="font-size:14px;"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" role="menu" style="">
+                                    <a href="javascript:;" onclick="Edit_QuickLinkAsync('@item.Id')" class="dropdown-item"><i class="fas fa-edit text-success"></i>  ویرایش </a>
+                                    <a href="javascript:;" onclick="Delete_QuickLinkAsync('@item.Id')" class="dropdown-item"><i class="fas fa-trash text-danger"></i> حذف</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

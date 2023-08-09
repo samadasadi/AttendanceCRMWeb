@@ -166,7 +166,7 @@ namespace ViewModel.UserManagement.Attendance
         /// <summary>
         /// دستگاه ها
         /// </summary>
-        public static string Devices => "دستگاه ها";
+        public static string DevicesName => "دستگاه ها";
         /// <summary>
         /// حضورغیاب در بازه زمانی
         /// </summary>

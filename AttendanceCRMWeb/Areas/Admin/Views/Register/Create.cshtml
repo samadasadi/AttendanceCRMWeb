@@ -1,0 +1,798 @@
+﻿@using System
+@using System.Collections.Generic
+@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@using Utility.HtmlHelpers
+@using Service.Consts
+@model ViewModel.UserManagement.UserVm
+@{
+    ViewBag.Title = Model.Id == Guid.Empty ? "افزودن کاربر" : "ویرایش کاربر";
+    Layout = Utility.Utitlies.VaribleForName.AddressLayoutMasterNew;
+    var _canAddUser = Model.CanAddUser;
+    var _userCount = Model.UserActiveCount;
+    var _maxUserCount = Service.Consts.Public.CurrentUser.UserCount;
+
+    var _isCallerActiv = (Public.CurrentUser.IsCallerActive == true ? "1" : "0");
+
+
+
+
+
+    //var _deviceList = WebUI.Hubs.GlobalHub.clientsConnections;
+    //_deviceList = _deviceList.Where(x => !string.IsNullOrEmpty(x.HubApplicationId)).ToList();
+
+    var _deviceList = CrmSocket.GetOnlineHardwareAppList("minadent");
+}
+
+@section styles
+{
+    <style>
+        .selectImageWebcame {
+        }
+    </style>
+    <link href="~/assets/global/plugins/jquery-multi-select/css/multi-select.css" rel="stylesheet" />
+    <link href="@Url.Content("~/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css")" rel="stylesheet" />
+    <link href="~/Scripts/chosen/chosen.css" rel="stylesheet" />
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="~/Content/AdminResponsive3.0/plugins/iCheck/all.css">
+}
+
+
+
+@using (Html.BsPanel(Resources.Md.Users))
+{
+
+    using (Html.BeginForm("Create", "Register", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", id = "PubUserFrm", @name = "PubUserFrm" }))
+    {
+        @Html.HiddenFor(m => m.cbiSignImage)
+        @Html.HiddenFor(m => m.SignFileId)
+
+        @Html.HiddenFor(m => m.UserDoctorCount)
+
+
+
+
+
+        <div class="card card-primary card-outline-tabs">
+            <div class="card-header p-0 border-bottom-0">
+                <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-selected="true"><i class="fa fa-user"></i>&nbsp;@Resources.Md.UserInformation</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-selected="false"><i class="fa fa-image"></i>&nbsp;@Resources.Md.UserImage</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="pill" href="#custom-tabs-three-messages" role="tab" aria-selected="false"><i class="fa fa-universal-access"></i>&nbsp;@Resources.Md.UserAccess</a>
+                    </li>
+                    @if (Service.Consts.Public.CurrentUser.IsAttendance)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="pill" href="#person_hoghogh" role="tab" aria-selected="false"><i class="fa fa-universal-access"></i>&nbsp;اطلاعات استخدامی</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="custom-tabs-three-tabContent">
+                    <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel">
+                        <div class="col-md-12">
+                            @if (Model != null && Model.Id != Guid.Empty)
+                            {
+                                @Html.HiddenFor(m => m.Id)
+                            }
+                            <div class="col-md-6">
+                                @if (Model != null && Model.Id != Guid.Empty)
+                                {
+                                    <input hidden type="text" id="EmployeeID" name="EmployeeID" readonly="readonly" value="@Model.EmployeeID" />
+                                }
+                                else
+                                {
+                                    @Html.EditorFor(m => m.EmployeeID)
+                                }
+                                @Html.EditorFor(m => m.Name)
+                                @Html.EditorFor(m => m.Family)
+                                @Html.EditorFor(m => m.FatherName)
+                                @Html.EditorFor(m => m.NationalCode)
+                                <div class="form-group row">
+                                    <label class="text-AlignBySoftWare col-md-3">@Resources.Md.UserType</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select2" style="width:100%;" id="UserType" name="UserType">
+                                            <option value="">--</option>
+                                            @foreach (var item in Model.UserTypeList)
+                                            {
+                                                <option @string.Format("{0}", Model.UserType == item.Value ? "selected" : "") value="@item.Value">@item.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                @Html.EditorFor(m => m.MobileNumber)
+                                @Html.EditorFor(m => m.PhoneNo)
+                                @Html.EditorFor(m => m.DateBirthEn)
+                                @Html.EditorFor(m => m.PlaceofBirth)
+
+                                <div class="form-group row">
+                                    <label class="text-AlignBySoftWare col-md-3">@Resources.Md.Education</label>
+                                    <div class="col-md-9">
+                                        <select class="form-control select2" style="width:100%;" id="Education" name="Education">
+                                            <option value="">--</option>
+                                            @foreach (var item in Model.EducationList)
+                                            {
+                                                <option @string.Format("{0}", Model.Education == item.Value ? "selected" : "") value="@item.Value">@item.Text</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                @Html.EditorFor(m => m.Address)
+
+
+
+
+
+                            </div>
+                            <div class="col-md-6">
+                                @if (Model.UserName != "admin")
+                                {
+                                    <div class="form-group row">
+                                        <label class="col-md-3"></label>
+                                        <div class="card col-md-9 mb-0">
+                                            <div class="card-body p-2">
+                                                <div class="row">
+                                                    <label class="col-md-12 text-AlignBySoftWare">
+                                                        تعداد اکانت فعال : @_userCount
+                                                    </label>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="col-md-12 text-AlignBySoftWare">
+                                                        پزشکان فعال : @Model.UserDoctorCount
+                                                    </label>
+                                                </div>
+                                                <div class="row">
+                                                    <label class="col-md-12 text-AlignBySoftWare">
+                                                        تعداد اکانت باقیمانده : @(_maxUserCount - _userCount)
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    if (_canAddUser)
+                                    {
+                                        <div class="form-group row">
+                                            <label class="col-md-3">فعالسازی</label>
+                                            <div class="col-md-9">
+                                                <div class="col-md-2" @string.Format("{0}", Model.IsUserActive == true ? "Checked" : "") for="Pregnant">@Html.CheckBoxFor(x => x.IsUserActive)</div>
+                                                فعالسازی نام کاربری
+                                            </div>
+                                        </div>
+                                    }
+                                    if (_canAddUser)
+                                    {
+                                        if ((Model != null && Model.Id != Guid.Empty))
+                                        {
+                                            <div class="form-group row">
+                                                <label class="col-md-3 text-AlignBySoftWare">
+                                                    @Html.LabelFor(m => m.UserName)
+                                                </label>
+                                                <div class="col-md-9">
+                                                    @*<input class="form-control" data-val-required="*" name="UserName" id="UserName" type="text" value="@Model.UserName">*@
+                                                    @Html.TextBoxFor(x => x.UserName, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(x => x.UserName)
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="form-group row">
+                                                <label class="col-md-3 text-AlignBySoftWare">
+                                                    @Html.LabelFor(m => m.UserName)
+                                                </label>
+                                                <div class="col-md-9">
+                                                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(m => m.UserName)
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    @Html.CheckBoxFor(m => m.IsUserActive, new { style = "display:none" })
+                                    <input class="form-control" data-val-required="*" name="UserName" id="UserName" type="hidden" value="@Model.UserName">
+                                }
+
+                                @if (Model.UserName != "admin")
+                                {
+                                    if (_canAddUser)
+                                    {
+                                        if ((Model != null && Model.Id != Guid.Empty))
+                                        {
+                                            <div class="form-group row">
+                                                <label class="col-md-3 text-AlignBySoftWare">
+                                                    @Html.LabelFor(m => m.Password)
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input class="form-control" data-val-required="*" name="Password" id="Password" type="text" value="@Model.Password">
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="form-group row">
+                                                <label class="col-md-3 text-AlignBySoftWare">
+                                                    @Html.LabelFor(m => m.Password)
+                                                </label>
+                                                <div class="col-md-9">
+                                                    @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(m => m.Password)
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="form-group row">
+                                        <label class="col-md-3 text-AlignBySoftWare">
+                                            @Html.LabelFor(m => m.Password)
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" data-val-required="*" name="Password" id="Password" type="text" value="@Model.Password">
+                                        </div>
+                                    </div>
+                                }
+                                @*}*@
+
+                                <div class="form-group row">
+                                    <label class="text-AlignBySoftWare col-md-3">تاریخ اعتبار</label>
+                                    <div class="col-md-9 card mb-0">
+                                        <div class="card-body p-2">
+                                            <div class="col-md-6 p-0">
+                                                @Html.EditorFor(m => m.FromValidityDate)
+                                            </div>
+
+                                            <div class="col-md-6 p-0">
+                                                @Html.EditorFor(m => m.ToValidityDate)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                @Html.EditorFor(m => m.TaxPercent)
+                                @if (Model.UserName != "admin")
+                                {
+                                    <div class="form-group row">
+                                        @if (Model.Id != Guid.Empty)
+                                        {
+                                            <label class="text-AlignBySoftWare col-md-3">وضعیت</label>
+                                            <div class="col-md-9">
+                                                @Html.CheckBoxFor(m => m.EmployeeActive)
+                                                &nbsp;
+                                                @Html.LabelFor(m => m.EmployeeActive)
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                <div class="form-group row">
+                                    <label class="text-AlignBySoftWare col-md-3"></label>
+                                    <div class="col-md-9">
+                                        @Html.CheckBoxFor(m => m.IsCallerActive)
+                                        &nbsp;
+                                        @Html.LabelFor(m => m.IsCallerActive)
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="text-AlignBySoftWare col-md-3">@Resources.Md.IsMale</label>
+                                    <div class="col-md-9 card mb-0">
+                                        <div class="card-body p-2">
+                                            <input @string.Format("{0}", Model.IsMale == true ? "Checked" : "") data-val="true" id="rb2NumberStatus" name="IsMale" type="radio" value="true">
+                                            <label for="rb2NumberStatus">@Resources.Md.Male</label>
+
+                                            <input @string.Format("{0}", Model.IsMale == false ? "Checked" : "") id="rb1NumberStatus" name="IsMale" type="radio" value="false">
+                                            <label for="rb1NumberStatus">@Resources.Md.Female</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="text-AlignBySoftWare col-md-3">@Resources.Md.Married</label>
+                                    <div class="col-md-9 card mb-0">
+                                        <div class="card-body p-2">
+                                            <input @string.Format("{0}", Model.Married == true ? "Checked" : "") id="rbMarry" name="Married" type="radio" value="true">
+                                            <label for="rbMarry">@Resources.Md.Marry</label>
+
+                                            <input @string.Format("{0}", Model.Married == false ? "Checked" : "") id="rbSingle" name="Married" type="radio" value="false">
+                                            <label for="rbSingle">@Resources.Md.Single</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                @Html.EditorFor(m => m.PrinterName)
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel">
+
+                        <label class="text-AlignBySoftWare col-md-3"></label>
+                        <div class="col-md-12">
+
+                            @if (Model.FileId != Guid.Empty)
+                            {
+                                <div class="col-md-4">
+                                    <label class="col-md-4 control-label">انتخاب عکس</label>
+                                    <div class="col-md-8">
+                                        <div class="fileinput fileinput-exists" data-provides="fileinput">
+
+                                            <div class="fileinput-new fileinput-preview thumbnail selectImageWebcame" style="width: 200px; height: 150px;">
+                                                <img src="@Model.ImgPath" style="max-width: 200px;" />
+                                            </div>
+                                            <div class="fileinput-preview fileinput-exists thumbnail selectImageWebcame" style="max-width: 200px; line-height: 10px;">
+                                                <img src="@Model.ImgPath" style="max-width: 200px;" />
+                                            </div>
+                                            <div>
+                                                <span class="btn red btn-file">
+                                                    <span class="fileinput-new">
+                                                        @Resources.Md.ChoosePhoto
+                                                    </span>
+                                                    <span class="fileinput-exists">
+                                                        @Resources.Md.ChangePhoto
+                                                    </span>
+                                                    <input type="hidden" value="" name="...">
+                                                    <input type="hidden" value="" name="">
+                                                    @* <input type="file" name="File" id="File" class="valid">*@
+
+                                                    <input type="file" name="File" id="File" class="valid" value="@Model.FileId" accept="image/*">
+                                                    @Html.HiddenFor(m => m.FileId)
+                                                    @Html.HiddenFor(m => m.ImgPath)
+
+
+                                                </span>
+
+                                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput" onclick="DeleteImg('@Model.FileId')">
+                                                    <span class="md-click-circle md-click-animate" style="height: 78px; width: 78px; top: 209px; left: 651px;"></span>
+                                                    @Resources.Md.Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*اثر انگشت*@
+                                if (Service.Consts.Public.CurrentUser.IsFingerPrint)
+                                {
+                                    <div class="col-md-4">
+                                        @if (_deviceList != null && _deviceList.Count > 0)
+                                        {
+                                            <div class="form-group row">
+                                                <label class="control-label col-form-label text-right col-md-4" for="TariffType">دستگاه اثر انگشت</label>
+                                                <div class="col-md-8 text-right">
+                                                    <select multi="Multiple" class="form-control select2" id="FingerPrintDevice" name="FingerPrintDevice" style=" width:100%">
+                                                        <option value="null">--</option>
+                                                        @foreach (var item in _deviceList)
+                                                        {
+                                                            <option value="@item.Value" data-title="@item.Text">@(item.Text ?? item.Value)</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        }
+
+
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label">اثرانگشت</label>
+                                            <div class="col-md-8">
+                                                <div class="fileinput fileinput-new" style="margin-right:20px;" data-provides="fileinput">
+                                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                        <img src="@(Model.Image != null ? "data:image/bmp;base64," + Model.Image : Url.Content("~/assets/global/img/text.png"))" id="scanfinger" />
+                                                        <input hidden value="@(Model.Image != null ? Model.Image : "")" id="Image" name="Image" type="text" />
+                                                    </div>
+                                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;">
+                                                    </div>
+                                                    <div>
+                                                        <span class="btn btn-danger btn-file">
+                                                            <span class="fileinput-new" id="scanEmployee">
+                                                                اثر انگشت
+                                                            </span>
+                                                            <span class="fileinput-exists">
+                                                                @Resources.Md.ChangePhoto
+                                                            </span>
+                                                        </span>
+                                                        <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+                                                            <span class="md-click-circle md-click-animate" style="height: 78px; width: 78px; top: 209px; left: 651px;"></span>
+                                                            @Resources.Md.Delete
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="col-md-4">
+                                    <label class="col-md-4 control-label">انتخاب عکس</label>
+                                    <div class="col-md-8">
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div class="fileinput-new thumbnail selectImageWebcame" style="width: 200px; height: 150px;">
+                                                <img src="~/assets/global/img/text.png" />
+                                            </div>
+                                            <div class="fileinput-preview fileinput-exists thumbnail selectImageWebcame" style="max-width: 200px; max-height: 150px; line-height: 10px;">
+                                            </div>
+                                            <div>
+                                                <span class="btn red btn-file">
+                                                    <span class="fileinput-new">
+                                                        @Resources.Md.ChoosePhoto
+                                                    </span>
+                                                    <span class="fileinput-exists">
+                                                        @Resources.Md.ChangePhoto
+                                                    </span>
+                                                    <input type="hidden" value="" name="...">
+                                                    <input type="file" name="File" id="File" accept="image/*">
+                                                </span>
+                                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+                                                    <span class="md-click-circle md-click-animate" style="height: 78px; width: 78px; top: 209px; left: 651px;"></span>
+                                                    @Resources.Md.Delete
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*اثر انگشت*@
+                                if (Service.Consts.Public.CurrentUser.IsFingerPrint)
+                                {
+                                    <div class="col-md-4">
+                                        @if (_deviceList != null && _deviceList.Count > 0)
+                                        {
+                                            <div class="form-group row">
+                                                <label class="control-label col-form-label text-right col-md-4" for="TariffType">دستگاه اثر انگشت</label>
+                                                <div class="col-md-8 text-right">
+                                                    <select multi="Multiple" class="form-control select2" id="FingerPrintDevice" name="FingerPrintDevice" style=" width:100%">
+                                                        <option value="null">--</option>
+                                                        @foreach (var item in _deviceList)
+                                                        {
+                                                            <option value="@item.Value" data-title="@item.Text">@(item.Text ?? item.Value)</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        }
+                                        <div class="form-group row">
+                                            <label class="col-md-4 control-label">اثرانگشت</label>
+                                            <div class="col-md-8">
+                                                <div class="fileinput fileinput-new" style="margin-right:20px;" data-provides="fileinput">
+                                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                                        <img src="@(Model.Image != null ? "data:image/bmp;base64," + Model.Image : Url.Content("~/assets/global/img/text.png"))" id="scanfinger" />
+                                                        <input hidden value="@(Model.Image != null ? Model.Image : "")" id="Image" name="Image" type="text" />
+                                                    </div>
+                                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;">
+                                                    </div>
+                                                    <div>
+                                                        <span class="btn btn-danger btn-file">
+                                                            <span class="fileinput-new" id="scanEmployee">
+                                                                اثر انگشت
+                                                            </span>
+                                                            <span class="fileinput-exists">
+                                                                @Resources.Md.ChangePhoto
+                                                            </span>
+                                                        </span>
+                                                        <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+                                                            <span class="md-click-circle md-click-animate" style="height: 78px; width: 78px; top: 209px; left: 651px;"></span>
+                                                            @Resources.Md.Delete
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            }
+                            <div class="col-md-4">
+                                @*وب کم*@
+                                <div class="fileinput fileinput-new" style="margin-right:20px;" data-provides="fileinput">
+                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                        @Html.Partial("WebCam")
+                                    </div>
+                                    <div>
+                                        <span class="btn btn-danger btn-file" onclick="take_snapshot()">
+                                            <span class="fileinput-new">
+                                                وب کم
+                                            </span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        @*امضای کاربر*@
+                        <div class="box-shadowDefult" style="margin:0 !important; height:580px; clear:both; width:100%">
+                            <h4 class="alert-block">*در صورتی که امضای جدید وارد کنید امضای قبلی پاک میشود.</h4>
+
+                            @if (Model.cbiSignImage != null)
+                            {
+                                <div style="float:right;"><img style="width:218px;height: 170px;" src="@(Model.cbiSignImage != null ? Model.cbiSignImage : Url.Content("~/assets/global/img/text.png")) " id="cbiSignImage" /></div>
+                                <div style="float:right;"><input hidden value="@(Model.cbiSignImage != null ? Model.cbiSignImage : "")" id="cbiSignImage" name="CustomerBasicInfo.cbiSignImage" type="text" /></div>
+
+                                //Comented By Samad  ---   @*<img src="@Url.Action("ShowImage","File",new { area="",id=Model.CustomerBasicInfo.SignFileId})" id="canvasResultDisplay" style="float:right;border: 2px solid;margin-top:10px;width: 50%;" />*@
+                            }
+                            @*<canvas id="can" width="400" height="400" style="position:absolute;top:20%;left:10%;border:2px solid;"></canvas>*@
+                            <div id="LightPenDiv" style="direction:ltr; float:left;">
+                                @Html.Partial("S_LightPen_Users", Model)
+                            </div>
+
+                            <img id="Path" style="position:absolute;top:10%;left:52%; display:none;">
+
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel">
+                        @using (Html.BsPanelWithCloseAndMinimize("دسترسی به :", colorPanel: ColorPanel.Warning))
+                        {
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <select multiple="multiple" class="multi-select" id="SelectedRoleGroups" name="SelectedRoleGroups[]">
+                                            @if (Model.SelectedRoleGroups != null)
+                                            {
+                                                foreach (var usergroup in Model.RoleGroups)
+                                                {
+
+                                                    <option id="@usergroup.Value" value="@usergroup.Value" @string.Format("{0}", Model.SelectedRoleGroups.Contains(Guid.Parse(usergroup.Value)) ? "selected" : " ")>@usergroup.Text </option>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                foreach (var usergroup in Model.RoleGroups)
+                                                {
+                                                    <option id="@usergroup.Value" value="@usergroup.Value">@usergroup.Text </option>
+                                                }
+                                            }
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="tab-pane fade" id="person_hoghogh" role="tabpanel">
+                        <div class="col-md-6">
+                            @Html.EditorFor(m => m.personHoghogh.BimehNumber)
+                            @Html.EditorFor(m => m.personHoghogh.BankName)
+                            @Html.EditorFor(m => m.personHoghogh.HesabNumber)
+                            @Html.EditorFor(m => m.personHoghogh.AaberNumber)
+                            @Html.EditorFor(m => m.personHoghogh.HoghoghePaye)
+                            @Html.EditorFor(m => m.personHoghogh.HagheMaskan)
+                            @Html.EditorFor(m => m.personHoghogh.OladCount)
+                            @Html.EditorFor(m => m.personHoghogh.PadasheBahrevari)
+                        </div>
+                        <div class="col-md-6">
+                            @Html.EditorFor(m => m.personHoghogh.BimehZarib)
+                            @Html.EditorFor(m => m.personHoghogh.EKarZarib)
+                            @Html.EditorFor(m => m.personHoghogh.Bon)
+                            @Html.EditorFor(m => m.personHoghogh.SaghfeKasreKar1Zarib)
+                            @Html.EditorFor(m => m.personHoghogh.Nahar)
+                            @Html.EditorFor(m => m.personHoghogh.Sobhane)
+                            @Html.EditorFor(m => m.personHoghogh.AyaboZahab)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card -->
+        </div>
+
+
+        <div class="form-group">
+            <div class="row" style="float:left;margin-left:10px;">
+                <div style="float:left;padding:5px;min-width: 135px;" id="btnSaveEmployee">
+                    <button type="button" class="btn btn-block bg-gradient-success btn-flat OperationButton">
+                        <i class="fa fa-save"></i>
+                        @Resources.Md.Save
+                    </button>
+                </div>
+                <div style="float:left;padding:5px;min-width: 135px;">
+                    <a class="btn btn-block bg-danger btn-flat OperationButton" href="@Url.Action("Index", "Register", new { Area = "UserManagement" })">
+                        @Resources.Md.Cancel
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+    }
+}
+
+
+
+@*@section scripts
+    {*@
+<script src="~/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js"></script>
+<script src="~/Scripts/View/UploadImage.js?updated=1"></script>
+<script src="@Url.Content("~/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js")"></script>‍‍‍‍
+<script src="~/Scripts/chosen/chosen.jquery.min.js"></script>
+<!-- iCheck -->
+<script src="~/Content/AdminResponsive3.0/plugins/iCheck/icheck.min.js"></script>
+@*/////////////////////////////////////////////////////شروع امضا کاربر///////////////////////////////////////////////////////////*@
+<script>
+    $(function () {
+        UserActive();
+        $('.select2').select2();
+    });
+
+    $('input').iCheck({
+        checkboxClass: 'icheckbox_square-green',
+        radioClass: 'iradio_flat-green',
+        increaseArea: '20%'
+    });
+
+    function DeleteDocument() {
+
+        bootbox.confirm({
+            message: 'از حذف گزينه هاي انتخاب شده مطمئن هستيد؟',
+            buttons: {
+                confirm: {
+                    label: MinaDent.Common.yesBtnTxt,
+                    className: "red",
+                    callback: function () {
+
+                        erase();
+                    }
+                },
+                cancel: {
+                    label: MinaDent.Common.noBtnTxt,
+                    className: "blue"
+                }
+            },
+            callback: function (result) {
+
+                if (result) {
+                    erase();
+                }
+                else {
+                    console.log('عملیات حذف با موفقیت انجام شد' + result);
+                }
+            }
+        });
+    }
+    function SaveLightPen() {
+
+        $.ajax({
+            type: "POST",
+            url: "/Admin/Register/Create",
+            data: {
+                File: canvas.toDataURL(),
+                //customerId: $("#CustomerId").val(),
+                //TypeId: $("#TypeId").val(),
+            }
+        }).done(function (o) {
+            window.location = "/Admin/Register/Index";
+        });
+
+        $.get("/Home/Headerbar").done(function (result) {
+            $("#headerBari").html(result);
+        });
+    }
+
+    function SaveLightPenBySess() {
+
+        $.ajax({
+            type: "POST",
+            url: "/Admin/Register/SaveLightPenBySess",
+            data: {
+                canvas: canvas.toDataURL()
+            }
+        }).done(function (o) {
+            if (o != true)
+                alert(o);
+            else
+                alert("امضای شما با موفقیت به ثبت رسید");
+        });
+
+    }
+    $("#Address").css("height", "141px");
+    $('.multi-select').multiSelect();
+    function removeImg(Id) {
+
+
+        $.ajax({
+            url: "/Admin/Register/DeleteRow",
+            type: 'GET',
+            scriptCharset: "utf-16",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-16",
+            data: { id: Id },
+            success: function (res) {
+
+                $('#Modal').modal('hide');
+                $("#" + Id + "").remove();
+            }, error: function () {
+                AlertDialog("متاسفانه عملیات با موفقیت انجام نشد", "خطا", 'error');
+            }
+        });
+    }
+    function DeleteImg(Id) {
+
+
+        $.ajax({
+            url: "/Admin/Register/DeleteImg",
+            type: 'GET',
+            scriptCharset: "utf-16",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-16",
+            data: { id: Id },
+            success: function (res) {
+
+                $("#FileId").val('00000000-0000-0000-0000-000000000000');
+            }, error: function () {
+                AlertDialog("متاسفانه عملیات با موفقیت انجام نشد", "خطا", 'error');
+            }
+        });
+    }
+
+
+
+    $("#btnSaveEmployee").click(function (e) {
+        var _UserType = $("#UserType").val();
+        if ($("#empContarctWithNM").is(":checked") && ($("#NezamCode").val() == null || $("#NezamCode").val() == undefined || $("#NezamCode").val() == "")) {
+            AlertDialog("لطفا کد نظام پزشکی را وارد نمایید", "خطا");
+            return;
+        }
+        else {
+            if (_UserType != null && _UserType != undefined && _UserType != "") {
+                $("form[name=PubUserFrm]").submit();
+            }
+            else {
+                AlertDialog("لطفا سمت شغلی را وارد نمایید", "خطا");
+            }
+        }
+    });
+    $('#IsUserActive').on('ifChanged', function (event) {
+
+        UserActive();
+    });
+    function UserActive() {
+
+        if ($("#IsUserActive").is(":checked")) {
+            $("#UserName").attr("disabled", false);
+            $("#Password").attr("disabled", false);
+        } else {
+            $("#UserName").attr("disabled", true);
+            $("#Password").attr("disabled", true);
+        }
+    }
+    function SaveUser() {
+
+
+        if ($("#IsUserActive").is(":checked")) {
+            var _username =$("#UserName").val();
+            var _password =$("#Password").val();
+            if (_username == "" || _username == undefined || _username == null) {
+                AlertDialog("لطفا نام کاربری را وارد نمایید", "اخطار");
+                return false;
+            }
+            if (_password == "" || _password == undefined || _password == null) {
+                AlertDialog("لطفا پسوورد را وارد نمایید", "اخطار");
+                return false;
+            }
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Create", "Register")",
+            data: $("#PubUserFrm").serialize(),
+        beforeSend: function () {
+            showWait();
+        },
+        success: function (data, textStatus, request) {
+        },
+        complete: function () {
+            hideWait();
+            window.location.href = '@Url.Action("Index", "Register")';
+        }
+    });
+    return false;
+    }
+
+</script>

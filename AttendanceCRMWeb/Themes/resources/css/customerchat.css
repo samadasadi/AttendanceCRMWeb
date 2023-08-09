@@ -1,0 +1,299 @@
+.chatExternalbox {
+z-index: 9999999;
+font-family: Tahoma;
+background-color: #fff;
+background-clip: padding-box;
+border-width: 1px 1px 1px 6px;
+box-shadow: inset 1px 1px 0 rgba(0,0,0,.1),inset 0 -1px 0 rgba(0,0,0,.07);
+box-shadow: rgba(0,0,0,0.2) 0 2px 6px;
+position: fixed;
+position: expression('absolute');
+width: 350px;
+bottom: 0px;
+right: 26px;
+display: block;
+border: solid 1px #DDD;
+}
+.chatExternalbox.chatExternalmini {
+width: 220px;
+}
+#chatExternalbox .chatExternalboxhead {
+height: 18px;text-align: left;direction: ltr;padding: 6px;cursor:pointer;
+}
+
+#chatExternalbox .chatExternalboxtitle {
+float: right;
+font-size: 9pt;
+}
+
+#chatExternalbox .chatExternalclose {
+background-image: url('../images/chat.png');
+background-position: -22px -22px;
+width: 11px;
+height: 11px;
+display: block;
+margin: 4px;
+cursor: pointer;
+float: left;
+}
+#chatExternalbox .chatExternalminus {
+background-image: url('../images/chat.png');
+background-position: -22px -10px;
+display: block;
+width: 11px;
+height: 11px;
+float: left;
+margin: 3px;
+}
+#chatExternalbox .chatExternalmaxim{
+background-image: url('../images/chat.png');
+background-position: -22px 0px;
+display: block;
+width: 11px;
+height: 11px;
+float: left;
+margin: 3px;
+}
+
+.chatExternalboxblink {
+	background-color: #21B4E4
+}
+
+
+#chatExternalbox .chatExternalboxcontent 
+{
+	font-family: tahoma;
+	font-size: 13px;
+	color: #333333;
+	height:200px;
+	overflow-y:auto;
+	overflow-x:auto;
+	padding:7px;
+	border-left:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+	border-bottom:1px solid #eeeeee;
+	background-color: #ffffff;
+	line-height: 1.3em;
+}
+
+#chatExternalbox .chatExternalboxtool { 
+height: 65px;
+line-height: 25px;
+border: solid 1px #DDD;
+border-top:none;
+position: relative;
+}
+#chatExternalbox .chatExternaluserpic {
+float: left;
+margin: 7px 10px;
+}
+#chatExternalbox .chatExternaluserpic img{
+border-width: 0px;
+width: 50px;
+height: 50px;
+border: solid 1px white;
+border-radius: 3px;
+}
+#chatExternalbox .chatExternalusername {
+font-size: 8pt;
+font-weight: bold;
+color: #424242;
+padding:0 10px;
+}
+#chatExternalbox .operator-role {
+font-size: 7pt;
+float: left;
+line-height: 8px;
+color: gray;
+
+}
+
+.chatExternalbox #rating {
+position: absolute;
+bottom: 7px;
+height: 19px;
+left: 70px;
+display:none;
+}
+.chatExternalbox a.rate-bad {
+float: right;
+width: 22px;
+height: 19px;
+background-position: 0px -100px;
+}
+.chatExternalbox .rating-button {
+display: block;
+background-image: url('../images/chat.png');
+background-repeat: no-repeat;
+cursor: pointer;
+z-index: 5001;
+}
+.chatbox span.rate-good {
+height: 19px;
+line-height: 19px;
+font-size: 10px;
+background-image: url('../images/chat.png');
+background-repeat: repeat-x;
+background-position: 0px -140px;
+float: left;
+padding: 0px 4px 0 2px;
+cursor: pointer;
+z-index: 5001;
+}
+.chatExternalbox a.rate-good {
+float: right;
+padding-left: 20px;
+position: relative;
+height: 19px;
+color: #777;
+background-position: 0px -79px;
+top: 0.1px;
+} 
+.rating-button.rate-bad:hover {
+background-position: 0px -121px;
+}
+.rating-button.rate-good:hover {
+background-position: 0px -58px;
+}
+
+
+.chatExternalboxinput {
+border: 1px solid #CCC;
+border-top: 1px solid #DDD; 
+}
+.emoticonSelect {
+width: 20px;
+height: 19px;
+float: right;
+background-image: url('../images/chat.png');
+background-position: 0 -19px;
+margin: 6px 5px;
+cursor:pointer;
+}
+.emoticonSelect:hover
+{ 
+    background-position:0 -38px;
+}
+
+.chatExternalboxtextarea {
+max-width: 310px;
+min-width: 310px;
+height: 25px;
+padding: 3px;
+border: none;
+margin: 1px;
+overflow: hidden;
+resize: none; 
+line-height: 25px;
+font-size: 8pt;
+outline:none;
+font-family: tahoma;
+}
+
+.chatExternalboxtextareaselected {
+	border: none;
+}
+ 
+ .chatExternalbox-first{ 
+border: solid 1px #DBDBDB;
+padding: 10px 35px 10px 35px;
+font-size:9pt}
+
+.chatExternalbox-message{
+height: 310px; 
+} 
+
+.chatExternalbox input[type=text],.chatExternalbox select
+{
+    font-family: tahoma;
+padding: 5px;
+color: #2B2B2B;
+outline: none;
+border: solid 1px #BBB;
+width: 150px;
+margin: 3px;   
+}
+#startchatExternal {
+background-color: #EEE;
+border: solid 1px #DDD;
+font-family: tahoma;
+padding: 5px 8px;
+cursor:pointer;
+}
+#startchatExternal:hover {
+background-color: #D5D2D2;
+border: solid 1px #B1B1B1;
+}
+
+.wait-chatExternal {
+background-color: white;
+width: 80%;
+height: 80px;
+margin: auto;
+top: 50px;
+position: relative;
+border: solid 1px #CACACA;
+box-shadow: 2px 2px 2px #E9E9E9;
+padding:0 10px;
+text-align: center;
+font-size: 10pt;
+}
+.wait-chatExternal .wait-horizontaly{margin: 5px auto;}
+.wait-horizontaly
+{
+    background-image: url('../images/Ballsline.gif');
+    width:60px;
+    height:5px;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+
+.chatExternalboxmessage { min-height: 40px;
+}
+.chatExternalboxmessage .chatExternaluserpic
+{
+    border-width:0px;width: 30px;height: 30px;margin: 0 3px;
+}
+.chatExternalboxmessage:hover
+{}
+.chatExternalboxmessagecontent {background-color: #E9E9E9;background-image: -webkit-linear-gradient(top,#F8F8F8,#EFEFEF);background-image: -moz-linear-gradient(top,#F8F8F8,#EFEFEF);border: solid 1px #DDD;padding:1px 10px 3px 10px;border-radius: 2px;min-height: 24px;box-shadow: 1px 1px 2px #999;position: relative;margin: 4px;max-width: 155px;}
+.chatExternalcontentArrow{background-image: url('../images/chat.png');height: 14px;width: 10px;position: absolute;top:3px;}
+.chatExternalcontentArrow.arrow-left_right{background-position: -23px -122px;left:-10px;}    
+.chatExternalcontentArrow.arrow-right_left{background-position: -31px -122px;right:-10px;}    
+.chatExternalboxmessage{overflow:hidden;}
+.itemmessage{display:block;}
+
+.left_right {float: left;}
+.right_left {float: right;}
+
+#chatExternalbox .chatExternalerror {
+border: solid 1px #997171;
+background-color: #FFE7E7;
+}
+
+.popupemoticon
+{
+    display:none;
+    height: 50px;
+    width: 195px;
+    position: absolute;
+    bottom: 50px;
+    right: 5px;
+    background-color: #ECECEC;
+    border: solid 1px #9C9C9C;
+    box-shadow: 2px 2px 1px #ddd;
+}
+.popupemoticon img {
+margin: 4px;
+cursor:pointer;
+}
+.popupemoticon-arrow
+{
+    background-image: url('../images/chat.png?v=12');
+    background-position: -21px -38px;
+    height: 14px;
+    width: 21px;
+    position: absolute;
+bottom: -14px;
+right: 5px;
+}

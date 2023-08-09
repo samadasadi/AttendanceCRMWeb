@@ -1,0 +1,225 @@
+﻿
+.soundrecorder-container {
+    height: 80px;
+    background-color: #f1f1f1;
+    border: solid 1px #ddd;
+    overflow: hidden;
+}
+
+.soundrecorder-margin {
+    margin-left: 130px;
+}
+
+.soundrecorder-buttons {
+    overflow: hidden;
+    float: left;
+    margin-left: -130px;
+}
+
+.soundrecorder-record-button {
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+}
+
+    .soundrecorder-record-button.stop {
+        -webkit-animation: animate-splash-red 2s infinite;
+        -moz-animation: animate-splash-red 2s infinite;
+        animation: animate-splash-red 2s infinite;
+    }
+
+    .soundrecorder-record-button.record::after {
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        content: '';
+        border-radius: 100%;
+        -moz-border-radius: 100%;
+        -webkit-border-radius: 100%;
+        box-shadow: inset 1px 1px 5px #A30303;
+        -moz-box-shadow: inset 1px 1px 5px #A30303;
+        -webkit-box-shadow: inset 1px 1px 5px #A30303;
+    }
+
+    .soundrecorder-record-button.stop::after {
+        width: 17px;
+        height: 17px;
+        background-color: #555;
+        position: absolute;
+        top: 22px;
+        left: 22px;
+        content: '';
+        box-shadow: inset 1px 1px 5px #000;
+        -moz-box-shadow: inset 1px 1px 5px #000;
+        -webkit-box-shadow: inset 1px 1px 5px #000;
+    }
+
+@-webkit-keyframes animate-splash-red {
+    0% {
+        background-color: #fff;
+    }
+
+    50% {
+        background-color: #FFDFDF;
+    }
+
+    100% {
+        background-color: #fff;
+    }
+}
+
+@-moz-keyframes animate-splash-red {
+    0% {
+        background-color: #fff;
+    }
+
+    50% {
+        background-color: #FFDFDF;
+    }
+
+    100% {
+        background-color: #fff;
+    }
+}
+
+@keyframes animate-splash-red {
+    0% {
+        background-color: #fff;
+    }
+
+    50% {
+        background-color: #FFDFDF;
+    }
+
+    100% {
+        background-color: #fff;
+    }
+}
+
+.soundrecorder-play-button {
+    width: 40px;
+    height: 40px;
+    margin: 20px 5px 0 5px;
+}
+
+    .soundrecorder-play-button.play::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 14px;
+        left: 18px;
+        border-color: transparent transparent transparent black;
+        border-style: solid;
+        border-width: 6px;
+    }
+
+    .soundrecorder-play-button.stop::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 16px;
+        left: 15px;
+        background-color: #000;
+        width: 10px;
+        height: 10px;
+    }
+
+.soundrecorder-play-button, .soundrecorder-record-button {
+    float: left;
+    background-color: white;
+    border-radius: 100%;
+    -moz-border-radius: 100%;
+    -webkit-border-radius: 100%;
+    box-shadow: 1px 1px 5px 1px #ccc;
+    -moz-box-shadow: 1px 1px 5px 1px #ccc;
+    -webkit-box-shadow: 1px 1px 5px 1px #ccc;
+    transition: all 300ms;
+    -moz-transition: all 300ms;
+    -webkit-transition: all 300ms;
+    position: relative;
+    cursor: pointer;
+}
+
+    .soundrecorder-play-button:hover, .soundrecorder-record-button:hover {
+        box-shadow: 1px 1px 5px 1px #999;
+        -moz-box-shadow: 1px 1px 5px 1px #999;
+        -webkit-box-shadow: 1px 1px 5px 1px #999;
+    }
+
+    .soundrecorder-record-button:active, .soundrecorder-play-button:active {
+        transform: scale(0.90);
+        -moz-transform: scale(0.90);
+        -webkit-transform: scale(0.90);
+    }
+
+.soundrecorder-data {
+    float: left;
+    width: 100%;
+}
+
+.soundrecorder-visualization {
+    background-color: black;
+    height: 40px;
+    margin: 10px 10px 0;
+    position: relative;
+}
+
+    .soundrecorder-visualization .h-line {
+        height: 1px;
+        z-index: 1;
+        background-color: #EEE;
+        position: absolute;
+        top: 20px;
+        left: 5px;
+        right: 5px;
+    }
+
+    .soundrecorder-visualization .v-line {
+        position: absolute;
+        width: 1px;
+        background-color: #EEE;
+        z-index: 1;
+    }
+
+    .soundrecorder-visualization .bg-line {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        top: 0;
+        background: linear-gradient(to left,#000,#5D8392 50%);
+        -moz-background: linear-gradient(to left,#000,#5D8392 50%);
+        -webkit-background: linear-gradient(to left,#000,#5D8392 50%);
+        transition: all 300ms;
+        -moz-transition: all 300ms;
+        -webkit-transition: all 300ms;
+        z-index: 0;
+    }
+
+.soundrecorder-message {
+    float: right;
+    margin: 0 10px;
+    line-height: 30px;
+}
+
+.soundrecorder-time {
+    float: left;
+    margin: 0 10px;
+    line-height: 30px;
+}
+
+.soundrecorder-flashcontent #recorderApp {
+    position: absolute;
+    left: -100px;
+    top: -100px;
+    z-index: 2000;
+}
+
+    .soundrecorder-flashcontent #recorderApp.floating {
+        top: 50%;
+        left: 50%;
+        margin-left: -120px;
+        margin-top: -80px;
+    }

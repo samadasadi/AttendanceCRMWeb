@@ -1,0 +1,23 @@
+﻿@model object
+@{
+    var required = ViewData.ModelMetadata.IsRequired;
+}
+<style>
+    .select2 select2-container {
+        direction: rtl;
+    }
+</style>
+<div class="form-group row @string.Format("{0}",required?"rqd":"")">
+    @Html.LabelFor(model => model, htmlAttributes: new { @class = "control-label col-form-label col-md-3 text-right" })
+    <div class="col-md-9 text-right">
+        @if (ViewData[ViewData.ModelMetadata.PropertyName] != null)
+        {
+            @Html.DropDownListFor(model => model, (SelectList)ViewData[ViewData.ModelMetadata.PropertyName], "جستجو کنید", new { @class = "form-control select2", style = "width:100%;direction: rtl;" })
+        }
+        else
+        {
+            @Html.DropDownListFor(model => model, new List<SelectListItem>() { }, "جستجو کنید", new { @class = "form-control select2", style = "width:100%;direction: rtl;" })
+        }
+        @Html.ValidationMessageFor(model => model, "", new { @class = "text-danger" })
+    </div>
+</div>

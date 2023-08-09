@@ -1,0 +1,219 @@
+﻿
+@{
+    var Code = (string)ViewBag.Code;
+    var CodeParent = (string)ViewBag.CodeParent;
+    var Level = (string)ViewBag.Level;
+    var text = (string)ViewBag.Text;
+
+}
+
+
+<input type="hidden" hidden value="@Code" id="TreatmentCode"/>
+
+@if (Code.StartsWith("01314") && Level == "4")
+{
+    <div class="card card-primary card-outline card-tabs">
+        <div class="card-header p-0 pt-1 border-bottom-0">
+            <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active"  data-toggle="pill" href="#tabCoding_1" role="tab"  aria-selected="true">@Resources.Md.NewRecord</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"data-toggle="pill" href="#tabCoding_2" role="tab"  aria-selected="false">@Resources.Md.NewProfile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="#tabCoding_3" role="tab"  aria-selected="false">@Resources.Md.TreatmentConsiderations</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content" id="custom-tabs-two-tabContent">
+                <div class="tab-pane fade show active" id="tabCoding_1" role="tabpanel" >
+                    @Html.Action("GeBasicCodingVm", new { code = Code })
+                </div>
+                <div class="tab-pane fade" id="tabCoding_2" role="tabpanel" >
+                    @Html.Action("GridListProfile", "Profile", new { code = Code })
+                </div>
+                <div class="tab-pane fade" id="tabCoding_3" role="tabpanel">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-form-label col-md-1" for="title">@Resources.Md.Text</label>
+                            @Html.LabelFor(model => model, htmlAttributes: new { @class = "control-label col-form-label col-md-3" })
+                            <div class="col-md-10">
+                                <textarea class="form-control" Row="15" id="Text">@text</textarea>
+                            </div>
+                        </div>
+                        <a class="btn btn-success" style="float: left;" href="#" onclick="MinaDent.Coding.SaveTreatmentConsiderations()">@Resources.Md.Registration</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+}
+else if (Code.StartsWith("01314") && Level == "5")
+{
+    <div class="card card-primary card-outline card-tabs">
+        <div class="card-header p-0 pt-1 border-bottom-0">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="pill" href="#tabCoding_1" role="tab" aria-selected="true">@Resources.Md.Pateint</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="#tabCoding_2" role="tab" aria-selected="false">@Resources.Md.Doctor</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="#tabCoding_3" role="tab" aria-selected="false">@Resources.Md.Assistant</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="#tabCoding_4" role="tab" aria-selected="false">هزینه مواد</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="#tabCoding_5" role="tab" aria-selected="false">@Resources.Md.TreatmentConsiderations</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body p-1">
+            <div class="tab-content" id="custom-tabs-two-tabContent">
+                <div class="tab-pane fade show active" id="tabCoding_1" role="tabpanel">
+
+                </div>
+                <div class="tab-pane fade" id="tabCoding_2" role="tabpanel">
+
+                </div>
+                <div class="tab-pane fade" id="tabCoding_3" role="tabpanel">
+
+                </div>
+                <div class="tab-pane fade" id="tabCoding_4" role="tabpanel">
+
+                </div>
+                <div class="tab-pane fade" id="tabCoding_6" role="tabpanel">
+
+                </div>
+                <div class="tab-pane fade" id="tabCoding_5" role="tabpanel">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label col-form-label col-md-1" for="title">@Resources.Md.Text</label>
+                            @Html.LabelFor(model => model, htmlAttributes: new { @class = "control-label col-form-label col-md-3" })
+                            <div class="col-md-10">
+                                <textarea class="form-control" Row="15" id="Text">@text</textarea>
+                            </div>
+                        </div>
+                        <a class="btn btn-success" style="float: left;" href="#" onclick="MinaDent.Coding.SaveTreatmentConsiderations()">@Resources.Md.Registration</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (CodeParent == "013" && Level == "4")
+{
+    <div class="card card-primary card-outline card-tabs">
+        <div class="card-header p-0 pt-1 border-bottom-0">
+            <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active"  data-toggle="pill" href="#custom-tabs-two-home" role="tab"  aria-selected="true">@Resources.Md.NewRecord</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="pill" href="#custom-tabs-two-profile" role="tab" aria-selected="false">@Resources.Md.NewProfile</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content" id="custom-tabs-two-tabContent">
+                <div class="tab-pane fade show active" id="" role="tabpanel">
+                    @Html.Action("GeBasicCodingVm", new { code = Code })
+                </div>
+                <div class="tab-pane fade" id="" role="tabpanel">
+                    @Html.Action("GridListProfile", "Profile", new { code = Code })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else if (CodeParent.StartsWith("030"))
+{
+    @Html.Action("GeDiscountVm", new { code = Code })
+}
+else if (CodeParent == "013" && Level == "2")
+{
+    @Html.Action("GeBasicCodingVm", new { code = Code, isShowButtonAdd = false })
+}
+else if ((CodeParent == "022" && Level != "2") || (CodeParent == "018" && int.Parse(Level) > 3))
+{
+    @Html.Action("GridListProfile", "Profile", new { code = Code })
+}
+else
+{
+    @Html.Action("GeBasicCodingVm", new { code = Code })
+}
+
+
+
+
+<script>
+
+    $(function () {
+        LoadAllTreatmentVoucher();
+    });
+
+    function LoadAllTreatmentVoucher() {
+        AjaxCallAction('GET', '/WareHousee/SindhWarehouse/GetTreatment_Voucher', { DoingChildCode: $("#TreatmentCode").val() }, true,
+            function (res) {
+                if (!res.error) {
+                    $("#tabCoding_6").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, false);
+    }
+
+
+
+
+    function Create_TreatmentVoucher() {
+        InitModal('', '/WareHousee/SindhWarehouse/CreateTreatment_Voucher', { DoingChildCode: $("#TreatmentCode").val() }, function () { Save_TreatmentVoucher(); }, false);
+    }
+
+    function Edit_TreatmentVoucher(id) {
+        InitModal('', '/WareHousee/SindhWarehouse/CreateTreatment_Voucher', { Id: id }, function () { Save_TreatmentVoucher(); }, false);
+    }
+
+    function Delete_TreatmentVoucher(id) {
+        ConfirmDelete('GET', '/WareHousee/SindhWarehouse/DeleteTreatment_Voucher', { Id: id }, function () { LoadAllTreatmentVoucher(); });
+    }
+
+    function Save_TreatmentVoucher() {
+
+        var _vchitmPartID = $('#vchitmPartID').val();
+        var _vchitmExQty = $('#vchitmExQty').val();
+        var _vchitmUnitPrice = $('#vchitmUnitPrice').val();
+
+        if (_vchitmPartID == null || _vchitmPartID == '' || _vchitmPartID == undefined) {
+            AlertDialog('لطفا نام کالا را انتخاب نمایید', '', 'error');
+            return;
+        }
+        if (_vchitmExQty == null || _vchitmExQty == '' || _vchitmExQty == undefined || _vchitmExQty == 0 || _vchitmExQty == '0') {
+            AlertDialog('لطفا تعداد صادره را وارد نمایید', '', 'error');
+            return;
+        }
+
+
+        AjaxCallAction("POST", "/WareHousee/SindhWarehouse/SaveTreatment_Voucher", $("#TreatmentVoucherFrm").serialize(), true, function (res) {
+
+            if (!res.error) {
+                CloseModal();
+                LoadAllTreatmentVoucher();
+            }
+            else {
+                AlertDialog(res.message, '', 'error');
+            }
+        }, true);
+    }
+
+</script>

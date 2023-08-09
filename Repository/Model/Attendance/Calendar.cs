@@ -29,7 +29,6 @@ namespace Repository.Model
 
 
         public DateTime ModifiedDate { get; set; }
-        public Guid MedicalCenterId { get; set; }
         public bool IsDeleted { get; set; }
 
     }

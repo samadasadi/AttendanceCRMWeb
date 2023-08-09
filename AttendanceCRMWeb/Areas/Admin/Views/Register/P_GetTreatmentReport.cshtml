@@ -1,0 +1,113 @@
+﻿
+
+@model ViewModel.BasicInfo.DoctorDoingReport
+
+
+<div class="card card-danger card-outline">
+    <div class="card-header with-border">
+        <h3 class="card-title">صورت وضعیت</h3>
+
+        <div class="box-tools pull-right">
+            @*<button type="button" class="btn btn-default btn-sm" onclick="refreshPersonelReport()"><i class="fa fa-refresh"></i></button>*@
+        </div>
+    </div>
+    <!-- /.box-header -->
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-sm-3 col-xs-6">
+                <div class="description-block">
+                    <span class="description-percentage text-green"><i class=""></i> </span>
+                    <h5 class="description-header" style="margin-bottom: 14px;">@string.Format("{0:#,0}", Model.doctorWorkLog.TotalRealPrice)</h5>
+                    <span class="description-text text-red">کل کارکرد</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-3 col-xs-6">
+                <div class="description-block border-right">
+                    <span class="description-percentage text-yellow"><i class=""></i> </span>
+                    <h5 class="description-header" style="margin-bottom: 14px;">@string.Format("{0:#,0}", Model.doctorWorkLog.TotalPrices)</h5>
+                    <span class="description-text text-blue">هزینه درمان</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+
+            <div class="col-sm-3 col-xs-6">
+                <div class="description-block border-right">
+                    <span class="description-percentage text-green"><i class=""></i> </span>
+                    <h5 class="description-header" style="margin-bottom: 14px;">@string.Format("{0:#,0}", Model.doctorWorkLog.Total_MatabReceived)</h5>
+                    <span class="description-text text-yellow">دریافتی مطب</span>
+                </div>
+            </div>
+            <div class="col-sm-3 col-xs-6">
+                <div class="description-block border-right">
+                    <span class="description-percentage text-"><i class=""></i> </span>
+                    <h5 class="description-header" style="margin-bottom: 14px;">@string.Format("{0:#,0}", Model.doctorWorkLog.TotalRecevied)</h5>
+                    <span class="description-text text-green">کل دریافتی</span>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- ./box-body -->
+    <div class="card-footer">
+
+        <div class="row">
+
+
+            <!-- /.col -->
+            <div class="col-sm-2 col-xs-6">
+                <div class="description-block">
+                    <span class="description-percentage text-green"><i class=""></i> </span>
+                    <h5 class="description-header" style="margin-bottom: 14px;">@Model.doctorWorkLog.Total_PercentOfTotalPriceStr</h5>
+                    <span class="description-text text-yellow">سهم کارکرد</span>
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-6">
+                <div class="description-block ">
+                    <span class="description-percentage text-red"><i class=""></i> </span>
+                    <h5 class="description-header" style="margin-bottom: 14px;">@Model.doctorWorkLog.Total_NetShareStr</h5>
+                    <span class="description-text text-blue">سهم کارکرد با احتساب تخفیف</span>
+                </div>
+            </div>
+
+            <div class="col-sm-2 col-xs-6">
+                <div class="description-block ">
+                    <span class="description-percentage text-"><i class=""></i> </span>
+                    <h5 class="description-header" style="margin-bottom: 14px;direction: ltr;">@string.Format("{0:#,0}", ((Model.doctorWorkLog.NetShare_P + Model.doctorWorkLog.NetShare_F) - Model.doctorWorkLog.TotalRecevied))</h5>
+                    <span class="description-text text-green">مانده</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+
+
+
+            <div class="col-sm-4 col-xs-6">
+                <div class="description-block border-right">
+                    <span class="description-percentage text-red"><i class=""></i> </span>
+                    <h5 class="description-header" style="margin-bottom: 14px;">@string.Format("{0:#,0}", Model.doctorWorkLog.Percent_of_Total_MatabReceived)</h5>
+                    <span class="description-text text-blue">سهم کارکرد از دریافتی مطب</span>
+                </div>
+            </div>
+
+            <div class="col-sm-2 col-xs-6">
+                <div class="description-block">
+                    <span class="description-percentage text-"><i class=""></i> </span>
+                    <h5 class="description-header" style="margin-bottom: 14px;direction: ltr;">@string.Format("{0:#,0}", (Model.doctorWorkLog.Percent_of_Total_MatabReceived - Model.doctorWorkLog.TotalRecevied))</h5>
+                    <span class="description-text text-green">مانده</span>
+                </div>
+                <!-- /.description-block -->
+            </div>
+
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.box-footer -->
+</div>
+
+
+

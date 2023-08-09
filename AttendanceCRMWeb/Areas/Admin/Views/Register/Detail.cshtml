@@ -1,0 +1,153 @@
+﻿@model ViewModel.UserManagement.UserVm
+@using Utility;
+@using Utility.HtmlHelpers;
+
+@{
+    var frmSecurityDetail = (ViewModel.Security.FormSecurity)ViewBag.FormSecurity;
+}
+<link href="@Url.Content("~/assets/admin/pages/css/timeline-rtl.css")" rel="stylesheet" />
+<link href="@Url.Content("~/assets/admin/pages/css/RatingStars.css")" rel="stylesheet" />
+
+@Html.HiddenFor(m => m.Id)
+
+<div class="card">
+    <div class="card-body">
+        @using (Html.CreateDivForBootstrap())
+        {
+            <div class="col-md-8 margin-top-20">
+                @using (Html.CreateDivForBootstrap())
+                {
+                    <div class="form-group">
+                        <label class="control-label col-form-label col-md-4">
+                            نام :
+                        </label>
+                        <div class="col-md-8">
+                            @Model.Name
+                        </div>
+                    </div>
+                }
+                @using (Html.CreateDivForBootstrap())
+                {
+                    <div class="form-group">
+                        <label class="control-label col-form-label col-md-4">
+                            نام خانوادگی :
+                        </label>
+                        <div class="col-md-8">
+                            @Model.Family
+                        </div>
+                    </div>
+                }
+                @using (Html.CreateDivForBootstrap())
+                {
+                    <div class="form-group">
+                        <label class="control-label col-form-label col-md-4">
+                            تلفن :
+                        </label>
+                        <div class="col-md-8">
+                            @Model.PhoneNo
+                        </div>
+                    </div>
+                }
+                @using (Html.CreateDivForBootstrap())
+                {
+                    <div class="form-group">
+                        <label class="control-label col-form-label col-md-4">
+                            تاریخ ایجاد :
+                        </label>
+                        <div class="col-md-8">
+                            @DateTimeOperation.PersianDateString(Model.ModifiedDate)
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col-md-4">
+                @if (Model.FileId != null && Model.FileId != Guid.Empty)
+                {
+                    <img src="@Model.ImgPath" class="img-circle img-fluid" style="width:150px;height:150px;" />
+                }
+                else
+                {
+                    <img src="~/Content/Image/user.png" class="img-circle img-fluid" style="width:150px;height:150px;" />
+                }
+
+            </div>
+        }
+        @if (frmSecurityDetail.Update)
+        {
+            <a class="btn btn-success" data-toggle="ویرایش" data-placement="top" title="ویرایش" href="/Admin/Register/Edit?id=@Model.Id">
+                <i class="fa fa-edit"></i>
+            </a>
+        }
+        else
+        {
+            <a class="btn btn-icon-only green" data-toggle="ویرایش" data-placement="top" title="ویرایش" onclick="AlertDialog('شما مجوز انجام این عملیات را ندارید', 'خطا')">
+                <i class="fa fa-edit"></i>
+            </a>
+        }
+        @if (frmSecurityDetail.Delete)
+        {
+            <a class="btn btn-icon-only red" data-toggle="حذف" data-placement="top" title="حذف" onclick="DeleteModal('@Model.Id')">
+                <i class="fa fa-trash"></i>
+            </a>
+        }
+        else
+        {
+            <a class="btn btn-icon-only red" data-toggle="حذف" data-placement="top" title="حذف" onclick="AlertDialog('شما مجوز انجام این عملیات را ندارید', 'خطا')">
+                <i class="fa fa-trash"></i>
+            </a>
+        }
+    </div>
+</div>
+<script>
+    function DeleteModal(userId) {
+        
+        bootbox.confirm({
+            message: 'از حذف گزينه هاي انتخاب شده مطمئن هستيد؟',
+            buttons: {
+                confirm: {
+                    label: MinaDent.Common.yesBtnTxt,
+                    className: "red",
+                    callback: function () {
+                        
+                        del(userId);
+                    }
+                },
+                cancel: {
+                    label: MinaDent.Common.noBtnTxt,
+                    className: "blue"
+                }
+            },
+            callback: function (result) {
+                if (result == true) {
+                    del(userId);
+                }
+                else {
+                    message: 'عملیات حذف با موفقیت انجام شد',
+                        console.log('عملیات حذف با موفقیت انجام شد' + result);
+                }
+            }
+
+        });
+
+    }
+
+    function del(userId) {
+        
+
+        $.ajax({
+            url: "/Admin/Register/Delete",
+            type: 'GET',
+            scriptCharset: "utf-16",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-16",
+            data: { id: userId },
+            success: function (res) {
+                
+                $('#Modal').modal('hide');
+                $("#" + userId + "").remove();
+            }, error: function () {
+                AlertDialog("متاسفانه عملیات با موفقیت انجام نشد", "خطا", 'error');
+            }
+        });
+    }
+</script>

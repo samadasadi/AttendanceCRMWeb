@@ -1,0 +1,84 @@
+﻿
+@if ((bool)ViewData[Utility.PublicEnum.EnumForReportAreaView.SetAttributeForDivReportView.ToString()] == true)
+{
+    <style>
+        .stiMenuParent {
+            overflow: hidden;
+            min-width: 223px;
+            min-height: 419px;
+            position: absolute;
+        }
+
+        .stiMenu {
+            background-color: #8f0000;
+        }
+    </style>
+}
+
+
+<div id="ReportView" @if ((bool)ViewData[Utility.PublicEnum.EnumForReportAreaView.SetAttributeForDivReportView.ToString()] == true) { <text> style="clear: both;direction: ltr" </text> }></div>
+
+
+
+<script>
+    $(function () {
+
+        @if ((bool)ViewData[Utility.PublicEnum.EnumForReportAreaView.ShowScriptFromDateAndToDate.ToString()] == true)
+        {
+            <text>
+                $("#FromDateStr").change(function () {$("#FromDate").val(this.value);});
+                $("#ToDateStr").change(function () {$("#ToDate").val(this.value);});
+            </text>
+        }
+
+        @if ((bool)ViewData[Utility.PublicEnum.EnumForReportAreaView.SetConfigureDateComponent.ToString()] == true)
+            {
+                <text>
+                $('.mdDate').MdPersianDateTimePicker({
+                Placement: 'bottom',
+                    Trigger: 'click',
+                    EnableTimePicker: false,
+                    //  TargetSelector: '#ElementId',
+                    GroupId: '',
+                    ToDate: false,
+                    FromDate: false,
+                    DisableBeforeToday: false,
+                    Disabled: false,
+                    Format: 'yyyy/MM/dd',
+                    IsGregorian: false,
+                    EnglishNumber: false,
+                });
+                </text>
+            }
+    });
+
+    function ShowReport() {
+        $.ajax({
+            type: "Get",
+            url: "@Url.Action(ViewData[Utility.PublicEnum.EnumForReportAreaView.UrlReport.ToString()].ToString(), "StaticReport",new {Arae="Report"})",
+            data: $("#reportParameter").serialize(),
+            beforeSend: function () {
+                @if ((bool)ViewData[Utility.PublicEnum.EnumForReportAreaView.ShowNotification.ToString()] == true)
+                {
+                    <text>
+                        showWait();
+                    </text>
+                }
+            },
+            success: function (data, textStatus, request) {
+
+                $("#ReportView").html(data);
+            },
+            complete: function () {
+                @if ((bool)ViewData[Utility.PublicEnum.EnumForReportAreaView.ShowNotification.ToString()] == true)
+                {
+                    <text>
+                         hideWait();
+                    </text>
+                }
+            }
+        });
+    return false;
+}
+</script>
+

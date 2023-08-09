@@ -239,7 +239,7 @@ namespace Service.UserManagement.Attendance
                     _res.Add(new NormalJsonClass { Id = (int)PubliReportType.Shift_Report, Text = PublicResource.Shift });
 
                     //if (Public.CurrentUser.IsAdministrator || _permission.AvailableRole.Contains(PubRoles.DevicesReport))
-                    _res.Add(new NormalJsonClass { Id = (int)PubliReportType.Devices_Report, Text = PublicResource.Devices });
+                    _res.Add(new NormalJsonClass { Id = (int)PubliReportType.Devices_Report, Text = PublicResource.DevicesName });
                 }
                 return _res;
             }
@@ -434,8 +434,6 @@ namespace Service.UserManagement.Attendance
 
 
 
-
-
         #region گزارش شیفت کاری
         public async Task<ReportVm<ShiftWorkVm>> GetShiftWorkReport()
         {
@@ -462,7 +460,6 @@ namespace Service.UserManagement.Attendance
             }
         }
         #endregion
-
 
         #region گزارش حضور و غیاب در بازه زمانی
         public async Task<ReportVm<DailyAttendance>> DailyAttendanceReport(ReportParameter model)
@@ -548,7 +545,6 @@ namespace Service.UserManagement.Attendance
 
         #endregion
 
-
         #region گزارش افرادی که خروج ندارند
         public async Task<ReportVm<DailyAttendance>> PersonsAreNotExitReport(ReportParameter model)
         {
@@ -610,7 +606,6 @@ namespace Service.UserManagement.Attendance
         }
 
         #endregion
-
 
         #region گزارش عملکرد کلی
         public async Task<AttendanceVM> TotalPerformancePersonal_Report(ReportParameter model)
@@ -1758,7 +1753,6 @@ namespace Service.UserManagement.Attendance
         }
         #endregion
 
-
         #region گزارش مرخصی
         public async Task<ReportVm<TransactionRequestVm>> TransactionReqReport(ReportParameter reportParameter)
         {
@@ -1798,7 +1792,6 @@ namespace Service.UserManagement.Attendance
 
         #endregion
 
-
         #region EventLog Report
         /// <summary>
         /// گزارش رویدادنگاری تردد
@@ -1825,8 +1818,6 @@ namespace Service.UserManagement.Attendance
             }
         }
         #endregion
-
-
 
         #region Att Log
         public async Task<List<NormalJsonClass>> GetPersonelList()
@@ -1962,7 +1953,6 @@ namespace Service.UserManagement.Attendance
                         var _modelVm = new TimeRecordVm
                         {
                             IsDeleted = model.IsDeleted,
-                            MedicalCenterId = model.MedicalCenterId,
                             ModifiedDate = model.ModifiedDate,
                             RecordID = model.RecordID,
                             AttStatus = model.AttStatus,
@@ -2008,7 +1998,7 @@ namespace Service.UserManagement.Attendance
                 var _procedure = string.Format(_query, "1");
                 _result.TLists = (await _repoTimeRecord.RunQuery<TimeRecordVm>(_procedure)).ToList();
 
-                 _procedure = string.Format(_query, "2");
+                _procedure = string.Format(_query, "2");
                 _result.CountAll_TLists = await _repoTimeRecord.RunQuery_int(_procedure);
                 return _result;
             }
@@ -2036,7 +2026,176 @@ namespace Service.UserManagement.Attendance
         }
         #endregion
 
+        #region Time Record
+        public async Task<AttLogEvent_Report> GetAttendanceLog(ReportParameter model)
+        {
+            try
+            {
 
+                var _result = new AttLogEvent_Report();
+                _result.informationGlobalReport = new InformationGlobalReport();
+                _result.timeRecordVms = new List<TimeRecordVm>();
+                var _query_timerecord = string.Format(" declare @_from datetime = {0} " +
+                                            "\n declare @_to datetime = {1} " +
+                                            "\n declare @_user int = {2} " +
+                                            "\n declare @_devicecode int = {3} " +
+                                            "\n declare @_timeRecordId int = {4} " +
+                                            "\n declare @_devicegroup int = {5} " +
+                                            "\n declare @_usergroup int = {6} " +
+                                            "\n select  TimeRecords.RecordID, " +
+                                            "\n     TimeRecords.CardNo, TimeRecords.ChangebyPerson, TimeRecords.VerifyMethod, TimeRecords.DatetimeIOMain as DatetimeIO, TimeRecords.Day, TimeRecords.DeviceCode, " +
+                                            "\n     TimeRecords.Hour, TimeRecords.Minute, TimeRecords.Month, TimeRecords.Year," +
+                                            "\n     userr.FirstName+' '+userr.LastName as [Name], TimeRecords.AttStatus, " +
+                                            "\n     (select top(1) Name from NewDevice where Code = TimeRecords.DeviceCode) as DeviceName, " +
+                                            "\n     ISNULL(device.GroupId, 0) as DeviceGroupId, " +
+                                            "\n     ISNULL(userr.GroupId, 0) as UserGroupId " +
+                                            "\n from TimeRecords " +
+                                            "\n left join PubUser userr on TimeRecords.CardNo = userr.UserId " +
+                                            "\n left join UserGroup userrgroup on userrgroup.Id = userr.GroupId " +
+                                            "\n left join NewDevice device on device.Code = TimeRecords.DeviceCode " +
+                                            "\n Left join DeviceGroup deviceGroup on deviceGroup.Id = device.GroupId " +
+                                            "\n where (cast(TimeRecords.DatetimeIOMain as date)>=CAST(@_from as date) or @_from is null) " +
+                                            "\n     and ((cast(TimeRecords.DatetimeIOMain as date)<=CAST(@_to as date)) or @_to is null) " +
+                                            "\n     and (DeviceCode = @_devicecode or @_devicecode is null) " +
+                                            "\n     and (TimeRecords.CardNo = @_user or @_user is null)" +
+                                            "\n     and (TimeRecords.RecordID = @_timeRecordId or @_timeRecordId is null)" +
+                                            "\n     and (TimeRecords.IsDelete = 0)" +
+                                            "\n     and (deviceGroup.Id = @_devicegroup or @_devicegroup is null)" +
+                                            "\n     and (userrgroup.Id = @_usergroup or @_usergroup is null)" +
+                                            "\n order by TimeRecords.DatetimeIOMain",
+                                            (model.FromDate != null ? "N'" + model.FromDate.Value.ToString("yyyy-MM-dd") + "'" : "NULL"),
+                                            (model.ToDate != null ? "N'" + model.ToDate.Value.ToString("yyyy-MM-dd") + "'" : "NULL"),
+                                            (model.UserId > 0 ? "N'" + model.UserId + "'" : "NULL"),
+                                            (model.DeviceId > 0 ? "N'" + model.DeviceId + "'" : "NULL"),
+                                            (model.TimeRecordId > 0 ? "N'" + model.TimeRecordId + "'" : "NULL"),
+                                            (model.DeviceGroupId > 0 ? "N'" + model.DeviceGroupId + "'" : "NULL"),
+                                            (model.UserGroupId > 0 ? "N'" + model.UserGroupId + "'" : "NULL")
+                                            );
+                _result.timeRecordVms = (await _repoTimeRecord.RunQuery<TimeRecordVm>(_query_timerecord)).ToList();
+
+                return _result;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("location: PubUserService.GetAttendanceLog => " + ex.Message);
+            }
+        }
+        public async Task<DataModelResult> AttLog_Save(TimeRecordVm entity)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(entity.CardNo)) return new DataModelResult { Error = true, Message = "" };
+                if (entity.RecordID == 0)
+                {
+                    #region Insert by Query
+                    var _query = string.Format(@"INSERT INTO [dbo].[TimeRecords] "
+                                                        + "\n        ([CardNo] "
+                                                        + "\n        ,[DeviceCode] "
+                                                        + "\n        ,[Year] "
+                                                        + "\n        ,[Month] "
+                                                        + "\n        ,[Day] "
+                                                        + "\n        ,[Hour] "
+                                                        + "\n        ,[Minute] "
+                                                        + "\n        ,[DatetimeIO] "
+                                                        + "\n        ,[AttStatus] "
+                                                        + "\n        ,[IsDelete] "
+                                                        + "\n        ,[VerifyMethod] "
+                                                        + "\n        ,[ChangebyPerson] "
+                                                        + "\n        ,[WorkCode] "
+                                                        + "\n        ,[DatetimeIOMain]) "
+                                                        + "\n  VALUES "
+                                                        + "\n        ({0} "
+                                                        + "\n        ,{1} "
+                                                        + "\n        ,{2} "
+                                                        + "\n        ,{3} "
+                                                        + "\n        ,{4} "
+                                                        + "\n        ,{5} "
+                                                        + "\n        ,{6} "
+                                                        + "\n        ,{7} "
+                                                        + "\n        ,{8} "
+                                                        + "\n        ,{9} "
+                                                        + "\n        ,{10} "
+                                                        + "\n        ,{11} "
+                                                        + "\n        ,{12} "
+                                                        + "\n        ,{13}) ",
+                                                       !string.IsNullOrEmpty(entity.CardNo) ? "N'" + entity.CardNo + "'" : "NULL",
+                                                       entity.DeviceCode != null ? "N'" + entity.DeviceCode + "'" : "NULL",
+                                                       entity.Year != null ? "N'" + entity.Year + "'" : "NULL",
+                                                       entity.Month != null ? "N'" + entity.Month + "'" : "NULL",
+                                                       entity.Day != null ? "N'" + entity.Day + "'" : "NULL",
+                                                       entity.Hour != null ? "N'" + entity.Hour + "'" : "NULL",
+                                                       entity.Minute != null ? "N'" + entity.Minute + "'" : "NULL",
+                                                       entity.DatetimeIO != null ? "N'" + entity.DatetimeIO.Value.ToString("yyyy-MM-dd HH:mm:ss") + "'" : "NULL",
+                                                       "N'" + entity.AttStatus + "'",
+                                                       "N'" + (entity.IsDeleted == true ? "1" : "0") + "'",
+                                                       entity.VerifyMethod != null ? "N'" + entity.VerifyMethod + "'" : "NULL",
+                                                       "N'" + (entity.ChangebyPerson ? "1" : "0") + "'",
+                                                       "N'" + entity.WorkCode + "'",
+                                                       entity.DatetimeIO != null ? "N'" + entity.DatetimeIO.Value.ToString("yyyy-MM-dd HH:mm:ss") + "'" : "NULL"
+                                                       );
+                    await _repoTimeRecord.ExecuteSqlCommand(_query);
+                    #endregion
+
+
+                    return new DataModelResult { Error = false };
+                }
+                else
+                {
+                    var _record = await _repoTimeRecord.Find(entity.RecordID);
+                    var _Oldrecord = await _repoTimeRecord.Find(entity.RecordID);
+                    if (_record != null)
+                    {
+                        _record.CardNo = entity.CardNo;
+                        _record.ChangebyPerson = true;
+                        _record.DeviceCode = entity.DeviceCode;
+
+
+                        _record.DatetimeIOMain = entity.DatetimeIOMain;
+
+                        //ابن قسمت غیرفعال شد، اگر کاربر تردد را ویرایش کرد بعد از تخلیه دستگاه دوباره اطلاعات تغییر نکند
+                        //_record.DatetimeIO = entity.DatetimeIO;
+                        //_record.Year = entity.Year;
+                        //_record.Day = entity.Day;
+                        //_record.Month = entity.Month;
+                        //_record.Hour = entity.Hour;
+                        //_record.Minute = entity.Minute;
+
+                        await _repoTimeRecord.Detached(_record);
+                        await _repoTimeRecord.Detached(_Oldrecord);
+                        await _repoTimeRecord.Update(_record, _Oldrecord);
+                    }
+                    else
+                    {
+                        await _repoTimeRecord.Add(GenericMapping<TimeRecordVm, TimeRecords>.Map(entity));
+                        return new DataModelResult { Error = false };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("location: PubUserService.AttLog_Save => " + ex.Message);
+            }
+            return new DataModelResult();
+        }
+        public async Task<bool> Delete_AttLog(int? Id)
+        {
+            try
+            {
+                if (Id != 0 && Id != null)
+                {
+                    var _query = string.Format(@" update TimeRecords set IsDelete = '1' where RecordID ='{0}' ", Id);
+                    await _repoTimeRecord.ExecuteSqlCommand(_query);
+                    //_repoPubUser.Delete(x => x.ID == Id.Value);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //throw new Exception("location: PubUserService.Delete_AttLog => " + ex.Message);
+            }
+            return false;
+        }
+        #endregion
 
         #endregion
 

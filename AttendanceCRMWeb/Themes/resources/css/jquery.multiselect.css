@@ -1,0 +1,41 @@
+.ui-multiselect { text-align:left ;font-family:Tahoma;background-color: white;border: 1px solid #C3C3C3;padding: 3px;text-indent: 0;overflow: hidden;height: 28px;padding-top: 5px;padding-left: 6px;cursor: pointer;}
+.ui-multiselect span.ui-icon { float:right }
+.ui-multiselect-single .ui-multiselect-checkboxes input {  }
+.ui-multiselect-single .ui-multiselect-checkboxes input[type="radio"] { display:none }
+.ui-multiselect-single .ui-multiselect-checkboxes label { padding:9px 5px !important; }
+
+.ui-multiselect-header { margin-bottom:3px; padding:3px 0 3px 4px;color: white; }
+.ui-multiselect-header ul { font-size:0.8em }
+.ui-multiselect-header ul li { float:left; padding:0 10px 0 0 }
+.ui-multiselect-header a { text-decoration:none }
+.ui-multiselect-header a:hover { text-decoration:underline }
+.ui-multiselect-header span.ui-icon { /*float:left*/ }
+.ui-multiselect-header li.ui-multiselect-close { float:right; text-align:right; padding-right:0 }
+
+.ui-multiselect-menu { display:none; padding:3px; position:absolute; z-index:10000;border: 1px solid #AAA;color: #222;background-color:White; }
+.ui-multiselect-checkboxes {  overflow-y:scroll ;overflow-x:hidden;}/*position:relative  fixes bug in IE6/7 */
+.ui-multiselect-checkboxes label { cursor:default; display:block; border:1px solid transparent; padding:3px 1px }
+.ui-multiselect-checkboxes label input { position:relative; top:1px }
+.ui-multiselect-checkboxes li { clear:both; font-size:0.9em; padding-right:3px ;width: 100%;}
+.ui-multiselect-checkboxes li.ui-multiselect-optgroup-label { text-align:center; font-weight:bold; border-bottom:1px solid }
+.ui-multiselect-checkboxes li.ui-multiselect-optgroup-label a { display:block; padding:3px; margin:1px 0; text-decoration:none }
+
+/* remove label borders in IE6 because IE6 does not support transparency */
+* html .ui-multiselect-checkboxes label { border:none }
+
+
+/* multi select css*/
+.ui-multiselect-hasfilter ul {    position: relative;
+    float: right;
+    margin: 0;}
+.ui-multiselect-filter { margin-right:10px; font-size:10px;font-weight: normal; }
+.ui-multiselect-filter input {font-family: tahoma; width:100px; font-size:10px; margin-left:5px; height:15px; padding:2px; border:1px solid #292929; -webkit-appearance:textfield; -webkit-box-sizing:content-box; }
+
+.ui-multiselect-menu .ui-state-active {background-color:#E9E7E7 !important;background-image:none;}
+.ui-multiselect-header {
+    background: indianred !important;
+    background-color: #5b748e !important;
+    border: 1px solid #9E9E9E;
+    color: white !important;
+    overflow:hidden;
+}

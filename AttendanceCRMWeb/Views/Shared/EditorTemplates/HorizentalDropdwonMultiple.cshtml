@@ -1,0 +1,35 @@
+﻿@using Utility;
+@model object
+@{
+    var required = ViewData.ModelMetadata.IsRequired;
+    var name = ViewData.ModelMetadata.PropertyName;
+    var _res = (MyTextBox)Html.MyHelper().TreasuryTextBoxFor(model => model, TextBoxType.Date);
+    var _name = _res._componentName;
+    var _id = _res._componentId;
+}
+<div class="form-group  row @string.Format("{0}",required?"rqd":"")">
+    @Html.LabelFor(model => model, htmlAttributes: new { @class = "control-label col-form-label col-md-3 text-right" })
+    <div class="col-md-9">
+        @if (ViewData[name] != null)
+        {
+            <select class="form-control select2" multiple="multiple" style="width: 100%;" name="@_name" id="@_id" multiple>
+                @foreach (var item in (List<NormalJsonClass>)ViewData[name])
+                {
+                    <option value="@item.Value" @string.Format("{0}", item.Selected ? "selected" : "")>
+                        @item.Text
+                    </option>
+                }
+            </select>
+        }
+        else
+        {
+            @Html.DropDownListFor(model => model, new List<SelectListItem>() { }, "--", new { @class = "chzn-select form-control", Multi = "Multiple" })
+        }
+        @Html.ValidationMessageFor(model => model, "", new { @class = "text-danger" })
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.select2').select2();
+    });
+</script>

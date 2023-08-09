@@ -1,0 +1,67 @@
+﻿@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@model  ViewModel.UserManagement.UserVm
+
+@{
+
+}
+
+<form id="PatientAccountFrm" class="col-md-12 form-horizontal">
+    <div class="col-md-12">
+
+        @Html.HiddenFor(m => m.Id)
+
+        <div class="col-md-6">
+            @Html.EditorFor(x => x.personAccountingFilter.PersonelSalariMonth)
+            @Html.EditorFor(x => x.personAccountingFilter.FromDate)
+            @Html.EditorFor(x => x.personAccountingFilter.ToDate)
+            @Html.EditorFor(x => x.personAccountingFilter.AyabZahab)
+            @Html.EditorFor(x => x.personAccountingFilter.Sobhane)
+            @Html.EditorFor(x => x.personAccountingFilter.Nahar)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(x => x.personAccountingFilter.HazinehEydi)
+            @Html.EditorFor(x => x.personAccountingFilter.HazinehSanavat)
+            @Html.EditorFor(x => x.personAccountingFilter.SayerMazaya)
+            @Html.EditorFor(x => x.personAccountingFilter.SahmKarkard)
+            @Html.EditorFor(x => x.personAccountingFilter.SayerKosorat)
+            @Html.EditorFor(x => x.personAccountingFilter.CalcKasrKar)
+        </div>
+
+        <div class="form-group">
+            <div class="row" style="float:left;margin-left:10px;">
+                <div style="float:left;padding:5px;min-width: 135px;">
+                    <a class="btn btn-block bg-gradient-secondary btn-flat OperationButton" onclick="CalcPatientAccount()">
+                        <i class="fa fa-plus"></i>
+                        محاسبه حقوق
+                    </a>
+                </div>
+                <div style="float:left;padding:5px;min-width: 135px;">
+                    <a class="btn btn-block bg-gradient-primary btn-flat OperationButton" onclick="return ShowReport()">
+                        <i class="fa fa-print"></i>
+                        چاپ
+                    </a>
+                </div>
+                <div style="float:left;padding:5px;min-width: 135px;">
+                    <a class="btn btn-block bg-gradient-success btn-flat OperationButton" onclick="return SaveHoghogh()">
+                        <i class="fa fa-save"></i>
+                        ذخیره
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12" id="PatientAccountResult"></div>
+
+    <div class="col-md-12" id="ReportView" style="clear: both;direction: ltr"></div>
+
+
+
+</form>
+
+<script type="text/javascript">
+
+</script>
+
+

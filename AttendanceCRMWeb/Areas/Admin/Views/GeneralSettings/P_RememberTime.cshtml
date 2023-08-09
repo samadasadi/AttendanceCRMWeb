@@ -1,0 +1,54 @@
+﻿
+@model ViewModel.Common.GeneralSettingVm
+@using Utility.HtmlHelpers
+
+@using (Html.CreateDivForBootstrap())
+{
+    <div hidden id="checkdate" class="Metronic-alerts alert alert-danger fade in" style="display: block;display: block;margin-left: 5%;margin-right: 1%;">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+        <i class="fa-lg fa fa-warning"></i>
+        در صورت تغییر بازه زمانی و ساعت شروع و پایان کلیه زمان های وقت ملاقات نیز تغییر خواهند کرد و زمان جدید جایگزین می شود
+    </div>
+    using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "6"))
+    {
+        @*<input class="form-control" onkeypress="return isPlusNumberKey(event, this);" id="VisitInterval" name="VisitInterval" type="hidden" step="1" value="15">*@
+
+        <div class="form-group row">
+            <label class="text-AlignBySoftWare col-md-7" for="VisitInterval">@Resources.Md.VisitInterval</label>
+            <div class="col-sm-5">
+                <input class="form-control" onkeypress="return isPlusNumberKey(event, this);" id="VisitInterval" name="VisitInterval" type="number" min="5" max="60" step="5" value="@Model.VisitInterval">
+                <span class="field-validation-valid text-danger" data-valmsg-for="Appointment" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+
+
+
+        <div class="form-group  row">
+            <label class="text-AlignBySoftWare col-md-7" for="appExpireAlarmDay">موعد یادآوری تاریخ انقضا چند روز قبل تر باشد</label>
+            <div class="col-sm-5">
+                <input class="form-control" id="appExpireAlarmDay" name="appExpireAlarmDay" onkeypress="return isPlusNumberKey(event, this);" type="number" min="1" max="100000" step="1" value="@Model.appExpireAlarmDay">
+
+                <span class="field-validation-valid text-danger" data-valmsg-for="appExpireAlarmDay" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+    }
+    using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "6"))
+    {
+        <div class="form-group  row">
+            <label class="text-AlignBySoftWare col-md-7" for="Backup">@Resources.Md.Backup</label>
+            <div class="col-sm-5">
+                <input class="form-control" id="Backup" name="Backup" onkeypress="return isPlusNumberKey(event, this);" type="number" min="1" max="1000000" step="1" value="@Model.Backup">
+
+                <span class="field-validation-valid text-danger" data-valmsg-for="Backup" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+        <div class="form-group  row">
+            <label class="text-AlignBySoftWare col-md-7" for="TimeReminder">@Resources.Md.TimeReminder</label>
+            <div class="col-sm-5">
+                <input class="form-control" id="TimeReminder" name="TimeReminder" onkeypress="return isPlusNumberKey(event, this);" type="number" min="1" max="100000" step="1" value="@Model.TimeReminder">
+
+                <span class="field-validation-valid text-danger" data-valmsg-for="TimeReminder" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+    }
+}

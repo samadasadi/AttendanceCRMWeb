@@ -1,0 +1,45 @@
+﻿@using ViewModel.UserManagement.Attendance;
+
+@model  Utility.Utitlies.viewModel<JobTimeVm>
+@{
+    var formSecurity = (ViewModel.Security.FormSecurity)ViewBag.FormSecurity;
+}
+
+
+<table class="table table-hover text-nowrap">
+    <thead>
+        <tr>
+            <th>عملیات</th>
+            <th>عنوان</th>
+            <th>زمان ورود</th>
+            <th>فرجه ورود</th>
+            <th>زمان خروج</th>
+            <th>فرجه خروج</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model.TLists)
+            {
+                <tr>
+                    <td style="vertical-align:middle; min-width:100px;">
+                        <a onclick="EditJobTime('@item.Id')" class="fa fa-edit" title="ویرایش"></a>
+                        <a onclick="DeleteJobTime('@item.Id')" class="fa fa-trash" title="حذف"></a>
+                    </td>
+                    <td class="mailbox-name" style="vertical-align:middle; min-width:200px;"><a>@item.JobTimeName</a></td>
+                    <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.Explain</a></td>
+                    <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.TimeVorodStr</a></td>
+                    <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.TimeFVorodStr</a></td>
+                    <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.TimeKhorojStr</a></td>
+                    <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.TimeFKhorojStr</a></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@Html.Partial(Utility.Utitlies.VaribleForName.NamePartialOperationPageing, Model.CommonCustomViewTablePaging)
+
+
+
+

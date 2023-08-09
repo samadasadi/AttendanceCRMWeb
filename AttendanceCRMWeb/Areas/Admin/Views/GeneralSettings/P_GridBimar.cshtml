@@ -1,0 +1,30 @@
+﻿
+@model ViewModel.Common.GeneralSettingVm
+@using Utility.HtmlHelpers
+
+@using (Html.CreateDivForBootstrap())
+{
+    <div class="card">
+        <div class="card-header border-0">
+            <h6>فیلدها</h6>
+        </div>
+        <div class="card-body p-2">
+            <div class="form-group" style="margin-right: 5px;margin-left: 5px;">
+                <select multiple="multiple" class="multi-select" id="SelectedFieldPatient" name="SelectedFieldPatient[]">
+                    @foreach (var item in ViewBag.enumList as List<Utility.NormalJsonClass>)
+                    {
+                        if (Model.SelectedFieldPatient !=null && Model.SelectedFieldPatient.Count() > 0)
+                        {
+                            <option id="@item.Text" value="@item.Text" @string.Format("{0}", Model.SelectedFieldPatient.Contains(item.Text) ? "selected" : " ")>@item.Value</option>
+                        }
+                        else
+                        {
+                            <option id="@item.Text" value="@item.Text">@item.Value</option>
+                        }
+                    }
+                </select>
+            </div>
+
+        </div>
+    </div>
+}

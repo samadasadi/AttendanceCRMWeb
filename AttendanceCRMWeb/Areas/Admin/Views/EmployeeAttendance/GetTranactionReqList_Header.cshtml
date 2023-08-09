@@ -1,0 +1,48 @@
+﻿@using ViewModel.UserManagement.Attendance
+
+@model  Utility.Utitlies.viewModel<TransactionRequestVm>
+
+<div>
+    @if (Model != null && Model.TLists != null && Model.TLists.Count > 0)
+    {
+
+        foreach (var item in Model.TLists)
+        {
+            <div class="dropdown-item" id="@item.Id">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="dropdown-item-title">
+                            @item.Person_Name
+                        </h5>
+                        <p class="text-sm">مرخصی : &nbsp;&nbsp; @item.ReqTypeStr</p>
+                        <p class="text-sm">درخواست : &nbsp;&nbsp;  @item.Transaction_Name</p>
+                        @if (item.ReqType == 1)
+                        {
+                            <p class="text-sm">از تاریخ : &nbsp;&nbsp;  @item.FromDateRequestStr</p>
+                            <p class="text-sm">تا تاریخ : &nbsp;&nbsp;   @item.ToDateRequestStr</p>
+                        }
+                        else
+                        {
+                            <p class="text-sm"> تاریخ : &nbsp;&nbsp;  @item.FromDateRequestStr</p>
+                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> از ساعت  : @item.FromDateRequestStr_Time</p>
+                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> تا ساعت  : @item.ToDateRequestStr_Time</p>
+                        }
+                        <div class="form-group">
+                            <div class="row" style="float:left;margin-left:10px;">
+                                <div style="float:left;padding:5px;min-width: 90px;">
+                                    <button class="btn btn-block bg-gradient-success btn-flat" onclick="TransactionRequestStatus('@item.Id', '1')">تایید</button>
+                                </div>
+                                <div style="float:left;padding:5px;min-width: 90px;">
+                                    <button class="btn btn-block bg-gradient-danger btn-flat" onclick="TransactionRequestStatus('@item.Id', '2')">لغو</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown-divider"></div>
+        }
+    }
+    @*<a href="#" class="dropdown-item dropdown-footer">See All Messages</a>*@
+</div>
+

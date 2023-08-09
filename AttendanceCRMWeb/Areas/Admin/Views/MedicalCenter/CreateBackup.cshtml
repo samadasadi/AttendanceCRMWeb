@@ -1,0 +1,96 @@
+﻿@using ViewModel.BasicInfo
+@using Utility.HtmlHelpers
+@model ResultModel<List<ViewModel.Common.BackUpVm>>
+@{
+    ViewBag.Title = ((int)ViewBag.Type == 2 ? "پشتیبان گیری از تصاویر و ضمائم" : "پشتیبان گیری بانک اطلاعاتی");
+
+    var _title = ((int)ViewBag.Type == 2 ? "پشتیبان گیری از تصاویر و ضمائم" : "پشتیبان گیری بانک اطلاعاتی");
+}
+
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="fas fa-database"></i>
+            @_title
+        </h3>
+    </div>
+    <div class="card-body">
+
+        <div class="form-group  row">
+            <p class="col-md-12 text-danger" style="font-size:12px;">
+                <span class="text-info">مهم* : </span>
+                برای امنیت بیشتر اطلاعات خود، حتما
+                فایلهای بکاپ و پوشه عکس های درمانی را در یک فلش،
+                هارد اکسترنال یا سیستم دیگر ذخیره فرمایید. در صورت نیاز برای آموزش این مورد میتوانید با کارشناسان مربوطه در ارتباط باشید.
+            </p>
+        </div>
+
+        @using (Ajax.BeginForm("CreateBackup", "MedicalCenter", new AjaxOptions
+        {
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "content",
+            OnBegin = "BeforeSend();",
+            OnComplete = "Complete();"
+        }))
+        {
+            using (Html.CreateDivForBootstrap())
+            {
+    <div class="form-group">
+        @*<label class="control-label col-form-label col-md-1">نام:</label>*@
+
+        <div class="col-md-3">@Html.BsButton("پشتیبان گیری", typeButton: typeButton.submit, colorButton: ColorButton.Info, icon: Icons.save, colDivOffset: 0, colDivMain: 0)</div>
+        <div class="col-md-3">
+            @*Create By Mobin*@
+            <input type="hidden" id="isAlarmDate" name="isAlarmDate" value="@ViewBag.AlarmDate" />
+            @*<input type="text" name="name" id="name" class="form-control" hidden />*@
+            <input type="number" name="type" id="type" value="@ViewBag.Type" hidden />
+        </div>
+    </div>
+            }
+        }
+
+
+        <div id="content">
+            @Html.Partial("_Backup", Model)
+
+
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts
+{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+
+        function BeforeSend() {
+            showWait();
+        };
+        function Complete() {
+            hideWait();
+        }
+
+        function DeleteBackUp(id) {
+            $.ajax({
+                type: "Get",
+                url: "/Admin/MedicalCenter/DeleteRowBackup",
+                data: { id: id },
+                beforeSend: function () {
+                    showWait();
+                },
+                success: function (result) {
+                    $('#' + id).remove();
+                    hideWait();
+                },
+                error: function (xhr) {
+                    hideWait();
+                }
+            });
+        }
+    </script>
+}

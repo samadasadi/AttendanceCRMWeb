@@ -73,11 +73,6 @@ namespace ViewModel.Security
                 {
                     _result.RemoveAll(x => x.EnName.StartsWith(PubMenuDefault.Possibilities_Calls));
                 }
-                // "حسابداری پیشرفته"
-                if (!this.IsAccountingKit)
-                {
-                    _result.RemoveAll(x => x.EnName.StartsWith(PubMenuDefault.AdvancedAccounting));
-                }
                 return _result;
             }
         }
@@ -141,7 +136,7 @@ namespace ViewModel.Security
         public bool IsAvanak { get { try { return this.IsVpsServer ? true : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(17, 1) == "1") ? true : false); } catch { return false; } } }
         public bool IsTaminPrescription { get { try { return this.IsVpsServer || this.IsBasicallyKit ? true : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(18, 1) == "1") ? true : false); } catch { return false; } } }
         public bool IsBasicallyKit { get { try { return this.IsVpsServer ? false : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(19, 1) == "1") ? true : false); } catch { return false; } } }
-        public bool IsAccountingKit { get { try { return this.IsVpsServer ? false : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(20, 1) == "1") ? true : false); } catch { return false; } } }
+        //public bool IsAccountingKit { get { try { return this.IsVpsServer ? false : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(20, 1) == "1") ? true : false); } catch { return false; } } }
         public bool IsWhatsAppKit { get { try { return this.IsVpsServer ? true : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(21, 1) == "1") ? true : false); } catch { return false; } } }
 
 

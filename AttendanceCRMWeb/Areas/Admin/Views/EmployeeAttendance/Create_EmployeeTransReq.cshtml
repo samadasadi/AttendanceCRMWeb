@@ -1,0 +1,77 @@
+﻿@using Utility
+@using System
+@using System.Collections.Generic
+@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@using ViewModel.UserManagement.Attendance;
+@model  Utility.Utitlies.viewModel<TransactionRequestVm>
+
+@{
+    var i = 0;
+}
+
+<form id="TransReqFrmEmployee" class="col-md-12 form-horizontal">
+    <div class="col-md-12">
+
+        @if (Model != null)
+        {
+            @Html.HiddenFor(m => m.T_model.Id)
+            @Html.HiddenFor(m => m.T_model.PersonID)
+        }
+        <div class="col-md-6">
+            @*@Html.EditorFor(x => x.T_model.PersonID)*@
+            @Html.EditorFor(x => x.T_model.Transaction_Id)
+            @Html.EditorFor(x => x.T_model.Comment)
+
+
+            @Html.EditorFor(x => x.T_model.AcceptReq)
+
+
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label col-form-label col-md-3 text-right" for="Week0">نوع مرخصی</label>
+                <div class="col-md-9">
+                    <input class="rbStatusE col-sm-2" id="TransactionReqType_ReqDay" name="T_model.ReqType" type="radio" value="1" @(Model.T_model.ReqType == 1 ? "checked='checked'" : "")>
+                    <label for="TransactionReqType_ReqDay">روزانه</label>
+                    <br>
+                    <input class="rbStatusE col-sm-2" id="TransactionReqType_ReqHour" name="T_model.ReqType" type="radio" value="2" @(Model.T_model.ReqType == 2 ? "checked='checked'" : "")>
+                    <label for="TransactionReqType_ReqHour">ساعتی</label>
+                    <br>
+                </div>
+            </div>
+            @Html.EditorFor(x => x.T_model.FromDateRequest)
+            @Html.EditorFor(x => x.T_model.ToDateRequest)
+
+
+            <div id="Hour_TransactioRequest">
+                <div class="form-group row">
+                    <label class="control-label col-form-label col-md-3 text-right" for="Week0">از ساعت</label>
+                    <div class="col-sm-9">
+                        @Html.EditorFor(m => m.T_model.TimeFrom_Value)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-form-label col-md-3 text-right" for="Week0">تا ساعت</label>
+                    <div class="col-sm-9">
+                        @Html.EditorFor(m => m.T_model.TimeTo_Value)
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</form>
+
+<script type="text/javascript">
+
+
+    $(function () {
+        $(".select2").select2();
+    });
+
+
+</script>
+

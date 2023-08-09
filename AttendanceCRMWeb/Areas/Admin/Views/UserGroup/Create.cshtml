@@ -1,0 +1,288 @@
+﻿@using System
+@using System.Collections.Generic
+@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@using Utility.HtmlHelpers
+@model ViewModel.UserManagement.UserGroupVm
+
+@{
+    ViewBag.Title = Model.Id == Guid.Empty ? "افزودن گروه کاربری" : "ویرایش گروه کاربری";
+    Layout = Utility.Utitlies.VaribleForName.AddressLayoutMasterNew;
+    var i = 0;
+    Model.SelectedRole = Model.SelectedRole ?? new Guid[] { };
+}
+
+@section styles
+{
+    <style>
+        .m1 {
+            margin-left: 5px;
+            cursor: pointer;
+            display: inline-block;
+            padding: 1px 5px;
+        }
+
+        .tags {
+            font-size: 90%;
+            padding: 5px 5px;
+            border-radius: 2px;
+            margin: 3px;
+            border: 0;
+            background-color: rgb(147,192,79);
+            color: white;
+            line-height: 12px;
+            text-align: center;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets/global/plugins/jquery-multi-select/css/multi-select.css")" />
+    <style>
+        /* .ms-container .ms-selection {
+                float: right;
+                border-left: 1px solid black;
+            }*/
+        .ms-container {
+            -webkit-flex: 0 0 100%;
+            -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    </style>
+}
+
+
+
+@*@HtmlExtenstions.TitleAndSiteMap(Resources.Md.NewUserGroup, "کاربران", "گروهای کاربری", Model.Id == Guid.Empty ? "افزودن" : "ویرایش")*@
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BsPanel(Resources.Md.NewUserGroup))
+            {
+                using (Html.BeginForm("Create", "UserGroup", FormMethod.Post))
+                {
+                    @Html.ValidationSummary(true)
+                    if (Model != null && Model.Id != Guid.Empty)
+                    {
+                        @Html.HiddenFor(m => m.Id)
+                    }
+                    <div class="col-md-6">
+                        @Html.EditorFor(m => m.Name)
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-sm-9">
+                            <div class="form-group">
+                                <div class="row" style="float:left;margin-left:10px;">
+                                    <div style="float:left;padding:5px;min-width: 135px;">
+                                        <button type="submit" class="btn btn-block bg-gradient-success btn-flat OperationButton">
+                                            <i class="fa fa-save"></i>
+                                            @Resources.Md.Save
+                                        </button>
+                                    </div>
+                                    <div style="float:left;padding:5px;min-width: 135px;">
+                                        <a class="btn btn-block bg-danger btn-flat OperationButton" href="@Url.Action("Index", "UserGroup", new { Area = "Admin" })">
+                                            @Resources.Md.Cancel
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12" style="margin-top:50px;">
+
+                        @foreach (var groupname in Model.RoleList.GroupBy(m => m.groupName))
+                        {
+                            if (!Service.Consts.Public.CurrentUser.IsSms && groupname.Key.Contains("پيامک"))
+                            {
+                                continue;
+                            }
+                            else if (!Service.Consts.Public.CurrentUser.IsAttendance && groupname.Key.Contains("حضور وغیاب"))
+                            {
+                                continue;
+                            }
+                            else if (!Service.Consts.Public.CurrentUser.IsAnbar && groupname.Key.Contains("انبار"))
+                            {
+                                continue;
+                            }
+                            else if (!Service.Consts.Public.CurrentUser.IsCustomerClub && groupname.Key.Contains("باشگاه مشتريان"))
+                            {
+                                continue;
+                            }
+                            else if (!Service.Consts.Public.CurrentUser.IsAnbar && groupname.Key.Contains("گزارشات انبار"))
+                            {
+                                continue;
+                            }
+
+                            string strColorBoxCategory = string.Empty;
+                            var temp = groupname.OrderBy(m => m.Priority).ToList();
+
+                            int count = 0;
+                            foreach (var item in temp)
+                            {
+                                if (Model.SelectedRole.Contains(item.Id))
+                                {
+                                    count += 1;
+                                }
+                            }
+                            if (count == 0)
+                            {
+                                strColorBoxCategory = "rgb(204,79,79)";
+                            }
+                            else if (count == temp.Count())
+                            {
+                                strColorBoxCategory = "#35B60F";
+                            }
+                            else
+                            {
+                                strColorBoxCategory = "#FFCC00";
+                            }
+
+                            <div class="col-md-4">
+                                @*///////////////////////////////////////////////////////////////////////////////////////////*@
+                                <div class="card card-secondary card-outline">
+                                    <div class="card-header with-border">
+                                        <h6 class="card-title">@groupname.Key</h6>
+
+                                        <div class="card-tools pull-right">
+                                            <button type="button" id="btnUpToDown@(i+1)" valueToId="@(i+1)" class="btn btn-box-tool"><i class="fa fa-plus" style="margin-right: 13px;"></i></button>
+                                            <div id="divBackgrondSmallForStatus@(i+1)" style="background-color:@strColorBoxCategory;width: 12px;height:15px ;border-style: none;margin-top: -25px; border-radius:50%;"></div>
+                                        </div>
+                                    </div>
+
+                                    <div style="background-color: gainsboro;height:141px ;overflow: auto;" id="divShowSelected@(i+1)">
+                                        @foreach (var item in temp)
+                                        {
+                                            if (Model.SelectedRole.Contains(item.Id))
+                                            {
+                                                <span style="cursor:none" class="m1 tags">@item.FaName</span>
+                                            }
+                                        }
+                                    </div>
+                                    <script>
+                                                var bb = @(i+1);
+                                                $("#btnUpToDown" + bb+"").click(function () {
+                                                    var aa = $(this).attr("valueToId");
+                                                    var cssShowOrHide = $("#divShowSelected@(i+1)").css("display");
+                                                    $("#divShowSelected" + aa + "").slideToggle(200);
+                                                    var icoRight = @(i+2);
+                                                    $("#icoR" + icoRight + "").toggle();
+                                                    $("#icoL@(i+2)").toggle();
+                                                    $("#ms-SelectedRole@(i+1).ms-container").children(".ms-selection").each(function (i, item) {
+
+                                                        var dd = $(this)[i].innerText.split("\n");
+                                                        if (dd[0] == "") { $("#btnUpToDown@(i+1)").html("<i class='fa fa-plus' style='margin-right: 13px;'></i>");$("#divBody@(i+1)").css("display","none");$("#divShowSelected@(i+1)").html(""); return; }
+                                                        if (cssShowOrHide == "none") {
+                                                            $("#btnUpToDown@(i+1)").html("<i class='fa fa-plus' style='margin-right: 13px;'></i>");
+                                                            $("#divBody@(i+1)").css("display","none");
+                                                            $("#divShowSelected@(i+1)").html("");
+                                                            for (var j = 0; j < dd.length; j++)
+                                                                $("#divShowSelected@(i+1)").append("<span style='cursor:none' class='m1 tags'>" + dd[j] + "</span>");
+                                                        }
+                                                        else {
+                                                            $("#divBody@(i+1)").css("display", "block");
+                                                            $("#btnUpToDown@(i+1)").html("<i class='fa fa-minus' style='margin-right: 13px;'></i>");
+                                                        }
+                                                    });
+                                                });
+                                    </script>
+
+                                    <!-- /.box-header -->
+                                    <div class="card-body p-1" id="divBody@(i+1)" style="display:none;">
+                                        <div class="form-body">
+                                            <div class="form-group">
+
+
+                                                @*<i id="icoL@(i+2)" style="float:left;display:none;margin-left: 122px;margin-right:6px;" idToSelect="@(i+2)" class="fa fa-chevron-left"></i>
+                                                    <i id="icoR@(i+2)" style="float:left;display:none" idToSelect="@(i+2)" class="fa fa-chevron-right"></i>*@
+
+                                                <div>
+                                                    <a href="#" onclick="SelectAll('@(i+2)', '@(i+1)')" style="width: 48%; margin-top: 0.5rem; display: inline-block; " class="btn btn-block btn-outline-success btn-flat" idToSelect="@(i+2)"><i id="icoR@(i+2)" idToSelect="@(i+2)" style="display:none;" class="fa fa-chevron-right"></i></a>
+                                                    <a href="#" onclick="DeSelectAll('@(i+2)', '@(i+1)')" style="width: 48%; display:inline-block;" class="btn btn-block btn-outline-success btn-flat" idToSelect="@(i+2)"><i id="icoL@(i+2)" idToSelect="@(i+2)" style="display:none;" class="fa fa-chevron-left"></i></a>
+                                                </div>
+
+                                                <div class="row" style="max-height:350px;overflow-y:auto;">
+                                                    <select multiple="multiple" class="multi-select selectAll@(i+2)" id="SelectedRole@(i+1)" name="SelectedRole[]">
+                                                        @foreach (var item in temp)
+                                                        {
+                                                            <option id="@item.Id" value="@item.Id" @string.Format("{0}", Model.SelectedRole.Contains(item.Id) ? "selected" : " ")>@item.FaName </option>
+                                                        }
+                                                    </select>
+                                                    <script>
+
+                                                            function SelectAll(idToSelect, idcolor) {
+                                                                $(".selectAll" + idToSelect + "").multiSelect('select_all');
+                                                                $("#divBackgrondSmallForStatus" + idcolor).css("background-color", "#35B60F");
+                                                            }
+
+                                                            function DeSelectAll(idToSelect, idcolor) {
+                                                                $(".selectAll" + idToSelect + "").multiSelect('deselect_all');
+                                                                $("#divBackgrondSmallForStatus" + idcolor).css("background-color", "rgb(204,79,79)");
+                                                            }
+
+
+                                                                $("#icoR@(i+2)").click(function () {
+                                                                    var aa = $(this).attr("idToSelect");
+                                                                    $(".selectAll" + aa + "").multiSelect('select_all');
+                                                                    $("#divBackgrondSmallForStatus@(i+1)").css("background-color","#35B60F");
+                                                                });
+                                                                $("#icoL@(i+2)").click(function () {
+                                                                    var aa = $(this).attr("idToSelect");
+                                                                    $(".selectAll" + aa + "").multiSelect('deselect_all');
+                                                                    $("#divBackgrondSmallForStatus@(i+1)").css("background-color","rgb(204,79,79)");
+                                                                });
+                                                    </script>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*///////////////////////////////////////////////////////////////////////////////////////////*@
+                            </div>
+                            i++;
+                        }
+                    </div>
+
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="@Url.Content("~/assets/global/plugins/jquery-multi-select/js/jquery.multi-select.js")" type="text/javascript"></script>
+    <script>
+        $('.multi-select').multiSelect();
+        $('#SelectedRole').multiSelect();
+        $(".ms-elem-selectable").click(function () {
+
+            var ff = $(this).parent().parent().parent()[0].id.match(/\d/g);
+            var result = "";
+            for (var i = 0; i < ff.length; i++)
+                result += ff[i];
+
+
+            var dd = $("#ms-SelectedRole" + result + ".ms-container").children(".ms-selectable").find("ul")[0].innerText.split("\n");
+            if (dd.length > 1)
+                $("#divBackgrondSmallForStatus" + result + "").css("background-color", "#FFCC00");
+            else
+                $("#divBackgrondSmallForStatus" + result + "").css("background-color", "#35B60F");
+        });
+        $(".ms-elem-selection").click(function () {
+
+            var ff = $(this).parent().parent().parent()[0].id.match(/\d/g);
+            var result = "";
+            for (var i = 0; i < ff.length; i++)
+                result += ff[i];
+
+
+            var dd = $("#ms-SelectedRole" + result + ".ms-container").children(".ms-selection").find("ul")[0].innerText.split("\n");
+            if (dd.length == 1)
+                $("#divBackgrondSmallForStatus" + result + "").css("background-color", "rgb(204,79,79)");
+            else
+                $("#divBackgrondSmallForStatus" + result + "").css("background-color", "#FFCC00");
+        });
+    </script>
+}

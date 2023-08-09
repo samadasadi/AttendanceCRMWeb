@@ -1,0 +1,77 @@
+﻿
+
+
+.selectItemComponent {
+    width: 180px;
+    vertical-align: top;
+    font-size: 15px;
+    background-color: #fff;
+    border: 1px solid #bbb;
+    word-wrap: break-word;
+    height: 30px;
+    text-align: right;
+}
+
+.BtnSelectItemComponent {
+    width: 30px;
+   
+    text-align: center;
+    padding-top: 7px;
+    border-left: 1px solid #bbb;
+    cursor: pointer;
+    background-color: #eee;
+    display: inline-block;
+    height: 23px;
+}
+
+    .BtnSelectItemComponent .icon-dollar {
+        margin-top: 180px;
+    }
+
+    .BtnSelectItemComponent:hover {
+        box-shadow: inset 1px 1px 6px 1px #ccc;
+        /*background-color:#adff2f;*/
+    }
+
+.TxtSelectItemComponent {
+    width: 125px;
+    vertical-align: top;
+    font-size: 12px;
+    line-height: 25px;
+    padding: 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+     overflow: hidden; 
+    display: inline-block;
+}
+
+.selectItemComponent .BtnRemoveSelectItemComponent {
+    vertical-align: top;
+    margin-top: 9px;
+    font-size: 11px;
+    cursor: pointer;
+    color: #9e9e9e;
+    display: none;
+}
+
+.SelectItemComponentEn {
+    text-align: left !important;
+}
+    .SelectItemComponentEn .BtnSelectItemComponent {
+        border-left: 0 !important;
+        border-right: 1px solid #bbb !important;
+    }
+    .SelectItemComponentEn .TxtSelectItemComponent {
+        line-height: 20px !important;
+    }
+
+    .selectItemComponent .BtnRemoveSelectItemComponent :hover {
+        color: #f44336;
+    }
+
+.TxtSelectItemComponent a {
+    text-decoration: none;
+    padding: 0 5px !important;
+    width: 150px;
+    font-size: 12px;
+}

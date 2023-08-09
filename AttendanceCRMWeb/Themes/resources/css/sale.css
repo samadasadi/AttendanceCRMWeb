@@ -1,0 +1,642 @@
+﻿
+@font-face {
+    font-family: 'Tahoma_faNum';
+    src: url('../fonts/IRANSansWeb(FaNum)_Medium.woff') format('woff');
+    font-display: fallback;
+}
+
+.FRight {
+    float: right;
+}
+
+[dir=ltr] .FRight {
+    float: left;
+}
+
+.FLeft {
+    float: left;
+    width: 60%;
+    text-align: left;
+}
+
+[dir=ltr] .FLeft {
+    float: right;
+    text-align: right;
+}
+
+.SaleTitle {
+    background-position: 0% 0%;
+    background-image: unset !important;
+    border-bottom: 1px solid #eee;
+    padding: 12px 13px 9px 10px !important;
+    margin: 0px !important;
+    height: 37px;
+    background-color: #fff !important;
+    background-repeat: repeat !important;
+    background-attachment: scroll !important;
+}
+
+    .SaleTitle .page-icon {
+        position: relative;
+        top: 5px;
+    }
+
+    .SaleTitle .page-title {
+        font-size: 22px;
+    }
+
+    .SaleTitle .spinner, .SaleTitleEdit .spinner {
+        position: fixed;
+        top: 60px;
+        left: 45%;
+        z-index: 1000;
+    }
+
+.divSaleMain {
+    background-color: #f7f7f7;
+    padding: 15px 15px 0 15px;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border-color: #f0f2f7;
+}
+
+#divSaleTab {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: inline-block;
+}
+
+.divSaleMain .fields {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.divSaleMain .buttons {
+    padding: 0 8px !important;
+}
+
+#BtnNewSale {
+    width: 77px;
+    padding: 0 20px !important;
+    height: 32px !important;
+    border-radius: 2px !important;
+    font-size: 12px !important;
+}
+
+.tabboxes {
+    clear: both;
+}
+
+.tab-item {
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 300ms;
+    line-height: 30px;
+    padding: 0 15px;
+    display: table-cell;
+    position: relative;
+    user-select: none;
+    background-color: #fff;
+    border: 1px solid #bbb;
+}
+
+    .tab-item:hover {
+        background-color: #f0f0f0;
+    }
+
+    .tab-item i {
+        font-weight: bold;
+    }
+
+.tabitem {
+    padding-top: 11px;
+}
+
+[dir=rtl] #Salepipeline, [dir=rtl] #Salelist {
+    border-left-color: #f0f0f0;
+}
+
+[dir=ltr] #Salepipeline, [dir=ltr] #Salelist {
+    border-right-color: #f0f0f0;
+}
+
+.Saleactive {
+    cursor: default !important;
+    background-color: #eff5fd !important;
+    border: 1px solid #317ae2 !important;
+}
+
+[dir=rtl] .Saleactive + .tab-item {
+    border-right-color: #f0f0f0;
+}
+
+[dir=ltr] .Saleactive + .tab-item {
+    border-left-color: #f0f0f0;
+}
+
+#Salepipeline {
+    font-size: 13px;
+    padding: 0 14px 0 16px;
+    border-radius: 0 2px 2px 0;
+}
+
+[dir=ltr] #Salepipeline {
+    border-radius: 2px 0 0 2px;
+}
+
+#Salelist {
+    font-size: 12px;
+    padding: 0 18px 0 17px;
+}
+
+#Saleworkflow {
+    border-radius: 2px 0 0 2px;
+    font-size: 12px;
+}
+
+[dir=ltr] #Saleworkflow {
+    border-radius: 0 2px 2px 0;
+}
+
+.FLeft div {
+    display: inline-block;
+}
+
+.FLeft #All_Price, #All_Count, .FLeft #All_Price_SaleList, #All_Count_SaleList {
+    color: #555;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 12%;
+    padding: 11px 5px 0 5px;
+    font-size: 12px;
+    line-height: 14px;
+    text-align: left;
+    direction: ltr;
+}
+
+.FLeft #All_Price, .FLeft #All_Price_SaleList {
+    max-width: 18%;
+    padding-left: 10px;
+}
+
+[dir=rtl] .FLeft #All_Price, [dir=rtl] #All_Count, [dir=rtl] .FLeft #All_Price_SaleList, [dir=rtl] #All_Count_SaleList {
+    direction: rtl;
+    font-family: Tahoma_faNum;
+}
+
+.Filters {
+    background: #fff;
+    box-shadow: inset 0 0 0 1px #cbcccd, 0 1px 2px rgba(38,41,44,.08);
+    height: 32px;
+    width: 25%;
+    min-width: 32px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: #26292c;
+    transition: background .12s;
+    user-select: none;
+    padding: 4px;
+    vertical-align: top;
+    cursor: pointer;
+    margin: 1px 2px 0 2px;
+    text-align: center;
+    min-width: 120px;
+}
+
+    .Filters:hover {
+        background: #f7f7f7;
+    }
+
+    .Filters > * {
+        display: inline-block;
+        padding-top: 7px;
+        font-size: 12px;
+        color: #26292c;
+    }
+
+    .Filters .icon-signal {
+        float: right;
+        padding: 4px 4px 0 0;
+        font-size: 14px;
+    }
+
+[dir=ltr] .Filters .icon-signal {
+    float: left;
+    transform: rotate(180deg);
+    padding: 4px 0 7px 4px;
+}
+
+.Filters .icon-filter {
+    float: right;
+    padding: 6px 6px 0 0;
+    font-size: 13px;
+}
+
+[dir=ltr] .Filters .icon-filter {
+    float: left;
+    padding: 6px 0 0 6px;
+}
+
+.Filters .icon-caret-down {
+    float: left;
+    padding: 6px;
+    font-size: 14px;
+}
+
+[dir=ltr] .Filters .icon-caret-down {
+    float: right;
+}
+
+.ShowSaleInfo_SaleList #sqSaleItemtable {
+    width: 100%;
+}
+
+#FilterProccess_List span {
+    font-size: 11.4px;
+}
+
+.SaleProcessMenu_List {
+    width: 165px;
+}
+
+#box-list .ravesh-grid tr.tbl-row {
+    cursor: default;
+}
+
+/*RuleManager-----------------------------------------------------------------------------------*/
+
+.divSaleMain .page-panel-search {
+    margin: 0 1px 3px 3px;
+}
+
+.divSaleMain #FilterContainer {
+    clear: both;
+    padding-top: 8px;
+}
+
+.rule-manager-main {
+    position: relative;
+    width: 100%;
+    overflow: hidden
+}
+
+.rule-manager-group,
+.rule-manager-rule {
+    position: relative;
+    border: solid 1px #e5e5e5;
+    background: white;
+    margin-bottom: 5px;
+    padding: 10px
+}
+
+.rule-manager-group-head {
+    margin-bottom: 10px;
+    overflow: hidden
+}
+
+.rule-manager-group.multi-rule > .rule-manager-group-body {
+    padding-right: 15px
+}
+
+.rule-manager-rule {
+    background: #f9f9f9;
+    min-height: 25px
+}
+
+    .rule-manager-rule .rule-manager-operator {
+        margin: 0 10px
+    }
+
+.rule-manager-and-or-container {
+    color: #000;
+    background: #f9f9f9;
+    float: right;
+    font-size: 11px;
+    line-height: 25px;
+    padding: 0 5px;
+    border: solid 1px #e5e5e5;
+    user-select: none;
+    display: none
+}
+
+    .rule-manager-and-or-container .and-or {
+        cursor: pointer;
+        border-bottom: solid 2px #369;
+        display: inline;
+        padding: 0 3px;
+        margin: 0 2px;
+        transition: background .3s
+    }
+
+        .rule-manager-and-or-container .and-or:hover,
+        .rule-manager-and-or-container .and-or.active {
+            background: #fff
+        }
+
+        .rule-manager-and-or-container .and-or .arrow {
+            border-top: 5px solid #000;
+            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
+            display: inline-block
+        }
+
+[dir=rtl] .rule-manager-and-or-container .and-or .arrow {
+    margin-right: 3px
+}
+
+[dir=ltr] .rule-manager-and-or-container .and-or .arrow {
+    margin-left: 3px
+}
+
+.rule-manager-group.multi-rule > .rule-manager-group-head > .rule-manager-and-or-container {
+    display: block
+}
+
+.rule-manager-btn {
+    line-height: 25px;
+    height: 27px;
+    min-width: 27px;
+    text-align: center;
+    border-radius: 3px;
+    color: #000;
+    display: inline-block;
+    padding: 0 5px;
+    cursor: pointer;
+    float: left;
+    font-size: 10px;
+    box-sizing: border-box;
+    border: solid 1px #e5e5e5;
+    background: #fff
+}
+
+    .rule-manager-btn:hover {
+        background: #f9f9f9
+    }
+
+    .rule-manager-btn i {
+        font-size: 15px
+    }
+
+    .rule-manager-btn.btn-close {
+        margin-left: 10px;
+        border-color: #DD4B39;
+        color: #DD4B39;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity .3s
+    }
+
+.rule-manager-group:hover > .rule-manager-group-head .rule-manager-btn.btn-close {
+    visibility: visible;
+    opacity: 1
+}
+
+.rule-manager-btn.btn-add-rule {
+    margin-left: 10px
+}
+
+.rule-manager-btn.btn-add-rule,
+.rule-manager-btn.btn-add-group {
+    border-color: #4CAF50;
+    color: #1B5E20
+}
+
+.rule-manager-rule .rule-manager-btn {
+    background: #f9f9f9;
+    min-width: 22px;
+    height: 22px;
+    line-height: 22px;
+    padding: 0;
+    margin: 7px 3px 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .3s
+}
+
+.rule-manager-rule:hover .rule-manager-btn {
+    visibility: visible;
+    opacity: 1
+}
+
+.rule-manager-rule .rule-manager-btn:hover {
+    background: #fff
+}
+
+.rule-manager-rule .ravesh-input:not(.ravesh-multi-selector) {
+    height: 35px;
+    width: 150px
+}
+
+.rule-manager-main .ravesh-multi-selector {
+    background-color: #fff;
+}
+
+.rule-manager-group .rule-manager-rule:last-child {
+    margin-bottom: 0
+}
+
+.multi-rule > .rule-manager-group-body > ::after,
+.multi-rule > .rule-manager-group-body > ::before {
+    content: '';
+    position: absolute;
+    right: -10px;
+    width: 10px;
+    height: calc(50%+4px);
+    border-color: #999;
+    border-style: solid;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+.multi-rule > .rule-manager-group-body > ::before {
+    top: -4px;
+    border-width: 0 1px 1px 0
+}
+
+.multi-rule > .rule-manager-group-body > ::after {
+    top: 50%;
+    border-width: 0 1px 0 0
+}
+
+.multi-rule > .rule-manager-group-body > :first-child::before {
+    top: -12px;
+    height: calc(50%+14px)
+}
+
+.multi-rule > .rule-manager-group-body > :last-child::before {
+    border-radius: 0 0 5px 0
+}
+
+.multi-rule > .rule-manager-group-body > :last-child::after {
+    display: none
+}
+
+.rule-manager-rule.error {
+    border: solid 1px #DD4B39;
+    background: #fff6f6
+}
+
+.rule-manager-group.error,
+.rule-manager-main.error > .rule-manager-group {
+    border: solid 1px #DD4B39;
+    background: #fffcfc
+}
+
+.dialog-rule-manager-field {
+    padding: 1px 15px
+}
+
+    .dialog-rule-manager-field .ravesh-input-cover {
+        margin-bottom: 20px
+    }
+
+#FilterContainer .filter-action-btns {
+    min-height: 17px;
+    margin: -10px 0px 5px 0px
+}
+
+/*------------------------------------------------------------------------------*/
+
+
+[aria-labelledby=ui-dialog-title-dialog_SaleFailTagWf] {
+    box-shadow: unset !important;
+    padding: 0 !important;
+    visibility: hidden;
+}
+
+    [aria-labelledby=ui-dialog-title-dialog_SaleFailTagWf] .ui-resizable-handle {
+        display: none !important;
+    }
+
+    [aria-labelledby=ui-dialog-title-dialog_SaleFailTagWf] .ui-dialog-titlebar {
+        background-color: #fff !important;
+        padding: 20px 10px 20px 20px !important;
+    }
+
+[dir=rtl] [aria-labelledby=ui-dialog-title-dialog_SaleFailTagWf] .ui-dialog-title {
+    color: #3d3d3d;
+    float: right !important;
+}
+
+[dir=ltr] [aria-labelledby=ui-dialog-title-dialog_SaleFailTagWf] .ui-dialog-title {
+    color: #3d3d3d;
+    font-weight: normal;
+    float: left !important;
+}
+
+[aria-labelledby=ui-dialog-title-dialog_SaleFailTagWf] .ui-dialog-titlebar-close {
+    margin: 0 !important;
+    top: unset !important;
+    font-size: 20px !important;
+    color: #999 !important;
+    height: auto !important;
+    padding: 0 !important;
+}
+
+    [aria-labelledby=ui-dialog-title-dialog_SaleFailTagWf] .ui-dialog-titlebar-close:hover {
+        border: 0 !important;
+    }
+
+[dir=rtl] [aria-labelledby=ui-dialog-title-dialog_SaleFailTagWf] .ui-dialog-titlebar-close {
+    left: 20px !important;
+    right: unset !important;
+}
+
+[dir=ltr] [aria-labelledby=ui-dialog-title-dialog_SaleFailTagWf] .ui-dialog-titlebar-close {
+    right: 20px !important;
+    left: unset !important;
+}
+
+[aria-labelledby=ui-dialog-title-dialog_SaleFailTagWf] .ui-dialog-titlebar-close span {
+    margin: 0 !important;
+}
+
+/*------------------------------------------------------------------------------*/
+
+#FilterSale {
+    padding: 1px;
+}
+
+    #FilterSale span {
+        max-width: 65%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 13px;
+        padding-top: 9px;
+        font-size: 11.4px;
+    }
+
+    #FilterSale .icon-filter {
+        color: #03a9f4;
+        padding-top: 10px;
+    }
+
+    #FilterSale .icon-caret-down {
+        background-color: #f6f6f6;
+        padding: 8px 9px;
+    }
+
+
+    #FilterSale:hover .icon-caret-down {
+        background-color: #eee;
+    }
+
+.SaleFilterMenu {
+    min-width: 165px;
+}
+
+.SaleProcessMenu {
+    min-width: 165px;
+}
+
+    .SaleProcessMenu span {
+        display: inline-block;
+    }
+
+[dir=rtl] .SaleProcessMenu span {
+    font-family: Tahoma_faNum;
+}
+
+.SaleProcessMenu span:not(.ActivityCount) {
+    margin: 0 10px !important;
+}
+
+.SaleProcessMenu .ActivityCount {
+    margin: 14px 10px !important;
+    max-width: 15px;
+    direction: ltr;
+    text-align: center;
+    border: 1px solid #fff;
+    border-radius: 50px;
+    background-color: #5cb142;
+    color: #fff;
+    line-height: 17px;
+    padding: 1px 4px 0 4px;
+    font-size: 11px;
+    width: 10px;
+    float: left;
+}
+
+[dir=ltr] .SaleProcessMenu .ActivityCount {
+    float: right;
+}
+
+.SaleTitle .page-date {
+    background-color: #fff;
+    color: #369;
+    padding: 0 10px;
+    cursor: default;
+    font-size: 11px;
+    line-height: 0px;
+    margin: 17px 0 0;
+}
+
+[dir=rtl] .SaleTitle .page-date {
+    font-family: Tahoma_faNum;
+    font-size: 12px;
+}

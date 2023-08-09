@@ -1,0 +1,805 @@
+﻿@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@using Utility.HtmlHelpers
+@using ViewModel.UserManagement.Attendance
+@using Utility.Utitlies
+@model  viewModel<CalendarVm>
+@{
+    ViewBag.Title = "حضور و غیاب";
+    Layout = VaribleForName.AddressLayoutMasterNew;
+}
+
+
+
+
+<div class="card col-md-12">
+    <div class="card-header p-2">
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a class="nav-link active" href="#Calendar" data-toggle="tab" onclick="EventTab_Click_Attendance('Calendar')">ایجاد تقویم</a></li>
+            <li class="nav-item"><a class="nav-link" href="#JobTime" data-toggle="tab" onclick="EventTab_Click_Attendance('JobTime')">ساعت کاری</a></li>
+            <li class="nav-item"><a class="nav-link" href="#ShiftWork" data-toggle="tab" onclick="EventTab_Click_Attendance('ShiftWork')">شیفت کاری</a></li>
+            <li class="nav-item"><a class="nav-link" href="#UserShift" data-toggle="tab" onclick="EventTab_Click_Attendance('UserShift')">انتساب شیفت</a></li>
+            <li class="nav-item"><a class="nav-link" href="#TransReq" data-toggle="tab" onclick="EventTab_Click_Attendance('TransReq')">درخواست ماموریت/مرخصی</a></li>
+            <li class="nav-item"><a class="nav-link" href="#AttLog" data-toggle="tab" onclick="EventTab_Click_Attendance('AttLog')">تردد پرسنل</a></li>
+            <li class="nav-item"><a class="nav-link" href="#TotalPerformancePersonal" data-toggle="tab" onclick="EventTab_Click_Attendance('TotalPerformancePersonal')">گزارش عملکرد کلی</a></li>
+            @*<li class="nav-item"><a class="nav-link" href="#AttendanceIndex" data-toggle="tab" onclick="EventTab_Click_Attendance('AttendanceIndex')">گزارش ورود و خروج</a></li>*@
+
+
+            @*<li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">گزارش تردد سیستم</a></li>
+                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">گزارش مرخصی</a></li>*@
+
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="tab-content">
+
+            <div class="tab-pane active" id="Calendar"></div>
+            <div class="tab-pane" id="JobTime"></div>
+            <div class="tab-pane" id="ShiftWork"></div>
+            <div class="tab-pane" id="UserShift"></div>
+            <div class="tab-pane" id="AttLog"></div>
+            <div class="tab-pane" id="TransReq"></div>
+            <div class="tab-pane" id="TotalPerformancePersonal"></div>
+            <div class="tab-pane" id="AttendanceIndex"></div>
+
+
+            @*<div class="tab-pane" id="timeline">گزارش تردد سیستم</div>
+                <div class="tab-pane" id="settings">گزارش مرخصی</div>*@
+
+
+        </div>
+    </div>
+</div>
+
+
+<div id="ListAttendanceDiv">
+    @Html.Partial("Calendar_Index", Model)
+</div>
+
+
+
+<div id="ReportArea" style="clear: both;direction: ltr"></div>
+
+
+
+@*<link href="~/Content/AdminResponsive3.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" rel="stylesheet" />
+    <script src="~/Content/AdminResponsive3.0/plugins/sweetalert2/sweetalert2.min.js"></script>*@
+@*<link href="~/Content/AdminResponsive3.0/plugins/toastr/toastr.min.css" rel="stylesheet" />
+    <script src="~/Content/AdminResponsive3.0/plugins/toastr/toastr.min.js"></script>*@
+
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            CreateCalendars();
+        });
+
+
+        function EventTab_Click_Attendance(tabId) {
+            $("#ListAttendanceDiv").html('');
+
+            $("#Calendar").html('');
+            $("#JobTime").html('');
+            $("#ShiftWork").html('');
+            $("#UserShift").html('');
+            $("#AttLog").html('');
+            $("#TransReq").html('');
+            $("#TotalPerformancePersonal").html('');
+            $("#AttendanceIndex").html('');
+
+            if (tabId == 'Calendar') {
+                CreateCalendars();
+                ReloadCalendars();
+            }
+            else if (tabId == 'JobTime') {
+                CreateJobTime();
+                ReloadJobTime();
+            }
+            else if (tabId == 'ShiftWork') {
+                CreateShiftWork();
+                ReloadShiftWork();
+            }
+            else if (tabId == 'UserShift') {
+                CreateUserShift();
+                $("#ListAttendanceDiv").html('');
+            }
+            else if (tabId == 'AttLog') {
+                CreateAttLog();
+                ReloadAttLog();
+            }
+            else if (tabId == 'TransReq') {
+                CreateTransReq();
+                ReloadTransReq();
+            }
+            else if (tabId == 'TotalPerformancePersonal') {
+                TotalPerformancePersonal();
+            }
+            else if (tabId == 'AttendanceIndex') {
+                AttendanceIndex();
+            }
+            else {
+                $("#ListAttendanceDiv").html('');
+            }
+        }
+
+
+        function CreateCalendars() {
+            $("#Calendar").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Create_Calendar", {}, true, function (res) {
+                
+                $("#Calendar").html(res);
+
+            }, true);
+        }
+        function EditCalendars(Id) {
+            $("#Calendar").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Edit_Calendar", { id: Id }, true, function (res) {
+                
+                $("#Calendar").html(res);
+
+            }, true);
+        }
+        function DeleteCalendars(Id) {
+            $("#Calendar").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Delete_Calendar", { ID: Id }, true, function (res) {
+                
+                if (!res.Error) {
+                    CreateCalendars();
+                    ReloadCalendars();
+                }
+                else {
+                    AlertDialog(res.Message, '', 'error');
+                }
+            }, true);
+        }
+        function Save_Calendar() {
+
+            var _CalendarName = $("#T_model_YearsNumber").val();
+            var _YearsNumber = $("#T_model_YearsNumber").val();
+
+
+            if (_CalendarName == "" || _CalendarName == null || _CalendarName == undefined) {
+                AlertDialog('لطفا عنوان را نمایید', '', 'error')
+            }
+            else if (_YearsNumber == "" || _YearsNumber == null || _YearsNumber == undefined) {
+                AlertDialog('لطفا سال را انتخاب نمایید', '', 'error')
+            } else {
+
+                AjaxCallAction("POST", "/Admin/EmployeeAttendance/Save_Calendar", $("#CalendarFrm").serialize(), true, function (res) {
+                    
+                    if (!res.error) {
+                        CreateCalendars();
+                        ReloadCalendars();
+                    }
+                    else {
+                        AlertDialog(res.message, '', 'error');
+                    }
+                }, true);
+
+            }
+        }
+        function ReloadCalendars() {
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Calendar_Index", { page: 1 }, true, function (res) {
+                
+                if (!res.error) {
+                    $("#ListAttendanceDiv").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true);
+        }
+        function RefreshCalendars() {
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/P_Calendar", { Search: $("#" + idTextSearch).val(), PageNum: page, PageSize: $("#" + idComboSelectCount).val(), FirstPage: firstPage, }, true, function (res) {
+                
+                if (!res.error) {
+                    $("#divListsCalendar").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true);
+        }
+        function operationAjaxFor_Calendar(url, idTextSearch, idComboSelectCount, page, firstPage) {
+            
+            var ids = [];
+            ids = $("#Types").val() == null ? 0 : $("#Types").val();
+            if (ids == 0) {
+                ids = [];
+            }
+
+            window.AjaxCallAction("POST", url, { Search: $("#" + idTextSearch).val(), PageNum: page, PageSize: $("#" + idComboSelectCount).val(), FirstPage: firstPage, Types: ids }, true, function (result) {
+                
+                var fnName = 'successCallBack' + '_' + idTextSearch;
+                window[fnName](result, page);
+            }, true);
+        }
+
+
+
+        function CreateJobTime() {
+            $("#JobTime").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Create_JobTime", {}, true, function (res) {
+                
+                $("#JobTime").html(res);
+            }, true);
+        }
+        function EditJobTime(Id) {
+            $("#JobTime").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Edit_JobTime", { id: Id }, true, function (res) {
+                
+                $("#JobTime").html(res);
+
+            }, true);
+        }
+        function DeleteJobTime(id) {
+            $("#Calendar").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Delete_JobTime", { Id: id }, true, function (res) {
+                
+                if (!res.Error) {
+                    CreateJobTime();
+                    ReloadJobTime();
+                }
+                else {
+                    AlertDialog(res.Message, '', 'error');
+                }
+            }, true);
+        }
+        function Save_JobTime() {
+            
+
+            var _JobTimeName = $("#T_model_JobTimeName").val();
+            var _TimeVorodValue = $("#T_model_TimeVorod_Value").val();
+            var _TimeKhorojValue = $("#T_model_TimeKhoroj_Value").val();
+
+
+            if (_JobTimeName == "" || _JobTimeName == null || _JobTimeName == undefined) {
+                AlertDialog('لطفا عنوان را نمایید', '', 'error')
+            }
+            else if (_TimeVorodValue == "" || _TimeVorodValue == null || _TimeVorodValue == undefined) {
+                AlertDialog('لطفا ساعت ورود نمایید', '', 'error')
+            }
+            else if (_TimeKhorojValue == "" || _TimeKhorojValue == null || _TimeKhorojValue == undefined) {
+                AlertDialog('لطفا ساعت خروج نمایید', '', 'error')
+            } else {
+
+                AjaxCallAction("POST", "/Admin/EmployeeAttendance/Save_JobTime", $("#JobTimeFrm").serialize(), true, function (res) {
+                    
+                    if (!res.error) {
+                        CreateJobTime();
+                        ReloadJobTime();
+                    }
+                    else {
+                        AlertDialog(resureslt.message, '', 'error');
+                    }
+                }, true);
+            }
+        }
+        function ReloadJobTime() {
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/JobTime_Index", { page: 1 }, true, function (res) {
+                
+                if (!res.error) {
+                    $("#ListAttendanceDiv").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true);
+        }
+        function RefreshJobTime() {
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/P_JobTime", { Search: $("#" + idTextSearch).val(), PageNum: page, PageSize: $("#" + idComboSelectCount).val(), FirstPage: firstPage, }, true, function (res) {
+                
+                if (!res.error) {
+                    $("#divListsJobTime").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true);
+        }
+        function operationAjaxFor_JobTime(url, idTextSearch, idComboSelectCount, page, firstPage) {
+            
+            var ids = [];
+            ids = $("#Types").val() == null ? 0 : $("#Types").val();
+            if (ids == 0) {
+                ids = [];
+            }
+
+            window.AjaxCallAction("POST", url, { Search: $("#" + idTextSearch).val(), PageNum: page, PageSize: $("#" + idComboSelectCount).val(), FirstPage: firstPage, Types: ids }, true, function (result) {
+                
+                var fnName = 'successCallBack' + '_' + idTextSearch;
+                window[fnName](result, page);
+            }, true);
+        }
+
+
+
+        function CreateShiftWork() {
+            $("#ShiftWork").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Create_ShiftWork", {}, true, function (res) {
+                
+                $("#ShiftWork").html(res);
+
+            }, true);
+        }
+        function EditShiftWork(Id) {
+            $("#ShiftWork").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Edit_ShiftWork", { id: Id }, true, function (res) {
+                
+                $("#ShiftWork").html(res);
+
+            }, true);
+        }
+        function DeleteShiftWork(id) {
+            $("#Calendar").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Delete_ShiftWork", { Id: id }, true, function (res) {
+                
+                if (!res.Error) {
+                    CreateShiftWork();
+                    ReloadShiftWork();
+                }
+                else {
+                    AlertDialog(res.Message, '', 'error');
+                }
+            }, true);
+        }
+        function Save_ShiftWork() {
+            
+
+            var _ShiftName = $("#T_model_ShiftName").val();
+            var _calendarId = $("#T_model_Calendar_Id").val();
+
+            if (_calendarId == "" || _calendarId == null || _calendarId == undefined) {
+                AlertDialog('تقویم کاری را انتخاب نمایید', '', 'error');
+                return;
+            }
+
+            if (_ShiftName == "" || _ShiftName == null || _ShiftName == undefined) {
+                AlertDialog('لطفا عنوان را نمایید', '', 'error')
+            } else {
+
+                AjaxCallAction("POST", "/Admin/EmployeeAttendance/Save_ShiftWork", $("#ShiftWorkFrm").serialize(), true, function (res) {
+                    
+                    if (!res.error) {
+                        CreateShiftWork();
+                        ReloadShiftWork();
+                    }
+                    else {
+                        AlertDialog(res.message, '', 'error');
+                    }
+                }, true);
+
+            }
+        }
+        function ReloadShiftWork() {
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/ShiftWork_Index", { page: 1 }, true, function (res) {
+                
+                if (!res.error) {
+                    $("#ListAttendanceDiv").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true);
+        }
+        function RefreshShiftWork() {
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/P_ShiftWork", { Search: $("#" + idTextSearch).val(), PageNum: page, PageSize: $("#" + idComboSelectCount).val(), FirstPage: firstPage, }, true, function (res) {
+                
+                if (!res.error) {
+                    $("#divListsShiftWork").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true);
+        }
+        function operationAjaxFor_ShiftWork(url, idTextSearch, idComboSelectCount, page, firstPage) {
+            
+            var ids = [];
+            ids = $("#Types").val() == null ? 0 : $("#Types").val();
+            if (ids == 0) {
+                ids = [];
+            }
+
+            window.AjaxCallAction("POST", url, { Search: $("#" + idTextSearch).val(), PageNum: page, PageSize: $("#" + idComboSelectCount).val(), FirstPage: firstPage, Types: ids }, true, function (result) {
+                
+                var fnName = 'successCallBack' + '_' + idTextSearch;
+                window[fnName](result, page);
+            }, true);
+        }
+        function LoadCalendar() {
+            
+            var _calendarId = $("#T_model_Calendar_Id").val();
+            if (_calendarId != "" && _calendarId != null && _calendarId != undefined) {
+                AjaxCallAction("GET", "/Admin/EmployeeAttendance/LoadCalendar", { ID: _calendarId }, true, function (res) {
+                    
+                    $("#LoadCalendar").html(res);
+
+                }, true);
+            }
+        }
+        function Edit_LoadCalendar(shiftworkId) {
+            
+            if (shiftworkId != "" && shiftworkId != null && shiftworkId != undefined) {
+                AjaxCallAction("GET", "/Admin/EmployeeAttendance/Edit_LoadCalendar", { id: shiftworkId }, true, function (res) {
+                    
+                    $("#LoadCalendar").html(res);
+
+                }, true);
+            }
+        }
+        function SetJobTimeForDays() {
+            
+            var _jobTimeId = $("#T_model_jobTimevm").val();
+            var _calendarId = $("#T_model_Calendar_Id").val();
+            var _jobtimeFromdate = $("#T_model_JobTime_FromDate").val();
+            var _jobtimeTodate = $("#T_model_JobTime_ToDate").val();
+
+            if (_calendarId == "" || _calendarId == null || _calendarId == undefined) {
+                AlertDialog('تقویم کاری را انتخاب نمایید', '', 'error');
+                return;
+            }
+            if (_jobTimeId == "" || _jobTimeId == null || _jobTimeId == undefined) {
+                AlertDialog('ساعت کاری را انتخاب نمایید', '', 'error');
+                return;
+            }
+
+
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/SetJobTimeForDays", { Id: _jobTimeId, Calendar_Id: _calendarId, JobTime_FromDate: _jobtimeFromdate, JobTime_ToDate: _jobtimeTodate }, true, function (res) {
+                
+                $("#LoadCalendar").html(res);
+
+            }, true);
+
+        }
+        function RemoveJobTimeForDays() {
+            
+            var _calendarId = $("#T_model_Calendar_Id").val();
+            var _jobtimeFromdate = $("#T_model_JobTime_FromDate").val();
+            var _jobtimeTodate = $("#T_model_JobTime_ToDate").val();
+
+            if (_calendarId != "" && _calendarId != null && _calendarId != undefined) {
+                AjaxCallAction("GET", "/Admin/EmployeeAttendance/SetJobTimeForDays", { Id: 0, Calendar_Id: _calendarId, JobTime_FromDate: _jobtimeFromdate, JobTime_ToDate: _jobtimeTodate }, true, function (res) {
+                    
+                    $("#LoadCalendar").html(res);
+
+                }, true);
+            }
+        }
+        function ChangeVcation(date) {
+            
+            if (date != "" && date != null && date != undefined) {
+                AjaxCallAction("GET", "/Admin/EmployeeAttendance/ChangeVcation", { DateEn: date }, true, function (res) {
+                    
+                    $("#LoadCalendar").html(res);
+
+                }, true);
+            }
+        }
+        function ChangeJobTimeForDays(date, jobtimeId) {
+            
+            if (date != "" && date != null && date != undefined) {
+                AjaxCallAction("GET", "/Admin/EmployeeAttendance/ChangeJobTimeForDays", { DateEn: date, JobTime: jobtimeId }, true, function (res) {
+                    
+                    $("#LoadCalendar").html(res);
+
+                }, true);
+            }
+        }
+
+
+
+        function CreateUserShift() {
+            $("#UserShift").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Create_UserShift", {}, true, function (res) {
+                
+                $("#UserShift").html(res);
+
+            }, true);
+        }
+        function ReloadUserShift() {
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/UserShift_Index", { page: 1 }, true, function (res) {
+                
+                if (!res.error) {
+                    $("#ListAttendanceDiv").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true);
+        }
+        function RefreshJobTime() {
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/P_UserShift", { Search: $("#" + idTextSearch).val(), PageNum: page, PageSize: $("#" + idComboSelectCount).val(), FirstPage: firstPage, }, true, function (res) {
+                
+                if (!res.error) {
+                    $("#divListsUserShift").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true);
+        }
+        function Save_UserShift() {
+            
+
+            var _ShiftWork_Id = $("#T_model_ShiftWork_Id").val();
+            var _PuUser_Id = $("#T_model_PuUser_Id").val();
+            var _Type = $("#T_model_Type").val();
+
+
+            if (_ShiftWork_Id == "" || _ShiftWork_Id == null || _ShiftWork_Id == undefined) {
+                AlertDialog('لطفا شیفت کاری را انتخاب نمایید', '', 'error')
+
+            }
+            else if (_Type == '1' && (_PuUser_Id == "" || _PuUser_Id == null || _PuUser_Id == undefined)) {
+                AlertDialog('لطفا پرسنل را انتخاب نمایید', '', 'error')
+
+
+            } else {
+
+                AjaxCallAction("POST", "/Admin/EmployeeAttendance/Save_UserShift", $("#PubUserShiftFrm").serialize(), true, function (res) {
+                    if (!res.Error) {
+                        CreateUserShift();
+                        //ReloadUserShift();
+
+                        AlertDialog('انتساب شیفت کاری به پرسنل با موفقیت انجام شد', '', 'success');
+                    }
+                    else {
+                        AlertDialog(res.Message, '', 'error');
+                    }
+                }, true);
+            }
+        }
+
+
+
+        function CreateAttLog() {
+            $("#AttLog").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Create_AttLog", {}, true, function (res) {
+                
+                $("#AttLog").html(res);
+
+            }, true);
+        }
+        function EditAttLog(Id) {
+            $("#AttLog").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Edit_AttLog", { RecordID: Id }, true, function (res) {
+                
+                $("#AttLog").html(res);
+
+            }, true);
+        }
+        function DeleteAttLog(Id) {
+            $("#AttLog").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Delete_AttLog", { RecordID: Id }, true, function (res) {
+                
+                if (!res.Error) {
+                    CreateAttLog();
+                    ReloadAttLog();
+                }
+                else {
+                    AlertDialog(res.Message, '', 'error');
+                }
+            }, true);
+        }
+        function Save_AttLog() {
+            
+            var _CardNo = $("#T_model_CardNo").val();
+            var _Time_Value = $("#T_model_Time_Value").val();
+
+
+            if (_CardNo == "" || _CardNo == null || _CardNo == undefined) {
+                AlertDialog('لطفا پرسنل را انتخاب نمایید', '', 'error')
+            }
+            else if (_Time_Value == "" || _Time_Value == null || _Time_Value == undefined) {
+                AlertDialog('لطفا ساعت را وارد نمایید', '', 'error')
+            } else {
+
+                AjaxCallAction("POST", "/Admin/EmployeeAttendance/Save_AttLog", $("#AttLogFrm").serialize(), true, function (res) {
+                    
+                    if (!res.Error) {
+                        CreateAttLog();
+                        ReloadAttLog();
+                    }
+                    else {
+                        AlertDialog(res.message, '', 'error');
+                    }
+                }, true);
+
+            }
+        }
+        function ReloadAttLog() {
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/AttLog_Index", { page: 1 }, true, function (res) {
+                
+                if (!res.error) {
+                    $("#ListAttendanceDiv").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true);
+        }
+        function RefreshAttLog() {
+
+            AjaxCallAction("POST", "/Admin/EmployeeAttendance/P_AttLog",
+                {
+                    Search: $("#txtSearch").val(),
+                    PageNum: 1,
+                    PageSize: $("#cboSelectCount").val(),
+                    FirstPage: 1,
+                    FromDate: $("#T_model_FromDate").val(),
+                    ToDate: $("#T_model_ToDate").val()
+                }, true, function (res) {
+                
+                if (!res.error) {
+                    $("#divListsAttLog").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true);
+        }
+        function operationAjaxFor_AttLog(url, idTextSearch, idComboSelectCount, page, firstPage) {
+            
+            var ids = [];
+            ids = $("#Types").val() == null ? 0 : $("#Types").val();
+            if (ids == 0) {
+                ids = [];
+            }
+
+            window.AjaxCallAction("POST", url,
+                {
+                    Search: $("#" + idTextSearch).val(),
+                    PageNum: page,
+                    PageSize: $("#" + idComboSelectCount).val(),
+                    FirstPage: firstPage,
+                    Types: ids,
+                    FromDate: $("#T_model_FromDate").val(),
+                    ToDate: $("#T_model_ToDate").val()
+                }, true, function (result) {
+                
+                var fnName = 'successCallBack' + '_' + idTextSearch;
+                window[fnName](result, page);
+            }, true);
+        }
+
+
+
+        function CreateTransReq() {
+            $("#TransReq").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Create_TransReq", {}, true, function (res) {
+                
+                $("#TransReq").html(res);
+
+            }, true);
+        }
+        function EditTransReq(id) {
+            $("#TransReq").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Edit_TransReq", { Id: id }, true, function (res) {
+                
+                $("#TransReq").html(res);
+
+            }, true);
+        }
+        function DeleteTransReq(id) {
+            $("#TransReq").html('');
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/Delete_TransReq", { Id: id }, true, function (res) {
+                
+                if (!res.Error) {
+                    CreateTransReq();
+                    ReloadTransReq();
+                }
+                else {
+                    AlertDialog(res.Message, '', 'error');
+                }
+            }, true);
+        }
+        function Save_TransReq() {
+            
+            var _PersonID = $("#T_model_PersonID").val();
+            var _Transaction_Id = $("#T_model_Transaction_Id").val();
+            var _Comment = $("#T_model_Comment").val();
+
+            var _TimeFrom_Value = $("#T_model_TimeFrom_Value").val();
+            var _TimeTo_Value = $("#T_model_TimeTo_Value").val();
+
+            if (document.getElementById('TransactionReqType_ReqHour').checked == true && (_TimeFrom_Value == "" || _TimeFrom_Value == null || _TimeFrom_Value == undefined || _TimeTo_Value == "" || _TimeTo_Value == null || _TimeTo_Value == undefined)) {
+                AlertDialog('لطفا ساعت را وارد نمایید', '', 'error');
+                return;
+            }
+
+            if (_Transaction_Id == "" || _Transaction_Id == null || _Transaction_Id == undefined) {
+                AlertDialog('لطفا درخواست را انتخاب نمایید', '', 'error');
+                return;
+            }
+            if (_Comment == "" || _Comment == null || _Comment == undefined) {
+                AlertDialog('لطفا توضیحات را وارد نمایید', '', 'error');
+                return;
+            }
+            if (_PersonID == "" || _PersonID == null || _PersonID == undefined) {
+                AlertDialog('لطفا پرسنل را انتخاب نمایید', '', 'error')
+            } else {
+
+                AjaxCallAction("POST", "/Admin/EmployeeAttendance/Save_TransReq", $("#TransReqFrm").serialize(), true, function (res) {
+                    
+                    if (!res.Error) {
+                        CreateTransReq();
+                        ReloadTransReq();
+                    }
+                    else {
+                        AlertDialog(res.message, '', 'error');
+                    }
+                }, true);
+
+            }
+        }
+        function ReloadTransReq() {
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/TransReq_Index", { page: 1 }, true, function (res) {
+                
+                if (!res.error) {
+                    $("#ListAttendanceDiv").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true);
+        }
+        function RefreshTransReq() {
+            AjaxCallAction("GET", "/Admin/EmployeeAttendance/P_TransReq", { Search: $("#" + idTextSearch).val(), PageNum: page, PageSize: $("#" + idComboSelectCount).val(), FirstPage: firstPage, }, true, function (res) {
+                
+                if (!res.error) {
+                    $("#divListsCalendar").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true);
+        }
+        function operationAjaxFor_TransReq(url, idTextSearch, idComboSelectCount, page, firstPage) {
+            
+            var ids = [];
+            ids = $("#Types").val() == null ? 0 : $("#Types").val();
+            if (ids == 0) {
+                ids = [];
+            }
+
+            window.AjaxCallAction("POST", url, { Search: $("#" + idTextSearch).val(), PageNum: page, PageSize: $("#" + idComboSelectCount).val(), FirstPage: firstPage, Types: ids }, true, function (result) {
+                
+                var fnName = 'successCallBack' + '_' + idTextSearch;
+                window[fnName](result, page);
+            }, true);
+        }
+
+
+
+        function TotalPerformancePersonal() {
+            $("#TotalPerformancePersonal").html('');
+            AjaxCallAction("GET", "/Admin/StaticReport/TotalPerformancePersonal", {}, true, function (res) {
+                
+                $("#TotalPerformancePersonal").html(res);
+
+            }, true);
+        }
+
+
+
+        function AttendanceIndex() {
+            $("#AttendanceIndex").html('');
+            AjaxCallAction("GET", "/Admin/Attendance/Index", {}, true, function (res) {
+                
+                $("#AttendanceIndex").html(res);
+
+            }, true);
+        }
+
+
+
+    </script>
+}
+
+
+
+
+

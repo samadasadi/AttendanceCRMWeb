@@ -1,0 +1,19 @@
+﻿@using AttendanceCRMWeb.Helpers
+@{
+    ViewBag.Title = "CreateDatabaseBackup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.MyHelper().Panel("database backup"))
+{
+
+    @Html.BeginForm("CreateDatabaseBackup", "MedicalCenter", FormMethod.Post)
+    {
+
+        <label>نام گذاری اتوماتیک</label>
+        <input type="checkbox" name="autoName" id="autoName" />
+        <label>Backup Name:</label>
+        <input type="text" name="name" id="name" />
+    }
+}
+

@@ -1,0 +1,300 @@
+.ui-state-default, .ui-widget-content .ui-state-default {
+    border: 1px solid #d3d3d3;
+    font-weight: normal;
+    color: #555;
+    outline: 0;
+}
+
+
+.fg-menuA-container {
+    font-family: TahomaTH;
+    position: absolute;
+    top: 0;
+    left: -999px;
+    padding: .4em;
+    overflow: hidden;
+    z-index: 5000;
+    height: 280px;
+}
+
+.fg-menuA-container.fg-menuA-flyout {
+    overflow: visible
+}
+
+.fg-menuA,.fg-menuA ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0
+}
+
+.fg-menuA {
+    position: relative
+}
+
+.fg-menuA-flyout .fg-menuA {
+    position: static
+}
+
+.fg-menuA ul {
+    position: absolute;
+    top: 0
+}
+
+.fg-menuA ul ul {
+    top: -1px
+}
+
+.fg-menuA-container.fg-menuA-ipod .fg-menuA-content,.fg-menuA-container.fg-menuA-ipod .fg-menuA-content ul {
+    background: none!important
+}
+
+.fg-menuA.fg-menuA-scroll,.fg-menuA ul.fg-menuA-scroll {
+    overflow: scroll;
+    overflow-x: hidden
+}
+
+.fg-menuA li {
+    clear: both;
+    line-height: 16px;
+    float: left;
+    width: 99%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.fg-menuA .ui-state-hover{
+    background-color:#2F88CD !important;
+}
+.fg-menuA li li {
+    font-size: 1em
+}
+.fg-menuA .selectLink_tree{
+    text-align:center;
+}
+.fg-menuA-flyout ul ul {
+    padding: .4em
+}
+
+.fg-menuA-flyout li {
+    position: relative
+}
+
+.fg-menuA-scroll {
+    overflow: scroll;
+    overflow-x: hidden
+}
+
+.fg-menuA-breadcrumb {
+    margin: 0;
+    padding: 0
+}
+
+.fg-menuA-footer {
+    margin-top: .4em;
+    padding: .4em
+}
+
+.fg-menuA-header {
+    margin-bottom: .4em;
+    padding: .4em
+}
+
+.fg-menuA-breadcrumb li {
+    float: left;
+    list-style: none;
+    margin: 0;
+    padding: 0 .2em;
+    font-size: .9em;
+    opacity: .7;
+    /* color: White; */
+}
+
+.fg-menuA-breadcrumb li.fg-menuA-prev-list,.fg-menuA-breadcrumb li.fg-menuA-current-crumb {
+    clear: left;
+    float: none;
+    opacity: 1
+}
+
+.fg-menuA-breadcrumb li.fg-menuA-current-crumb {
+    padding-top: .2em
+}
+
+.fg-menuA-breadcrumb a,.fg-menuA-breadcrumb span {
+    float: left;
+    color: #383838;
+    font-weight: normal;
+    line-height: 16px;
+}
+
+.fg-menuA-footer a:link,.fg-menuA-footer a:visited {
+    float: left;
+    width: 100%;
+    text-decoration: none
+}
+
+.fg-menuA-footer a span {
+    float: left;
+    cursor: pointer
+}
+
+.fg-menuA-breadcrumb .fg-menuA-prev-list a:link,.fg-menuA-breadcrumb .fg-menuA-prev-list a:visited,.fg-menuA-breadcrumb .fg-menuA-prev-list a:hover,.fg-menuA-breadcrumb .fg-menuA-prev-list a:active {
+    background-image: none;
+    text-decoration: none
+}
+
+.fg-menuA-breadcrumb .fg-menuA-prev-list a {
+    float: left;
+    padding-right: .4em
+}
+
+.fg-menuA-breadcrumb .fg-menuA-prev-list a .ui-icon {
+    float: left
+}
+
+.fg-menuA-breadcrumb .fg-menuA-current-crumb a:link,.fg-menuA-breadcrumb .fg-menuA-current-crumb a:visited,.fg-menuA-breadcrumb .fg-menuA-current-crumb a:hover,.fg-menuA-breadcrumb .fg-menuA-current-crumb a:active {
+    display: block;
+    /* background-image: none; */
+    /* font-size: 1.3em; */
+    font-family: TahomaTh;
+    text-decoration: none;
+}
+
+.fg-menuA a:link,.fg-menuA a:visited,.fg-menuA a:hover,.fg-menuA a:active {
+    float: left;
+    width: 92%;
+    padding: .3em 3%;
+    text-decoration: none;
+    outline: 0!important;
+}
+
+.fg-menuA a {
+    border: 1px dashed transparent;
+    text-align: left
+}
+
+.fg-menuA a.ui-state-default:link,.fg-menuA a.ui-state-default:visited,.fg-menuA a.ui-state-default:hover,.fg-menuA a.ui-state-default:active,.fg-menuA a.ui-state-hover:link,.fg-menuA a.ui-state-hover:visited,.fg-menuA a.ui-state-hover:hover,.fg-menuA a.ui-state-hover:active,.fg-menuA a.ui-state-active:link,.fg-menuA a.ui-state-active:visited,.fg-menuA a.ui-state-active:hover,.fg-menuA a.ui-state-active:active {
+    border-style: solid;
+    font-weight: normal;
+    text-align: left
+}
+
+.fg-menuA a span {
+    display: block;
+    cursor: pointer
+}
+
+.fg-menuA-indicator span {
+    float: left
+}
+
+.fg-menuA-indicator span.ui-icon {
+    float: right
+}
+
+.fg-menuA-content.ui-widget-content,.fg-menuA-content ul.ui-widget-content {
+    border: 0
+}
+
+.fg-menuA.fg-menuA-has-icons a:link,.fg-menuA.fg-menuA-has-icons a:visited,.fg-menuA.fg-menuA-has-icons a:hover,.fg-menuA.fg-menuA-has-icons a:active {
+    padding-left: 20px
+}
+
+.fg-menuA .horizontal-divider hr,.fg-menuA .horizontal-divider span {
+    padding: 0;
+    margin: 5px .6em
+}
+
+.fg-menuA .horizontal-divider hr {
+    border: 0;
+    height: 1px
+}
+
+.fg-menuA .horizontal-divider span {
+    font-size: .9em;
+    text-transform: uppercase;
+    padding-left: .2em
+}
+
+.selectLink_tree {
+    width: 30px;
+    float: left;
+    padding: .3em 3%
+}
+
+.selectLink_tree_2 {
+    float: right;
+    overflow: hidden;
+    width: 70%
+}
+
+#menuALog {
+    font-size: 1.4em;
+    margin: 20px
+}
+
+.hidden {
+    position: absolute;
+    top: 0;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden
+}
+
+.fg-button {
+    clear: left;
+    margin: 0 4px 40px 20px;
+    padding: .6em 1em;
+    text-decoration: none!important;
+    cursor: pointer;
+    position: relative;
+    text-align: center;
+    zoom:1}
+
+.fg-button .ui-icon {
+    position: absolute;
+    top: 50%;
+    margin-top: -8px;
+    left: 50%;
+    margin-left: -8px
+}
+
+a.fg-button {
+    float: right;
+    margin: 0
+}
+
+button.fg-button {
+    width: auto;
+    overflow: visible
+}
+
+.fg-button-icon-left {
+    padding-left: 2.1em
+}
+
+.fg-button-icon-right {
+    padding-right: 2.1em
+}
+
+.fg-button-icon-left .ui-icon {
+    right: auto;
+    left: .2em;
+    margin-left: 0
+}
+
+.fg-button-icon-right .ui-icon {
+    left: auto;
+    right: .2em;
+    margin-left: 0
+}
+
+.fg-button-icon-solo {
+    display: block;
+    width: 8px;
+    text-indent: -9999px
+}
+
+.fg-button.ui-state-loading .ui-icon {
+    background: #6495ed no-repeat 0 0
+}

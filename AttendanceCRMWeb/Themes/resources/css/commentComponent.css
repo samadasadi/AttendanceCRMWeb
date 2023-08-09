@@ -1,0 +1,865 @@
+﻿
+.cCompComment {
+    min-width: 200px; /*450*/
+    max-width: 1000px;
+    max-height: 1000px;
+    vertical-align: top;
+    font-size: 15px;
+    background-color: #fff;
+    word-wrap: break-word;
+    text-align: right;
+    padding:5px;
+}
+
+.cCompCommentTitle {
+    cursor:pointer;
+    border-radius:2px;
+    border-bottom :1px solid #eee;
+    width:93%;
+    float:right;
+}
+
+.cCompCommentTitle:hover {
+    background-color:#f8f8f8;
+}
+
+.cCompShowSearchMenu {
+    float: left;
+    padding: 10px 5px 0 10px;
+    cursor: pointer;
+    font-size:15px !important;
+}
+
+.cCompSearchMenu {
+    height: 25px;
+    text-align: right;
+    direction: rtl;
+    display: none;
+    position:absolute;
+    z-index:1000;
+    padding-top:8px;
+    background-color:#fff;
+    width:200px;
+    height:35px;
+    background-color :#f3f3f3;
+}
+
+.cCompTxtSearch {
+    margin :0 10px;
+    position:relative;
+    z-index:1500;
+    font-family:Tahoma !important;
+    font-size:12px !important;
+    width:100px;
+    padding:3px;
+}
+
+.cCompChkSearchAttach {
+    position:relative;
+    z-index:1500;
+    top:4px;
+}
+
+.cCompSearchMenu lable {
+    font-size:11px;
+}
+
+.cCompViewComment {
+    width:96%;
+    min-height: 100px;
+    max-height: 500px;
+    font-family: tahoma;
+    font-size: 12px;
+    color: #333;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding-top: 7px;
+    padding-right:7px;
+    background-color: #fff;
+    line-height: 1.3em;
+    direction: ltr;
+    border-radius:2px;
+}
+
+.cCompActionComment {
+    border:1px solid #fff;
+    min-height:50px;
+    /*padding-top: 11px;*/
+}
+
+.cCompTxtContainer {
+    width: 96%;
+    min-height:40px;
+    margin-top: 0px !important;
+    margin: 0 11px;
+    overflow: hidden;
+    display:flex;
+}
+
+.cCompTitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height:15px;
+    text-align:left;
+}
+
+.cCompTxtComment {
+    width: 96%;
+    max-width:100%;
+    min-height: 20px;
+    max-height: 42px;
+    vertical-align: top;
+    font-size: 12px;
+    font-family: Tahoma;
+    padding: 10px 10px 5px 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: inline-block;
+    resize: none;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    overflow: auto;
+    direction: rtl;
+    cursor: text;
+    display: inline-block;
+    line-height: 15px;
+    background-color: #f8f8f8; 
+    border: 1px solid #bbb;
+}
+
+.cCompTxtComment a{
+    color:#0066CC !important;
+}
+
+.cCompViewComment::-webkit-scrollbar, .cCompTxtComment::-webkit-scrollbar
+{
+    width:6px;
+}
+
+.cCompViewComment::-webkit-scrollbar-thumb {
+    width: 5px;
+    background-color: #eee;
+    /*border-radius:5px;*/
+}
+
+.cCompTxtComment::-webkit-scrollbar-thumb {
+    width: 5px;
+}
+
+.cCompButtonArea {
+    display:none;
+    padding-top:3px;
+    width:105px;
+}
+
+.cCompAttachmentArea {
+    display: none;
+    margin:0 2px;
+}
+
+.cCompAttachmentRow {
+    padding: 5px 5px 1px 10px;
+    background-color:#eee;
+    font-size:12px;
+    color:#2d7bd1;
+    display:inline-block;
+    margin: 0 2px 4px 2px;
+    border:1px solid #bbb;
+    direction:ltr;
+}
+
+    .cCompAttachmentTitle {
+        max-width: 100px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        direction: ltr;
+        display:inline-block;
+        line-height:15px;
+    }
+
+    .cCompAttachmentRow i {
+        font-size: 10px;
+        padding: 0 3px;
+        position: relative;
+        top: -9px;
+        left: 4px;
+        color:#999;
+        cursor:pointer;
+    }
+
+.cCompBtnSaveComment {
+    border-radius:2px;
+    padding: 9px 15px;
+    cursor: pointer;
+    font-size: 12px !important;
+    font-family: Tahoma !important;
+    margin:1px 5px;
+    color: #fff;
+    background-color: #42a2eb!important;
+    border: solid 1px #42a2eb!important;
+    border-bottom: solid 1px #1b70b0!important;
+    display:inline-block;
+    /*background-color: #529E3B !important;
+    background-image: -webkit-linear-gradient(top,#529E3B,#4BA82E ) !important;*/
+}
+
+.cCompBtnSaveComment:hover{
+    background-color: #3c98dd!important;
+    border-bottom: solid 1px #1b70b0!important;
+    /*box-shadow: inset 1px 2px 19px #4D9437 !important;
+    background-color: #5CB142 !important;
+    background-image: -webkit-linear-gradient(top,#5CB142,#4BA82E ) !important;*/
+}
+
+.cCompCancelButton {
+    border-radius: 2px;
+    padding: 4px 15px;
+    cursor: pointer;
+    font-size: 12px !important;
+    font-family: Tahoma !important;
+    margin: 2px 5px;
+    background-color: #fff;
+    color: #777;
+    border: solid 1px #c4c4c4;
+}
+
+.cCompToolsComment {
+    /*height: 50px;*/
+    text-align: right;
+    direction: rtl;
+    display: none;
+    position:absolute;
+    z-index:1000;
+    left:800px;
+    padding:5px 0;
+    background-color:#fff;
+}
+
+.cCompShowMenu{
+    display:none;
+    margin: 0 10px;
+    cursor:pointer;
+}
+
+.cCompBtnAttach i {
+    font-size: 14px;
+}
+
+.cCompTools {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 11px;
+    padding: 4px 8px;
+    text-decoration: none !important;
+    color: black;
+}
+
+    .cCompTools:hover {
+        color: black;
+    }
+
+    .cCompTools.active {
+        border: solid 1px #cbd6e2;
+    }
+
+    .cCompTools i {
+        position: relative;
+        top: 4px;
+        color:#888;
+    }
+
+.cCompBtnEditComment {
+    display: none;
+}
+
+.cCompBtnCancelComment {
+    display: none;
+}
+
+.cCompComment .BtnRemovecCompComment {
+    vertical-align: top;
+    margin-top: 10px;
+    font-size: 11px;
+    cursor: pointer;
+    color: #9e9e9e;
+    display: none;
+}
+
+.cCompCommentEn {
+    text-align: left !important;
+}
+
+.cCompMoreComment {
+    cursor: pointer;
+    color: #2d7bd1;
+    font-size: 12px;
+    padding: 12px 25px;
+    display: inline-block;
+}
+
+.cCompRecordCount {
+   display: inline-block;
+   font-size : 8pt;
+   float:left;
+   padding:13px;
+   color:#787878;
+}
+
+.cCompComment .BtnRemovecCompComment :hover {
+    color: #f44336;
+}
+
+.cCompMsgPlace {
+    width: 200px;
+}
+
+.cCompCommentTitle div#message-success, .cCompCommentTitle div#message-error {
+    width: 100%;
+    height: 45px;
+}
+
+.cCompAutoCompleteSearchCurent div {
+    display: inline-block;
+}
+
+.cCompAutoCompleteSearch {
+    float: right;
+}
+
+cCompAutoCompleteSearchEn {
+    float: left;
+}
+
+.cCompAutoCompleteSearchCode {
+    float: left;
+    color: #000;
+}
+
+.cCompAutoCompleteSearchCodeEn {
+    float: right;
+    color: #000;
+}
+
+.CommentAuto {
+    border-radius: 0;
+    border: 1px solid #e5e5e5;
+    padding: 0;
+    max-width: 300px;
+}
+
+.cCompli {
+    background-color: #fff !important;
+    border-spacing: 10px !important;
+}
+
+.cCompli:last-child {
+    border:0px;
+}
+
+    .cCompli a:hover {
+        background-color: #fafafa !important;
+        border-radius: unset;
+        color: #000 !important;
+        border: 0px !important;
+    }
+
+    .cCompInsertSharp, .cCompInsertAtsign{
+        cursor:pointer;
+    }
+
+/*boxmessage =========================================================================================================*/
+
+.cCompBoxMessage {
+    overflow: hidden;
+    position: relative;
+    min-height: 40px;
+    margin-top:12px;
+    border-bottom:1px solid #eee;
+}
+
+.cCompBoxMessage:last-of-type {
+    border-bottom:0;
+}
+
+.cCompBoxMessageContent {
+    padding: 1px 8px 3px 8px;
+    min-height: 24px;
+    position: relative;
+    background-image:none;
+    margin-right: 4px;
+}
+
+.cCompBoxUserPic.rtl-right_left {
+    position: absolute;
+    right: 0;
+    float: right;
+}
+
+.cCompBoxMessageContent.rtl-right_left {
+    margin-right: 37px;
+    float: right;
+}
+
+.cCompBoxUserPic.ltr-left_right {
+    position: absolute;
+    left: 0;
+    float: left;
+}
+
+.cCompBoxMessageContent.ltr-left_right {
+    margin-left: 37px;
+    float: left;
+    border-top-right-radius:5px;
+    border-top-left-radius:0;
+}
+
+.cCompBoxMessage .cCompUserPic {
+    border-width: 0;
+    width: 30px;
+    height: 30px;
+    margin: 0 3px;
+    border-radius:15px;
+}
+
+.cCompBoxUserPic img {
+    border: 0;
+    text-decoration: underline;
+}
+
+.cCompExpand {
+    max-height: 500px;
+}
+
+.cCompMinus{
+    max-height:48px;
+}
+
+.cCompItemMessage {
+    width: 100%;
+    display: inline-block;
+    word-wrap: break-word;
+    min-width: 40px;
+    padding: 3px 5px 0 5px;
+    line-height: 22px;
+    direction: rtl;
+    text-align: right;
+    -webkit-transition: max-height 1.5s;
+    -moz-transition: max-height 1.5s;
+    transition: max-height 1.5s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cCompAttachmentView {
+    width: 0;
+    display:inline-block;
+    float:left;
+}
+
+.cCompStatusEdit{
+    color:#8bc34a;
+}
+
+.cCompStatusDelete{
+    color:#ff5722
+}
+
+.cCompMessageTools {
+    display: inline-block;
+    width: 50px;
+    float: left;
+    padding-top: 12px;
+    margin-right:7px;
+} 
+
+    /*.cCompMessageTools i {
+        font-size: 13px;
+        cursor: pointer;
+        line-height: 10px;
+        border: 1px solid #ccc;
+        border-radius: 15px;
+        padding: 4px 5px 3px 4px;
+        margin: 0 2px;
+        color:#888;
+    }*/
+
+    .cCompMessageTools i {
+        font-size: 13px;
+        cursor: pointer;
+        line-height: 10px;
+        padding: 4px 5px 3px 4px;
+        margin: 0 2px;
+        color: #888;
+    }
+
+
+
+    .cCompMessageTools .icon-trash {
+        padding: 4px 6px 3px 5px !important;
+    }
+
+    /*.cCompMessageTools .icon-trash:hover {
+        color: #fff;
+        background-color: #ff5722;
+        border-color: #ff5722;
+    }*/
+
+        .cCompMessageTools .icon-trash:hover {
+            color: #F44336;
+            font-weight: bold;
+        }
+
+    /*.cCompMessageTools .icon-edit:hover {
+        color: #fff;
+        background-color: #4caf50;
+        border-color: #4caf50;
+    }*/
+
+    .cCompMessageTools .icon-edit:hover {
+        color: #4CAF50;
+    }
+
+    .cCompShowType{
+        cursor:pointer;
+        color:#42a2eb !important;
+        /*padding: 0 15px;*/
+    }
+
+        .cCompShowType:hover {
+            color: #00bcd4;
+        }
+
+span.cCompChatMessageMedia {
+    display: inline-block;
+    border: solid 1px #B3ADAD;
+    margin: 5px;
+    background-color: white;
+    direction: ltr;
+    text-align: left;
+    padding: 5px;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height:12px;
+    width: 60%;
+    max-width:60px;
+}
+
+img.cCompChatMessageMedia {
+    border: solid 1px #B3ADAD;
+    margin: 5px;
+    display:inline-block;
+    vertical-align:middle;
+}
+
+.cCompDate2 div {
+    text-align: right;
+    direction: rtl;
+    font-size:11px;
+    color: #a2a2a2;
+    display:inline-block;
+}
+
+.cCompDate2 .icon-time {
+    margin: 0 0 0 6px;
+    font-size:13px;
+}
+
+.cCompDate2 .icon-dot{
+    margin: 0 10px !important;
+    font-size:20px;
+}
+
+.cCompExpandDiv {
+    float: left;
+    color:cornflowerblue;
+}
+
+.cCompDate2{
+    padding: 8px 0 14px 0;
+}
+
+.cCompLinkRow {
+    width: 212px;
+    height: 35px;
+}
+
+.cCompInfoDiv .cCompLinkRow {
+    height: 27px;
+}
+
+.cCompLinkRow div {
+    display: inline-block;
+}
+
+.cCompLinkLbl {
+    width: 65px;
+    font-size: 12px;
+    color: #555;
+}
+
+.cCompInfoDiv .cCompLinkLbl {
+    width: 100%;
+    color: #555;
+    font-size: 12px;
+}
+
+.cCompLinkTxt {
+    line-height: 24px;
+    border-radius: 0.1875rem;
+    background-color: #ffffff;
+    border: 1px solid #cbd6e2;
+    font-size: 12px;
+    width: 130px;
+    height: 25px;
+    padding: 0 5px;
+    cursor: text;
+    direction: rtl;
+    text-align: right;
+}
+
+.cCompUrl{
+    line-height: 24px;
+    border-radius: 0.1875rem;
+    background-color: #ffffff;
+    border: 1px solid #cbd6e2;
+    font-size: 12px;
+    width: 130px;
+    height: 25px;
+    padding: 0 5px;
+    cursor: text;
+    direction: ltr;
+    text-align: left;
+}
+
+.cCompLinkName{
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+.cCompLinkButton {
+    float: left;
+    border-radius: 0.1875rem;
+    background-color: #ffffff;
+    border: 1px solid #cbd6e2;
+    padding: 3px 8px 3px 5px;
+    color: #999;
+    cursor: pointer;
+    font-size: 11px !important;
+    font-family: Tahoma !important;
+    margin: 2px 5px;
+}
+
+    .cCompLinkButton:hover {
+        color: #fff;
+        background-color: #74a2d4;
+        box-shadow: 0 1px 24px 0 rgba(0,0,0,0.08);
+    }
+
+    .cCompBtnEmojy i {
+        font-size:14px;
+    }
+
+.cCompLinkRow .cCompImg {
+    display: inline-block;
+    padding: 0 5px;
+    cursor:pointer;
+    width:16px;
+    height:16px;
+}
+
+.cCompCrmCallUser{
+    display:none;
+}
+
+.cCompTxtExpand {
+    border-color: #fff;
+    background-color: #fff;
+    color: #000;
+    padding: 10px 10px 0 5px;
+    max-height: 20px ;
+    flex:2;
+}
+
+.cCompTxtCollaps{
+    width:96%;
+    border-color: #ccc;
+    background-color : #f8f8f8;
+    /*padding: 10px 10px 5px 5px;*/
+}
+
+.cCompActCollaps{
+    border-color: #fff;
+    padding-top:0;
+}
+
+.cCompActExpand {
+    border-color: #e5e5e5;
+    background-color: #fff;
+     padding-top: 11px;
+}
+
+/*placeholder =========================================================================================================*/
+
+.cCompTxtComment:empty:before {
+    content: attr(placeholder);
+    display: block;
+    color: #888;
+    transition: opacity 250ms ease-in-out;
+    min-height:20px;
+    vertical-align:central;
+}
+
+.cCompTxtExpand:empty:before {
+    color: #888;
+}
+
+.cCompTxtExpand pre {
+    background: #bbb;
+    padding: 5px;
+    width: 290px;
+}
+
+/*dialog link=========================================================================================================*/
+
+.cCompCommentLinkDiv {
+    display: none;
+    z-index: 1111;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    direction: rtl;
+    border-radius: 0.2875rem;
+}
+
+.cCompInfoDiv {
+    display: none;
+    z-index: 1111;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    direction: rtl;
+    background-color: #fafafa;
+    border-radius: 0.4875rem;
+}
+
+.cCompEmojyDiv {
+    display: none;
+    z-index: 1111;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    direction: rtl;
+    border-radius: 0.2875rem;
+}
+
+.cCompPrivatePopover.cCompPrivatePopoverDefault {
+    border-radius: 0.2875rem;
+    box-shadow: 0 1px 24px 0 rgba(0,0,0,0.08);
+    background-color: #ffffff;
+    border: 1px solid #cbd6e2;
+}
+
+.cCompInfoDiv .cCompPrivatePopover.cCompPrivatePopoverDefault {
+    background-color: #fafafa;
+    border: 1px solid #aaa;
+    border-radius: 0.4875rem;
+}
+
+.cCompPrivatePopoverDefault .cCompPrivatePopover__arrow, .cCompPrivatePopover--shepherd .cCompPrivatePopover__arrow {
+    border: 1px solid #cbd6e2;
+}
+
+.cCompInfoDiv .cCompPrivatePopoverDefault .cCompPrivatePopover__arrow, .cCompPrivatePopover--shepherd .cCompPrivatePopover__arrow {
+    border: 1px solid #aaa;
+}
+
+.cCompPrivatePopover {
+    max-width: 100vw;
+}
+
+.cCompTetherElementAttachedLeft.cCompTetherElementAttachedBottom .cCompuiPopover {
+    transform-origin: left bottom;
+}
+
+.cCompTetherElementAttachedLeft .cCompuiPopover {
+    transform-origin: left;
+}
+
+.cCompTetherElementAttachedBottom .cCompuiPopover {
+    transform-origin: bottom;
+}
+
+.cCompuiPopover {
+    transition: opacity 200ms ease-out,transform 200ms ease-out;
+}
+
+.cCompuiPopover--default {
+    background: #ffffff;
+    transition: opacity 200ms,transform 200ms;
+}
+
+.cCompuiPopoverArrow {
+    position: absolute;
+    background: inherit;
+    pointer-events: none;
+    border-top-left-radius: 100%;
+}
+
+.cCompPrivateListInline {
+    display: inline-block;
+    max-width: 100%;
+}
+
+.cCompDraftExtendControls.cCompDraftExtendPopoverControls, .cCompDraftExtendPopoverControls.cCompDraftExtendPopoverControls {
+    bottom: 2px;
+}
+
+.cCompDraftExtendPopoverControls {
+    position: relative;
+}
+
+.cCompDraftExtendControls, .cCompDraftExtendPopoverControls {
+    margin: 0px;
+    padding: 0px;
+    -webkit-align-items: baseline;
+    align-items: baseline;
+}
+
+.cCompPTop2 {
+    padding-top: 15px !important;
+}
+
+.cCompPx2 {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+li .cCompComment [class^="icon-"], li .cCompComment [class*=" icon-"]{
+    width:auto;
+}
+li .cCompComment{
+    line-height:12px;
+}
+
+/*.dialog-form-value .form-value-comments .cCompShowMenu,
+.dialog-form-value .form-value-comments .cCompShowSearchMenu {
+    display: none !important;
+}
+
+.dialog-form-value .form-value-comments .cCompTxtContainer {
+    margin: 10px 0 !important;
+    width: 100%;
+}
+
+.dialog-form-value .form-value-comments .cCompButtonArea {
+    width: 85px;
+}
+
+.dialog-form-value .form-value-comments .cCompViewComment {
+    min-height: 10px;
+}*/
+

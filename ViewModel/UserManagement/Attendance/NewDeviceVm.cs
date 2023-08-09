@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Utility.EXT;
+using Utility;
+using Utility.PublicEnum.Attendance;
 
 namespace ViewModel.UserManagement.Attendance
 {
@@ -77,8 +80,16 @@ namespace ViewModel.UserManagement.Attendance
 
         public Guid TransactionPeriod { get; set; }
         public DateTime ModifiedDate { get; set; }
-        public Guid MedicalCenterId { get; set; }
         public bool IsDeleted { get; set; }
+
+
+
+
+        public int gnCommHandleIndex { get; set; }
+        public FPDeviceType FPDeviceType { get; set; }
+        public List<NormalJsonClass> FPDeviceTypeList { get { return EnumHelper<FPDeviceType>.EnumToNormalJsonClass(); } }
+
+
     }
     public class DeviceHardwareInformation
     {

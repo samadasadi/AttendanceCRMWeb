@@ -1,4 +1,5 @@
-﻿using Resources;
+﻿using Repository.Model;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,7 +20,6 @@ namespace ViewModel.UserManagement
 
         }
         public Guid Id { get; set; }
-        public Guid MedicalCenterId { get; set; }
 
         [Required(ErrorMessage = "*")]
         [Display(Name = "شماره پرسنلی")]
@@ -42,6 +42,19 @@ namespace ViewModel.UserManagement
         //[DisplayName("نام خانوادگی ")]
         [UIHint("HorizentalTextBox")]
         public string Family { get; set; }
+
+
+
+
+
+        public int? Previlige { get; set; }
+        public string FaceImage { get; set; }
+        public List<FingerTemplate> FingerPrints { get; set; }
+        public int DeviceId { get; set; }
+
+
+
+
 
         public int? ChatStatus { get; set; }
         [Display(ResourceType = typeof(Md), Name = "FatherName")]
@@ -108,14 +121,7 @@ namespace ViewModel.UserManagement
         [UIHint("HorizentalTextBox")]
         public string NationalCode { get; set; }
 
-        [Display(ResourceType = typeof(Md), Name = "NezamCode")]
-        //[DisplayName("نظام پزشکی")]
-        [UIHint("HorizentalTextBox")]
-        public string NezamCode { get; set; }
 
-        [Display(ResourceType = typeof(Md), Name = "PercentOfPay")]
-        [UIHint("HorizentalNumberTextBox")]
-        public decimal? PercentOfPay { get; set; }
 
 
         [Display(ResourceType = typeof(Md), Name = "DateofBirth")]
@@ -174,9 +180,6 @@ namespace ViewModel.UserManagement
         [UIHint("HorizentalCheckBox")]
         public bool EmployeeActive { get; set; }
 
-        [Display(ResourceType = typeof(Md), Name = "Assistant")]
-        [UIHint("HorizentalCheckBox")]
-        public bool empIsAssistant { get; set; }
         [Display(ResourceType = typeof(Md), Name = "File")]
         public Guid FileId { get; set; }
         public HttpPostedFileBase File { get; set; }
@@ -189,9 +192,6 @@ namespace ViewModel.UserManagement
         public string Image { get; set; }
         public string RoleID { get; set; }
 
-        [Display(Name = "طرف قرارداد با بیمه")]
-        [UIHint("HorizentalCheckBox")]
-        public bool empContarctWithNM { get; set; }
 
         [Display(Name = "فعالسازی نام کاربری")]
         [UIHint("HorizentalCheckBox")]
@@ -218,15 +218,7 @@ namespace ViewModel.UserManagement
         [UIHint("HorizentalCheckBox")]
         public bool IsCallerActive { get; set; }
 
-        [Display(Name = "درصد از هزینه مواد")]
-        [UIHint("HorizentalNumberTextBox")]
-        [Range(0, 100, ErrorMessage = "{0} را بین 0 تا 100 وارد کنید")]
-        public float? PercentOfCost { get; set; }
 
-        [Display(Name = "درصد از هزینه لابراتوار")]
-        [UIHint("HorizentalNumberTextBox")]
-        [Range(0, 100, ErrorMessage = "{0} را بین 0 تا 100 وارد کنید")]
-        public float? PercentOfLaboratory { get; set; }
 
         public string WebCamBase64 { get; set; }
 
@@ -235,24 +227,9 @@ namespace ViewModel.UserManagement
         public string PrinterName { get; set; }
 
 
-        /// <summary>
-        /// دسترسی گروه بیماری
-        /// </summary>
-        public List<NormalJsonClass> DiseaseGroupAccess { get; set; }
-
-        public string DiseaseGroupAccessPatient { get; set; }
-
-        public string[] DiseaseGroupAccessSelected { get; set; }
 
 
 
-
-        [Display(Name = "نام کاربری سامانه سلامت")]
-        [UIHint("HorizentalTextBox")]
-        public string Salamat_Username { get; set; }
-        [Display(Name = "رمز عبور سامانه سلامت")]
-        [UIHint("HorizentalTextBox")]
-        public string Salamat_Password { get; set; }
         public string AuthorizationsSessionId { get; set; }
         public DateTime? LastAuthorizationsSessionDate { get; set; }
         public PersonHoghoghVm personHoghogh { get; set; }

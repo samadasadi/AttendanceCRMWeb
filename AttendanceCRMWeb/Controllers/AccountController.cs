@@ -101,17 +101,6 @@ namespace AttendanceCRMWeb.Controllers
                             }
                             FormsAuthentication.SetAuthCookie(model.UserName, true);
 
-                            #region ForAlarmBackupDate
-                            //_serviceGeneralSettingService = serviceLocator.Get<IGeneralSettingService>();
-                            if (await _serviceGeneralSettingService.checkAlarmBackupDate())
-                            {
-                                //TempData["AlarmBackUpDate"] = "مطابق تنظیم انجام شده می بایست از اطلاعات موجود نسخه پشتیبان جدید تهیه نمایید.آیا مایل به تهیه نسخه پشتیبان هستید؟";
-
-                                //_backupsDBService = serviceLocator.Get<IMCenterService>();
-                                //var _res = await _backupsDBService.GetLastBackupDB();
-                                //TempData["AlarmBackUpDate"] = string.Format(@"مطابق تنظیم انجام شده می بایست از اطلاعات موجود نسخه پشتیبان جدید تهیه نمایید.آیا مایل به تهیه نسخه پشتیبان هستید؟<br /><br />تاریخ آخرین بکاپ : <span id='spnNotifCountLA' class='label label-success' style='font-size: 12px;'>{0}</span><br />", (_res != null && _res.Id != Guid.Empty ? DateTimeOperation.M2S(_res.ModifiedDate) : "ندارد"));
-                            }
-                            #endregion
 
                             return RedirectToAction("Index", "Home");
                         }

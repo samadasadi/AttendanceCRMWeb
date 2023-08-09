@@ -1,0 +1,27 @@
+﻿@using ViewModel.UserManagement.Attendance;
+
+@model  Utility.Utitlies.viewModel<PubUser_ShiftVm>
+@{
+    var formSecurity = (ViewModel.Security.FormSecurity)ViewBag.FormSecurity;
+}
+
+
+<div class="table-responsive mailbox-messages">
+    <table class="table table-hover table-striped">
+        <tbody>
+            @{
+                foreach (var item in Model.TLists)
+                {
+                    <tr>
+                        <td class="mailbox-name" style="vertical-align:middle; min-width:200px;"><a>@item.EntesabDateStr</a></td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@Html.Partial(Utility.Utitlies.VaribleForName.NamePartialOperationPageing, Model.CommonCustomViewTablePaging)
+
+
+
+

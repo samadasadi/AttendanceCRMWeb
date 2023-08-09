@@ -8,6 +8,9 @@ using Repository.Model.Common;
 using Repository.Model.Attendance;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
+using System.Diagnostics;
+using System.Net.NetworkInformation;
+using Utility.PublicEnum;
 
 namespace Repository.iContext
 {
@@ -31,6 +34,7 @@ namespace Repository.iContext
         public DbSet<GeneralSetting> GeneralSettings { get; set; }
         public DbSet<Coding> Codings { get; set; }
         public DbSet<Tbl_Cost> Tbl_Costs { get; set; }
+        public DbSet<tbl_FP> tbl_FP { get; set; }
         public DbSet<Cost_Incoming> Cost_Incomings { get; set; }
         public DbSet<ChatHistory> ChatHistories { get; set; }
         public DbSet<Task> Tasks { get; set; }
@@ -50,6 +54,13 @@ namespace Repository.iContext
         public virtual DbSet<FingerTemplate> FingerTemplate { get; set; }
         public virtual DbSet<EmployeeAccounting> EmployeeAccounting { get; set; }
         public virtual DbSet<TChat> TChats { get; set; }
+
+
+        public DbSet<BackUp> BackUp { get; set; }
+        public DbSet<tbl_Login> tbl_Login { get; set; }
+        public virtual DbSet<QuickLink> QuickLinks { get; set; }
+
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -97,14 +108,6 @@ namespace Repository.iContext
                 .Property(e => e.AyaboZahab)
                 .HasPrecision(18, 0);
 
-            //modelBuilder.Entity<GeneralSetting>()
-            //    .Property(e => e.appEnTitle)
-            //    .IsUnicode(false);
-
-            //modelBuilder.Entity<GeneralSetting>()
-            //    .Property(e => e.appFaxNo)
-            //    .IsUnicode(false);
-
             modelBuilder.Entity<GeneralSetting>()
                 .Property(e => e.appEnAddress)
                 .IsUnicode(false);
@@ -113,28 +116,12 @@ namespace Repository.iContext
                 .Property(e => e.appLogoFileName)
                 .IsUnicode(false);
 
-            //modelBuilder.Entity<GeneralSetting>()
-            //    .Property(e => e.appEmail)
-            //    .IsUnicode(false);
-
-            //modelBuilder.Entity<GeneralSetting>()
-            //    .Property(e => e.appWebsite)
-            //    .IsUnicode(false);
-
             modelBuilder.Entity<GeneralSetting>()
                 .Property(e => e.appImageRootPath)
                 .IsUnicode(false);
 
             modelBuilder.Entity<GeneralSetting>()
                 .Property(e => e.appBackupPath)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<GeneralSetting>()
-                .Property(e => e.appDocNoStart)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<GeneralSetting>()
-                .Property(e => e.appCallerIDCityCode)
                 .IsUnicode(false);
 
             modelBuilder.Entity<GeneralSetting>()
@@ -154,23 +141,11 @@ namespace Repository.iContext
                 .IsUnicode(false);
 
             modelBuilder.Entity<GeneralSetting>()
-                .Property(e => e.appDefaultScanner)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<GeneralSetting>()
-                .Property(e => e.appRollPrinterName)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<GeneralSetting>()
                 .Property(e => e.appHostIp)
                 .IsUnicode(false);
 
             modelBuilder.Entity<GeneralSetting>()
                 .Property(e => e.appImageUrl)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<GeneralSetting>()
-                .Property(e => e.appPosIp)
                 .IsUnicode(false);
 
             modelBuilder.Entity<GeneralSetting>()
@@ -181,21 +156,6 @@ namespace Repository.iContext
                 .Property(e => e.LastUpdateSMSInbox)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<GeneralSetting>()
-                .Property(e => e.P_GovernmentK)
-                .HasPrecision(18, 0);
-
-            modelBuilder.Entity<GeneralSetting>()
-                .Property(e => e.P_NongovernmentalK)
-                .HasPrecision(18, 0);
-
-            modelBuilder.Entity<GeneralSetting>()
-                .Property(e => e.P_CharityK)
-                .HasPrecision(18, 0);
-
-            modelBuilder.Entity<GeneralSetting>()
-                .Property(e => e.P_PrivateK)
-                .HasPrecision(18, 0);
 
             modelBuilder.Entity<tbl_Attendance>()
                 .Property(e => e.Status)

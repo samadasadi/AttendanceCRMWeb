@@ -1,0 +1,414 @@
+﻿
+@font-face {
+    font-family: 'BTitrBold';
+    src: url('../fonts/BTitrBold.eot?#') format('eot'), url('../fonts/BTitrBold.woff') format('woff'), url('../fonts/BTitrBold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'BKoodakBold';
+    src: url('../fonts/BKoodakBold.eot?#') format('eot'), url('../fonts/BKoodakBold.woff') format('woff'), url('../fonts/BKoodakBold.ttf') format('truetype');
+}
+
+.float {
+    float: left;
+}
+
+.revfloat {
+    float: right;
+}
+
+.wait {
+    display: inline-block;
+    margin: 5px 5px 0px 5px;
+}
+
+.olNumber li {
+    margin-left: 40px;
+    float: left;
+    list-style-type: decimal;
+}
+
+.ico-addproduct {
+       font-family: 'Font Awesome 5 Pro';
+    font-size: 28px;
+    color: #009688;
+}
+
+/*----------------Grid-------------*/
+#content div.box table th.center, #content div.box table td.center {
+    text-align: center;
+}
+
+    #content div.box table th.center span, #content div.box table td.center span {
+        margin: auto;
+    }
+
+#content div.box table tr.alternate {
+    background-color: #eeeeee;
+}
+/*-------------------------------------*/
+
+/*------------------For Txts Price In Factors-------------------*/
+.txtPriceActive {
+    background-color: #E9F7FA !important;
+}
+/*-------------------------------------*/
+
+
+.spanValid {
+    color: red;
+    display: inline-block;
+    margin: 8px;
+}
+
+
+#FactorInitial {
+    border: 1px solid #000000;
+    padding: 5px;
+    width: 95%;
+    margin: 50px auto;
+    background-color: #FFFFFF;
+    direction: ltr;
+}
+
+    #FactorInitial Table {
+        margin-bottom: 5px;
+        border-collapse: collapse;
+        direction: ltr;
+    }
+
+        #FactorInitial Table .TrHead {
+            font-weight: bold;
+            background-color: #eee !important;
+            text-align: center;
+            height: 35px;
+        }
+
+        #FactorInitial Table .TrDetail {
+            font-weight: bold;
+            background-color: #eee !important;
+            height: 35px;
+        }
+
+        #FactorInitial Table td {
+            border: 1px solid #888888;
+            font-family: BKoodakBold,B Koodak,tahoma;
+            font-size: 10pt;
+            padding: 3px;
+        }
+
+    #FactorInitial .FCHead {
+        height: 140px;
+        width: 100%;
+        position: relative;
+        font-family: BKoodakBold,B Koodak,tahoma;
+        font-size: 12pt;
+    }
+
+        #FactorInitial .FCHead span {
+            padding: 0px 15px 0px 15px;
+            font-weight: bold;
+        }
+
+    #FactorInitial .FCcode {
+        width: 50%;
+        float: right;
+        text-align: right;
+    }
+
+    #FactorInitial .FCdate {
+        width: 50%;
+        float: right;
+        text-align: left;
+    }
+
+    #FactorInitial .FCtitle {
+        font-size: 16pt;
+        font-family: BTitrBold,B Titr,tahoma;
+        position: relative;
+        margin: auto;
+        width: 100%;
+        text-align: center;
+        line-height: 40px;
+    }
+
+    #FactorInitial .FCcompanyName {
+        font-size: 14pt;
+        font-family: BTitrBold,B Titr,tahoma;
+        position: relative;
+        margin: auto;
+        width: 100%;
+        text-align: center;
+        line-height: 40px;
+    }
+
+    #FactorInitial .FCFooter {
+        height: 150px;
+        width: 100%;
+        position: relative;
+        font-family: BKoodakBold,B Koodak,tahoma;
+    }
+
+        #FactorInitial .FCFooter .FCpurchaser {
+            font-size: 12pt;
+            position: absolute;
+            top: 12px;
+            right: 10%;
+        }
+
+        #FactorInitial .FCFooter .FCsalesManager {
+            font-size: 12pt;
+            left: 10%;
+            top: 12px;
+            position: absolute;
+        }
+
+        #FactorInitial .FCFooter .FCfootText {
+            font-size: 8pt;
+            bottom: 30px;
+            position: absolute;
+        }
+
+        #FactorInitial .FCFooter .FCcompanyAddress {
+            position: absolute;
+            width: 100%;
+            bottom: 40px;
+            border-top-style: solid;
+            border-top-width: 1px;
+            bottom: 0px;
+            right: 0px;
+            font-size: 8pt;
+            padding-top: 5px;
+        }
+
+/* ------------------------------------------------*/
+
+.pagination a, .pagination span {
+    height: 1%;
+    float: right;
+    background-color: #EBEBEB;
+    border-top: 1px solid #DEDEDE;
+    border-right: 1px solid #C4C4C4;
+    border-bottom: 1px solid #C4C4C4;
+    color: #4A4A4A;
+    font-weight: bold;
+    list-style-type: none;
+    margin-left: 0px;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 7px 10px;
+    color: #515151;
+    text-decoration: none;
+}
+
+    .pagination a:hover {
+        background-color: #F2F2F2;
+        border-top: 1px solid #B4B4B4;
+        border-right: 1px solid #B4B4B4;
+        border-bottom: 1px solid #B4B4B4;
+    }
+
+.pagination .current {
+    padding: 7px 10px;
+    background-color: #B4B4B4;
+    border-top: 1px solid #CCC;
+    border-left: 1px solid #BEBEBE;
+    border-right: 1px solid #B1B1B1;
+    border-bottom: 1px solid #AFAFAF;
+    color: #515151;
+}
+
+    .pagination .current.prev, .pagination .current.next {
+        color: #999;
+        background: #EBEBEB;
+    }
+
+.ellipse {
+    background-color: whiteSmoke !important;
+    border-top: 1px solid #F2F2F2 !important;
+    border-left: 1px solid #F2F2F2 !important;
+    border-right: 1px solid #B4B4B4;
+    border-bottom: 1px solid #F2F2F2 !important;
+    color: #999 !important;
+}
+
+.prev {
+    border-bottom-right-radius: 7px;
+    border-top-right-radius: 7px;
+    border-right: 1px solid #C4C4C4;
+}
+
+.next {
+    border-bottom-left-radius: 7px;
+    border-top-left-radius: 7px;
+    border-left: 1px solid #C4C4C4;
+}
+
+.resultBox {
+    margin: 20px 130px 0 0;
+    height: 1%;
+    display: block;
+    background: #EBEBEB url('../images/pager.png') repeat-x;
+    border-top: 1px solid #DEDEDE;
+    border-left: 1px solid #CFCFCF;
+    border-right: 1px solid #C4C4C4;
+    border-bottom: 1px solid #C4C4C4;
+    color: #4A4A4A;
+    font-weight: bold;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.ui-progressbar-value {
+    height: 18px !important;
+}
+
+#box .field-silver {
+    border: solid 1px #E9E9E9;
+    background-color: #FCFCFC;
+    overflow: hidden;
+    margin-bottom: 8px;
+    -webkit-box-shadow: 0 2px 2px -2px #E2E2E2;
+}
+
+    #box .field-silver .field {
+        border: none !important;
+        height: auto;
+    }
+
+        #box .field-silver .field .label span {
+            padding-left: 10px !important;
+        }
+
+#box .field-cust {
+    width: 300px;
+    float: left;
+}
+
+#box .field-datetime {
+    margin-left: 310px;
+}
+
+#box .field-Lead {
+    width: 400px;
+    float: left;
+}
+
+#box .field-descript {
+    margin-left: 410px;
+    height: 102px;
+}
+
+#box .field-silver .field .input {
+    margin: 0 0 0 76px ;
+}
+
+#box div.form div.fields div.field-col3 {
+    width: 33% !important;
+}
+
+
+.saleGridList .ui-multiselect{
+    margin: 0px -1px !important;
+}
+
+.DrdLeadsourceKind{
+    margin-left:120px !important;
+}
+
+.TxtDate {
+    margin-left:20px !important;
+}
+
+.TxtSaleAmountApproximate {
+    margin-left:30px !important;
+    text-align:left !important;
+}
+
+.TxtSaleAmountFinal {
+    margin-left: 30px !important;
+    text-align: left !important;
+}
+
+.TxtSaleDateApproximate {
+    margin-left:15px !important;
+}
+
+.TxtSaleFinalDate {
+     margin-left:15px !important;
+}
+
+.SaleAmountUnit {
+    margin-left:30px !important;
+}
+
+.SrTxtName {
+    margin-left:20px !important;
+}
+
+.DrdLeadsourceType {
+    margin-left:120px !important;
+}
+
+.Introductioncust {
+    margin-left: 115px !important;
+}
+
+.Mainsolt {
+    float: left;
+}
+
+.Solt {
+    height: 350px;
+}
+
+.Solt_Header {
+    background-color: #eee;
+    background: linear-gradient(to bottom, #ffffff 0%, #f5f5f5 100%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    padding: 20px;
+    margin: 2px;
+}
+
+.Saleitem {
+    padding: 10px;
+    border: 1px solid #B4B4B4;
+    margin: 5px;
+    cursor: move;
+    text-align: center;
+    background-color: #fff;
+    color: #fff;
+
+}
+
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
+}
+
+div[item=salelist] .icon-times {
+    display:none;
+}
+
+/*.row1 .col-md-3 {
+    pointer-events:none;
+}*/
+
+#box .widget .widget-title {
+    font-size:12px !important;
+}
+
+#box .widget .widget-title, #box .widget .widget-subtitle, #box .widget .widget-int, #box .widget .widget-big-int {
+ font-family:Tahoma;
+}
+
+#btn_selectCustomerComponent {
+    margin:15px;
+    padding: 5px;
+}
+
+.leadgenCount {
+        left: 280px;
+}

@@ -1,0 +1,18 @@
+﻿
+@model string
+@{
+    var placeholder = string.Empty;
+
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("placeholder"))
+    {
+        placeholder = ViewData.ModelMetadata.AdditionalValues["placeholder"] as string;
+    }
+    var required = ViewData.ModelMetadata.IsRequired;
+}
+<div class="form-group  row @string.Format("{0}",required?"rqd":"")">
+    @Html.LabelFor(model => model, htmlAttributes: new { @class = "control-label col-form-label col-md-3 text-right" })
+    <div class="col-md-9">
+        @Html.TextAreaFor(model => model, new { @class = "form-control", Row = "15" })
+        @Html.ValidationMessageFor(model => Model, "", new { @class = "text-danger" })
+    </div>
+</div>

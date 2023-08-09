@@ -1,0 +1,51 @@
+﻿@model DateTime?
+@{
+    var placeholder = string.Empty;
+
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("placeholder"))
+    {
+        placeholder = ViewData.ModelMetadata.AdditionalValues["placeholder"] as string;
+    }
+    var _res = (MyTextBox)Html.MyHelper().TreasuryTextBoxFor(model => model, TextBoxType.Date);
+    var _name = _res._componentName;
+    var _id = _res._componentId;
+    var nameStr = _id + "Str";
+    var value = (ViewData.ModelMetadata).Model;
+    var displayName = (ViewData.ModelMetadata).DisplayName;
+    var required = ViewData.ModelMetadata.IsRequired;
+    var showName = "show" + _id;
+}
+<div class="form-group row">
+    <label class="col-md-4 text-right">@displayName : </label>
+    <div class="input-group col-md-8">
+        <input type="text" class="form-control float-right" id="@nameStr" value="@value" placeholder="1400/01/01">
+        <input type="text" class="form-control float-right" id="@_id" name="@_name" value="@value" hidden>
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="@showName">
+                <i class="far fa-calendar-alt"></i>
+            </span>
+        </div>
+        <script>
+            $(function () {
+                $('#' + '@showName').MdPersianDateTimePicker({
+                    targetTextSelector: '#@nameStr',
+                    targetDateSelector: '#@_id',
+                    enableTimePicker: false
+                });
+            });
+        </script>
+    </div>
+</div>
+
+@*<div class="form-group  @string.Format("{0}",required?"rqd":"")">
+        @Html.LabelFor(model => model, htmlAttributes: new { @class = "text-AlignBySoftWare col-md-4" })
+        <div class="col-sm-8">
+            @Html.MyHelper().TreasuryTextBoxFor(model => model, TextBoxType.NullableDate)
+            @if (required)
+            {
+                <span class="field-validation-valid text-danger" data-valmsg-for="@string.Format("{0}Str",name)" data-valmsg-replace="true"></span>
+            }
+        </div>
+    </div>*@
+
+

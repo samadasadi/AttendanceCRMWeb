@@ -1,0 +1,242 @@
+﻿@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@using Utility.HtmlHelpers
+@model  ViewModel.ReportParameter
+
+@{
+    ViewBag.Title = "گزارش هزینه ها";
+    Layout = Utility.Utitlies.VaribleForName.AddressLayoutMasterNew;
+}
+
+
+
+@*@HtmlExtenstions.TitleAndSiteMap("گزارش هزینه ها", "گزارشات", "گزارشات حسابداری", "گزارش هزینه ها")*@
+@using (Html.BsPanelWithCloseAndMinimize("گزارش هزینه ها"))
+{
+    <form class="row form-horizontal" id="reportParameter">
+        <div class="col-md-12">
+
+            <div class="col-md-4">
+                @Html.EditorFor(m => m.FromDate)
+                @Html.EditorFor(m => m.CostCode)
+            </div>
+
+            <div class="col-md-4">
+                @Html.EditorFor(m => m.ToDate)
+                @Html.EditorFor(m => m.costPersonID)
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group ">
+                    <label class="control-label col-form-label text-right col-md-3">نوع گزارش</label>
+                    <div class="card col-md-9">
+                        <div class="card-body p-1 pt-2">
+
+                            <input class="rbStatusE col-sm-1" id="Status1" name="Status" type="radio" value="1" checked="checked">
+                            <label for="Status1">بصورت کلی</label>
+                            <br>
+                            <input class="rbStatusE col-sm-1" id="Status2" name="Status" type="radio" value="2">
+                            <label for="Status2">به تفکیک هزینه</label>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+    @Html.Partial("ShowReportButtonPartial")
+}
+
+
+@Html.Partial("P_Report_Area", viewData: new ViewDataDictionary {
+{ Utility.PublicEnum.EnumForReportAreaView.UrlReport.ToString(), "GetMedicalCenterCostReport" },
+{ Utility.PublicEnum.EnumForReportAreaView.ShowScriptFromDateAndToDate.ToString(), true },
+{ Utility.PublicEnum.EnumForReportAreaView.SetConfigureDateComponent.ToString(), true },
+{ Utility.PublicEnum.EnumForReportAreaView.SetAttributeForDivReportView.ToString(), true },
+{ Utility.PublicEnum.EnumForReportAreaView.ShowNotification.ToString(), true } })
+
+
+<script>
+    $("#CostCode").change(function () {
+
+        var code = $("#CostCode").val();
+
+        if (code == "015010101") {
+            FillListName("0120202", "costPersonID");
+        }
+        else if (code == '015010102' || code == '015010103') {
+            FillListName("0120203", "costPersonID");
+        }
+        else if (code == '015010402') {
+            FillListName("015010402", "costPersonID");
+        }
+        else if (code == "015010101") {
+            FillListName("0120202", "costPersonID");
+        }
+        else if (code == "015010102") {
+            FillListName("0120201", "costPersonID");
+        }
+        else if (code == "015010302") {
+            FillListName("015010302", "costPersonID");
+        }
+        else {
+            //MinaDent.Common.EmptyChoosenSelect("costPersonID");
+            FillListName(code, "costPersonID");
+        }
+    });
+
+    function FillListName(id, selectId, selectedvalue) {
+
+        if (id !== "" && id != null) {
+            var data = { parentId: id, selected: selectedvalue };
+            FillSelectByAjax("@Url.Action("GetListName")", selectId, data, true, true);
+
+            document.getElementById(selectId).value = selectedvalue;
+        }
+    };
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<style>
+        .stiMenuParent {
+            overflow: hidden;
+            min-width: 100px;
+            position: absolute;
+        }
+    </style>
+
+    <br />
+    <div class="col-md-12 center-block form-horizontal">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption font-green-haze">
+                    <span class="caption-subject bold uppercase">گزارش هزینه ها</span>
+                </div>
+            </div>
+            <br />
+            <div class="portlet-body">
+                <form id="reportParameter">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-5">
+                            </div>
+
+                            <div class="col-md-5">
+
+                            </div>
+
+
+                            <div class="col-md-10" style="margin:10px;"><hr style="border:solid;border-color:#f3f3f3;margin:0px auto;" /></div>
+
+                            <div class="col-md-11">
+                                <div class="col-md-2" style="float:left;">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="ReportArea" style="clear: both;direction: ltr">
+
+    </div>
+    <script type="text/javascript">
+
+        //$(document).ready(function () {
+        //    $("#FromDate").val($("#FromDateStr").val());
+        //    $("#ToDate").val($("#ToDateStr").val());
+        //});
+        //$(function () {
+        //    $("#FromDateStr").change(function () {
+        //
+        //        $("#FromDate").val(this.value);
+        //    });
+        //    $("#ToDateStr").change(function () {
+        //
+        //        $("#ToDate").val(this.value);
+        //    });
+        //});
+
+        @*function ShowReport() {
+            //if ($("#CostCode").val() !== "") {
+            $.ajax({
+                type: "Get",
+                url: "@Url.Action("GetMedicalCenterCostReport", "StaticReport",new {Arae="Report"})",
+                data: $("#reportParameter").serialize(),
+                beforeSend: function () {
+                    showWait();
+                },
+                success: function (data, textStatus, request) {
+                    $("#ReportArea").html(data);
+                },
+                complete: function () {
+                    hideWait();
+                }
+            });
+            //}
+            //else {
+
+            //    //$("#validation").attr("hidden", "false");
+            //    $('#validation').html("* عنوان هزینه را وراد کنید");
+            //}
+        }
+        $("#CostCode").change(function () {
+
+            var code = $("#CostCode").val();
+
+            if (code == "015010101") {
+                FillListName("0120202", "costPersonID");
+            }
+            else if (code == '015010102' || code == '015010103') {
+                FillListName("0120203", "costPersonID");
+            }
+            else if (code == '015010402') {
+                FillListName("015010402", "costPersonID");
+            }
+            else if (code == "015010101") {
+                FillListName("0120202", "costPersonID");
+            }
+            else if (code == "015010102") {
+                FillListName("0120201", "costPersonID");
+            }
+            else if (code == "015010302") {
+                FillListName("015010302", "costPersonID");
+            }
+            else {
+                MinaDent.Common.EmptyChoosenSelect("costPersonID");
+            }
+        });
+
+        function FillListName(id, selectId, selectedvalue) {
+
+            if (id !== "" && id != null) {
+                var data = { parentId: id, selected: selectedvalue };
+                FillSelectByAjax("@Url.Action("GetListName")", selectId, data, true, true);
+
+                document.getElementById(selectId).value = selectedvalue;
+            }
+        };
+
+    </script>*@

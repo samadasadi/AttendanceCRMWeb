@@ -81,9 +81,6 @@ namespace AttendanceCRMWeb.Filters
                 case MedicalCenterRole.CallerID:
                     operation = Public.CurrentUser.IsCallerID;
                     break;
-                case MedicalCenterRole.FinancialAccounting:
-                    operation = Public.CurrentUser.IsAccountingKit;
-                    break;
                 default:
                     break;
             }

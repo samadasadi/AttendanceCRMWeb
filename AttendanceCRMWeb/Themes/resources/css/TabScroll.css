@@ -1,0 +1,44 @@
+﻿.ravesh-tabscroll-wrapper {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+    .ravesh-tabscroll-wrapper.over {
+        left: 45px;
+        right: 45px;
+    }
+
+.ravesh-tabscroll-wrapper-content {
+    overflow: hidden;
+    -moz-transition: all 300ms;
+    -webkit-transition: all 300ms;
+    transition: all 300ms;
+}
+
+.ravesh-tabscroll-button {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+}
+
+.ravesh-tabscroll-button-1 {
+    height: 40px;
+    border: solid 1px #999;
+    width: 30px;
+    line-height: 40px;
+    text-align: center;
+    margin: 5px;
+    background: #DFE9FF;
+}
+
+    .ravesh-tabscroll-button.ravesh-tabscroll-button-next {
+        left: 0;
+    }
+
+    .ravesh-tabscroll-button.ravesh-tabscroll-button-prev {
+        right: 0;
+    }

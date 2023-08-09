@@ -1,0 +1,277 @@
+﻿
+@using Service.Consts
+@using Repository.Model.Common
+@using Service.Common
+@using Repository.Infrastructure
+
+@model ViewModel.Common.GeneralSettingVm
+@using Utility.HtmlHelpers
+
+@{
+
+    var taskService = EngineContext.Resolve<IGenericAttributeService>();
+    var showRememberInHeader = taskService.GetAttribute<bool>(new Repository.Model.BaseClass { Id = Guid.Empty }, GenericAttributeDefault.ShowRememberInHeader).Result;
+    var showRememberInDashboard = taskService.GetAttribute<bool>(new Repository.Model.BaseClass { Id = Guid.Empty }, GenericAttributeDefault.ShowRememberInDashboard).Result;
+    var showPatientList = taskService.GetAttribute<bool>(new Repository.Model.BaseClass { Id = Guid.Empty }, GenericAttributeDefault.ShowPatientList).Result;
+    var showRemainCosts = taskService.GetAttribute<bool>(new Repository.Model.BaseClass { Id = Guid.Empty }, GenericAttributeDefault.ShowTreatmentRemainCosts).Result;
+    var showVisitTimes = taskService.GetAttribute<bool>(new Repository.Model.BaseClass { Id = Guid.Empty }, GenericAttributeDefault.ShowVisitTimes).Result;
+    var showWebcamCamera = taskService.GetAttribute<bool>(new Repository.Model.BaseClass { Id = Guid.Empty }, GenericAttributeDefault.CustomerInfoEnableWebcam).Result;
+
+
+    var customerInfoSettingCheckEmptyDocNo = taskService.GetAttribute<bool>(new Repository.Model.BaseClass { Id = Guid.Empty }, GenericAttributeDefault.CustomerInfoSettingCheckEmptyDocNo).Result;
+
+
+    var searchOption_SearchEnterKeyOnly = taskService.GetAttribute<bool>(new Repository.Model.BaseClass { Id = Guid.Empty }, GenericAttributeDefault.ApplicationSearchOption_SearchEnterKeyOnly).Result;
+    var searchOption_SearchPatientByDocNo = taskService.GetAttribute<bool>(new Repository.Model.BaseClass { Id = Guid.Empty }, GenericAttributeDefault.ApplicationSearchOption_SearchPatientByDocNo).Result;
+    var reportCustomerDebtor_SelectPatient = taskService.GetAttribute<bool>(new Repository.Model.BaseClass { Id = Guid.Empty }, GenericAttributeDefault.ApplicationReportCustomerDebtor_SelectPatient).Result;
+
+
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="col-md-7">
+
+
+
+
+            @Html.EditorFor(m => m.appmoneyunit)
+            @Html.EditorFor(m => m.appHostIp)
+            <div class="form-group  row">
+                <label class="text-AlignBySoftWare col-md-3" for="PortNo">پورت اپلیکیشن</label>
+                <div class="col-sm-9">
+                    <input class="form-control valid" id="appHostPort" name="appHostPort" onkeypress="return isPlusNumberKey(event,this);" value="@Model.appHostPort">
+                    <span class="field-validation-valid text-danger" data-valmsg-for="PortNo" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+
+
+            <div class="form-group card ">
+                <div class="card-body p-2">
+                    <label class="text-AlignBySoftWare col-md-7" for="ChangeCostBase">
+                        تغییر بهای پایه حین ثبت درمان
+                    </label>
+                    <div class="col-md-5">
+                        @Html.RadioButtonFor(model => model.ChangeCostBase, true, new { id = "rbYes" })
+                        @Html.Label("rbYes", @Resources.Md.Yes)
+                        @Html.RadioButtonFor(model => model.ChangeCostBase, false, new { id = "rbNo" })
+                        @Html.Label("rbNo", @Resources.Md.No)
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group card">
+                <div class="card-header border-0"><label class="col-form-label" for="inputSuccess"><i class="fas fa-users-cog"></i> &nbsp; &nbsp; سایر</label></div>
+                <div class="card-body ">
+                    <p><a class="text-primary" href="javascript:void(0);" data-toggle="modal" data-target="#modal-ActiveKit">مشاهده کیت های فعال برنامه</a></p>
+                    <p><a class="text-primary" href="javascript:void(0);" onclick="AlterDatabase()">بازسازی بانک اطلاعاتی</a></p>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-5">
+
+            <div class="card">
+                <div class="card-header border-0"><label class="col-form-label" for="inputSuccess"><i class="fas fa-users-cog"></i>  &nbsp; &nbsp;تنظیمات برنامه</label></div>
+                <div class="card-body">
+
+
+                    <div class="row">
+                        <div class="icheck-success d-inline">
+                            <input type="checkbox" id="CustomerInfoSettingCheckEmptyDocNo" @(customerInfoSettingCheckEmptyDocNo ? "checked" : "")>
+                            <label for="CustomerInfoSettingCheckEmptyDocNo">چک کردن شماره های خالی در شماره دهی</label>
+                        </div>
+                        <script>
+                            $('#CustomerInfoSettingCheckEmptyDocNo').on('ifChanged', function (event) {
+                                if ($("#CustomerInfoSettingCheckEmptyDocNo").is(":checked")) {
+                                    SaveGeneralPreference('@GenericAttributeDefault.CustomerInfoSettingCheckEmptyDocNo', 'True');
+                                } else {
+                                    SaveGeneralPreference('@GenericAttributeDefault.CustomerInfoSettingCheckEmptyDocNo', 'False');
+                                }
+                            });
+                        </script>
+                    </div>
+
+
+                    <div class="row">
+                        <label class="text-AlignBySoftWare " for="appshowzeroprice">
+                            @Html.CheckBoxFor(m => m.appshowzeroprice)
+                            عدم نمایش تعرفه های صفر مرکز در شرح درمان
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label class="text-AlignBySoftWare " for="appshowzeropriceforins">
+                            @Html.CheckBoxFor(m => m.appshowzeropriceforins)
+                            عدم نمایش تعرفه های صفر بیمه ها در شرح درمان
+                        </label>
+                        <div class="col-md-5"></div>
+                    </div>
+                    <div class="row">
+                        <label class="text-AlignBySoftWare " for="appshowdocname">
+                            @Html.CheckBoxFor(m => m.appshowdocname)
+                            خالی بودن نام پزشک در ثبت درمان
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label class="text-AlignBySoftWare " for="appshowassistname">
+                            @Html.CheckBoxFor(m => m.appshowassistname)
+                            خالی بودن نام دستیار در ثبت درمان
+                        </label>
+                    </div>
+                    <div class="row">
+                        <label class="text-AlignBySoftWare " for="IsShowAlarmTypeSickness">
+                            @Html.CheckBoxFor(m => m.IsShowAlarmTypeSickness)
+                            یادآوری سابقه بیماری
+                        </label>
+                    </div>
+
+
+
+
+                    <div class="row">
+                        <div class="icheck-success d-inline">
+                            <input type="checkbox" id="searchOption_SearchEnterKeyOnly" @(searchOption_SearchEnterKeyOnly ? "checked" : "")>
+                            <label for="searchOption_SearchEnterKeyOnly">جستجوی بیماران فقط با کلید اینتر باشد</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="icheck-success d-inline">
+                            <input type="checkbox" id="searchOption_SearchPatientByDocNo" @(searchOption_SearchPatientByDocNo ? "checked" : "")>
+                            <label for="searchOption_SearchPatientByDocNo">جستجوی بیمار فقط براساس شماره پرونده باشد</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="icheck-success d-inline">
+                            <input type="checkbox" id="reportCustomerDebtor_SelectPatient" @(reportCustomerDebtor_SelectPatient ? "checked" : "")>
+                            <label for="reportCustomerDebtor_SelectPatient">فیلد بیمار در گزارش صورتحساب بیمار اجباری باشد</label>
+                        </div>
+                    </div>
+
+                    <script>
+                        $('#searchOption_SearchEnterKeyOnly').on('ifChanged', function (event) {
+                            if ($("#searchOption_SearchEnterKeyOnly").is(":checked")) {
+                                SaveGeneralPreference('@GenericAttributeDefault.ApplicationSearchOption_SearchEnterKeyOnly', 'True');
+                            } else {
+                                SaveGeneralPreference('@GenericAttributeDefault.ApplicationSearchOption_SearchEnterKeyOnly', 'False');
+                            }
+                        });
+                        $('#searchOption_SearchPatientByDocNo').on('ifChanged', function (event) {
+                            if ($("#searchOption_SearchPatientByDocNo").is(":checked")) {
+                                SaveGeneralPreference('@GenericAttributeDefault.ApplicationSearchOption_SearchPatientByDocNo', 'True');
+                            } else {
+                                SaveGeneralPreference('@GenericAttributeDefault.ApplicationSearchOption_SearchPatientByDocNo', 'False');
+                            }
+                        });
+                        $('#reportCustomerDebtor_SelectPatient').on('ifChanged', function (event) {
+                            if ($("#reportCustomerDebtor_SelectPatient").is(":checked")) {
+                                SaveGeneralPreference('@GenericAttributeDefault.ApplicationReportCustomerDebtor_SelectPatient', 'True');
+                            } else {
+                                SaveGeneralPreference('@GenericAttributeDefault.ApplicationReportCustomerDebtor_SelectPatient', 'False');
+                            }
+                        });
+                    </script>
+
+
+                </div>
+            </div>
+
+            @{
+                <div class="form-group card">
+                    <div class="card-header border-0"><label class="col-form-label" for="inputSuccess"><i class="fas fa-users-cog"></i> &nbsp; &nbsp;تنظیمات نمایشی</label></div>
+                    <div class="card-body ">
+
+                        <div class="row">
+                            <div class="icheck-success d-inline">
+                                <input type="checkbox" id="showRememberInHeader" @(showRememberInHeader ? "checked" : "")>
+                                <label for="showRememberInHeader">نمایش یادآوری ها در بخش سر صفحه</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="icheck-success d-inline">
+                                <input type="checkbox" id="showRememberInDashboard" @(showRememberInDashboard ? "checked" : "")>
+                                <label for="showRememberInDashboard">نمایش یادآوری ها در داشبورد</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="icheck-success d-inline">
+                                <input type="checkbox" id="showPatientList" @(showPatientList ? "checked" : "")>
+                                <label for="showPatientList">نمایش بیماران در لود اولیه</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="icheck-success d-inline">
+                                <input type="checkbox" id="showRemainCosts" @(showRemainCosts ? "checked" : "")>
+                                <label for="showRemainCosts">نمایش کل مانده حساب در بخش درمان</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="icheck-success d-inline">
+                                <input type="checkbox" id="showVisitTimes" @(showVisitTimes ? "checked" : "")>
+                                <label for="showVisitTimes">نمایش وقت های ملاقات در لود اولیه</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="icheck-success d-inline">
+                                <input type="checkbox" id="showWebcamCamera" @(showWebcamCamera ? "checked" : "")>
+                                <label for="showWebcamCamera">فعال کردن وب کم</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+
+                            $('#showRememberInHeader').on('ifChanged', function (event) {
+                                if ($("#showRememberInHeader").is(":checked")) {
+                                    SaveGeneralPreference('@GenericAttributeDefault.ShowRememberInHeader', 'True');
+                                } else {
+                                    SaveGeneralPreference('@GenericAttributeDefault.ShowRememberInHeader', 'False');
+                                }
+                            });
+                            $('#showRememberInDashboard').on('ifChanged', function (event) {
+                                if ($("#showRememberInDashboard").is(":checked")) {
+                                    SaveGeneralPreference('@GenericAttributeDefault.ShowRememberInDashboard', 'True');
+                                } else {
+                                    SaveGeneralPreference('@GenericAttributeDefault.ShowRememberInDashboard', 'False');
+                                }
+                            });
+                            $('#showPatientList').on('ifChanged', function (event) {
+                                if ($("#showPatientList").is(":checked")) {
+                                    SaveGeneralPreference('@GenericAttributeDefault.ShowPatientList', 'True');
+                                } else {
+                                    SaveGeneralPreference('@GenericAttributeDefault.ShowPatientList', 'False');
+                                }
+                            });
+                            $('#showRemainCosts').on('ifChanged', function (event) {
+                                if ($("#showRemainCosts").is(":checked")) {
+                                    SaveGeneralPreference('@GenericAttributeDefault.ShowTreatmentRemainCosts', 'True');
+                                } else {
+                                    SaveGeneralPreference('@GenericAttributeDefault.ShowTreatmentRemainCosts', 'False');
+                                }
+                            });
+                            $('#showVisitTimes').on('ifChanged', function (event) {
+                                if ($("#showVisitTimes").is(":checked")) {
+                                    SaveGeneralPreference('@GenericAttributeDefault.ShowVisitTimes', 'True');
+                                } else {
+                                    SaveGeneralPreference('@GenericAttributeDefault.ShowVisitTimes', 'False');
+                                }
+                            });
+                            $('#showWebcamCamera').on('ifChanged', function (event) {
+                                if ($("#showWebcamCamera").is(":checked")) {
+                                    SaveGeneralPreference('@GenericAttributeDefault.CustomerInfoEnableWebcam', 'True');
+                                } else {
+                                    SaveGeneralPreference('@GenericAttributeDefault.CustomerInfoEnableWebcam', 'False');
+                                }
+                            });
+
+                    </script>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+</div>

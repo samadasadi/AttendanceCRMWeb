@@ -1,0 +1,608 @@
+﻿
+/*Solt_Header----------------------------------------------------*/
+
+.Mainsolt {
+    min-width: 150px;
+}
+
+[dir=rtl] .Mainsolt {
+    float: right;
+}
+
+[dir=ltr] .Mainsolt {
+    float: left;
+}
+
+.Solt_Header {
+    padding: 9px 15px 9px 2px;
+    border: 1px solid #cfcfcf;
+    height: 37px;
+    position: relative;
+    border-right: 0;
+    border-left: 0;
+    background-color: #fff;
+}
+
+[dir=ltr] .Solt_Header {
+    padding: 9px 2px 9px 15px;
+}
+
+[dir=rtl] .Mainsolt:first-child .Solt_Header {
+    border-right: 1px solid #cfcfcf;
+    padding: 9px 9px 9px 2px;
+}
+
+[dir=rtl] .Mainsolt:last-child .Solt_Header {
+    border-left: 1px solid #cfcfcf;
+}
+
+[dir=ltr] .Mainsolt:last-child .Solt_Header {
+    border-right: 1px solid #cfcfcf;
+}
+
+[dir=ltr] .Mainsolt:first-child .Solt_Header {
+    border-left: 1px solid #cfcfcf;
+    padding: 9px 2px 9px 9px;
+}
+
+.Solt_Header div {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 15px;
+}
+
+.Solt_Header:before {
+    width: 36px;
+    height: 40px;
+    position: absolute;
+    top: 5px;
+    transform: scaleX(.3) rotate(45deg);
+    content: " ";
+    background: #fff;
+    cursor: default;
+    z-index: 1;
+}
+
+[dir=rtl] .Solt_Header:before {
+    left: -20px;
+    border-bottom: 3px solid #cfcfcf;
+    border-left: 3px solid #cfcfcf;
+}
+
+[dir=ltr] .Solt_Header:before {
+    right: -20px;
+    border-top: 3px solid #cfcfcf;
+    border-right: 3px solid #cfcfcf;
+    top: 7px;
+    height: 39px;
+}
+
+.Mainsolt:last-child .Solt_Header:before {
+    width: 0;
+    height: 0;
+    border: 0;
+}
+
+.Solt_Title {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.Solt_Price, .Solt_Percent {
+    display: inline-block;
+    padding-top: 11px;
+    color: #777;
+    text-align: left;
+}
+
+.Solt_Price {
+    width: 68%;
+}
+
+[dir=rtl] .Solt_Price {
+    text-align: right;
+    font-family: Tahoma_faNum;
+}
+
+.Solt_Percent {
+    width: 23%;
+    margin-right: 3px;
+    font-size: 11px;
+}
+
+[dir=rtl] .Solt_Percent {
+    font-family: Tahoma_faNum;
+    font-size: 12px;
+}
+
+[dir=ltr] .Solt_Percent {
+    text-align: right;
+    margin-left: 3px;
+    margin-right: 0px;
+}
+
+/*Solt----------------------------------------------------*/
+
+#ChangeState {
+    position: relative;
+    min-height: 630px;
+    overflow-x: scroll;
+    overflow-y: unset;
+    padding: 0;
+    display: flex;
+}
+
+    #ChangeState::-webkit-scrollbar-track {
+        background-color: #eee;
+    }
+
+    #ChangeState::-webkit-scrollbar-thumb {
+        background-color: #e1e1e1;
+    }
+
+#ChangeStatet::-webkit-scrollbar-thumb:hover {
+    background-color: #cecece;
+}
+
+.Solt {
+    padding: 2px 7px;
+    position: relative;
+    text-align: center;
+    height: 560px;
+    max-height: 560px !important;
+    overflow: auto;
+    direction: ltr;
+}
+
+[dir=ltr] .Solt {
+    direction: rtl;
+}
+
+.Solt:hover .AddSale > i {
+    display: block;
+}
+
+.Solt::-webkit-scrollbar {
+    width: 7px;
+    display: none;
+}
+
+.Solt::-webkit-scrollbar-thumb {
+    background-color: #e1e1e1;
+}
+
+.Solt::-webkit-scrollbar-track {
+    background-color: #eee;
+}
+
+.Solt::-webkit-scrollbar-thumb:hover {
+    background-color: #e1e1e1;
+}
+
+.Mainsolt:hover .Solt::-webkit-scrollbar {
+    display: block;
+}
+
+.Solt_highlight {
+    background-color: #DBDBDC;
+}
+
+.Solt .AddSale {
+    background-color: #f7f7f7;
+    padding: 7px 0 6px 0;
+    margin-top: 7px;
+    border-radius: 4px;
+    height: 18px;
+}
+
+    .Solt .AddSale:hover {
+        background-color: #ececec;
+        cursor: pointer;
+    }
+
+    .Solt .AddSale > i {
+        display: none;
+        font-size: 18px;
+        color: #666;
+    }
+
+/*Sale_Items-------------------------------------------------------*/
+
+.Saleitem {
+    padding: 5px 10px 5px 3px;
+    border: 0;
+    margin-top: 6px;
+    cursor: pointer;
+    text-align: right;
+    background-color: #fff;
+    color: #000;
+    border-radius: 3px;
+    box-shadow: 0 0 1px 1px rgba(0,0,0,.05), 0 1px 2px -2px rgba(0,0,0,.06), 0 1px 3px 0 rgba(0,0,0,.07);
+    overflow: auto;
+    transition: box-shadow .1s linear;
+    box-sizing: border-box;
+    z-index: 2;
+    min-width: 136px;
+    direction: rtl;
+}
+
+[dir=ltr] .Saleitem {
+    direction: ltr;
+    padding: 5px 3px 5px 10px;
+    text-align: left;
+}
+
+.Saleitem:hover {
+    box-shadow: 0px 1.5px 4px -2px #999;
+}
+
+.Saleitem[won='2'] .Item_Title {
+    color: #F44336;
+}
+
+.Saleitem[won='1'] .Item_Title {
+    color: #4CAF50;
+}
+
+.Saleitem > div {
+    line-height: 15px;
+    text-align: right;
+    padding-top: 1px;
+    max-width: 87px;
+}
+
+[dir=ltr] .Saleitem div {
+    text-align: left;
+}
+
+.Item_Title {
+    font-size: 12px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.Item_Price {
+    padding-top: 4px !important;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 90px;
+}
+
+[dir=rtl] .Item_Price {
+    font-family: Tahoma_faNum;
+}
+
+.Saleitem .Item_User {
+    padding-top: 2px !important;
+    display: inline-block;
+    width: 80%;
+    overflow: hidden;
+}
+
+    .Saleitem .Item_User img {
+        width: 19px;
+        height: 19px;
+        border: 2px solid #fff;
+        border-radius: 50px;
+        cursor: default;
+    }
+
+    .Saleitem .Item_User i {
+        width: 19px;
+        height: 16px;
+        border: 2px solid #fff;
+        border-radius: 50px;
+        cursor: default;
+        display: inline-block;
+        vertical-align: top;
+        padding-top: 2px;
+        font-size: 19px;
+        color: #e1e1e1;
+    }
+
+[dir=rtl] .Saleitem .Item_User .ShareUser {
+    margin-left: -7px;
+}
+
+[dir=ltr] .Saleitem .Item_User .ShareUser {
+    margin-right: -7px;
+}
+
+.Saleitem .icon-user {
+    display: inline-block;
+    font-size: 12px;
+    color: #888;
+}
+
+.disable-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.Saleitem .Item_Menu {
+    float: left;
+    display: inline-block;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    font-size: 19px;
+    padding: 1px 9px 0 8px;
+    position: absolute;
+    left: 5px;
+    top: 7px;
+    color: #fff;
+}
+
+.Saleitem .Item_Activity {
+    float: left;
+    display: inline-block;
+    border: 1px solid #fff;
+    border-radius: 100px;
+    font-size: 14px;
+    padding: 3px 3px 3px 3px;
+    position: absolute;
+    left: 5px;
+    top: 43px;
+    color: #fff;
+}
+
+[dir=ltr] .Saleitem .Item_Menu {
+    float: right !important;
+    left: unset;
+    right: 5px;
+    padding: 1px 9px 0 8px;
+}
+
+[dir=ltr] .Saleitem .Item_Activity {
+    float: right !important;
+    left: unset;
+    right: 5px;
+    padding: 3px;
+}
+
+.Saleitem:not(.isMobile):hover .Item_Activity, .Saleitem:not(.isMobile):hover .Item_Menu, .Saleitem.isMobile .Item_Activity, .Saleitem.isMobile .Item_Menu {
+    color: #aaa;
+}
+
+.Saleitem .Item_Activity:hover, .Saleitem .Item_Menu:hover {
+    background-color: #efefef;
+    border-color: #efefef;
+}
+
+.Item_Activity.active, .Item_Menu.active {
+    background-color: #e1e1e1 !important;
+}
+
+.Item_Activity.active {
+    background-color: #e1e1e1 !important;
+    border-color: #e1e1e1 !important;
+}
+
+.PipeActivity {
+    border-radius: 5px !important;
+}
+
+    .PipeActivity > .option:first-child {
+        border-radius: 5px 5px 0 0;
+        height: 42px;
+    }
+
+    .PipeActivity .icon-plus {
+        font-weight: bold;
+        font-size: 12px !important;
+        color: #444;
+        margin-right: 12px;
+    }
+
+[dir=ltr] .PipeActivity .icon-plus {
+    margin-right: 0;
+    margin-left: 12px;
+}
+
+.PipeActivity > .option:first-child > span {
+    margin: 0 9px;
+}
+
+.PipeActivity .option:last-child {
+    min-width: 320px;
+    min-height: 75px;
+    max-height: 300px;
+    overflow-y: auto;
+    height: auto;
+    border-radius: 0 0 5px 5px;
+}
+
+    .PipeActivity .option:last-child:hover {
+        background-color: #fff !important;
+        cursor: default !important;
+    }
+
+    .PipeActivity .option:last-child .spinner {
+        margin-top: 20px;
+    }
+
+.ActivityList {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.emptyActive {
+    padding-top: 27px;
+    font-size: 13px;
+    color: #999;
+    min-height: 73px;
+}
+
+.ActivityHeader {
+    height: 30px;
+    background-color: #aaa;
+    line-height: normal;
+}
+
+    .ActivityHeader .title {
+        float: right;
+        height: 18px;
+        padding: 7px 17px 0 17px;
+        font-size: 11px;
+        color: #fff;
+    }
+
+[dir=ltr] .ActivityHeader .title {
+    float: left;
+}
+
+.ActivityHeader .counter {
+    float: left;
+    height: 14px;
+    background-color: #aaa;
+    color: #fff;
+    font-size: 11px;
+    padding: 4px 9px 1px 9px;
+    margin: 4px 14px;
+    border-radius: 8px;
+}
+
+[dir=ltr] .ActivityHeader .counter {
+    float: right;
+}
+
+.ActivityRow {
+    min-height: 38px;
+    width: 290px;
+    padding: 8px 15px;
+    line-height: 30px;
+    font-size: 11px;
+    border-bottom: 1px solid #eee;
+    transition: background .3s;
+}
+
+    .ActivityRow:hover {
+        background-color: #f9f9f9;
+    }
+
+    .ActivityRow .icon-clock {
+        font-size: 15px !important;
+        float: left;
+    }
+
+[dir=ltr] .ActivityRow .icon-clock {
+    float: right;
+}
+
+.ActivityRow .doneRad {
+    cursor: pointer;
+    vertical-align: super;
+    border-radius: 20px;
+}
+
+.ActivityRow .info {
+    float: right;
+}
+
+[dir=ltr] .ActivityRow .info {
+    float: left;
+}
+
+.ActivityRow .info > * {
+    display: inline-block;
+    margin: 0 !important;
+    line-height: 20px;
+}
+
+.ActivityRow .info .subject {
+    display: block;
+    text-align: right;
+    margin: 0 10px 0 0 !important;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 220px;
+}
+
+.ActivityRow .info .footer {
+    display: block;
+    text-align: right;
+    margin: 0 10px 0 0 !important;
+    max-width: 250px;
+}
+
+[dir=ltr] .ActivityRow .info .subject, [dir=ltr] .ActivityRow .info .footer {
+    text-align: left;
+    margin: 0 0 0 10px !important;
+}
+
+.ActivityRow .info .footer div {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 140px;
+    float: left;
+    padding-right: 3px;
+    font-size: 10px;
+}
+
+[dir=ltr] .ActivityRow .info .footer div {
+    float: right;
+    padding-right: 0;
+    padding-left: 3px;
+}
+
+.ActivityRow.past:not(.done) .info .footer, .ActivityRow.past .icon-clock {
+    color: #f44336;
+}
+
+.ActivityRow.today:not(.done) .info .footer, .ActivityRow.today .icon-clock {
+    color: #4caf50;
+}
+
+.ActivityRow.planed:not(.done) .info .footer, .ActivityRow.planed .icon-clock {
+    color: #9e9e9e;
+}
+
+.ActivityRow .commentTxt {
+    width: 92%;
+    border-radius: 2px;
+    min-height: 20px;
+    padding: 6px 10px 4px 10px !important;
+    clear: both;
+    text-align: right;
+    word-break: break-word;
+    white-space: normal;
+    line-height: 20px;
+    max-height: 120px;
+    overflow-y: auto;
+}
+
+[dir=ltr] .ActivityRow .commentTxt {
+    text-align: left;
+}
+
+.ActivityRow:last-of-type {
+    border-bottom: none;
+}
+
+.ActivityRow.doned .subject {
+    text-decoration-line: line-through
+}
+
+#FilterProccess span {
+    max-width: 62%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 13px;
+    font-size: 11.4px;
+    padding-top: 6px;
+}
+
+#ChangeState::-webkit-scrollbar {
+    height: 9px;
+}
+
+.done .doneRad {
+    visibility: hidden;
+}

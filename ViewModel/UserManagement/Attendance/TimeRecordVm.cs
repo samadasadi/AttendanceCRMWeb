@@ -56,6 +56,7 @@ namespace ViewModel.UserManagement.Attendance
         [Display(Name = "تاریخ")]
         [UIHint("HorizentalCompleteDateTimeTextBox")]
         public DateTime? DatetimeIO { get; set; }
+        public DateTime? DatetimeIOMain { get; set; }
         public string DatetimeIOStr { get { try { return DatetimeIO != null ? DateTimeOperation.M2S(DatetimeIO.Value) : ""; } catch { return ""; } } }
         public string TimeStr { get { try { return DatetimeIO != null ? DatetimeIO.Value.ToString("HH:mm") : ""; } catch { return ""; } } }
         public string DayNameStr { get { try { return DatetimeIO != null ? DateTimeOperation.GetPersianDayName(DatetimeIO.Value) : ""; } catch { return ""; } } }
@@ -71,7 +72,6 @@ namespace ViewModel.UserManagement.Attendance
         public int DeviceGroupId { get; set; }
         public int UserGroupId { get; set; }
         public DateTime ModifiedDate { get; set; }
-        public Guid MedicalCenterId { get; set; }
         public bool IsDeleted { get; set; }
         public Guid DoingUserId { get; set; }
 

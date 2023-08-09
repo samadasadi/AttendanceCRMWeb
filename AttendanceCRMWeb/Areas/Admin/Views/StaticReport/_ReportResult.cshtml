@@ -1,0 +1,32 @@
+﻿
+
+@using Utility.HtmlHelpers
+@using (Html.BsPanelWithCloseAndMinimize("نتیجه گزارش"))
+{
+    @Html.Stimulsoft().StiMvcViewer(new StiMvcViewerOptions()
+    {
+        Server =
+        {
+            RequestTimeout = 123450,
+        },
+        Appearance =
+        {
+            RightToLeft = true,
+        },
+        Toolbar = {
+            FontFamily = "Vazir",
+        },
+        Localization = "fa",
+        Actions =
+        {
+            GetReport = "ShowReport",
+            ViewerEvent = "ViewerEvent",
+            PrintReport = "ShowPrint",
+            //ExportReport = "Export"
+        }
+    })
+}
+
+
+
+

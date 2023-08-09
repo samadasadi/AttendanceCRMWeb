@@ -1,0 +1,52 @@
+﻿
+@using AttendanceCRMWeb.Helpers
+@using Utility.HtmlHelpers
+@using ViewModel.UserManagement.Attendance;
+@model  Utility.Utitlies.viewModel<TransactionRequestVm>
+
+
+
+
+<div class="card col-md-12">
+    <div class="card-header">
+        <h6 class="card-title">درخواست مرخصی/ماموریت </h6>
+        <div class="card-tools">
+            <div class="btn-group">
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" id="@Model.CommonCustomViewTablePaging.IdTextSearch" type="search" placeholder="جستجو" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-default" onclick="search_@Model.CommonCustomViewTablePaging.IdTextSearch ()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="input-group input-group-sm" style="width:75px;">
+                    <select class="form-control" id="cboSelectCount" name="cboSelectCount" onchange="search_@Model.CommonCustomViewTablePaging.IdTextSearch ()" style="width:75px;margin-right: 5px;">
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body table-responsive p-0">
+        <div id="@Model.CommonCustomViewTablePaging.TableIdDiv">
+            @Html.Partial("P_TransReq", Model)
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script>
+    $(function () {
+        $('.select2').select2();
+    });
+</script>

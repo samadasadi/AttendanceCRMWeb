@@ -40,7 +40,6 @@ namespace ViewModel.UserManagement.Attendance
         }
         public bool IsActive { get; set; }
         public DateTime ModifiedDate { get; set; }
-        public Guid MedicalCenterId { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsTemp { get; set; }
         public Guid UserId { get; set; }

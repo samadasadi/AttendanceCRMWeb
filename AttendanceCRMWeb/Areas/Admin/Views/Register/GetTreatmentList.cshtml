@@ -1,0 +1,177 @@
+﻿@using Trirand.Web.Mvc
+@using AttendanceCRMWeb.Helpers
+@using Utility.HtmlHelpers
+@model  Utility.Utitlies.viewModel<ViewModel.BasicInfo.TherapyVm>
+
+
+
+<div>
+
+    <div class="card card-danger card-outline" >
+        <!-- /.box-header -->
+        <div class="card-body">
+            <div class="row">
+
+                @using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "5"))
+                {
+                    @Html.EditorFor(m => m.T_model.FromDate)
+                }
+                @using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "5"))
+                {
+                    @Html.EditorFor(m => m.T_model.ToDate)
+                }
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-info" style="float:right;" type="button" onclick="GetTreatmentListReport($('#T_model_FromDate').val(), $('#T_model_ToDate').val());">فیلتر</button>                    
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- ./box-body -->
+    </div>
+
+    <div id="TreatmentReport">
+
+    </div>
+
+    <div class="card card-danger card-outline">
+        <div class="card-header with-border">
+            <h3 class="card-title">لیست درمان های انجام شده</h3>
+            <div class="card-tools pull-right">
+                <div style="float:left">
+                    <select class="form-control" id="cboSelectCount" name="cboSelectCount" onchange="search_@Model.CommonCustomViewTablePaging.IdTextSearch ()" style="width:75px;height: 30px;margin-right: 5px;">
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+                <div class="input-group input-group-sm" style="width: 250px;float:left;">
+                    <input type="text" name="table_search" class="form-control pull-right" id="@Model.CommonCustomViewTablePaging.IdTextSearch" placeholder="جستجو">
+
+                    <div class="input-group-btn">
+                        <button type="submit" class="btn btn-default" onclick="search_@Model.CommonCustomViewTablePaging.IdTextSearch ()"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-tools -->
+        </div>
+        <!-- /.box-header -->
+        <div class="card-body no-padding">
+            <div>
+                <div id="@Model.CommonCustomViewTablePaging.TableIdDiv">
+                    @Html.Partial("P_GetTreatmentList", Model)
+                </div>
+                <!-- /.table -->
+            </div>
+            <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.box-body -->
+        <div class="card-footer no-padding">
+            <div class="mailbox-controls">
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+    $(function () {
+        $('.select2').select2()
+        //Enable iCheck plugin for checkboxes
+        //iCheck for checkbox and radio inputs
+        //$('.mailbox-messages input[type="checkbox"]').iCheck({
+        //    checkboxClass: 'icheckbox_flat-blue',
+        //    radioClass: 'iradio_flat-blue'
+        //});
+
+        //Enable check and uncheck all functionality
+        $(".checkbox-toggle").click(function () {
+            var clicks = $(this).data('clicks');
+            if (clicks) {
+                //Uncheck all checkboxes
+                $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
+                $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
+            } else {
+                //Check all checkboxes
+                $(".mailbox-messages input[type='checkbox']").iCheck("check");
+                $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
+            }
+            $(this).data("clicks", !clicks);
+        });
+
+
+
+        //$("#T_model_FromDate").val($("#T_model_FromDateStr").val());
+        //$("#T_model_ToDate").val($("#T_model_ToDateStr").val());
+
+        GetTreatmentListReport($("#T_model_FromDate").val(), $("#T_model_ToDate").val());
+    });
+
+    $(function () {
+        // mdDate
+        $('.mdDate').MdPersianDateTimePicker({
+            Placement: 'bottom',
+            Trigger: 'click',
+            EnableTimePicker: false,
+            //  TargetSelector: '#ElementId',
+            GroupId: '',
+            ToDate: false,
+            FromDate: false,
+            DisableBeforeToday: false,
+            Disabled: false,
+            Format: 'yyyy/MM/dd',
+            IsGregorian: false,
+            EnglishNumber: false,
+        });
+    });
+
+    //$("#T_model_FromDateStr").change(function () {
+    //    
+    //    //$("#T_model_FromDateStr").trigger('Select');
+    //    //$("#T_model_FromDate").trigger('change');
+    //    //$("#T_model_FromDate").val(this.value);
+
+    //    GetTreatmentListReport($("#T_model_FromDate").val(), $("#T_model_ToDate").val());
+    //});
+    //$("#T_model_ToDateStr").change(function () {
+    //    
+    //    //$("#T_model_ToDateStr").trigger('Select');
+    //    //$("#T_model_ToDate").trigger('change');
+    //    //$("#T_model_ToDate").val(this.value);
+
+    //    GetTreatmentListReport($("#T_model_FromDate").val(), $("#T_model_ToDate").val());
+    //});
+
+
+
+
+    function GetTreatmentListReport(from, to) {
+        $('#TreatmentReport').html("لطفاً منتظر بمانید...");
+        var _url = "/Admin/Register/P_GetTreatmentReport";
+        $.ajax({
+            type: "GET",
+            url: _url,
+            data: { Id: $("#Id").val(), UserType: $("#UserType").val(), FromDate: from, ToDate: to },
+            beforeSend: function () {
+                showWait();
+            },
+            success: function (result) {
+                
+                $('#TreatmentReport').html(result);
+            },
+            complete: function () {
+                hideWait();
+            },
+            error: function (err) {
+                hideWait();
+            }
+        });
+    }
+
+</script>

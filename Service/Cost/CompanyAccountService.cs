@@ -14,6 +14,7 @@ using Utility.PublicEnum;
 using Utility;
 using ViewModel.BasicInfo;
 using ViewModel.UserManagement.Attendance;
+using ViewModel.Cost;
 
 namespace Service.Cost
 {
@@ -33,6 +34,7 @@ namespace Service.Cost
 
         Task<Cost_Incoming> SaveCompanyAccountAsync(CompanyAccountVm model);
         Task<Cost_Incoming> GetCompanyAccountAsync(CompanyAccountVm model);
+        Task<List<MedicalCenterCostReport>> GetCompanyAccountAsync(ViewModel.ReportParameter parameter);
         System.Threading.Tasks.Task DeleteAsync(Guid Id);
         Task<string> Deletes(string[] Id);
 
@@ -71,6 +73,8 @@ namespace Service.Cost
             _Costrepo = Costrepo;
             _Costrepo.FrameworkContext = currentcontext;
             _Costrepo.DbFactory = contextFactory;
+
+            _codingService = Codingrepo;
 
         }
 
@@ -265,6 +269,55 @@ namespace Service.Cost
         }
 
 
+        public async Task<List<MedicalCenterCostReport>> GetCompanyAccountAsync(ViewModel.ReportParameter parameter)
+        {
+            string CostTypeCode = "";
+            switch (parameter.costInCode)
+            {
+                case "015010302":
+                    CostTypeCode = "2";
+                    break;
+                case "015010101":
+                    CostTypeCode = "3";
+                    break;
+                default:
+                    CostTypeCode = "1";
+                    break;
+            }
+
+            var sqlQuery = @"   Declare @StrCostCode varchar(100)
+                                Declare @FromDate varchar(60)
+                                Declare @toDate varchar(60)
+                                Declare @CostTypeCode int
+                                
+                                set @FromDate = '" + parameter.FromDate.ToString("yyyy-MM-dd") + @"'
+                                set @toDate = '" + parameter.ToDate.ToString("yyyy-MM-dd") + @"'
+                                set @CostTypeCode = '" + CostTypeCode + @"'
+                                set @StrCostCode  = " + (!string.IsNullOrEmpty(parameter.costPersonID) ? "'" + parameter.costPersonID + "'" : "NULL") + @"
+                                SELECT     CostCode, factor_no, Comment, DateEn, Pricecreditor, Price, costPersonID,CostTypeCode, CostCodeName from
+                                (
+	                                    SELECT CostCode, Pricecreditor, Price, Factor_No, Comment, DateEn, costPersonID, CASE WHEN LEFT(CostCode, 7) = '0150103' THEN 2 WHEN costcode = '015010102' THEN 1 ELSE 3 END AS CostTypeCode, CostCodeName
+	                                    FROM     (SELECT CostCode, ISNULL(tbl_Cost_Incoming.Price, 0) AS Pricecreditor, ISNULL(cost, 0) AS Price, Factor_No, Coment as Comment, DateEn, costPersonID,(case when @CostTypeCode='3' then emp.FirstName + ' '+emp.LastName else  coding.name end) as CostCodeName
+	                                                      FROM      dbo.tbl_Cost_Incoming
+	                                    							LEFT JOIN tbl_Coding as coding ON coding.code = (case when @CostTypeCode='3' then tbl_Cost_Incoming.costPersonID else tbl_Cost_Incoming.CostCode end)
+	                                    							LEFT JOIN tbl_Employees as emp ON Convert(nvarchar(50),emp.Id) = (case when @CostTypeCode='3' then tbl_Cost_Incoming.costPersonID else tbl_Cost_Incoming.CostCode end)
+                                                            where tbl_Cost_Incoming.IsDeleted = 0
+	                                                      UNION
+	                                                      SELECT CostCode, ISNULL(cost, 0) AS Pricecreditor, ISNULL(Tbl_Cost.Price, 0) AS Price, Factor_No, Coment as Comment, DateEn, costPersonID,(case when @CostTypeCode='3' then emp.FirstName + ' '+emp.LastName else  coding.name end) as CostCodeName
+	                                                      FROM     dbo.Tbl_Cost
+	                                    							LEFT JOIN tbl_Coding as coding ON coding.code = (case when @CostTypeCode='3' then Tbl_Cost.costPersonID  else Tbl_Cost.CostCode end)
+	                                    							LEFT JOIN tbl_Employees as emp ON Convert(nvarchar(50),emp.Id) = (case when @CostTypeCode='3' then Tbl_Cost.costPersonID else Tbl_Cost.CostCode end)
+                                                            where Tbl_Cost.IsDeleted = 0
+                                                    ) AS D
+                                )A
+                                WHERE     
+                                			(costPersonID = @StrCostCode OR @StrCostCode is null)
+                                		AND (CostTypeCode=@CostTypeCode)
+                                		AND (CONVERT(VARCHAR(10),DateEn,101) BETWEEN Convert(datetime,@FromDate,101) AND Convert(datetime,@toDate,101))
+                                order by DateEn";
+
+            return (await _repo.RunQuery<MedicalCenterCostReport>(sqlQuery)).ToList();
+        }
 
         public async Task<Cost_Incoming> GetCompanyAccountAsync(CompanyAccountVm model)
         {

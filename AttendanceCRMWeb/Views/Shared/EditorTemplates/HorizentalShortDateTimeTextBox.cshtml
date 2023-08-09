@@ -1,0 +1,22 @@
+﻿@model string
+@{
+    var placeholder = string.Empty;
+
+    if (ViewData.ModelMetadata.AdditionalValues.ContainsKey("placeholder"))
+    {
+        placeholder = ViewData.ModelMetadata.AdditionalValues["placeholder"] as string;
+    }
+    var name = (ViewData.ModelMetadata).PropertyName;
+    var required = ViewData.ModelMetadata.IsRequired;
+}
+
+<div class="form-group  row @string.Format("{0}",required?"rqd":"")">
+    @Html.LabelFor(model => model, htmlAttributes: new { @class = "control-label col-form-label col-md-3" })
+    <div class="col-sm-9">
+        @Html.MyHelper().TreasuryTextBoxFor(model => model, TextBoxType.ShortDate)
+        @if (required)
+        {
+            <span class="field-validation-valid text-danger" data-valmsg-for="@string.Format("{0}Str",name)" data-valmsg-replace="true"></span>
+        }
+    </div>
+</div>

@@ -1,0 +1,223 @@
+﻿#bodyTodo {
+    text-align: left;
+}
+#bodyTodo #div_right li {
+padding: 0px !important;
+direction:ltr;
+}
+#bodyTodo .contextMenu li {
+padding: 0px !important;
+}
+#bodyTodo li{list-style-type: none;clear:both;}
+#bodyTodo ul{-webkit-padding-start: 10px;}  ol{-webkit-padding-start: 25px;clear: both;}
+#bodyTodo :focus {outline: none;}
+#bodyTodo textarea {resize: none;font-family:Tahoma;}
+#bodyTodo .Filterlist li{cursor: pointer;color: Black;margin-left: 1px;}
+#bodyTodo #div_left{float: right;height: 100%;width: 26%;margin-right: 30px;}
+#bodyTodo #div_right{float: right;height: 100%;width: 69%;}
+#bodyTodo #LoaderImg{background: url(../images/movewait.gif) no-repeat center;height: 20px;width: 240px;margin-left: 11px;background-color: #F3F3F3;}
+#bodyTodo .LoaderImg_top{height: 20px;margin-bottom: 6px;}
+#bodyTodo .LeftMenuTitle{margin-bottom: 5px;padding: 2px;padding-left: 4px;background: url(../images/todo.png) no-repeat;padding-left: 38px;background-color: #DFECF5;padding-right: 6px;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;background-position: 0px -224px;min-height:17px;}
+#bodyTodo .icon{margin:0 5px;width: 16px;height: 16px;float: left;background: url(../images/todo.png) no-repeat;}
+#bodyTodo .icon_tody{background-position: -2px -45px;}
+#bodyTodo .icon_next{background-position: -24px -45px;}
+#bodyTodo .icon_new{background-position: -45px -23px;}
+#bodyTodo .icon_Recycle{background-position: -45px -130px;}
+#bodyTodo .icon_grippy{background-position: -45px -45px;}
+#bodyTodo .icon_dropdown{background-position: -2px -109px;}
+#bodyTodo .icon_save{background-position: -24px -109px;cursor:pointer;}
+#bodyTodo .icon_delete{background-position: -2px -87px;cursor:pointer;}
+#bodyTodo .icon_notes{background-position: -45px -174px;}#bodyTodo .icon_notes_full{background-position: -23px -174px;}
+#bodyTodo .icon_clear_cross{background-position: -24px -131px;}
+
+
+#bodyTodo .icon_AddItemChecbox{background-position: -24px -151px;}
+#bodyTodo .icon_alarm{background-position: -45px -87px;}
+#bodyTodo .icon_grippy2{background-position: -2px -24px;}
+#bodyTodo .icon_edit{background-position: -40px -107px;}
+#bodyTodo .icon_5{background-position: -24px -2px;}
+#bodyTodo .icon_8{background-position: -3px -151px;}
+#bodyTodo .icon_3{background-position: -2px -66px;}
+#bodyTodo .icon_2{background-position: -45px -2px;}
+#bodyTodo .icon_6{background-position: -24px -23px;}
+#bodyTodo .icon_4{background-position: -24px -66px;}
+#bodyTodo .icon_10{background-position: -2px -2px;}
+#bodyTodo .icon_1{background-position: -24px -87px;}
+#bodyTodo .icon_9{background-position: -2px -131px;}
+#bodyTodo .icon_7{background-position: -45px -66px;}
+#bodyTodo .contextMenu li.order a {background: url(../images/todo.png) no-repeat;background-position: -40px -42px;}
+#bodyTodo .contextMenu li.priority a {background: url(../images/todo.png) no-repeat;background-position: -40px -65px;}
+#bodyTodo .contextMenu li.DueDate a {background: url(../images/todo.png) no-repeat;background-position: -40px -86px;}
+#bodyTodo .baseli{list-style-type: none;border-top: 1px solid white;border-left: 1px solid white;border-right: 1px solid white;border-bottom: 1px solid #E8E8E8;font-size: 11px;margin: 0;padding-left: 3px;padding-right: 3px;padding-bottom: 3px;padding-top: 3px;color: black;cursor: pointer;height: 17px;min-width: 150px;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;}
+#bodyTodo .baseli:hover,#bodyTodo  .div_newporject:hover,#bodyTodo   .BaseProjectLiDiv:hover,#bodyTodo  .BaseFilterLiDiv:hover{background-color: #FFFFCC;border-top: 1px solid #FFFFCC;border-left: 1px solid #FFFFCC;border-right: 1px solid #FFFFCC;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;}
+#bodyTodo .item_contant{float: left;padding-left: 9px;}
+#bodyTodo .LeftMenuTitleInner{font-size: 14px;}
+#bodyTodo .ListCountTodo{text-align: center;color: black;padding: 2px 1px 1px 1px;height: 14px;font: 9px verdana,arial,sans-serif;background-color: #E8E8E8;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;float: right;min-width: 22px;margin-right: 6px;}
+#bodyTodo .div_newporject{margin-top: 5px;padding: 5px;cursor: pointer;margin-left: 9px;font-size: 13px;text-align:left;}
+#bodyTodo .div_addnewporject{margin-left: 18px;height: 27px;}
+#bodyTodo .fl{float: left;white-space: nowrap;}
+#bodyTodo .InputBtnAdd{min-width:50px;float:left;height: 24px !important;cursor: pointer;background: #00B6FF;border-radius: 5px;text-shadow: 0 -1px 0 rgba(0,0,0,0.15);box-shadow: 0 0 0 1px #0086ba inset,0 0 0 2px #6cdcea inset,0 30px 20px -18px rgba(255,255,255,0.65) inset, 1px 1px 3px rgba(0,0,0,0.2);-webkit-border-radius: 5px;-webkit-text-shadow: 0 -1px 0 rgba(0,0,0,0.15);-webkit-box-shadow: 0 0 0 1px #0086ba inset, 0 0 0 2px #6cdcea inset, 0 30px 20px -18px rgba(255,255,255,0.65) inset,1px 1px 3px rgba(0,0,0,0.2);}
+#bodyTodo .InputBtnAdd:hover{background: #6CD7FF;}
+#bodyTodo .InputBtnAdd[disabled]{background: #CCCCCC;color: #999999;-webkit-box-shadow: none;box-shadow: none;}
+/*---*/
+#bodyTodo .ProjectSelected,#bodyTodo  .ProjectSelectedmenu{background-color: #D1F099 !important;border-top: 1px solid #D1F099;border-left: 1px solid #D1F099;border-right: 1px solid #D1F099;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;}
+/*---*/
+#bodyTodo .list {list-style-type: none;margin: 0;padding: 0;}
+#bodyTodo .projectList li,#bodyTodo  .filterList li {color: black;cursor: pointer;padding:0 !important;}
+#bodyTodo .BaseProjectLiDiv,#bodyTodo  .BaseFilterLiDiv,#bodyTodo  .AddProjectLiDiv,#bodyTodo  .BaseItemLiDiv,#bodyTodo  .BaseRecycleLiDiv,#bodyTodo  .BaseDoneLiDiv,#bodyTodo  .BaseworkLiTodoDiv {border-top: 1px solid white;border-left: 1px solid white;border-right: 1px solid white;border-bottom: 1px solid #E8E8E8;font-size: 11px;margin: 0;padding-left: 3px;padding-right: 3px;padding-bottom: 3px;padding-top: 3px;color: black;cursor: pointer;min-height: 17px;min-width: 150px;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;}
+#bodyTodo .icon_grippy {cursor: url(../images/openhand.cur), default;padding-top: 2px;float: left;padding-left: 0px;padding-right: 0px;}
+#bodyTodo .ui-state-highlight { height: 15px; line-height: 1.2em;background-color:whiteSmoke; }
+#bodyTodo .ProjItemContent{float:left;padding-top:3px;}
+#bodyTodo .ProjItemMenu{float:right;} 
+#bodyTodo .ItemMenu{float:right;} 
+#bodyTodo .contextMenu{position:absolute;position: absolute;width: 120px;z-index: 99999;border: solid 1px #CCC;background: #EEE;padding: 0px;margin: 0px;display:none;}
+#bodyTodo .iconframe{margin: 3px;width: 16px;height: 16px;display: block;float: left;cursor: pointer;}
+#bodyTodo .contextMenu li.separator {border-top: solid 1px #CCC;}
+#bodyTodo .contextMenu a {color: #333;text-decoration: none;display: block;line-height: 20px;height: 20px;background-repeat: no-repeat;outline: none;padding: 1px 5px;padding-left: 28px;}
+#bodyTodo .contextMenu li:hover {color: white;background-color: #39F;cursor:pointer;}
+#bodyTodo .nohover {color: black !important;background-color: initial !important;cursor: default !important;}
+#bodyTodo .contextMenu li.edit a {background: url(../images/todo.png) no-repeat;background-position: -40px -107px;}
+#bodyTodo .contextMenu li.delete a {background: url(../images/todo.png) no-repeat;background-position: -40px -128px;}
+#bodyTodo .contextMenu li.removeNote a {background: url(../images/todo.png) no-repeat;background-position: -40px -149px;}
+
+#bodyTodo .IconFrameOuter {padding: 4px;padding-top: 2px;}
+#bodyTodo .ProjectEditDiv{width:152px;}
+#bodyTodo .CurrentProjectTitle {text-align:left;min-height: 16px;font-size: 16px;padding-bottom: 13px;padding-left: 38px;padding-top: 4px;font-weight: bold;background: url(../images/todo.png) no-repeat;background-position: -33px -190px;}
+
+#bodyTodo .ItemCheckDiv,#bodyTodo  .RecycleCheckDiv,#bodyTodo  .DoneCheckDiv,#bodyTodo  .workCheckDiv{float:left;padding-right:8px;}
+#bodyTodo .ItemCheckBox{margin:0;}
+#bodyTodo .ItemContentDiv {padding-left: 42px;}
+
+#bodyTodo .ItemDueDateOuter {padding-top: 2px;margin-top: -2px;margin-right: 2px;margin-left: 2px;float: right;}
+#bodyTodo .ItemDueDate {text-align: center;color: black;}
+#bodyTodo .ItemDueDateInner_pp1{background: #E6EFC2;border: 1px solid #C6D880;}
+#bodyTodo .ItemDueDateInner_pp0{background-color: #f9f9f9;border: 1px solid #C7C7C7;}
+#bodyTodo .ItemDueDateInner_pp2{background: #FBE3E4;border: 1px solid #FBC2C4;}
+#bodyTodo .ItemDueDateInner_pp3{background-color: #f9f9f9;border: 1px solid #C7C7C7;display:none;}
+#bodyTodo .ItemDueDateInner_pp4{background: #FFC;border: 1px solid #FFEA9F;}
+#bodyTodo .ItemDueDateInner {padding: 1px 6px;-webkit-border-radius: 11px;-moz-border-radius: 11px;border-radius: 11px;direction:rtl;white-space:nowrap;}
+#bodyTodo .ItemNotesBtn,#bodyTodo  .workNotesBtn{float:right;}
+#bodyTodo .btn_search{width: 52px!important;font-weight: normal;cursor:pointer;border: 1px solid #E1E1E1;white-space: nowrap;text-align: center;outline: medium none;-moz-box-shadow: none;-webkit-box-shadow: none;padding: 0px 6px 0px 6px;background-image: none;background-color: #F3F3F3;border-radius: 2px;height: 22px;margin-top: 0px;}
+#bodyTodo .txt_search{direction: rtl;text-align: left;padding: 2px 1px 2px 1px;border: 1px #DDD solid !important;}
+
+#bodyTodo .PrioFrame {border: 1px solid #808080;
+margin: 3px 2px;
+width: 10px;
+height: 14px;
+display: block;
+float: left;
+cursor: pointer;
+padding: 0 2px 0 4px;
+color: #FFF;
+border-image: initial;}
+#bodyTodo .PrioFrameOuter {height: 25px;padding:0 5px;}
+#bodyTodo .PrioTitle {line-height: 20px;padding:0 8px;padding-top: 2px;}
+#bodyTodo .BaseItemLiDiv:hover {background-color: #FFC;}
+#bodyTodo .divComment, #bodyTodo .divmyComment {
+    z-index: 50;
+cursor: text;
+vertical-align: top;
+padding: 5px;
+background-color: #FFF !important;
+width: 89%;
+text-align: justify;
+margin-top: 10px;
+line-height: 16px;
+border: 1px solid #E2E2E2;
+margin-left: 27px;
+margin-bottom: 0px;
+min-height: 15px;
+word-wrap: break-word;
+-webkit-nbsp-mode: space;
+-webkit-line-break: after-white-space;
+border-image: initial;
+}
+#bodyTodo #ProjectEditDiv {
+    margin-top: -4px;
+}
+#bodyTodo .Write{-webkit-user-modify: read-write;}
+#bodyTodo .selected_comment{background-color: #FFC;}
+#bodyTodo .disable{color:#c2c2c2 !important;}
+#bodyTodo #noteEditDiv{margin: 8px 22px;
+cursor: pointer;
+display: inline-table;}
+#bodyTodo .Priority_1{background-color: #FF3300;} 
+#bodyTodo .Priority_2{background-color: #168BB8;}  
+#bodyTodo .Priority_3{background-color: #6D9B17;}  
+#bodyTodo .Priority_4{background-color: #DFDF00;} 
+#bodyTodo .Priority_5{background-color: #000000;}
+#bodyTodo .Prioritycontant_1{color: #FF3300;}
+#bodyTodo .Prioritycontant_2{color: #168BB8;} 
+#bodyTodo .Prioritycontant_3{color: #6D9B17;} 
+#bodyTodo .Prioritycontant_4{color: #DFDF00;} 
+#bodyTodo .Prioritycontant_5{color: #000000;}
+#bodyTodo .icon_clear_cross{left: 83px;top: 47px;position: initial;margin: 0;padding: 0;margin-top: 2px;z-index: 2;position: absolute;cursor: pointer;}
+#bodyTodo .EditDueDateMiddle {text-align:left;padding-left: 8px;padding-right: 8px;padding-top:7px; background: #DFECF5 none repeat scroll 0 0;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;}
+#bodyTodo .EditDueDatePostpone {width: 100%;height: 32px;border-bottom-style: solid;border-bottom-width: 1px;border-bottom-color: silver;margin-bottom: 3px;}
+#bodyTodo .divduedateinput{float: left;width: 65%;}
+#bodyTodo .placeholder {background-color:whiteSmoke;height:27px;}
+#bodyTodo .ui-nestedSortable-error {background:#fbe3e4;color:#8a1f11;}
+#bodyTodo .PostponeBtnDiv{float:right;}
+#bodyTodo .mydatapiker{padding-top: 10px;padding-bottom: 7px;clear:both;}
+#bodyTodo .DoneItem {text-decoration: line-through;color: #666;}
+#bodyTodo #emptyRecycle{font-size: 11px;padding: 4px;}
+ #bodyTodo .boxTodo {
+     position:relative;
+width: 90%;
+margin-right: 10px;
+border: 2px solid #B0B0B0;
+-webkit-border-radius: 11px;
+-moz-border-radius: 11px;
+border-radius: 11px;
+float: left;
+}
+#bodyTodo .boxitem{padding: 5px;}
+#bodyTodo .InputTextAddItem {border: 0px !important;width: 94%;font-family: tahoma;font-size: 11px;line-height: 15px;height: 20px;min-height: 20px;max-height: 200px;display: block;background-color: transparent;padding-top: 6px;padding-left: 2px;border-image: initial;}
+#bodyTodo .AddItemRow {border-top-style: solid;border-top-width: 1px;border-top-color: #CCC;}
+#bodyTodo .pading_top6{margin-top: 6px;}
+#bodyTodo .AddItemNotes {margin: 0 20px;z-index:50;
+padding: 5px 5px 0px 5px;
+width: 94%;
+min-height: 20px;
+-webkit-user-modify: read-write;
+word-wrap: break-word;
+-webkit-nbsp-mode: space;
+-webkit-line-break: after-white-space;}
+#bodyTodo .AddItemExpander{left:10px;cursor:pointer;width: 40px;height: 15px;background-color: #d2d2d2;margin-top:2px; position: absolute;margin-left: 30px;text-align: center;-moz-border-bottom-right-radius: 11px;border-bottom-right-radius: 11px;border-bottom-left-radius: 11px;-moz-border-bottom-lef-radius: 11px;}
+#bodyTodo .AddNewItemDiv{margin-top:40px;}
+#bodyTodo .FilterItemProjectDiv{-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;color: black;white-space: nowrap;padding-left: 6px;padding-right: 6px;padding-bottom: 2px;padding-top: 2px;margin-left: 2px;margin-right: 4px;float: right;background-color: #DDC;cursor: pointer;font-size: 10px;}
+#bodyTodo .DoneItemsHeader{direction:ltr; padding-top: 40px;padding-left: 2px;padding-bottom: 3px;border-bottom: 1px solid #CCC;font-size: 10px;color: #666;font-weight: bold;margin-top: 25px;clear:both;}
+#bodyTodo .DoneItemsHeader a {color: #666;text-decoration: none;}
+#bodyTodo .cursor{cursor:pointer;}
+#bodyTodo .ContentAreaTopButtons {float: right;font-size: 11px;color: gray;text-align: right;}
+#bodyTodo .ProjectActions {clear: right;}
+#bodyTodo .SortMenu{cursor: pointer;text-decoration: underline;}
+/* -----------------------------------------------------------
+	    jquery ui -> datepicker
+    ----------------------------------------------------------- */
+#bodyTodo .ui-datepicker{width: 204px;padding: .2em .2em 0;border: 0px;background: #DFECF5;opacity: none;filter: none;display: block;background: #DFECF5;border-image: initial;}
+#bodyTodo .ui-datepicker .ui-datepicker-header { position:relative; padding:.2em 0; background: #F6F6F6; }
+#bodyTodo .ui-datepicker .ui-datepicker-prev,#bodyTodo .ui-datepicker .ui-datepicker-next {/* position:absolute; *//* top: 1px; *//* width: 1.8em; *//* height: 1.8em; */}
+#bodyTodo .ui-datepicker .ui-datepicker-prev-hover,#bodyTodo .ui-datepicker .ui-datepicker-next-hover { top: 1px; }
+#bodyTodo .ui-datepicker .ui-datepicker-prev { right: 0; }
+#bodyTodo .ui-datepicker .ui-datepicker-next { /*left: 0;*/ }
+#bodyTodo .ui-datepicker .ui-datepicker-prev-hover { right: 0; }
+#bodyTodo .ui-datepicker .ui-datepicker-next-hover { /*left: 0;*/ }
+#bodyTodo .ui-datepicker .ui-datepicker-prev span,#bodyTodo .ui-datepicker .ui-datepicker-next span {/* display: block; *//* position: absolute; *//* left: 50%; *//* margin-left: -8px; *//* top: 50%; *//* margin-top: -8px; */}
+#bodyTodo .ui-datepicker .ui-datepicker-title {margin: 0 2.3em;line-height: 1.8em;text-align: center;}
+#bodyTodo .ui-datepicker .ui-datepicker-title select { margin:1px 0; }
+#bodyTodo .ui-datepicker select.ui-datepicker-month-year {width: 100%;}
+#bodyTodo .ui-datepicker select.ui-datepicker-month, #bodyTodo 
+#bodyTodo .ui-datepicker select.ui-datepicker-year { width: 49%;}
+#bodyTodo .ui-datepicker table {width: 100%; border-collapse: collapse; margin: 0 0 4px 0; }
+#bodyTodo .ui-datepicker th {border: 0px !important;color: #222 !important;background: inherit !important;padding: 6px 3px !important;text-align: center;border: 0;}
+#bodyTodo .ui-datepicker td {border: 0;margin: 0px;padding: 0px !important;}
+#bodyTodo .ui-datepicker td span,#bodyTodo .ui-datepicker td a {display: block;/* padding: 3px; *//* height: 11px; */text-align: center;text-decoration: none;}
+#bodyTodo .ui-datepicker td span,#bodyTodo .ui-datepicker td a:hover {/* background: #376ea6; *//* color: #ffffff; */}
+#bodyTodo .ui-datepicker .ui-datepicker-buttonpane { background-image: none; margin: .7em 0 0 0; padding:0 .2em; border-left: 0; border-right: 0; border-bottom: 0; }
+#bodyTodo .ui-datepicker .ui-datepicker-buttonpane button { float: right; margin: .5em .2em .4em; cursor: pointer; padding: .2em .6em .3em .6em; width:auto; overflow:visible; }
+#bodyTodo .ui-datepicker .ui-datepicker-buttonpane button.ui-datepicker-current { float:left; }
+#bodyTodo .ui-datepicker td span,#bodyTodo .ui-datepicker td.ui-datepicker-today a { background: #DDDDDD; color: #585858; }
+#bodyTodo .ui-datepicker td span,#bodyTodo .ui-datepicker td.ui-datepicker-current-day a { background: #376ea6; color: #ffffff; }
+#bodyTodo .ui-state-default,#bodyTodo .ui-widget-content .ui-state-default {/* border: 1px solid #9CCEE2; *//* background: #9CCEE2; */font-weight: normal;width: 19px;height: 19px;line-height: 20px;}
+    

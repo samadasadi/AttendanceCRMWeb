@@ -1,0 +1,797 @@
+﻿@font-face {
+    font-family: 'Tahoma_faNum';
+    src: url('../fonts/IRANSansWeb(FaNum)_Medium.woff') format('woff');
+    font-display: fallback;
+}
+
+#UCdialog_AddSale {
+    padding: 0px !important;
+}
+
+#ui-dialog-title-UCdialog_AddSale {
+    font-size: 14px;
+}
+
+.addDeal {
+    float: right;
+    width: 300px;
+    padding: 13px 15px 0;
+}
+
+.addDealSide {
+    float: left;
+    min-width: 347px;
+    height: 449px;
+    overflow-y: auto;
+    border: 1px solid #e2e2e2;
+    border-bottom: 0;
+    border-top: 0;
+}
+
+@-moz-document url-prefix() {
+    .addDealSide {
+        height: 445px
+    }
+}
+
+[dir=ltr] .addDeal {
+    float: left;
+    border-right: 1px solid #fff;
+}
+
+[dir=ltr] .addDealSide {
+    float: right;
+}
+
+.AddSaleRow {
+    position: relative;
+    padding-bottom: 5px;
+}
+
+#TxtAddSaleCustomer {
+    position: relative;
+    background: none !important;
+    height: 32px !important;
+    width: 300px;
+}
+
+.AddSaleRow .LblAddSaleRow {
+    color: rgba(38,41,44,.64);
+    font-size: 11.4px;
+    padding: 2px;
+    line-height: 27px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.AddSaleRow #LnkAddProductRow {
+    float: left;
+    color: #317ae2;
+    font-size: 11.4px;
+    padding: 2px;
+    line-height: 22px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+[dir=ltr] .AddSaleRow #LnkAddProductRow {
+    float: right;
+}
+
+#TxtAddSaleDescript {
+    height: 65px;
+}
+
+.AddSaleinput {
+    width: 297px;
+    border: 1px solid #cbcccd;
+    border-radius: 3px;
+    padding: 5px 7px 5px 7px;
+    color: #26292c;
+    box-sizing: border-box;
+    line-height: 20px;
+    font-size: 11.4px !important;
+}
+
+[dir=rtl] .AddSaleinput {
+    font-family: Tahoma_faNum;
+}
+
+.AddSaleinput:focus {
+    border: 1px solid #317ae2;
+}
+
+.AddSaleinput.hasIcon {
+    padding-right: 31px;
+}
+
+[dir=ltr] .AddSaleinput.hasIcon {
+    padding-left: 31px;
+}
+
+.AddSaleRow textarea {
+    resize: none;
+}
+
+.AddSaleRow i {
+    position: absolute;
+    font-size: 11px;
+    top: 38px;
+    right: 11px;
+    display: inline-block;
+    color: #404346;
+}
+
+[dir=ltr] .AddSaleRow i {
+    left: 11px;
+    width: 10px;
+}
+
+.AddSaleRow .spinner {
+    position: absolute;
+    left: 8px;
+    display: inline-block;
+    top: 35px;
+    width: 13px;
+    height: 13px;
+    z-index: 99999;
+}
+
+[dir=ltr] .AddSaleRow .spinner {
+    left: unset;
+    right: 8px;
+}
+
+.AddSaleRow .badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 4px 5px;
+    background: #317ae2;
+    border-radius: 10px;
+    color: #fff;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    position: absolute;
+    top: 34px;
+    left: 6px;
+    z-index: 1;
+}
+
+[dir=ltr] .AddSaleRow .badge {
+    left: unset;
+    right: 6px;
+    width: 30px;
+}
+
+/*------------------------------------------------------------*/
+
+.AddSaleAuto {
+    border-radius: 0;
+    border: 1px solid #e5e5e5;
+    padding: 0;
+    min-width: 299px;
+}
+
+.AddSaleli {
+    background-color: #fff !important;
+    border-spacing: 10px !important;
+}
+
+    .AddSaleli:last-child {
+        border: 0px;
+    }
+
+    .AddSaleli a:hover {
+        background-color: #fafafa !important;
+        border-radius: unset;
+        color: #000 !important;
+        border: 0px !important;
+    }
+
+.AddSaleAutoCompleteSearch {
+    float: right;
+}
+
+.AddSaleAutoCompleteSearchEn {
+    float: left;
+}
+
+.AddSaleSubtitle {
+    font-size: 11px;
+    color: #aaa;
+    padding-top: 10px;
+}
+
+.AddSaleSearchCustCode {
+    float: left;
+    font-size: 11px;
+    color: #aaa;
+}
+
+[dir=ltr] .AddSaleSearchCustCode {
+    float: right;
+}
+
+/*CustomerInfo ----------------------------------------------------------------*/
+.addDealSide > div {
+    padding: 13px 15px 15px;
+    box-sizing: border-box;
+}
+
+.addDealSide > #CustomerDiv {
+    min-height: 200px;
+}
+
+    .addDealSide > #CustomerDiv > i {
+        font-size: 18px;
+        float: right;
+        margin: 3px;
+        color: #747678;
+    }
+
+[dir=ltr] .addDealSide > #CustomerDiv > i {
+    float: left;
+}
+
+.addDealSide .PrimeryDiv {
+    width: 260px;
+    min-height: 184px;
+    padding-right: 15px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+[dir=ltr] .addDealSide .PrimeryDiv {
+    padding-right: 0;
+    padding-left: 15px;
+}
+
+.addDealSide > #CustomerDiv .spinner {
+    position: absolute;
+    top: 76px;
+    left: 142px;
+}
+
+[dir=ltr] .addDealSide > #CustomerDiv .spinner {
+    right: 142px;
+    left: unset;
+}
+
+.AddCustInfoRow .LblCustInfo {
+    color: rgba(38,41,44,.64);
+    font-size: 11.4px;
+    padding: 2px;
+    line-height: 27px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.AddCustInfoRow .TxtCustInfo {
+    width: 252px;
+    border: 1px solid #cbcccd;
+    border-radius: 3px;
+    padding: 5px 7px 5px 7px;
+    color: #26292c;
+    box-sizing: border-box;
+    line-height: 20px;
+}
+
+[dir=rtl] .AddCustInfoRow .TxtCustInfo {
+    font-family: Tahoma_faNum;
+}
+
+.AddCustInfoRow {
+    padding-bottom: 5px;
+}
+
+    .AddCustInfoRow .TxtCustInfo:disabled {
+        background-color: #f7f7f7;
+        border-color: #cbcccd;
+        cursor: not-allowed;
+        box-shadow: inset 0 1px 2px #eee;
+    }
+
+#SelectgruopCustQuick_AddSale {
+    padding-top: 9.5px;
+    padding-bottom: 9.5px;
+    width: 250px;
+    font-size: 11.4px;
+    margin-top: 25px;
+}
+
+    #SelectgruopCustQuick_AddSale .ui-icon-triangle-1-s {
+        font-size: 16px;
+        padding-top: 2px;
+    }
+
+    #SelectgruopCustQuick_AddSale span:last-child {
+        font-size: 11.4px;
+        padding-top: 5px;
+    }
+
+/*----------------------------------------------------------------*/
+
+#AddSaleForcastDateRow {
+    display: inline-block;
+    padding-left: 3px;
+}
+
+[dir=ltr] #AddSaleForcastDateRow {
+    padding-left: 0;
+    padding-right: 3px;
+}
+
+#TxtAddSaleForcastPrice, #TxtAddSaleForcastDate {
+    display: block;
+    width: 146px;
+    text-align: left;
+    direction: ltr;
+}
+
+.AddSaleRow .ravesh-dropdown {
+    border-radius: 3px;
+    height: 33px;
+    border-color: #cbcccd;
+}
+
+#DrdAddSaleUser:active .ravesh-dropdown {
+    border-color: #03a9f4;
+}
+
+.AddSaleRow .ravesh-dropdown input {
+    height: 33px;
+}
+
+.AddSaleRow .arrow:after {
+    top: -1px;
+}
+
+/*SaleStage---------------------------------------------------------------------*/
+
+#AddSaleStage {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    flex-flow: row nowrap;
+    border-radius: 2px;
+    table-layout: fixed;
+    height: 26px;
+    width: 100%;
+    min-width: 240px;
+    box-sizing: border-box;
+}
+
+.AddSaleSolt {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: #dcdddd;
+    color: #747678;
+    cursor: pointer;
+    font-size: 13px;
+    text-align: center;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    margin-right: -6px;
+    margin-left: 0;
+    -webkit-clip-path: polygon(calc(100% - 2px) 0,calc(100% - 8px) 50%,calc(100% - 2px) 100%,6px 100%,0 50%,6px 0);
+    clip-path: polygon(calc(100% - 2px) 0,calc(100% - 8px) 50%,calc(100% - 2px) 100%,6px 100%,0 50%,6px 0);
+}
+
+[dir=ltr] .AddSaleSolt {
+    margin-left: -6px;
+    margin-right: 0;
+    -webkit-clip-path: polygon(calc(100% - 6px) 0,100% 50%,calc(100% - 6px) 100%,2px 100%,8px 50%,2px 0);
+    clip-path: polygon(calc(100% - 6px) 0,100% 50%,calc(100% - 6px) 100%,2px 100%,8px 50%,2px 0);
+}
+
+.AddSaleSolt:first-of-type {
+    margin-right: 0;
+    border-radius: 0 2px 2px 0;
+    -webkit-clip-path: polygon(100% 0,100% 50%,100% 100%,6px 100%,0 50%,6px 0);
+    clip-path: polygon(100% 0,100% 50%,100% 100%,6px 100%,0 50%,6px 0);
+}
+
+[dir=ltr] .AddSaleSolt:first-of-type {
+    margin-left: 0;
+    border-radius: 2px 0 0 2px;
+    -webkit-clip-path: polygon(0 0,calc(100% - 6px) 0,100% 50%,calc(100% - 6px) 100%,0 100%);
+    clip-path: polygon(0 0,calc(100% - 6px) 0,100% 50%,calc(100% - 6px) 100%,0 100%);
+}
+
+.AddSaleSolt:last-of-type {
+    border-radius: 2px 0 0 2px;
+    -webkit-clip-path: polygon(0 0,calc(100% - 2px) 0,calc(100% - 8px) 50%,calc(100% - 2px) 100%, 0 100%);
+    clip-path: polygon(0 0,calc(100% - 2px) 0,calc(100% - 8px) 50%,calc(100% - 2px) 100%, 0 100%);
+}
+
+[dir=ltr] .AddSaleSolt:last-of-type {
+    border-radius: 0 2px 2px 0;
+    -webkit-clip-path: polygon(100% 0,100% 100%,2px 100%,8px 50%,2px 0);
+    clip-path: polygon(100% 0,100% 100%,2px 100%,8px 50%,2px 0);
+}
+
+.AddSaleSolt:hover {
+    background-color: #eee;
+}
+
+.AddSaleSolt:active {
+    background-color: #cbcccd;
+}
+
+.AddSaleSolt.Selected {
+    background-color: #08a742;
+    color: #fff;
+}
+
+    .AddSaleSolt.Selected:hover {
+        background-color: #26b259;
+    }
+
+    .AddSaleSolt.Selected:active {
+        background-color: #0c923e;
+    }
+
+/*WorkFlow---------------------------------------------------------------------------*/
+
+#AddSaleRunWorkFlowContainer {
+    height: auto;
+    margin: 10px;
+}
+
+    #AddSaleRunWorkFlowContainer .selected {
+        background-color: #ededed !important;
+    }
+
+.AddSaleRunWorkflowsBlock {
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    display: inline-block;
+    height: 60px;
+    margin: 4px;
+    width: 214px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+    .AddSaleRunWorkflowsBlock h2 {
+        color: #515151;
+        font-size: 11px;
+        margin-bottom: 0 !important;
+        margin-top: 0 !important;
+        padding: 2px 0 7px !important;
+        text-transform: uppercase;
+    }
+
+.AddSaleradiorow {
+    display: inline-block;
+    margin-top: 12px;
+}
+
+    .AddSaleradiorow input {
+        margin: 0 1px;
+        padding: 7px 7px 6px 7px;
+        float: right;
+        background: #FFFFFF;
+        border-top: 1px solid #b3b3b3;
+        border-left: 1px solid #b3b3b3;
+        border-right: 1px solid #eaeaea;
+        border-bottom: 1px solid #eaeaea;
+        color: #000000;
+        font-family: Tahoma, Lucida Grande, Verdana, Lucida Sans Regular, Lucida Sans Unicode, Arial, sans-serif;
+        font-size: 11px;
+    }
+
+    .AddSaleradiorow span {
+        color: rgba(38,41,44,.64);
+        font-size: 11.4px;
+        padding: 2px;
+        line-height: 13px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+#DrdAddSaleNewWorkflow, #DrdAddSaleRunWorkflow {
+    margin-top: 8px;
+}
+
+#AddSaleWorkFlowRow {
+    width: 318px;
+}
+
+[dir=ltr] #AddSaleWorkFlowRow {
+    width: 330px;
+}
+
+/*Product-----------------------------------------------------------------------------*/
+
+#dialogFormAddSale .field {
+    border-bottom: 0 !important;
+}
+
+#hierarchybreadcrumb2AddSale {
+    margin-top: 6px;
+    padding-top: 9px;
+    width: 157px;
+    font-size: 11.4px;
+    font-family: Tahoma !important;
+}
+
+    #hierarchybreadcrumb2AddSale span:last-child {
+        font-size: 11.4px;
+        padding-top: 4px;
+    }
+
+    #hierarchybreadcrumb2AddSale .ui-icon-triangle-1-s {
+        font-size: 16px;
+        padding-top: 3px;
+    }
+
+.AddSaleLabel16 {
+    margin-top: 9px !important;
+}
+
+#AddSaleLabel3ss {
+    margin-top: 3px;
+}
+
+#dialogFormAddSale .buttons {
+    padding-right: 102px;
+    padding-left: 0px;
+}
+
+[dir=ltr] #dialogFormAddSale .buttons {
+    padding-left: 102px;
+    padding-right: 0px;
+}
+
+.DivProductItemAddSale button {
+    text-align: center;
+    font-size: 11.4px;
+    margin: 1px 0;
+    font-weight: normal;
+}
+
+#DrdStoreItemAddSale {
+    width: 194px;
+    font-size: 11.4px;
+}
+
+#DrdProductItemAddSale {
+    width: 193px;
+}
+
+#TxtPrice_bItemAddSale {
+    width: 80px;
+    font-size: 11.4px;
+}
+
+#AddSaleLabel21 {
+    margin-top: 5px;
+}
+
+#DrdOtpriceItemAddSale {
+    width: 193px;
+    margin-top: 5px;
+    font-size: 11.4px;
+}
+
+#AddSaleLabel22 {
+    margin-top: 3px;
+}
+
+#TxtPrice_sItemAddSale {
+    width: 177px;
+    margin: 5px 0 0 0;
+    font-size: 11.8px;
+    text-align: center;
+    background: #fff;
+    display: inline-block;
+    direction: ltr;
+}
+
+[dir=rtl] #TxtPrice_sItemAddSale {
+    font-family: Tahoma_faNum;
+}
+
+#TxtCountItemAddSale {
+    width: 177px;
+    font-size: 11.8px;
+    text-align: center;
+    background: #fff;
+    display: inline-block;
+    direction: ltr;
+}
+
+[dir=rtl] #TxtCountItemAddSale {
+    font-family: Tahoma_faNum;
+}
+
+#dialogFormAddSale .label span {
+    color: rgba(38,41,44,.64);
+}
+
+.AddSalePriceUnit, .AddSaleItemUnit {
+    display: inline-block;
+    font-size: 10px;
+    color: rgba(38,41,44,.64);
+    padding: 14px 10px 0 10px;
+}
+
+.AddSaleItemUnit {
+    padding-top: 10px;
+}
+
+.AddSaleDivTableWf {
+    max-width: 520px;
+    overflow: hidden;
+    position: relative;
+    border: solid 1px #C4C4C4;
+    margin: 10px 35px 5px 0;
+    font-size: 11px;
+    color: rgba(38,41,44,.64);
+    box-shadow: 0 0 5px #D5D5D5;
+    -moz-box-shadow: 0 0 5px #D5D5D5;
+    -webkit-box-shadow: 0 0 5px #D5D5D5;
+}
+
+[dir=rtl] .AddSaleDivTableWf {
+    font-family: tahoma_fanum;
+}
+
+[dir=ltr] .AddSaleDivTableWf {
+    margin: 10px 0 5px 36px;
+}
+
+.AddSaleDivTableWf table {
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    .AddSaleDivTableWf table tr, .AddSaleDivTableWf table td.absolutetd {
+        background-color: White;
+        background-image: -webkit-linear-gradient(top,white,#F9F9F9);
+        background-image: -moz-linear-gradient(top,white,#F9F9F9);
+    }
+
+        .AddSaleDivTableWf table tr:hover, .AddSaleDivTableWf table tr.alternate:hover, .AddSaleDivTableWf table td.absolutetd:hover {
+            background-image: none;
+            background-color: #ddd !important;
+            -webkit-transition: background-color 300ms linear;
+            -moz-transition: background-color 300ms linear;
+            -ms-transition: background-color 300ms linear;
+            -o-transition: background-color 300ms linear;
+            transition: background-color 300ms linear;
+        }
+
+    .AddSaleDivTableWf table td {
+        border-right: solid 1px #EEE;
+        padding: 0 5px;
+        line-height: 20px;
+    }
+
+        .AddSaleDivTableWf table th.center, .AddSaleDivTableWf table td.center {
+            text-align: center;
+        }
+
+    .AddSaleDivTableWf table th {
+        background-color: #E5E5E5 !important;
+        color: #000 !important;
+        border-top: 1px solid #FAFAFA !important;
+        height: 30px;
+        padding: 0 5px !important;
+        font-weight: normal;
+        background: #eeeeee;
+        border-right: 1px solid #cdcdcd;
+        border-bottom: 1px solid #cdcdcd;
+        user-select: none;
+    }
+
+    .AddSaleDivTableWf table td {
+        padding: 5px;
+        user-select: none;
+    }
+
+#ProduvtDiv .icon-cart-plus {
+    color: #747678;
+    font-size: 22px;
+}
+
+#ProduvtDiv .field {
+    border-bottom: 0;
+}
+
+#tblDocItemAddSale .Crm-icon {
+    display: block;
+    cursor: pointer;
+}
+
+/*-----------------------------------------------------------------------------*/
+
+.addSaleFooter {
+    text-align: left;
+    height: 33px;
+    padding: 7px 14px;
+    clear: both;
+    overflow: hidden;
+    color: #414141 !important;
+    border-top: solid 1px #e2e2e2;
+    border-left: solid 1px #e2e2e2;
+}
+
+[dir=ltr] .addSaleFooter {
+    text-align: right;
+    border-right: solid 1px #e2e2e2;
+    border-left: 0;
+}
+
+.addSaleFooter .ui-state-default {
+    min-width: 50px;
+    cursor: pointer;
+    font-weight: normal;
+    border: 1px solid #E1E1E1;
+    white-space: nowrap;
+    text-align: center;
+    outline: medium none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    padding: 5px 6px 7px 6px;
+    background-image: none;
+    background-color: #f9f9f9;
+    border-radius: 2px;
+    height: 28px;
+    margin-top: 0px;
+}
+
+.addSaleFooter input, .addSaleFooter .sinput {
+    margin: 0;
+    margin: 0 2px;
+}
+
+.addSaleFooter .ui-state-default:hover {
+    background: #f2f2f2;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#EEE),to(#E0E0E0));
+    background-image: -webkit-linear-gradient(top,#EEE,#E0E0E0);
+    background-image: -moz-linear-gradient(top,#EEE,#E0E0E0);
+    background-image: -ms-linear-gradient(top,#EEE,#E0E0E0);
+    background-image: -o-linear-gradient(top,#EEE,#E0E0E0);
+    background-image: linear-gradient(top,#EEE,#E0E0E0);
+    border: 1px solid #CCC;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    color: #333;
+    -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.AddSaleHead {
+    border-bottom: 1px solid #e2e2e2;
+    border-left: 1px solid #e2e2e2;
+    height: 59px;
+}
+
+[dir=ltr] .AddSaleHead {
+    border-right: 1px solid #e2e2e2;
+    border-left: 0;
+}
+
+/*-----------------------------------------------------------------------------*/
+
+.AddCustInfoRow .ravesh-input.error {
+    border: solid 1px #F44336 !important;
+}

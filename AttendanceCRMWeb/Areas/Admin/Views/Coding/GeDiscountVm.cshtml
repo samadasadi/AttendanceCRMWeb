@@ -1,0 +1,11 @@
+﻿
+
+
+@model Utility.Utitlies.viewModel<ViewModel.Common.CodingVm>
+@using Utility.HtmlHelpers
+
+@using (Html.CreateDivForBootstrap())
+{
+    @Html.SelectAndText(Model.CommonCustomViewTablePaging.IdComboSelectCount, Resources.Md.Search, Model.CommonCustomViewTablePaging.IdTextSearch, Resources.Md.Create, "MinaDent.Coding.ShowDivForDiscount(" + "\"" + Model.CommonCustomViewTablePaging.TableIdDiv + "\"" + "," + "\"" + Model.CommonCustomViewTablePaging.IdComboSelectCount + "\"" + "," + "\"" + Model.CommonCustomViewTablePaging.IdTextSearch + "\"" + ");", true, true, false, true, null)
+    @Html.Partial("P_ListBasicCoding", Model)
+}
