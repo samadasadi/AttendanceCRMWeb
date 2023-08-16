@@ -514,9 +514,7 @@ namespace Service.UserManagement
                     _result.Password = !string.IsNullOrEmpty(model.Password) ? EncDec.Encrypt(model.Password) : null;
                     _result.IsUserActive = await CanAddUserAsync(model.Id) == true ? model.IsUserActive : false;
                     _result.NationalCode = model.NationalCode;
-                    _result.IsCallerActive = model.IsCallerActive;
                     _result.ModifiedDate = DateTime.Now;
-                    _result.PrinterName = model.PrinterName;
                     await _repo.Commit();
 
                     if (Public.CurrentUser.Id == model.Id)
@@ -600,7 +598,6 @@ namespace Service.UserManagement
                     _result.FromValidityDate = model.FromValidityDate;
                     _result.ToValidityDate = model.ToValidityDate;
                     _result.NationalCode = model.NationalCode;
-                    _result.IsCallerActive = model.IsCallerActive;
                     _result.UserName = !string.IsNullOrEmpty(model.UserName) ? model.UserName.Trim() : model.UserName;
                     _result.EmployeeActive = model.Id == Guid.Empty ? true : model.EmployeeActive;
                     _result.UserId = Convert.ToInt32(model.EmployeeID);

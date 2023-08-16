@@ -322,11 +322,10 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
 
         public async System.Threading.Tasks.Task SetViewBag(ViewModel.UserManagement.UserVm model)
         {
+
             ViewData["UserType"] = new SelectList(model.UserTypeList, "Value", "Text", model.UserType);
             ViewData["Education"] = new SelectList(model.EducationList, "Value", "Text", model.Education);
             ViewData["ParentId"] = new SelectList(model.ParentLists, "Value", "Text", model.ParentId);
-            //ViewData["TreatmentTopics"] = model.TreatmentTopicsList;
-            ViewData["PrinterName"] = new SelectList(Utility.Utitlies.Utility.GetPrinterList(), "Value", "Text", model.PrinterName);
 
         }
 

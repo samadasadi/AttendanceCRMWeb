@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace ViewModel.Attendance
 {
+
+
     public class PagingViewModel
     {
         public int PageNumber { get; set; }
@@ -14,7 +16,11 @@ namespace ViewModel.Attendance
         public int DeviceId { get; set; }
         public int GroupId { get; set; }
     }
+
+
     public class PublicViewModel
     {
     }
+
+
 }

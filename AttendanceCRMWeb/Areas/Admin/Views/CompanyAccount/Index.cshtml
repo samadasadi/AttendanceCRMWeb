@@ -1,0 +1,215 @@
+﻿@using Utility;
+@using Utility.PublicEnum
+@using AttendanceCRMWeb.Helpers
+@using Utility.HtmlHelpers
+@using ViewModel.Cost
+@using ViewModel.BasicInfo
+@*@model WebUI.Areas.BasicInfo.Models.CompanyAccountGrid*@
+@model Utility.Utitlies.viewModel<ViewModel.BasicInfo.CompanyAccountVm>
+@{
+    ViewBag.Title = "حسابداری | طرف های حساب";
+    Layout = Utility.Utitlies.VaribleForName.AddressLayoutMasterNew;
+    var type = "I";
+    var isactiv = true;
+
+    string CompanyAccount = ((int)CompanyAccountEnum.CompanyAccount).ToString();
+
+}
+
+
+
+
+<div class="row">
+
+
+    <div class="col-md-12">
+        @Html.Partial("FilterModelCompanyAccount", new FilterModelCompanyAccount { })
+    </div>
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header border-0">
+                <div class="card-tools">
+                    <div class="btn-group">
+                        <div class="input-group input-group-sm" style="width:75px;">
+                            <select class="form-control" id="cboSelectCount" name="cboSelectCount" onchange="return ReloadOpeningDocument_Type(_accTypeId);" style="width:75px;margin-right: 5px;">
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-2" id="div_Result">
+
+                @Html.Partial("P_GetList_CompanyAccount", Model)
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="~/Scripts/View/FinancialAccounting.js?updated=1"></script>
+<script src="~/Scripts/View/CompanyAccountModal.js?updated=1"></script>
+<script>
+
+    let _accTypeId = '1';
+
+    $(document).ready(function () {
+
+    });
+
+    function CreateCompanyAccount(idGrid, idComboBox, idTextBox) {
+
+        InitModal('ثبت', '/Admin/CompanyAccount/Create', {}, function () { SaveCompanyAccount(idGrid, idComboBox, idTextBox) });
+    }
+    function EditCompanyAccount(id, idGrid, idComboBox, idTextBox) {
+
+        InitModal('ویرایش', '/Admin/CompanyAccount/Edit', { Id: id }, function () { SaveCompanyAccount(idGrid, idComboBox, idTextBox) });
+
+
+    }
+    function SaveCompanyAccount(idGrid, idComboBox, idTextBox) {
+
+
+        //if ($("#CostCode").val() == null || $("#CostCode").val() == '' || $("#CostCode").val() == undefined) {
+        //    AlertDialog('لطفا عنوان هزینه را انتخاب نمایید', '', 'error');
+        //    return;
+        //}
+
+        if ($("#costPersonID").val() == null || $("#costPersonID").val() == '' || $("#costPersonID").val() == undefined) {
+            AlertDialog('لطفا نام را انتخاب نمایید', '', 'error');
+            return;
+        }
+
+        if ($("#Price").val() == null || $("#Price").val() == '' || $("#Price").val() == undefined) {
+            AlertDialog('لطفا مبلغ را وارد نمایید', '', 'error');
+            return;
+        }
+
+            $('#Price').val(!isEmpty($('#Price').val()) ? removeComaForString($('#Price').val()) : $('#Price').val());
+
+            AjaxCallAction('POST', '/Admin/CompanyAccount/Create', $("#CompanyFrm").serialize(), true, function (res) {
+
+                if (!res.error) {
+
+                    $("#" + idComboBox).val(10);
+                    //$("#" + idTextBox).val("");
+                    //$("#" + idGrid).html(res);
+
+
+                    search_txtSearch_CompanyAccount();
+
+                    CloseModal();
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, false);
+        
+    }
+    function DeleteCompanyAccountItem(id) {
+
+        ConfirmDelete('GET', '/Admin/CompanyAccount/DeleteRow', { id: id, SelectCount: $('#cboSelectCount_CompanyAccount').val() }, function (result) {
+            RefreshGridHtml_txtSearch_CompanyAccount(result);
+        });
+    }
+
+    function ReloadOpeningDocument_Type(type) {
+
+        $("#div_Result").html('');
+        _accTypeId = type;
+
+        debugger;
+
+        var _url = '/Admin/CompanyAccount/P_GetList_CompanyAccount';
+        if (_accTypeId == '1') {
+            $("#divBtnAddNew").show();
+        }
+        else {
+            _url = '/Admin/CompanyAccount/P_GetList_SindhWarehouse';
+            $("#divBtnAddNew").hide();
+        }
+
+
+        AjaxCallAction("POST", _url,
+            {
+                page: 1,
+                typeId: type,
+                Search: $("#Search").val(),
+                FromDate: $('#FromDate').val(),
+                ToDate: $('#ToDate').val(),
+                PageSize: $('#cboSelectCount').val()
+
+            },
+            true,
+            function (res) {
+                debugger;
+
+                if (!res.error) {
+                    $("#div_Result").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true, null, null);
+    }
+    function operationAjaxFor_CompanyAccount(url, idTextSearch, idComboSelectCount, page, firstPage) {
+
+
+        window.AjaxCallAction("POST", url, {
+
+            PageNum: page,
+            FirstPage: firstPage,
+            Search: $("#Search").val(),
+            FromDate: $('#FromDate').val(),
+            ToDate: $('#ToDate').val(),
+            PageSize: $('#cboSelectCount').val()
+
+        }, true, function (result) {
+
+            var fnName = 'successCallBack' + '_' + idTextSearch;
+            window[fnName](result, page);
+        }, true);
+    }
+
+
+    function operationAjaxFor_SindhWarehouse(url, idTextSearch, idComboSelectCount, page, firstPage) {
+
+        debugger;
+
+        window.AjaxCallAction("POST", url, {
+
+            PageNum: page,
+            //PageSize: $("#" + idComboSelectCount).val(),
+            FirstPage: firstPage,
+            Search: $("#Search").val(),
+            FromDate: $('#FromDate').val(),
+            ToDate: $('#ToDate').val(),
+            PageSize: $('#cboSelectCount').val()
+
+
+        }, true, function (result) {
+
+            var fnName = 'successCallBack' + '_' + idTextSearch;
+            window[fnName](result, page);
+        }, true);
+    }
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+

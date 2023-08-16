@@ -1,0 +1,74 @@
+﻿
+@using Utility.PublicEnum
+@model Utility.Utitlies.viewModel<ViewModel.BasicInfo.CompanyAccountVm>
+@using Utility.HtmlHelpers
+@{
+
+}
+
+<div class="table-responsive">
+    <div id="@Model.CommonCustomViewTablePaging.TableIdDiv">
+        @using (Html.CreateDivForBootstrap())
+        {
+
+            <table class="table table-hover table-bordered text-nowrap">
+                <thead>
+                    <tr>
+                        <th>عملیات</th>
+                        <th>#</th>
+                        <th>@Resources.Md.TitleIncoming</th>
+                        <th>@Resources.Md.Name</th>
+                        <th>@Resources.Md.Date</th>
+                        <th>@Resources.Md.Price</th>
+                        <th>@Resources.Md.Factor_No</th>
+                        <th>@Resources.Md.Coment</th>
+                        <th>@Resources.Md.UserRecipient</th>
+                        <th>نوع ثبت</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (var item in Model.TLists)
+                        {
+                            <tr>
+                                <td style="vertical-align:middle; min-width:70px;">
+                                    <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="deleteRow_txtSearch_CompanyAccount('@item.Id')"><i class="fas fa-trash"></i></a>
+                                    @if (item.RefvchhdrID == null || item.RefvchhdrID == 0)
+                                    {
+                                        <a class="btn btn-info btn-sm" href="javascript:void(0)" onclick="editRow_txtSearch_CompanyAccount('@item.Id')"><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;ویرایش</a>
+                                    }
+                                </td>
+                                <td class="mailbox-name" style="vertical-align:middle;">@item.Row</td>
+                                <td class="mailbox-name" style="vertical-align:middle;">@item.NameCoding</td>
+                                <td class="mailbox-name" style="vertical-align:middle;">@item.PersonName</td>
+                                <td class="mailbox-name" style="vertical-align:middle;">@item.date</td>
+                                <td class="mailbox-name" style="vertical-align:middle;">@item.PriceSplitStr</td>
+                                <td class="mailbox-name" style="vertical-align:middle;">@item.Factor_No</td>
+                                <td class="mailbox-name" style="vertical-align:middle;">@item.Coment</td>
+                                <td class="mailbox-name" style="vertical-align:middle;">@item.UserName</td>
+                                <td class="mailbox-name" style="vertical-align:middle;">
+                                    @if (item.CompanyAccountType == CompanyAccountType.Warehouse)
+                                    {
+                                        <span class="badge bg-secondary p-2" style="font-size:10px;">@item.CompanyAccountTypeStr (@item.vchhdrNo)</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-primary">@item.CompanyAccountTypeStr</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+
+
+
+            @Html.Partial(Utility.Utitlies.VaribleForName.NamePartialOperationPageing, Model.CommonCustomViewTablePaging)
+        }
+    </div>
+</div>
+
+
+
+

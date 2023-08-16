@@ -1,0 +1,14 @@
+﻿
+@using Utility.HtmlHelpers
+
+@model Utility.Utitlies.viewModel<ViewModel.WareHousee.WarehouseHeaderVm>
+
+
+@*@Html.SelectAndText(Model.CommonCustomViewTablePaging.IdComboSelectCount, Resources.Md.Search, Model.CommonCustomViewTablePaging.IdTextSearch, Resources.Md.Registration, "", false, true, false,true, null)*@
+@Html.Partial("P_GetList_SindhWarehouse", Model)
+<script type="text/javascript">
+    function successCallBack_ReloadWarehouseGrid(res) {
+        
+        MinaDent.CostModal.GridReloadWarehouseGrid('@Model.CommonCustomViewTablePaging.TableIdDiv',res,'@Model.CommonCustomViewTablePaging.IdComboSelectCount','@Model.CommonCustomViewTablePaging.IdTextSearch');
+    }
+</script>

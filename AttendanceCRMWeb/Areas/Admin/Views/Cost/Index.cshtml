@@ -1,0 +1,209 @@
+﻿
+@using Utility;
+@using Utility.PublicEnum
+@using AttendanceCRMWeb.Helpers
+@using Utility.HtmlHelpers
+@using ViewModel.BasicInfo
+
+@{
+    ViewBag.Title = "حسابداری | ثبت هزینه ها";
+    Layout = Utility.Utitlies.VaribleForName.AddressLayoutMasterNew;
+}
+
+
+
+<div class="row">
+
+    <div class="col-md-12" id="div_Fiter">
+        <div class="card">
+            <div class="card-body">
+                <ul class="nav nav-pills">
+                    @{
+                        foreach (var item in (List<NormalJsonClass>)ViewBag.CostList)
+                        {
+                            <li class="nav-item"><a class="nav-link @string.Format("{0}", (item.Value=="11") ? "active" : "")" href="#activity" data-toggle="tab" onclick="ReloadOpeningDocument_Type('@item.Value')">@item.Text</a></li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        @Html.Partial("FilterModelCost", new FilterModelCost { })
+    </div>
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header border-0">
+                @*<h3 class="card-title">عملیات اول دوره</h3>*@
+                <div class="card-tools">
+                    <div class="btn-group">
+                        <div class="input-group input-group-sm" style="width:75px;">
+                            <select class="form-control" id="cboSelectCount" name="cboSelectCount" onchange="return ReloadOpeningDocument_Type(_accTypeId);" style="width:75px;margin-right: 5px;">
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body p-2" id="div_Result">
+
+                @Html.Action("GridList", new { TypeId = ((int)CostEnum.Cost).ToString() })
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="~/Scripts/View/FinancialAccounting.js?updated=1"></script>
+<script src="~/Scripts/View/CostModal.js?updated=1"></script>
+<script>
+
+    let _accTypeId = '11';
+
+    $(document).ready(function () {
+        //CreateOpeningDocument();
+        //OpeningDocument_Fiter();
+        //ReloadOpeningDocument();
+        //ReloadOpeningDocument_Type('1');
+    });
+
+    function CreateCost(idGrid, idComboBox, idTextBox) {
+        InitModal('ثبت', '/Admin/Cost/Create', {}, function () { SaveCost(idGrid, idComboBox, idTextBox) });
+        //InitModal('ثبت', '/Admin/Cost/Create', {}, "SaveCost('" + idGrid + "', '" + idComboBox + "', '" + idTextBox + "')");
+    }
+    function EditCost(id, idGrid, idComboBox, idTextBox) {
+
+        InitModal('ویرایش', '/Admin/Cost/Edit', { Id: id }, function () { SaveCost(idGrid, idComboBox, idTextBox) });
+
+
+    }
+    function SaveCost(idGrid, idComboBox, idTextBox) {
+
+
+        var _costcode = $("#CostCode").val();
+        if (_costcode == null || _costcode == '' || _costcode == undefined) {
+            AlertDialog('لطفا عنوان هزینه را انتخاب نمایید', '', 'error');
+            return;
+        }
+
+        var _costPersonId = $("#costPersonID").val();
+        if (_costPersonId == null || _costPersonId == '' || _costPersonId == undefined) {
+            AlertDialog('لطفا نام را انتخاب نمایید', '', 'error');
+            return;
+        }
+
+        if ($("#IsAccountingKit").val() == "1") {
+            var _accCol = $("#AccountingCollection_Id").val();
+            if (_accCol == null || _accCol == '' || _accCol == undefined) {
+                AlertDialog('لطفا حساب را انتخاب نمایید', '', 'error');
+                return;
+            }
+        }
+
+
+
+
+
+            $('#Price').val(!isEmpty($('#Price').val()) ? removeComaForString($('#Price').val()) : $('#Price').val());
+
+            AjaxCallAction('POST', '/Admin/Cost/Create', $("#CostFrm").serialize(), true, function (res) {
+
+                if (!res.error) {
+
+                    CloseModal();
+                    //$("#" + idComboBox).val($("#" + idComboBox + " option:first").val());
+                    //$("#" + idTextBox).val("");
+                    //$("#" + idGrid).html(res);
+
+                    ReloadOpeningDocument_Type(_accTypeId);
+
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, false);
+        
+    }
+
+    function DeleteCostItem(id) {
+
+        ConfirmDelete('GET', '/Admin/Cost/DeleteRow', { id: id },
+            function (result) {
+                ReloadOpeningDocument_Type(_accTypeId);
+            });
+
+    }
+
+    function ReloadOpeningDocument_Type(type) {
+
+        $("#div_Result").html('');
+        _accTypeId = type;
+
+        if (_accTypeId == '11') {
+            $("#divBtnAddNew").show();
+            $("#divSortTypeCost").show();
+        }
+        else {
+            $("#divBtnAddNew").hide();
+            $("#divSortTypeCost").hide();
+        }
+
+        var SortType = 1;
+        if (document.getElementById('SortType1').checked) {
+            SortType = 1;
+        } else if (document.getElementById('SortType2').checked) {
+            SortType = 2;
+        }
+
+        AjaxCallAction("GET", "/Admin/Cost/GridList",
+            {
+                page: 1,
+                typeId: type,
+                Search: $("#Search").val(),
+                FromDate: $('#FromDate').val(),
+                ToDate: $('#ToDate').val(),
+                PageSize: $('#cboSelectCount').val(),
+                SortType: SortType
+
+            },
+            true,
+            function (res) {
+                debugger;
+
+                if (!res.error) {
+                    $("#div_Result").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true, null, null);
+    }
+    function operationAjaxFor_OpeningDocument(url, idTextSearch, idComboSelectCount, page, firstPage) {
+
+
+        window.AjaxCallAction("POST", url, {
+
+            Type: _accTypeId,
+            Search: $("#" + idTextSearch).val(),
+            PageNum: page,
+            PageSize: $("#" + idComboSelectCount).val(),
+            FirstPage: firstPage
+
+        }, true, function (result) {
+
+            var fnName = 'successCallBack' + '_' + idTextSearch;
+            window[fnName](result, page);
+        }, true);
+    }
+
+
+</script>
+
+

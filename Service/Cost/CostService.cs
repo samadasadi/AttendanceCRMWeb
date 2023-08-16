@@ -23,31 +23,47 @@ namespace Service.Cost
     public interface ICostService
     {
         Task<Tbl_Cost> SaveCost(CostVm model);
+
         Task<DataModel> Delete(Guid Id);
+
         Task<Tbl_Cost> CheckCompanyAccount(CostVm model);
-        Task<List<MedicalCenterCostReport>> GetMedicalCenterCostReport(ViewModel.ReportParameter parameter);
+
         Task<IEnumerable<CostVm>> GetAll(FilterModelCost model);
 
         Task<int> CountAll_GetAll(FilterModelCost model);
 
         Task<CostVm> GetCostVm(Guid? id);
+
         Task<Repository.Model.Tbl_Cost> GetCostById(Guid id);
+
         Task<List<NormalJsonClass>> GetCostCodeList();
+
         Task<List<NormalJsonClass>> GetCostCodeList(int level);
+
         Task<List<NormalJsonClass>> GetPersonList();
+
         Task<List<NormalJsonClass>> GetList(string parentId, string selected = null);
 
+        Task<IEnumerable<CompanyAccountVm>> GetCompanyAccount(FilterModelCompanyAccount model);
+
         Task<List<NormalJsonClass>> GetListCompany(string parentId);
+
         Task<List<NormalJsonClass>> GetListForCombo(string parentId, string selected = null);
+
         Task<List<NormalJsonClass>> GetListCompanyWithOtherCode(string parentId, string selected = null);
 
+        Task<List<MedicalCenterCostReport>> GetMedicalCenterCostReport(ViewModel.ReportParameter parameter);
+
         Task<string> GetAllUserName(Guid? id);
+
         Task<string> GetGeneralSettingLogo();
 
         Task<viewModel<CostVm>> GetDoctorCostList(TherapyFilterVm value);
+
         Task<int> CountAll_DoctorCostList(TherapyFilterVm value);
 
         Task<DataModel> UpdateCostAccountCollectionId(CostVm entity);
+
     }
 
     public class CostService : ICostService
@@ -71,8 +87,7 @@ namespace Service.Cost
             IRepository<Cost_Incoming> CostIncomingRepo,
             IRepository<Coding> codingrepository,
             IFileService fileService,
-            IRepository<GeneralSetting> generalSettingrepo
-            )
+            IRepository<GeneralSetting> generalSettingrepo)
         {
             var currentcontext = contextFactory.GetContext();
             _context = currentcontext;
@@ -90,13 +105,16 @@ namespace Service.Cost
             _PubUserrepo.FrameworkContext = currentcontext;
             _PubUserrepo.DbFactory = contextFactory;
 
+
             _CostIncomingRepo = CostIncomingRepo;
             _CostIncomingRepo.FrameworkContext = currentcontext;
             _CostIncomingRepo.DbFactory = contextFactory;
 
+
             _codingrepository = codingrepository;
             _codingrepository.FrameworkContext = currentcontext;
             _codingrepository.DbFactory = contextFactory;
+
 
             _fileService = fileService;
 
@@ -143,7 +161,6 @@ namespace Service.Cost
                 }
 
 
-
                 return _result;
             }
             catch (Exception ex)
@@ -178,11 +195,6 @@ namespace Service.Cost
                     await _repo.ExecuteSqlCommand(_query);
                 }
             }
-            else if (cost.Type == CostType.Warehouse)
-            {
-                await _repo.LogicalDelete(m => m.Id == Id);
-                var WarehouseHeaderId = cost.RefvchhdrID;
-            }
             else
             {
                 if (cost.IsEmployeeAccount)
@@ -190,10 +202,10 @@ namespace Service.Cost
                     var _query = string.Format(@" update EmployeeAccounting set Uploaded = 0, UploadType = null where Id = '{0}' ", cost.EmployeeAccountId);
                     await _repo.ExecuteSqlCommand(_query);
                 }
-                var _query_2 = $"delete from CheckTransaction where [Entity_Id] = N'{Id}'";
-                await _repo.ExecuteSqlCommand(_query_2);
+
                 await _repo.LogicalDelete(m => m.Id == Id);
             }
+
 
 
             return new DataModel();
@@ -295,6 +307,7 @@ namespace Service.Cost
 
         public async Task<IEnumerable<CompanyAccountVm>> GetCompanyAccount(FilterModelCompanyAccount model)
         {
+            
             return await _CompanyAccountService.GetAllAsync(model);
         }
 
@@ -437,7 +450,6 @@ namespace Service.Cost
             return (res != null ? res.Name + " " + res.Family : "");
         }
 
-
         public async Task<List<NormalJsonClass>> GetListCompanyWithOtherCode(string parentId, string selected = null)
         {
             return (await _codingrepository.Get(m => (m.code.StartsWith(parentId)) && m.CodeActive == true && m.code != parentId)).Select(z => new NormalJsonClass
@@ -455,7 +467,7 @@ namespace Service.Cost
                 Text = z.name,
                 Value = z.code.ToString(),
             }).ToList();
-            var company = (await _codingrepository.Get(m => (m.code == "0" + ((int)CodingEnum.Company).ToString()) && m.CodeActive == true)).FirstOrDefault();
+            var company = (await _codingrepository.Get(m => (m.code == "0" + ((int)CodingEnum.Company).ToString()) && m.CodeActive == true )).FirstOrDefault();
             if (company != null)
                 lstres.Add(new NormalJsonClass
                 {

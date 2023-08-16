@@ -274,14 +274,6 @@
                                         }
                                     </div>
                                 }
-                                <div class="form-group row">
-                                    <label class="text-AlignBySoftWare col-md-3"></label>
-                                    <div class="col-md-9">
-                                        @Html.CheckBoxFor(m => m.IsCallerActive)
-                                        &nbsp;
-                                        @Html.LabelFor(m => m.IsCallerActive)
-                                    </div>
-                                </div>
 
                                 <div class="form-group row">
                                     <label class="text-AlignBySoftWare col-md-3">@Resources.Md.IsMale</label>
@@ -307,7 +299,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @Html.EditorFor(m => m.PrinterName)
+
 
                             </div>
 
@@ -358,56 +350,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @*اثر انگشت*@
-                                if (Service.Consts.Public.CurrentUser.IsFingerPrint)
-                                {
-                                    <div class="col-md-4">
-                                        @if (_deviceList != null && _deviceList.Count > 0)
-                                        {
-                                            <div class="form-group row">
-                                                <label class="control-label col-form-label text-right col-md-4" for="TariffType">دستگاه اثر انگشت</label>
-                                                <div class="col-md-8 text-right">
-                                                    <select multi="Multiple" class="form-control select2" id="FingerPrintDevice" name="FingerPrintDevice" style=" width:100%">
-                                                        <option value="null">--</option>
-                                                        @foreach (var item in _deviceList)
-                                                        {
-                                                            <option value="@item.Value" data-title="@item.Text">@(item.Text ?? item.Value)</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        }
 
-
-                                        <div class="form-group row">
-                                            <label class="col-md-4 control-label">اثرانگشت</label>
-                                            <div class="col-md-8">
-                                                <div class="fileinput fileinput-new" style="margin-right:20px;" data-provides="fileinput">
-                                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                                        <img src="@(Model.Image != null ? "data:image/bmp;base64," + Model.Image : Url.Content("~/assets/global/img/text.png"))" id="scanfinger" />
-                                                        <input hidden value="@(Model.Image != null ? Model.Image : "")" id="Image" name="Image" type="text" />
-                                                    </div>
-                                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;">
-                                                    </div>
-                                                    <div>
-                                                        <span class="btn btn-danger btn-file">
-                                                            <span class="fileinput-new" id="scanEmployee">
-                                                                اثر انگشت
-                                                            </span>
-                                                            <span class="fileinput-exists">
-                                                                @Resources.Md.ChangePhoto
-                                                            </span>
-                                                        </span>
-                                                        <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-                                                            <span class="md-click-circle md-click-animate" style="height: 78px; width: 78px; top: 209px; left: 651px;"></span>
-                                                            @Resources.Md.Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
                             }
                             else
                             {
@@ -439,94 +382,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                @*اثر انگشت*@
-                                if (Service.Consts.Public.CurrentUser.IsFingerPrint)
-                                {
-                                    <div class="col-md-4">
-                                        @if (_deviceList != null && _deviceList.Count > 0)
-                                        {
-                                            <div class="form-group row">
-                                                <label class="control-label col-form-label text-right col-md-4" for="TariffType">دستگاه اثر انگشت</label>
-                                                <div class="col-md-8 text-right">
-                                                    <select multi="Multiple" class="form-control select2" id="FingerPrintDevice" name="FingerPrintDevice" style=" width:100%">
-                                                        <option value="null">--</option>
-                                                        @foreach (var item in _deviceList)
-                                                        {
-                                                            <option value="@item.Value" data-title="@item.Text">@(item.Text ?? item.Value)</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        }
-                                        <div class="form-group row">
-                                            <label class="col-md-4 control-label">اثرانگشت</label>
-                                            <div class="col-md-8">
-                                                <div class="fileinput fileinput-new" style="margin-right:20px;" data-provides="fileinput">
-                                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                                        <img src="@(Model.Image != null ? "data:image/bmp;base64," + Model.Image : Url.Content("~/assets/global/img/text.png"))" id="scanfinger" />
-                                                        <input hidden value="@(Model.Image != null ? Model.Image : "")" id="Image" name="Image" type="text" />
-                                                    </div>
-                                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;">
-                                                    </div>
-                                                    <div>
-                                                        <span class="btn btn-danger btn-file">
-                                                            <span class="fileinput-new" id="scanEmployee">
-                                                                اثر انگشت
-                                                            </span>
-                                                            <span class="fileinput-exists">
-                                                                @Resources.Md.ChangePhoto
-                                                            </span>
-                                                        </span>
-                                                        <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-                                                            <span class="md-click-circle md-click-animate" style="height: 78px; width: 78px; top: 209px; left: 651px;"></span>
-                                                            @Resources.Md.Delete
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
+
 
                             }
-                            <div class="col-md-4">
-                                @*وب کم*@
-                                <div class="fileinput fileinput-new" style="margin-right:20px;" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                        @Html.Partial("WebCam")
-                                    </div>
-                                    <div>
-                                        <span class="btn btn-danger btn-file" onclick="take_snapshot()">
-                                            <span class="fileinput-new">
-                                                وب کم
-                                            </span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
 
 
 
-                        @*امضای کاربر*@
-                        <div class="box-shadowDefult" style="margin:0 !important; height:580px; clear:both; width:100%">
-                            <h4 class="alert-block">*در صورتی که امضای جدید وارد کنید امضای قبلی پاک میشود.</h4>
-
-                            @if (Model.cbiSignImage != null)
-                            {
-                                <div style="float:right;"><img style="width:218px;height: 170px;" src="@(Model.cbiSignImage != null ? Model.cbiSignImage : Url.Content("~/assets/global/img/text.png")) " id="cbiSignImage" /></div>
-                                <div style="float:right;"><input hidden value="@(Model.cbiSignImage != null ? Model.cbiSignImage : "")" id="cbiSignImage" name="CustomerBasicInfo.cbiSignImage" type="text" /></div>
-
-                                //Comented By Samad  ---   @*<img src="@Url.Action("ShowImage","File",new { area="",id=Model.CustomerBasicInfo.SignFileId})" id="canvasResultDisplay" style="float:right;border: 2px solid;margin-top:10px;width: 50%;" />*@
-                            }
-                            @*<canvas id="can" width="400" height="400" style="position:absolute;top:20%;left:10%;border:2px solid;"></canvas>*@
-                            <div id="LightPenDiv" style="direction:ltr; float:left;">
-                                @Html.Partial("S_LightPen_Users", Model)
-                            </div>
-
-                            <img id="Path" style="position:absolute;top:10%;left:52%; display:none;">
-
-                        </div>
 
                     </div>
                     <div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel">

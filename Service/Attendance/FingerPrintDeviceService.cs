@@ -16,6 +16,7 @@ using ViewModel.UserManagement;
 namespace Service.Attendance
 {
 
+
     public class DevicesList
     {
         public DevicesList(NewDeviceVm device)
@@ -57,10 +58,12 @@ namespace Service.Attendance
         void SetConnectState(bool state);
         //void SaveTransactionLog(DeviceTransactionEventVm model);
     }
+
     public abstract class Creator
     {
         public abstract IFPDevice TwainDevice(NewDeviceVm dashboard);
     }
+
     public class TwainDeviceCreator : Creator
     {
         public override IFPDevice TwainDevice(NewDeviceVm dashboard)
@@ -74,7 +77,6 @@ namespace Service.Attendance
             }
         }
     }
-
 
     public class SDKHelper : IFPDevice
     {
@@ -3034,8 +3036,6 @@ namespace Service.Attendance
         }
 
     }
-
-
 
     public class FingerPrintDeviceService
     {

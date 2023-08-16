@@ -432,10 +432,9 @@ namespace Service.Cost
         {
             var _query = string.Format(
                 "EXEC [dbo].[CountAll_getListCompanys] " +
-                "@medicalCenterId = '{0}', " +
-                "@fromDate = N'{1}', " +
-                "@toDate = N'{2}'," +
-                "@text = {3}",
+                "@fromDate = N'{0}', " +
+                "@toDate = N'{1}'," +
+                "@text = {2}",
                 model.FromDate,
                 model.ToDate,
                 (string.IsNullOrEmpty(model.Search) ? "NULL" : "N'" + model.Search + "'"));

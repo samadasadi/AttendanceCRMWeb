@@ -1,0 +1,52 @@
+﻿
+@model ViewModel.BasicInfo.FilterModelCost
+@using Utility.HtmlHelpers
+@{
+    Layout = null;
+}
+
+
+
+<div class="card">
+    <div class="card-header border-0">
+        <h6 class="card-title">ثبت هزینه ها</h6>
+    </div>
+    <div class="card-body">
+        <form id="formFilterCost" class="col-md-12 form-horizontal">
+            @Html.HiddenFor(m => m.Id)
+
+            <div class="col-md-4">
+                @Html.EditorFor(m => m.FromDate)
+                @Html.EditorFor(m => m.Search)
+            </div>
+            <div class="col-md-4">
+                @Html.EditorFor(m => m.ToDate)
+            </div>
+            <div class="col-md-4" id="divSortTypeCost">
+
+                <div class="form-group ">
+                    <label class="control-label col-form-label text-right col-md-3">مرتب سازی براساس</label>
+                    <div class="card col-md-9">
+                        <div class="card-body p-1 pt-2">
+                            <input class="rbStatusE col-sm-1" id="SortType1" name="SortType" type="radio" value="@((int)Utility.PublicEnum.CostSortType.DateEn)" checked="checked">
+                            <label for="SortType1">تاریخ هزینه</label>
+                            <br>
+                            <input class="rbStatusE col-sm-1" id="SortType2" name="SortType" type="radio" value="@((int)Utility.PublicEnum.CostSortType.ModifiedDate)">
+                            <label for="SortType2">تاریخ ثبت</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <div class="card-footer clearfix p-2">
+        @*<button type="button" class="btn btn-block btn-primary btn-flat mt-2" onclick="Filter()" style="width:130px;float:left;"><span class="fa fa-filter"></span> @Resources.Md.Filter</button>*@
+        <button type="button" class="btn btn-block btn-primary btn-flat mt-2" onclick="return ReloadOpeningDocument_Type(_accTypeId);" style="width:130px;float:left;"><span class="fa fa-filter"></span> @Resources.Md.Filter</button>
+        
+        <div id="divBtnAddNew">
+            <a class="btn btn-block btn-success btn-flat float-right ml-2" style="width:130px;" href="javascript:void(0);" onclick="CreateCost('divLists_Cost','cboSelectCount_Cost','txtSearch_Cost');"><span class="fa fa-plus"></span> مورد جدید</a>
+        </div>
+    </div>
+</div>
+

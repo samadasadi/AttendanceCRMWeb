@@ -37,13 +37,12 @@
 </style>
 
 
-
-
 @*@HtmlExtenstions.TitleAndSiteMap(Resources.Md.Report, "گزارشات")*@
 @using (Html.BsPanel(Resources.Md.Report))
 {
 
     <div class="col-12 center-block" id="accordion">
+
         <style>
             .card-body .lead span {
                 color: red;
@@ -65,38 +64,30 @@
 
         @{
             var _menuItems = Service.Consts.Public.CurrentUser.Menus;
-            foreach (var item in _menuItems.OrderBy(m => m.Priority).Where(m =>  m.EnName.StartsWith("AppReports.")))
-            {
-                if (_menuItems.Any(m => m.ParentId == item.Id))
-                {
 
-                    <div class="card card-secondary card-outline">
-                        <a class="d-block w-100" data-toggle="collapse" href="#collapse_@item.Priority">
-                            <div class="card-header">
-                                <h4 class="card-title w-100"><span>@item.Priority  - </span>@item.FaName</h4>
-                            </div>
-                        </a>
-                        <div id="collapse_@item.Priority" class="collapse" data-parent="#accordion">
-                            <div class="card-body">
+            <div class="card card-secondary card-outline">
+                <a class="d-block w-100" data-toggle="collapse" href="#collapse_1">
+                    <div class="card-header">
+                        <h4 class="card-title w-100"><span>1  - </span>گزارشات</h4>
+                    </div>
+                </a>
+                <div id="collapse_1" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
 
-                                <div class="row">
+                        <div class="row">
 
-                                    @foreach (var sub in _menuItems.OrderBy(m => m.Priority).Where(m => m.ParentId == item.Id))
-                                    {
-                                        <div class=" col-6 col-sm-3 col-md-2 d-flex align-items-stretch flex-column">
-                                            <a class="btn btn-app bg-white" href="@sub.Url"><i class="fas fa-industry mt-3 mb-2"></i><span>@sub.Priority  - </span> @sub.FaName</a>
-                                        </div>
-                                    }
+                            @foreach (var item in _menuItems.OrderBy(m => m.Priority).Where(m => m.EnName.StartsWith("AppReports.")))
+                            {
+                                <div class=" col-6 col-sm-3 col-md-2 d-flex align-items-stretch flex-column">
+                                    <a class="btn btn-app bg-white" href="@item.Url"><i class="fas fa-industry mt-3 mb-2"></i><span>@item.Priority  - </span> @item.FaName</a>
                                 </div>
+                            }
 
-                            </div>
                         </div>
                     </div>
-                }
-            }
+                </div>
+            </div>
         }
-
-
     </div>
 
 }

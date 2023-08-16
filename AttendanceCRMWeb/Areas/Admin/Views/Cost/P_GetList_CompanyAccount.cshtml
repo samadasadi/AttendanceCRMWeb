@@ -1,0 +1,38 @@
+﻿
+
+@model Utility.Utitlies.viewModel<ViewModel.BasicInfo.CompanyAccountVm>
+@using Utility.HtmlHelpers
+@{
+
+}
+
+        <div class="table-responsive">
+            <div id="@Model.CommonCustomViewTablePaging.TableIdDiv">
+                @using (Html.CreateDivForBootstrap())
+                {
+                    @(Html.TableFor<ViewModel.BasicInfo.CompanyAccountVm>()
+                        .Columns(column =>
+                        {
+                            column.Expression(p => p.Row).Title(Resources.Md.Row);
+                            column.Expression(p => p.NameCoding).Title(Resources.Md.TitleIncoming);
+                            column.Expression(p => p.PersonName).Title(Resources.Md.Name);
+                            column.Expression(p => p.date).Title(Resources.Md.Date);
+                            column.Expression(p => p.PriceSplitStr).Title(Resources.Md.Price);
+                            column.Expression(p => p.Factor_No).Title(Resources.Md.Factor_No);
+                            column.Expression(p => p.Coment).Title(Resources.Md.Coment);
+                            column.Expression(p => p.UserName).Title(Resources.Md.UserRecipient);
+                            column.Expression(p => p.IconInUploadOrCheck).Title("");
+                        })
+                        .DataSource(Model.TLists)
+                        .ToHtml(isShowButtonDeleteAndUpdate: false, lstIcons: new string[]
+                        {
+                                "IconInUploadOrCheck"
+                        }))
+                    @Html.Partial(Utility.Utitlies.VaribleForName.NamePartialOperationPageing, Model.CommonCustomViewTablePaging)
+                }
+            </div>
+        </div>
+
+
+
+

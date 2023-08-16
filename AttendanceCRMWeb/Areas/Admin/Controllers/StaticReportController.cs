@@ -1,37 +1,39 @@
-﻿using AttendanceCRMWeb.Controllers;
-using Service.Common;
-using Service.Cost;
-using Service.UserManagement.Attendance;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
-using ViewModel.UserManagement;
+﻿using System;
 using Utility;
-using Utility.PublicEnum;
 using ViewModel;
-using ViewModel.Report;
-using AttendanceCRMWeb.Filters;
-using Stimulsoft.Report.Components;
-using Utility.Utitlies;
+using System.IO;
+using System.Web;
+using System.Linq;
+using Service.Cost;
+using Service.Common;
+using System.Web.Mvc;
 using Service.Consts;
+using System.Drawing;
 using Utility.Filters;
 using Stimulsoft.Base;
-using Stimulsoft.Base.Localization;
-using System.Drawing.Printing;
-using System.IO;
+using ViewModel.Report;
+using Utility.Utitlies;
 using Stimulsoft.Report;
-using Stimulsoft.Report.Components.Table;
+using Utility.PublicEnum;
 using Stimulsoft.Report.Mvc;
+using System.Threading.Tasks;
+using System.Drawing.Printing;
+using ViewModel.UserManagement;
+using AttendanceCRMWeb.Filters;
+using System.Collections.Generic;
+using AttendanceCRMWeb.Controllers;
+using Stimulsoft.Report.Components;
+using Stimulsoft.Base.Localization;
+using Service.UserManagement.Attendance;
+using Stimulsoft.Report.Components.Table;
 using ViewModel.UserManagement.Attendance;
-using System.Drawing;
+using static Stimulsoft.Report.StiOptions.Designer;
 
 namespace AttendanceCRMWeb.Areas.Admin.Controllers
 {
     public class StaticReportController : BaseController
     {
+
         #region Fields
         private readonly ICostService _serviceCost;
         private readonly IShiftService _serviceShift;
@@ -41,6 +43,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         private readonly IAttendanceReportService _serviceAttendanceReport;
         private ViewModel.ReportParameter model { get; set; } = new ViewModel.ReportParameter();
         #endregion
+
 
         #region Ctor
         public StaticReportController(
@@ -64,6 +67,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
 
         }
         #endregion
+
 
         #region Utilities
 
@@ -111,6 +115,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         }
         #endregion
 
+
         #region Methods
 
         public ActionResult Index(string flag)
@@ -118,6 +123,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
             ViewBag.flag = flag;
             return View();
         }
+
 
         #region StReport
         /* گزارش مربوطه رو نمایش می دهد.  */
@@ -180,6 +186,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         }
         #endregion
 
+
         #region MedicalCenterCostReport
         //گزارش حسابداری(گزارشات هزینه ها)ا
         [CustomAutorizeFilter(Role = new[] { EnumRole.AppReports_AccountingReports_CostReport })]
@@ -230,6 +237,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         }
 
         #endregion
+
 
         #region CompanyAccountReport        
 
@@ -282,7 +290,6 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
             return PartialView("_ReportResult");
         }
 
-
         public async Task<JsonResult> GetListName(int? Id, string parentId, Guid? selected = null)
         {
             if (parentId == "0120201" || parentId == "0120202" || parentId == "0120203")
@@ -311,17 +318,30 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
 
         #endregion
 
-        #region Attendance Reoprt
+
+        public async System.Threading.Tasks.Task SetViewBag(ViewModel.UserManagement.Attendance.ReportParameter report)
+        {
+            try
+            {
+                report.Personel_Lists = await _serviceShift.GetPersonelList();
+                ViewData["PersonId"] = new SelectList(report.Personel_Lists, "Value", "Text", report.PersonId);
+
+                ViewData["SystemReportType"] = new SelectList(report.SystemReportTypeList, "Value", "Text", report.SystemReportType);
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+
+        #region گزارش عملکرد کل
         public async Task<ActionResult> TotalPerformancePersonal()
         {
             var model = new ViewModel.UserManagement.Attendance.ReportParameter();
-            model.FromDate = DateTime.Now;
-            model.ToDate = DateTime.Now;
-            model.Personel_Lists = await _serviceShift.GetPersonelList();
-
-            ViewData["PersonId"] = new SelectList(model.Personel_Lists, "Value", "Text", model.PersonId);
-
-            return Json(this.RenderPartialToString("TotalPerformancePersonal", model), JsonRequestBehavior.AllowGet);
+            await SetViewBag(model);
+            return View("TotalPerformancePersonal", model);
         }
         public async Task<ActionResult> TotalPerformancePersonal_Report(ViewModel.UserManagement.Attendance.ReportParameter parameter)
         {
@@ -351,8 +371,298 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
                 throw ex;
             }
         }
-
         #endregion
+
+
+        #region لاگ ورود و خروج پرسنل
+        public async Task<ActionResult> AttendanceLog()
+        {
+            var model = new ViewModel.UserManagement.Attendance.ReportParameter();
+            model.Personel_Lists = await _serviceShift.GetPersonelList();
+
+            ViewData["PersonId"] = new SelectList(model.Personel_Lists, "Value", "Text", model.PersonId);
+
+            return View(model);
+        }
+        public async Task<ActionResult> AttendanceLog_Report(ViewModel.UserManagement.Attendance.ReportParameter parameter)
+        {
+            try
+            {
+                var _list = await _serviceAttendanceReport.GetAttendanceLog(parameter);
+
+
+                var report = new StiReport();
+                report.Load(Server.MapPath("~/App_Data/StimulSoftReport/AttendanceLogRpt.mrt"));
+
+                if (_list != null && _list.timeRecordVms != null && _list.timeRecordVms.Count > 0)
+                {
+                    report.BusinessObjectsStore.Clear();
+                    report.RegBusinessObject("AttendanceList", _list.timeRecordVms);
+                    report.RegBusinessObject("InformationGlobalReport", _list.informationGlobalReport);
+                }
+                Session["rptResult"] = report;
+
+                return PartialView("_ReportResult");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+
+        #region ورود و خروج پرسنل
+        public async Task<ActionResult> AttLog()
+        {
+            var model = new ViewModel.UserManagement.Attendance.ReportParameter();
+            model.Personel_Lists = await _serviceShift.GetPersonelList();
+
+            ViewData["PersonId"] = new SelectList(model.Personel_Lists, "Value", "Text", model.PersonId);
+
+            return View(model);
+        }
+        public async Task<ActionResult> AttLog_Report(ViewModel.UserManagement.Attendance.ReportParameter parameter)
+        {
+            try
+            {
+                var _list = await _serviceAttendanceReport.GetAttendanceLog(parameter);
+
+
+                var report = new StiReport();
+                report.Load(Server.MapPath("~/App_Data/StimulSoftReport/TotalPerformancecPersonal.mrt"));
+
+                if (_list != null && _list.timeRecordVms != null && _list.timeRecordVms.Count > 0)
+                {
+                    report.BusinessObjectsStore.Clear();
+                    report.RegBusinessObject("AttendanceList", _list.timeRecordVms);
+                    report.RegBusinessObject("InformationGlobalReport", _list.informationGlobalReport);
+                }
+                Session["rptResult"] = report;
+
+                return PartialView("_ReportResult");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+
+        #region 
+        public async Task<ActionResult> DailyAttendanceReport()
+        {
+            var model = new ViewModel.UserManagement.Attendance.ReportParameter();
+            model.Personel_Lists = await _serviceShift.GetPersonelList();
+
+            ViewData["PersonId"] = new SelectList(model.Personel_Lists, "Value", "Text", model.PersonId);
+
+            return View(model);
+        }
+        public async Task<ActionResult> DailyAttendanceReport_Report(ViewModel.UserManagement.Attendance.ReportParameter parameter)
+        {
+            try
+            {
+                var _list = await _serviceAttendanceReport.DailyAttendanceReport(parameter);
+
+
+                var report = new StiReport();
+                report.Load(Server.MapPath("~/App_Data/StimulSoftReport/DailyAttendance.mrt"));
+
+                if (_list != null && _list.reportList != null && _list.reportList.Count > 0)
+                {
+                    report.BusinessObjectsStore.Clear();
+                    report.RegBusinessObject("AttendanceList", _list.reportList);
+                    report.RegBusinessObject("InformationGlobalReport", _list.informationGlobalReport);
+                }
+                Session["rptResult"] = report;
+
+                return PartialView("_ReportResult");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+
+        #region PersonsAreNotExitReport
+        public async Task<ActionResult> PersonsAreNotExitReport()
+        {
+            var model = new ViewModel.UserManagement.Attendance.ReportParameter();
+            await SetViewBag(model);
+
+            return View(model);
+        }
+        public async Task<ActionResult> PersonsAreNotExitReport_Report(ViewModel.UserManagement.Attendance.ReportParameter parameter)
+        {
+            try
+            {
+                var _list = await _serviceAttendanceReport.PersonsAreNotExitReport(parameter);
+
+
+                var report = new StiReport();
+                report.Load(Server.MapPath("~/App_Data/StimulSoftReport/PersonsAreNotExitReport.mrt"));
+
+                if (_list != null && _list.reportList != null && _list.reportList.Count > 0)
+                {
+                    report.BusinessObjectsStore.Clear();
+                    report.RegBusinessObject("AttendanceList", _list.reportList);
+                    report.RegBusinessObject("InformationGlobalReport", _list.informationGlobalReport);
+                }
+                Session["rptResult"] = report;
+
+                return PartialView("_ReportResult");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+
+        #region TransactionReqReport
+        public async Task<ActionResult> TransactionReqReport()
+        {
+            var model = new ViewModel.UserManagement.Attendance.ReportParameter();
+            await SetViewBag(model);
+
+            return View(model);
+        }
+        public async Task<ActionResult> TransactionReqReport_Report(ViewModel.UserManagement.Attendance.ReportParameter parameter)
+        {
+            try
+            {
+                var _list = await _serviceAttendanceReport.TransactionReqReport(parameter);
+
+
+                var report = new StiReport();
+                report.Load(Server.MapPath("~/App_Data/StimulSoftReport/PersonsAreNotExitReport.mrt"));
+
+                if (_list != null && _list.reportList != null && _list.reportList.Count > 0)
+                {
+                    report.BusinessObjectsStore.Clear();
+                    report.RegBusinessObject("AttendanceList", _list.reportList);
+                    report.RegBusinessObject("InformationGlobalReport", _list.informationGlobalReport);
+                }
+                Session["rptResult"] = report;
+
+                return PartialView("_ReportResult");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+
+        #region 
+        public async Task<ActionResult> TotalPerformancePersonal_AllUser_Excel()
+        {
+            var model = new ViewModel.UserManagement.Attendance.ReportParameter();
+            await SetViewBag(model);
+
+            return View(model);
+        }
+        public async Task<ActionResult> TotalPerformancePersonal_AllUser_Excel_Report(ViewModel.UserManagement.Attendance.ReportParameter parameter)
+        {
+            try
+            {
+                var _list = await _serviceAttendanceReport.TotalPerformancePersonal_AllUser_Excel(parameter);
+
+
+                var report = new StiReport();
+                report.Load(Server.MapPath("~/App_Data/StimulSoftReport/UsersPerformance.mrt"));
+
+                if (_list != null && _list.Count > 0)
+                {
+                    report.BusinessObjectsStore.Clear();
+                    report.RegBusinessObject("UsersPerformance", _list);
+                }
+                Session["rptResult"] = report;
+
+                return PartialView("_ReportResult");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+
+        #region 
+        public async Task<ActionResult> OtherAttendanceReport()
+        {
+            var model = new ViewModel.UserManagement.Attendance.ReportParameter();
+            await SetViewBag(model);
+
+            return View(model);
+        }
+        public async Task<ActionResult> OtherAttendanceReport_Report(ViewModel.UserManagement.Attendance.ReportParameter parameter)
+        {
+            try
+            {
+                var _list = await _serviceAttendanceReport.TotalPerformancePersonal_Report(parameter);
+
+
+                var report = new StiReport();
+
+
+
+                if (_list != null && _list.listAttenDanceVm != null && _list.listAttenDanceVm.Count > 0)
+                {
+                    if (parameter.SystemReportType == SystemReportType.Ezafekar_Report)
+                    {
+                        _list.listAttenDanceVm = _list.listAttenDanceVm.Where(x => x.EzafeKari > 0).ToList();
+                        report.Load(Server.MapPath("~/App_Data/StimulSoftReport/EzafeKari.mrt"));
+                    }
+                    else if (parameter.SystemReportType == SystemReportType.Gheybat_Report)
+                    {
+                        _list.listAttenDanceVm = _list.listAttenDanceVm.Where(x => x.Gheybat > 0 || (x.IsPresent == false && x.IsHoliday == false)).ToList();
+                        report.Load(Server.MapPath("~/App_Data/StimulSoftReport/Gheybat.mrt"));
+                    }
+                    else if (parameter.SystemReportType == SystemReportType.Karkard_Report)
+                    {
+                        _list.listAttenDanceVm = _list.listAttenDanceVm.Where(x => x.TotalTime > 0).ToList();
+                        report.Load(Server.MapPath("~/App_Data/StimulSoftReport/Karkard.mrt"));
+                    }
+                    else if (parameter.SystemReportType == SystemReportType.Tajil_Report)
+                    {
+                        _list.listAttenDanceVm = _list.listAttenDanceVm.Where(x => x.Tajil > 0).ToList();
+                        report.Load(Server.MapPath("~/App_Data/StimulSoftReport/Tajil.mrt"));
+                    }
+                    else if (parameter.SystemReportType == SystemReportType.Takhir_Report)
+                    {
+                        _list.listAttenDanceVm = _list.listAttenDanceVm.Where(x => x.Takhir > 0).ToList();
+                        report.Load(Server.MapPath("~/App_Data/StimulSoftReport/Takhir.mrt"));
+                    }
+                    report.BusinessObjectsStore.Clear();
+                    report.RegBusinessObject("PersonelInfo", _list.personInfoVm);
+                    report.RegBusinessObject("AttendanceList", _list.listAttenDanceVm);
+                    report.RegBusinessObject("InformationGlobalReport", _list.informationGlobalReport);
+
+                }
+
+
+
+
+                Session["rptResult"] = report;
+
+                return PartialView("_ReportResult");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        #endregion
+
+
 
         #endregion
 

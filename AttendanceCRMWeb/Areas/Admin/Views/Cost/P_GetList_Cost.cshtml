@@ -1,0 +1,98 @@
+﻿@using Utility.Utitlies
+@using Utility.Utitlies
+@using Utility.HtmlHelpers
+@using Utility.PublicEnum
+@model viewModel<ViewModel.BasicInfo.CostVm>
+@{
+
+}
+
+
+<div class="table-responsive">
+    <div id="@Model.CommonCustomViewTablePaging.TableIdDiv">
+
+
+        <table class="table table-hover table-bordered text-nowrap">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>عملیات</th>
+                    <th>@Resources.Md.CostCode</th>
+                    <th>@Resources.Md.Name</th>
+                    <th>@Resources.Md.Date</th>
+                    <th>@Resources.Md.Price</th>
+                    <th>@Resources.Md.Factor_No</th>
+                    <th>@Resources.Md.Coment</th>
+                    <th>کاربر</th>
+                    <th>نوع ثبت</th>
+                    <th>سند حسابداری</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var item in Model.TLists)
+                    {
+                        <tr>
+                            <td class="mailbox-name" style="vertical-align:middle;">@item.Row</td>
+                            <td style="vertical-align:middle; min-width:70px;">
+                                <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="DeleteCostItem('@item.Id')"><i class="fas fa-trash"></i></a>
+                                <a class="btn btn-info btn-sm" href="javascript:void(0)" onclick="EditCost('@item.Id')"><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;ویرایش</a>
+                            </td>
+                            <td class="mailbox-name" style="vertical-align:middle;">@item.NameCoding</td>
+                            <td class="mailbox-name" style="vertical-align:middle;">@item.PersonName</td>
+                            <td class="mailbox-name" style="vertical-align:middle;">@item.date</td>
+                            <td class="mailbox-name" style="vertical-align:middle;">@item.PriceSplitStr</td>
+                            <td class="mailbox-name" style="vertical-align:middle;">
+                                @if (item.Type == CostType.Cost)
+                                {
+                                    <span class="text-primary">@item.Factor_No</span>
+                                }
+                                else
+                                {
+                                    <span class="text-success">@item.Reference_FactorNo</span>
+                                }
+                            </td>
+                            <td class="mailbox-name" style="vertical-align:middle;">@item.Coment</td>
+                            <td class="mailbox-name" style="vertical-align:middle;">@item.UserName</td>
+                            @*<td class="mailbox-name" style="vertical-align:middle;">@string.Format("{0:#,0}", item.Amount)</td>*@
+                            <td class="mailbox-name" style="vertical-align:middle;">
+                                @if (item.Type == CostType.CompanyAccount)
+                                {
+                                    <span class="badge bg-primary p-2" style="font-size:10px;">@item.TypeStr</span>
+                                }
+                                else
+                                {
+                                    <span class="text-primary">@item.TypeStr</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.FinancialDocument_Id != Guid.Empty)
+                                {
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fas fa-bars"></i>  شماره سند : @item.DocumentNumber
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                            @if (item.FinancialDocumentIsFinal == false)
+                                            {
+                                                @*<a href="javascript:void(0)" class="dropdown-item" onclick="MinaDent.FinancialAccounting.Delete_FinancialDocument('@item.FinancialDocument_Id', function () { MinaDent.Therapy.RefreshGridHtml('@customerId', '@TreatmentPlan');});"><i class="fas fa-trash text-danger"></i> حذف</a>*@
+                                                <a class="dropdown-item" href="/UserManagement/Accounting/CreateFinancialDocument_View?Id=@item.FinancialDocument_Id"><i class="fas fa-pencil-alt text-primary"></i>&nbsp;&nbsp;@Resources.Md.Edit</a>
+                                            }
+                                            <a class="dropdown-item" href="javascript:void(0)" onclick="MinaDent.FinancialAccounting.FinancialDocument_Detail('@item.FinancialDocument_Id')"><i class="fas fa-eye"></i>&nbsp;&nbsp;مشاهده</a>
+                                        </div>
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        @Html.Partial(VaribleForName.NamePartialOperationPageing, Model.CommonCustomViewTablePaging)
+    </div>
+</div>
+
+
+
+
+

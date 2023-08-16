@@ -1,0 +1,29 @@
+﻿
+@using Utility.HtmlHelpers
+
+@model Utility.Utitlies.viewModel<ViewModel.BasicInfo.CompanyAccountVm>
+@{
+    var formSecurity = (FormSecurity)ViewBag.FormSecurity;
+}
+@*<script src="~/Content/AdminResponsive3.0/MD.BootstrapPersianDateTimePicker-master-bs4/src/jquery.md.bootstrap.datetimepicker.js"></script>*@
+<script src="~/Scripts/View/CompanyAccountModal.js?updated=1"></script>
+
+@*@Html.Partial("FilterModelCompanyAccount", new FilterModelCompanyAccount { })*@
+@Html.SelectAndText(
+    Model.CommonCustomViewTablePaging.IdComboSelectCount, 
+    Resources.Md.Search, 
+    Model.CommonCustomViewTablePaging.IdTextSearch, 
+    Resources.Md.Registration, 
+    "CreateCompanyAccount(0," + "\"" + Model.CommonCustomViewTablePaging.TableIdDiv + "\"" + "," + "\"" + Model.CommonCustomViewTablePaging.IdComboSelectCount + "\"" + "," + "\"" + Model.CommonCustomViewTablePaging.IdTextSearch + "\"" + ");", 
+    true, true, true, true, null)
+@Html.Partial("P_GetList_CompanyAccount", Model)
+
+<script type="text/javascript">
+
+    function Filter() {
+        debugger;
+
+        if(MinaDent.CompanyAccountModal.ValidationFilterPanel())
+            setPagerAjaxTemp_@Model.CommonCustomViewTablePaging.IdTextSearch ($("#@Model.CommonCustomViewTablePaging.IdTextSearch").val(), 1, $('#@Model.CommonCustomViewTablePaging.IdComboSelectCount').val(), 1);
+    }
+</script>

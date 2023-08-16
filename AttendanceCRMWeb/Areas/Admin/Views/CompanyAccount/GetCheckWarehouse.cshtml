@@ -1,0 +1,23 @@
+﻿
+
+@using System
+@using System.Collections.Generic
+@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+
+
+<section class="content">
+    <form id="frmUploadWarehouseToCost" class="col-md-12 form-horizontal">
+        <div class="col-md-12">
+            @if (Model != null)
+            {
+                @Html.HiddenFor(m => m.vchhdrID)
+            }
+
+
+            @Html.EditorFor(m => m.CommissionAmount)
+            @Html.EditorFor(m => m.AccountingCollection_Id)
+
+        </div>
+    </form>
+</section>

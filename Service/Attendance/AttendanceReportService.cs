@@ -13,12 +13,14 @@ using System.Threading.Tasks;
 using Utility;
 using Utility.PublicEnum;
 using Utility.Utitlies;
+using ViewModel.Attendance;
 using ViewModel.Report;
 using ViewModel.UserManagement;
 using ViewModel.UserManagement.Attendance;
 
 namespace Service.UserManagement.Attendance
 {
+
     public interface IAttendanceReportService
     {
         Task<AttendanceVM> GetAttendanceList(ReportParameter model);
@@ -67,6 +69,21 @@ namespace Service.UserManagement.Attendance
         Task<DataModelResult> SavePersonelAccount_Cost(ViewModel.BasicInfo.CostVm model);
         Task<ViewModel.BasicInfo.ResultModel<Cost_Incoming>> SavePersonelAccount_CostIncoming(ViewModel.BasicInfo.CostVm model);
 
+
+
+        /// <summary>
+        /// لاگ ورود و خروج پرسنل
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task<AttLogEvent_Report> GetAttendanceLog(ReportParameter model);
+
+
+
+        Task<List<UsersPerformance>> TotalPerformancePersonal_AllUser_Excel(ReportParameter parameter);
+
+
+
         #region Att Log
         Task<DataModelResult> SaveAttLog(TimeRecordVm entity);
         Task<TimeRecordVm> GetAttLog(TimeRecordVm entity);
@@ -75,6 +92,7 @@ namespace Service.UserManagement.Attendance
 
         #endregion
     }
+
     public class AttendanceReportService : IAttendanceReportService
     {
 
@@ -433,7 +451,6 @@ namespace Service.UserManagement.Attendance
         }
 
 
-
         #region گزارش شیفت کاری
         public async Task<ReportVm<ShiftWorkVm>> GetShiftWorkReport()
         {
@@ -460,6 +477,7 @@ namespace Service.UserManagement.Attendance
             }
         }
         #endregion
+
 
         #region گزارش حضور و غیاب در بازه زمانی
         public async Task<ReportVm<DailyAttendance>> DailyAttendanceReport(ReportParameter model)
@@ -545,6 +563,7 @@ namespace Service.UserManagement.Attendance
 
         #endregion
 
+
         #region گزارش افرادی که خروج ندارند
         public async Task<ReportVm<DailyAttendance>> PersonsAreNotExitReport(ReportParameter model)
         {
@@ -607,7 +626,9 @@ namespace Service.UserManagement.Attendance
 
         #endregion
 
+
         #region گزارش عملکرد کلی
+
         public async Task<AttendanceVM> TotalPerformancePersonal_Report(ReportParameter model)
         {
             try
@@ -618,22 +639,27 @@ namespace Service.UserManagement.Attendance
                 _model.listAttenDanceVm = new List<AttendanceList>();
                 _model.informationGlobalReport = new InformationGlobalReport();
 
+                _model.reportParameter.CalcEzafeBeforeVoroud = model.CalcEzafeBeforeVoroud;
+
+
                 var _user = (await _repoPubUser.Get(x => x.Id == model.PersonId)).FirstOrDefault();
                 if (_user == null) return new AttendanceVM { Error = true, Message = "لطفا کاربر را انتخاب نمایید" };
 
 
+
                 if (_user != null)
                 {
-                    try { model.UserId = _user.UserId != null ? _user.UserId.Value : Convert.ToInt32(_user.EmployeeID); } catch { model.UserId = 0; return _model; }
                     _model.personInfoVm.FirstName = _user.Name;
                     _model.personInfoVm.LastName = _user.Family;
                     _model.personInfoVm.FromDateStr = model.FromDate != null ? DateTimeOperation.M2S(model.FromDate.Value) : "";
                     _model.personInfoVm.ToDateStr = model.ToDate != null ? DateTimeOperation.M2S(model.ToDate.Value) : "";
                     _model.personInfoVm.PersonalCode = model.UserId.ToString();
 
+                    _model.personInfoVm.TarkeKar = _user.TarkeKar ?? false;
+                    _model.personInfoVm.TarkeKarDateEn = _user.TarkeKarDateEn;
+
                     _model.personInfoVm.FatherName = _user.FatherName;
                     _model.personInfoVm.NationalCode = _user.NationalCode;
-
 
                 }
 
@@ -646,11 +672,18 @@ namespace Service.UserManagement.Attendance
 
                 for (int index = 0; index < _totalDay; index++)
                 {
+                    var _currdate = _fromDate.AddDays(index);
+
+                    if (_model.personInfoVm.TarkeKarDateEn != null && _model.personInfoVm.TarkeKarDateEn.Value <= _currdate && (_user.TarkeKar ?? false))
+                    {
+                        break;
+                    }
+
                     var _date = new AttendanceList
                     {
-                        DateEn = _fromDate.AddDays(index),
+                        DateEn = _currdate,
                         UserId = model.UserId,
-                        PersonID = _user.UserId != null ? _user.UserId.Value : 0
+                        PersonID = _user.UserId ?? 0
                     };
                     _model.listAttenDanceVm.Add(_date);
                 }
@@ -673,7 +706,7 @@ namespace Service.UserManagement.Attendance
                     await GetTimeWork(_model);
 
                     //محاسبه ساعت کاری در هر روز
-                    await CalcTimeWorkPerDay(_model, _transactionReq);
+                    await CalcTimeWorkPerDay(_model, _transactionReq, model);
 
                     //محاسبه تمامی اطلاعات مربوط به مرخصی و ماموریت
                     CalcTotalMissionAndVacation(_transactionReq, _model);
@@ -686,7 +719,18 @@ namespace Service.UserManagement.Attendance
 
 
                     _model.personInfoVm.CountPresentDay = _model.listAttenDanceVm.Where(x => x.IsPresent == false).Count();
-                    _model.personInfoVm.CountHozorDay = _model.listAttenDanceVm.Where(x => x.IsPresent == true && !x.IsHoliday).Count();
+                    //_model.personInfoVm.CountHozorDay = _model.listAttenDanceVm.Where(x => x.IsPresent == true && !x.IsHoliday).Count();
+                    //_model.personInfoVm.CountHozorDay = _model.listAttenDanceVm.Where(x => x.IsPresent == true ).Count();
+                    _model.personInfoVm.CountHozorDay = _model.listAttenDanceVm.Where(x =>
+                    x.IsPresent == true // حاضر باشد
+                    || (x.IsHoliday) //تعطیللات رسمی باشد
+                    || x.IsMamoriyat //ماموریت باشد
+                    || (x.IsVacation && x.IsVacation_WithoutCash == false) //مرخصی با حقوق باشد
+                    ).Count();
+
+
+                    _model.personInfoVm.CountHozorDay_AllWithVacataion = _model.listAttenDanceVm.Where(x => x.IsPresent == true).Count();
+
                 }
                 return _model;
             }
@@ -695,6 +739,8 @@ namespace Service.UserManagement.Attendance
                 throw new Exception("location: ReportService.TotalPerformancePersonal_Report => " + ex.Message);
             }
         }
+
+
         /// <summary>
         /// دریافت ساعات کاری
         /// </summary>
@@ -723,50 +769,164 @@ namespace Service.UserManagement.Attendance
 
                     if (_timeRecord != null && _timeRecord.Count() > 0)
                     {
+
                         int _index = 0;
                         foreach (var item in _timeRecord)
                         {
+
                             if (_index == 0)
-                            {
-                                timeRecord_item.EnterDate = item.DatetimeIO;
-                                timeRecord_item.EnterChangebyPerson = item.ChangebyPerson;
-                            }
+                                timeRecord_item.EnterDate = item.DatetimeIOMain;
                             else if (_index == 1)
-                            {
-                                timeRecord_item.LeaveDate = item.DatetimeIO;
-                                timeRecord_item.LeaveChangebyPerson = item.ChangebyPerson;
-                            }
+                                timeRecord_item.LeaveDate = item.DatetimeIOMain;
+
+
                             else if (_index == 2)
-                            {
-                                timeRecord_item.EnterDate2 = item.DatetimeIO;
-                                timeRecord_item.EnterChangebyPerson2 = item.ChangebyPerson;
-                            }
+                                timeRecord_item.EnterDate2 = item.DatetimeIOMain;
                             else if (_index == 3)
-                            {
-                                timeRecord_item.LeaveDate2 = item.DatetimeIO;
-                                timeRecord_item.LeaveChangebyPerson2 = item.ChangebyPerson;
-                            }
+                                timeRecord_item.LeaveDate2 = item.DatetimeIOMain;
+
+
                             else if (_index == 4)
-                            {
-                                timeRecord_item.EnterDate3 = item.DatetimeIO;
-                                timeRecord_item.EnterChangebyPerson3 = item.ChangebyPerson;
-                            }
+                                timeRecord_item.EnterDate3 = item.DatetimeIOMain;
                             else if (_index == 5)
-                            {
-                                timeRecord_item.LeaveDate3 = item.DatetimeIO;
-                                timeRecord_item.LeaveChangebyPerson3 = item.ChangebyPerson;
-                            }
+                                timeRecord_item.LeaveDate3 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 6)
+                                timeRecord_item.EnterDate4 = item.DatetimeIOMain;
+                            else if (_index == 7)
+                                timeRecord_item.LeaveDate4 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 8)
+                                timeRecord_item.EnterDate5 = item.DatetimeIOMain;
+                            else if (_index == 9)
+                                timeRecord_item.LeaveDate5 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 10)
+                                timeRecord_item.EnterDate6 = item.DatetimeIOMain;
+                            else if (_index == 11)
+                                timeRecord_item.LeaveDate6 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 12)
+                                timeRecord_item.EnterDate7 = item.DatetimeIOMain;
+                            else if (_index == 13)
+                                timeRecord_item.LeaveDate7 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 14)
+                                timeRecord_item.EnterDate8 = item.DatetimeIOMain;
+                            else if (_index == 15)
+                                timeRecord_item.LeaveDate8 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 16)
+                                timeRecord_item.EnterDate9 = item.DatetimeIOMain;
+                            else if (_index == 17)
+                                timeRecord_item.LeaveDate9 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 18)
+                                timeRecord_item.EnterDate10 = item.DatetimeIOMain;
+                            else if (_index == 19)
+                                timeRecord_item.LeaveDate10 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 20)
+                                timeRecord_item.EnterDate11 = item.DatetimeIOMain;
+                            else if (_index == 21)
+                                timeRecord_item.LeaveDate11 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 22)
+                                timeRecord_item.EnterDate12 = item.DatetimeIOMain;
+                            else if (_index == 23)
+                                timeRecord_item.LeaveDate12 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 24)
+                                timeRecord_item.EnterDate13 = item.DatetimeIOMain;
+                            else if (_index == 25)
+                                timeRecord_item.LeaveDate13 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 26)
+                                timeRecord_item.EnterDate14 = item.DatetimeIOMain;
+                            else if (_index == 27)
+                                timeRecord_item.LeaveDate14 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 28)
+                                timeRecord_item.EnterDate15 = item.DatetimeIOMain;
+                            else if (_index == 29)
+                                timeRecord_item.LeaveDate15 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 30)
+                                timeRecord_item.EnterDate16 = item.DatetimeIOMain;
+                            else if (_index == 31)
+                                timeRecord_item.LeaveDate16 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 32)
+                                timeRecord_item.EnterDate17 = item.DatetimeIOMain;
+                            else if (_index == 33)
+                                timeRecord_item.LeaveDate17 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 34)
+                                timeRecord_item.EnterDate18 = item.DatetimeIOMain;
+                            else if (_index == 35)
+                                timeRecord_item.LeaveDate18 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 36)
+                                timeRecord_item.EnterDate19 = item.DatetimeIOMain;
+                            else if (_index == 37)
+                                timeRecord_item.LeaveDate19 = item.DatetimeIOMain;
+
+
+
+                            else if (_index == 38)
+                                timeRecord_item.EnterDate20 = item.DatetimeIOMain;
+                            else if (_index == 39)
+                                timeRecord_item.LeaveDate20 = item.DatetimeIOMain;
+
+
+
+
+
 
 
                             _index++;
-                            if (_index == 6) break;
+                            if (_index == 40) break;
                         }
                         timeRecord_item.IsPresent = true;
+                        timeRecord_item.IsKarkard = true;
                     }
                     else
                     {
                         timeRecord_item.Descriptions = PublicResource.DailyAbsense;
                         timeRecord_item.IsPresent = false;
+                        timeRecord_item.IsKarkard = false;
                     }
                 }
             }
@@ -776,16 +936,11 @@ namespace Service.UserManagement.Attendance
         }
 
 
-
-
-
-
-
         /// <summary>
         /// محاسبه ساعت کاری در هر روز
         /// </summary>
         /// <param name="model"></param>
-        private async System.Threading.Tasks.Task CalcTimeWorkPerDay(AttendanceVM model, List<TransactionRequestVm> transReq)
+        private async System.Threading.Tasks.Task CalcTimeWorkPerDay(AttendanceVM model, List<TransactionRequestVm> transReq, ReportParameter filter)
         {
             try
             {
@@ -793,6 +948,9 @@ namespace Service.UserManagement.Attendance
                 {
                     var _shift_work_query = string.Format(QueryString.ShiftWorkList, timeRecord_item.PersonID);
                     var _shift_work = (await _repoShiftWork.RunQuery<ShiftWorkVm>(_shift_work_query)).ToList().FirstOrDefault();
+
+                    timeRecord_item.CalcEzafeBeforeVoroud = model.reportParameter.CalcEzafeBeforeVoroud;
+
                     if (_shift_work != null && !string.IsNullOrEmpty(_shift_work.Data) && _shift_work.DataList != null && _shift_work.DataList.Count > 0)
                     {
                         if (_shift_work.DataList != null && _shift_work.DataList.Count > 0)
@@ -803,11 +961,11 @@ namespace Service.UserManagement.Attendance
                                 var _jobTime = (await _repoJobTime.Get(x => x.Id == _shiftworkItem.JobTime_Id)).FirstOrDefault();
                                 if (_jobTime != null)
                                 {
-
                                     if (_jobTime.ShiftShenavar == false)
                                     {
                                         _jobTime.TimeVorod = new DateTime(timeRecord_item.DateEn.Year, timeRecord_item.DateEn.Month, timeRecord_item.DateEn.Day, _jobTime.TimeVorod.Hour, _jobTime.TimeVorod.Minute, _jobTime.TimeVorod.Second);
                                         _jobTime.TimeKhoroj = new DateTime(timeRecord_item.DateEn.Year, timeRecord_item.DateEn.Month, timeRecord_item.DateEn.Day, _jobTime.TimeKhoroj.Hour, _jobTime.TimeKhoroj.Minute, _jobTime.TimeKhoroj.Second);
+
 
                                         if (_jobTime.TimeFVorod != null)
                                             _jobTime.TimeFVorod = new DateTime(timeRecord_item.DateEn.Year, timeRecord_item.DateEn.Month, timeRecord_item.DateEn.Day, _jobTime.TimeFVorod.Value.Hour, _jobTime.TimeFVorod.Value.Minute, _jobTime.TimeFVorod.Value.Second);
@@ -826,8 +984,11 @@ namespace Service.UserManagement.Attendance
 
                                 if (_jobTime != null && _jobTime.ShiftShenavar == false)
                                 {
-                                    //ثبت خروج برای روزهایی که خروج آنها ثبت نشده است
-                                    RegisterLeaveTimeForNoneLeave(timeRecord_item, _jobTime);
+                                    if (filter.SetExitAttRecord)
+                                    {
+                                        //ثبت خروج برای روزهایی که خزوج آنها ثبت نشده است
+                                        RegisterLeaveTimeForNoneLeave(timeRecord_item, _jobTime);
+                                    }
                                 }
 
                                 // روز فعلی ماموریت بوده یا خیر
@@ -841,9 +1002,14 @@ namespace Service.UserManagement.Attendance
 
                                 //---------------------------------------------------------------------------
 
-                                //دریافت عنوان ساعت کاری
-                                timeRecord_item.JobTimeName = _jobTime != null ? _jobTime.JobTimeName : "";
 
+                                timeRecord_item.CurrentJobTime = _jobTime;
+
+                                //دریافت عنوان ساعت کاری
+                                //timeRecord_item.JobTimeName = _jobTime != null ? _jobTime.JobTimeName : "";
+
+                                //چک کردن روز تعطیل
+                                CheckVacationDay(timeRecord_item, _shift_work);
                                 if (_jobTime != null && _jobTime.ShiftTaRoozeBad == true)
                                 {
 
@@ -852,75 +1018,58 @@ namespace Service.UserManagement.Attendance
                                 {
                                     if (_jobTime != null && _jobTime.ShiftShenavar == true)
                                     {
-                                        //محاسبه تاخیر آیتم فعلی
-                                        CalcTakhir_Shenavar(timeRecord_item, _jobTime);
-                                        //محاسبه اضافه کاری
-                                        ClacEzafeKari_Shenavar(timeRecord_item, _jobTime);
+                                        if (timeRecord_item.IsPresent)
+                                        {
+                                            //محاسبه تاخیر آیتم فعلی
+                                            CalcTakhir_Shenavar(timeRecord_item, _jobTime);
+                                            //محاسبه اضافه کاری
+                                            timeRecord_item.EzafeKari = timeRecord_item._EzafeKari;
 
-                                        var _totalTime = 0;
-                                        if (timeRecord_item.EnterDate != null && timeRecord_item.LeaveDate != null && timeRecord_item.LeaveDate > timeRecord_item.EnterDate)
-                                        {
-                                            TimeSpan span = timeRecord_item.LeaveDate.Value.Subtract(timeRecord_item.EnterDate.Value);
-                                            _totalTime += (int)span.TotalMinutes;
+
+                                            //timeRecord_item.TotalTime = _totalTime;
+                                            timeRecord_item.TotalTime = timeRecord_item._TotalTime;
+                                            //محاسبه غیبت آیتم فعلی
+                                            CalcGheybat(timeRecord_item, filter);
                                         }
-                                        if (timeRecord_item.EnterDate2 != null && timeRecord_item.LeaveDate2 != null && timeRecord_item.LeaveDate2 > timeRecord_item.EnterDate2)
-                                        {
-                                            TimeSpan span = timeRecord_item.LeaveDate2.Value.Subtract(timeRecord_item.EnterDate2.Value);
-                                            _totalTime += (int)span.TotalMinutes;
-                                        }
-                                        if (timeRecord_item.EnterDate3 != null && timeRecord_item.LeaveDate3 != null && timeRecord_item.LeaveDate3 > timeRecord_item.EnterDate3)
-                                        {
-                                            TimeSpan span = timeRecord_item.LeaveDate3.Value.Subtract(timeRecord_item.EnterDate3.Value);
-                                            _totalTime += (int)span.TotalMinutes;
-                                        }
-                                        timeRecord_item.TotalTime = _totalTime;
-                                        //محاسبه غیبت آیتم فعلی
-                                        CalcGheybat(timeRecord_item);
                                     }
                                     else
                                     {
-
-                                        //چک کردن روز تعطیل
-                                        CheckVacationDay(timeRecord_item, _shift_work);
-                                        //محاسبه تاخیر آیتم فعلی
-                                        CalcTakhir(timeRecord_item, _jobTime);
-                                        //محاسبه تاخیر آیتم فعلی
-                                        CalcTajil(timeRecord_item, _jobTime);
-                                        //محاسبه اضافه کاری
-                                        ClacEzafeKari(timeRecord_item, _jobTime);
-
-                                        var _totalTime = 0;
-                                        if (timeRecord_item.EnterDate != null && timeRecord_item.LeaveDate != null && timeRecord_item.LeaveDate > timeRecord_item.EnterDate)
+                                        if (timeRecord_item.IsPresent)
                                         {
-                                            TimeSpan span = timeRecord_item.LeaveDate.Value.Subtract(timeRecord_item.EnterDate.Value);
-                                            _totalTime += (int)span.TotalMinutes;
-                                        }
-                                        if (timeRecord_item.EnterDate2 != null && timeRecord_item.LeaveDate2 != null && timeRecord_item.LeaveDate2 > timeRecord_item.EnterDate2)
-                                        {
-                                            TimeSpan span = timeRecord_item.LeaveDate2.Value.Subtract(timeRecord_item.EnterDate2.Value);
-                                            _totalTime += (int)span.TotalMinutes;
-                                        }
-                                        if (timeRecord_item.EnterDate3 != null && timeRecord_item.LeaveDate3 != null && timeRecord_item.LeaveDate3 > timeRecord_item.EnterDate3)
-                                        {
-                                            TimeSpan span = timeRecord_item.LeaveDate3.Value.Subtract(timeRecord_item.EnterDate3.Value);
-                                            _totalTime += (int)span.TotalMinutes;
-                                        }
-                                        timeRecord_item.TotalTime = _totalTime;
+                                            //محاسبه تاخیر آیتم فعلی
+                                            CalcTakhir(timeRecord_item, _jobTime);
 
-                                        //if (timeRecord_item.IsPresent)
-                                        //{
-                                        //    if ((_totalTime + timeRecord_item.Takhir + timeRecord_item.Tajil) < timeRecord_item.TotalMinuteCurrentDay)
-                                        //    {
-                                        //        var _res = timeRecord_item.TotalMinuteCurrentDay.Value - (_totalTime + timeRecord_item.Takhir + timeRecord_item.Tajil);
-                                        //        timeRecord_item.EzafeKari = _res < timeRecord_item.EzafeKari ? _res - timeRecord_item.EzafeKari : 0;
-                                        //        if (_res > timeRecord_item.EzafeKari)
-                                        //        {
-                                        //            timeRecord_item.Takhir += (_res - timeRecord_item.EzafeKari);
-                                        //        }
-                                        //    }
-                                        //}
-                                        //محاسبه غیبت آیتم فعلی
-                                        CalcGheybat(timeRecord_item);
+                                            //محاسبه تاخیر آیتم فعلی
+                                            CalcTajil(timeRecord_item, _jobTime);
+
+                                            //محاسبه اضافه کاری
+                                            timeRecord_item.EzafeKari = timeRecord_item._EzafeKari;
+
+
+
+
+                                            //timeRecord_item.TotalTime = _totalTime;
+                                            timeRecord_item.TotalTime = timeRecord_item._TotalTime;
+
+
+                                            //if (_jobTime != null && !_jobTime.ShiftShenavar)
+                                            //{
+                                            //    if (!timeRecord_item.IsHoliday && !timeRecord_item.IsVacation && !timeRecord_item.IsMamoriyat)
+                                            //    {
+                                            //        if ((timeRecord_item.TotalTime + timeRecord_item.Takhir + timeRecord_item.Tajil) < timeRecord_item.TotalMinuteCurrentDay)
+                                            //        {
+                                            //            var _res = timeRecord_item.TotalMinuteCurrentDay.Value - (timeRecord_item.TotalTime + timeRecord_item.Takhir + timeRecord_item.Tajil);
+                                            //            timeRecord_item.EzafeKari = _res < timeRecord_item.EzafeKari ? _res - timeRecord_item.EzafeKari : 0;
+                                            //            if (_res > timeRecord_item.EzafeKari)
+                                            //            {
+                                            //                timeRecord_item.Takhir = (_res - timeRecord_item.EzafeKari);
+                                            //            }
+                                            //        }
+                                            //    }
+                                            //}
+                                            //محاسبه غیبت آیتم فعلی
+                                            CalcGheybat(timeRecord_item, filter);
+                                        }
                                     }
                                 }
                             }
@@ -939,7 +1088,7 @@ namespace Service.UserManagement.Attendance
         /// </summary>
         /// <param name="attItem"></param>
         /// <param name="jobTime"></param>
-        private void RegisterLeaveTimeForNoneLeave(AttendanceList attItem, JobTime jobTime)
+        private async System.Threading.Tasks.Task RegisterLeaveTimeForNoneLeave(AttendanceList attItem, JobTime jobTime)
         {
             try
             {
@@ -954,6 +1103,8 @@ namespace Service.UserManagement.Attendance
             {
             }
         }
+
+
         /// <summary>
         /// تعیین تعطیلی آیتم جاری
         /// </summary>
@@ -976,6 +1127,8 @@ namespace Service.UserManagement.Attendance
 
             }
         }
+
+
         /// <summary>
         /// محاسبه تمام ساعات کاری
         /// </summary>
@@ -992,11 +1145,14 @@ namespace Service.UserManagement.Attendance
                     model.personInfoVm.TotalTakhir = model.listAttenDanceVm.Sum(x => x.Takhir);
                     model.personInfoVm.TotalTajil = model.listAttenDanceVm.Sum(x => x.Tajil);
                     model.personInfoVm.TotalEzafeKari = model.listAttenDanceVm.Sum(x => x.EzafeKari);
+                    model.personInfoVm.TotalEzafeKari_T = model.listAttenDanceVm.Sum(x => x.EzafeKari_T);
                     model.personInfoVm.TotalGheybat = model.listAttenDanceVm.Sum(x => x.Gheybat);
                 }
             }
             catch (Exception ex) { }
         }
+
+
         /// <summary>
         /// محاسبه تاخیر آیتم ورودی
         /// </summary>
@@ -1051,6 +1207,8 @@ namespace Service.UserManagement.Attendance
             {
             }
         }
+
+
         /// <summary>
         /// محاسبه تعجیل آیتم ورودی
         /// </summary>
@@ -1067,7 +1225,29 @@ namespace Service.UserManagement.Attendance
                 if (jobTime == null) return;
                 if (timeRecord_item.LeaveDate != null || timeRecord_item.LeaveDate2 != null || timeRecord_item.LeaveDate3 != null)
                 {
-                    var _res = new[] { timeRecord_item.LeaveDate, timeRecord_item.LeaveDate2, timeRecord_item.LeaveDate3 }.Max();
+                    var _res = new[] {
+                        timeRecord_item.LeaveDate,
+                        timeRecord_item.LeaveDate2,
+                        timeRecord_item.LeaveDate3,
+
+                        timeRecord_item.LeaveDate4,
+                        timeRecord_item.LeaveDate5,
+                        timeRecord_item.LeaveDate6,
+                        timeRecord_item.LeaveDate7,
+                        timeRecord_item.LeaveDate8,
+                        timeRecord_item.LeaveDate9,
+                        timeRecord_item.LeaveDate10,
+                        timeRecord_item.LeaveDate11,
+                        timeRecord_item.LeaveDate12,
+                        timeRecord_item.LeaveDate13,
+                        timeRecord_item.LeaveDate14,
+                        timeRecord_item.LeaveDate15,
+                        timeRecord_item.LeaveDate16,
+                        timeRecord_item.LeaveDate17,
+                        timeRecord_item.LeaveDate18,
+                        timeRecord_item.LeaveDate19,
+                        timeRecord_item.LeaveDate20,
+                    }.Max();
 
                     if (_res != null)
                     {
@@ -1083,11 +1263,13 @@ namespace Service.UserManagement.Attendance
             {
             }
         }
+
+
         /// <summary>
         /// محاسبه غیبت آیتم ورودی
         /// </summary>
         /// <param name="timeRecord_item"></param>
-        private void CalcGheybat(AttendanceList timeRecord_item)
+        private void CalcGheybat(AttendanceList timeRecord_item, ReportParameter filter)
         {
             try
             {
@@ -1095,14 +1277,20 @@ namespace Service.UserManagement.Attendance
                     //اگر روز تعطیل باشد و حضور داشته باشد باید کل روز به عنوان اضافه کار در نظر گرفته شود 
                     return;
 
-                timeRecord_item.Gheybat = timeRecord_item.Tajil + timeRecord_item.Takhir;
+                //اگر روز فعلی مرخصی یا ماموریت باشد نباید غیبت بخورد
+                if (timeRecord_item.VacationsDay || timeRecord_item.MissionDay) return;
 
-                timeRecord_item.Gheybat = timeRecord_item.VacationsHour > timeRecord_item.Gheybat ? 0 : (timeRecord_item.Gheybat - timeRecord_item.VacationsHour);
+                var _tot_valid = (timeRecord_item.VacationsHour + timeRecord_item.MissionHour) + filter.NaharTime;
+
+                timeRecord_item.Gheybat = timeRecord_item.Tajil + timeRecord_item.Takhir;
+                timeRecord_item.Gheybat = _tot_valid > timeRecord_item.Gheybat ? 0 : (timeRecord_item.Gheybat - (_tot_valid));
             }
             catch (Exception ex)
             {
             }
         }
+
+
         /// <summary>
         /// محاسبه اضافه کاری
         /// </summary>
@@ -1157,6 +1345,8 @@ namespace Service.UserManagement.Attendance
             {
             }
         }
+
+
         /// <summary>
         ///  روز فعلی ماموریت بوده یا خیر
         /// </summary>
@@ -1176,6 +1366,7 @@ namespace Service.UserManagement.Attendance
                         timeRecord_item.MissionDay = true;
                         timeRecord_item.Descriptions = _res.FirstOrDefault().Transaction_Name;
                         timeRecord_item.IsPresent = true;
+                        timeRecord_item.IsMamoriyat = true;
                         return true;
                     }
                 }
@@ -1185,6 +1376,8 @@ namespace Service.UserManagement.Attendance
             }
             return false;
         }
+
+
         /// <summary>
         /// محاسبه ماموریت ساعتی
         /// </summary>
@@ -1212,6 +1405,8 @@ namespace Service.UserManagement.Attendance
             {
             }
         }
+
+
         /// <summary>
         ///  روز فعلی مرخصی بوده یا خیر
         /// </summary>
@@ -1230,7 +1425,17 @@ namespace Service.UserManagement.Attendance
                     {
                         timeRecord_item.VacationsDay = true;
                         timeRecord_item.Descriptions = _res.FirstOrDefault().Transaction_Name;
-                        timeRecord_item.IsPresent = true;
+                        timeRecord_item.IsVacation = true;
+                        //اگر مرخصی بدون حقوق باشد
+                        if (_res.Where(x => x.Transaction_Id == Guid.Parse("F1AC3ACA-C785-23EB-2A89-0EFA126E2C7E")).ToList().Count > 0)
+                        {
+                            timeRecord_item.IsVacation_WithoutCash = true;
+                            timeRecord_item.IsPresent = false;
+                        }
+                        else
+                        {
+                            timeRecord_item.IsPresent = true;
+                        }
 
                         return true;
                     }
@@ -1241,6 +1446,8 @@ namespace Service.UserManagement.Attendance
             }
             return false;
         }
+
+
         /// <summary>
         /// محاسبه مرخصی ساعتی
         /// </summary>
@@ -1270,13 +1477,24 @@ namespace Service.UserManagement.Attendance
                     {
                         timeRecord_item.VacationsHour = (_res.FirstOrDefault().ToDateRequest > _res.FirstOrDefault().FromDateRequest ? ((int)_res.FirstOrDefault().ToDateRequest.Subtract(_res.FirstOrDefault().FromDateRequest).TotalMinutes) : 0);
                         timeRecord_item.Descriptions = _res.FirstOrDefault().Transaction_Name;
+
+
+                        //foreach (var item in _res)
+                        //{
+                        //    timeRecord_item.VacationsHour += (item.ToDateRequest > item.FromDateRequest ? ((int)item.ToDateRequest.Subtract(item.FromDateRequest).TotalMinutes) : 0);
+                        //    timeRecord_item.Descriptions = _res.FirstOrDefault().Transaction_Name;
+                        //}
+
+
                     }
                 }
+
             }
             catch (Exception ex)
             {
             }
         }
+
 
         /// <summary>
         /// محاسبه مجموع مرخصی و ماموریت
@@ -1322,7 +1540,7 @@ namespace Service.UserManagement.Attendance
                 {
                     foreach (var item in _vacation_hour)
                     {
-                        model.personInfoVm.Vacations_Hour += (item.ToDateRequest > item.FromDateRequest ? ((int)item.ToDateRequest.Subtract(item.FromDateRequest).TotalMinutes) : 0); ;
+                        model.personInfoVm.Vacations_Hour += (item.ToDateRequest > item.FromDateRequest ? ((int)item.ToDateRequest.Subtract(item.FromDateRequest).TotalMinutes) : 0);
                     }
                 }
 
@@ -1332,6 +1550,8 @@ namespace Service.UserManagement.Attendance
             {
             }
         }
+
+
         private int GetDayCount(List<TransactionRequestVm> transReq)
         {
             try
@@ -1356,6 +1576,7 @@ namespace Service.UserManagement.Attendance
                 return 0;
             }
         }
+
 
         /// <summary>
         /// اعمال پارامتر های گزارش
@@ -1432,12 +1653,6 @@ namespace Service.UserManagement.Attendance
         }
 
 
-
-
-
-
-
-
         /// <summary>
         /// محاسبه تاخیر آیتم ورودی شناور
         /// </summary>
@@ -1451,28 +1666,27 @@ namespace Service.UserManagement.Attendance
                     //اگر روز تعطیل باشد و حضور داشته باشد باید کل روز به عنوان اضافه کار در نظر گرفته شود 
                     return;
 
-                if (jobTime.TimeShiftLength == null) return;
 
                 if (jobTime == null) return;
+                if (jobTime.TimeShiftLength == null) return;
                 var _totalTakhir = 0;
                 var _zeroTime = new DateTime(timeRecord_item.EnterDate.Value.Year, timeRecord_item.EnterDate.Value.Month, timeRecord_item.EnterDate.Value.Day, 0, 0, 0);
                 jobTime.TimeShiftLength = new DateTime(timeRecord_item.EnterDate.Value.Year, timeRecord_item.EnterDate.Value.Month, timeRecord_item.EnterDate.Value.Day, jobTime.TimeShiftLength.Value.Hour, jobTime.TimeShiftLength.Value.Minute, jobTime.TimeShiftLength.Value.Second);
                 var _totalminutework = (int)jobTime.TimeShiftLength.Value.Subtract(_zeroTime).TotalMinutes;
 
-                var _res1 = timeRecord_item.LeaveDate != null && timeRecord_item.EnterDate != null ? ((int)timeRecord_item.LeaveDate.Value.Subtract(timeRecord_item.EnterDate.Value).TotalMinutes) : 0;
-                var _res2 = timeRecord_item.LeaveDate2 != null && timeRecord_item.EnterDate2 != null ? ((int)timeRecord_item.LeaveDate2.Value.Subtract(timeRecord_item.EnterDate2.Value).TotalMinutes) : 0;
-                var _res3 = timeRecord_item.LeaveDate3 != null && timeRecord_item.EnterDate3 != null ? ((int)timeRecord_item.LeaveDate3.Value.Subtract(timeRecord_item.EnterDate3.Value).TotalMinutes) : 0;
-
-                var _res = _res1 + _res2 + _res3;
-                _totalTakhir = _res >= _totalminutework || _res == 0 ? 0 : _totalminutework - _res;
-
+                //_totalTakhir = (timeRecord_item._TotalTime + timeRecord_item.VacationsHour + timeRecord_item.MissionHour) >= _totalminutework ? 0 : _totalminutework - (timeRecord_item._TotalTime+timeRecord_item.VacationsHour + timeRecord_item.MissionHour);
+                _totalTakhir = (timeRecord_item._TotalTime) >= _totalminutework ? 0 : _totalminutework - (timeRecord_item._TotalTime);
 
                 timeRecord_item.Takhir = _totalTakhir;
+
+
             }
             catch (Exception ex)
             {
             }
         }
+
+
         /// <summary>
         /// محاسبه اضافه کاری شناور
         /// </summary>
@@ -1533,8 +1747,6 @@ namespace Service.UserManagement.Attendance
         }
 
 
-
-
         public async Task<AttendanceVM> CalculatePatientAccount(UserVm filter)
         {
             try
@@ -1573,8 +1785,6 @@ namespace Service.UserManagement.Attendance
         }
 
 
-
-
         public async Task<EmployeeAccountingVm> GetPersonAccount(EmployeeAccountingVm filter)
         {
             try
@@ -1593,6 +1803,8 @@ namespace Service.UserManagement.Attendance
             }
             catch (Exception ex) { throw ex; }
         }
+
+
         public async Task<DataModelResult> SavePersonelAccount(UserVm filter)
         {
             try
@@ -1627,6 +1839,8 @@ namespace Service.UserManagement.Attendance
             }
             catch (Exception ex) { throw ex; }
         }
+
+
         public async Task<viewModel<EmployeeAccountingVm>> GetAllPersonAccount(UserVm value)
         {
             try
@@ -1652,6 +1866,7 @@ namespace Service.UserManagement.Attendance
                 throw ex;
             }
         }
+
 
         public async Task<DataModelResult> DeletePersonelAccount(EmployeeAccountingVm filter)
         {
@@ -1712,6 +1927,8 @@ namespace Service.UserManagement.Attendance
                 throw ex;
             }
         }
+
+
         public async Task<ViewModel.BasicInfo.ResultModel<Cost_Incoming>> SavePersonelAccount_CostIncoming(ViewModel.BasicInfo.CostVm model)
         {
             try
@@ -1751,7 +1968,17 @@ namespace Service.UserManagement.Attendance
                 throw ex;
             }
         }
+
+
         #endregion
+
+
+
+
+
+
+
+
 
         #region گزارش مرخصی
         public async Task<ReportVm<TransactionRequestVm>> TransactionReqReport(ReportParameter reportParameter)
@@ -1792,6 +2019,7 @@ namespace Service.UserManagement.Attendance
 
         #endregion
 
+
         #region EventLog Report
         /// <summary>
         /// گزارش رویدادنگاری تردد
@@ -1818,6 +2046,7 @@ namespace Service.UserManagement.Attendance
             }
         }
         #endregion
+
 
         #region Att Log
         public async Task<List<NormalJsonClass>> GetPersonelList()
@@ -2024,7 +2253,9 @@ namespace Service.UserManagement.Attendance
                 return new DataModelResult { Error = true, Message = ex.Message };
             }
         }
+
         #endregion
+
 
         #region Time Record
         public async Task<AttLogEvent_Report> GetAttendanceLog(ReportParameter model)
@@ -2047,21 +2278,16 @@ namespace Service.UserManagement.Attendance
                                             "\n     TimeRecords.Hour, TimeRecords.Minute, TimeRecords.Month, TimeRecords.Year," +
                                             "\n     userr.FirstName+' '+userr.LastName as [Name], TimeRecords.AttStatus, " +
                                             "\n     (select top(1) Name from NewDevice where Code = TimeRecords.DeviceCode) as DeviceName, " +
-                                            "\n     ISNULL(device.GroupId, 0) as DeviceGroupId, " +
-                                            "\n     ISNULL(userr.GroupId, 0) as UserGroupId " +
+                                            "\n     ISNULL(device.GroupId, 0) as DeviceGroupId " +
                                             "\n from TimeRecords " +
-                                            "\n left join PubUser userr on TimeRecords.CardNo = userr.UserId " +
-                                            "\n left join UserGroup userrgroup on userrgroup.Id = userr.GroupId " +
+                                            "\n left join tbl_Employees userr on TimeRecords.CardNo = userr.UserId " +
                                             "\n left join NewDevice device on device.Code = TimeRecords.DeviceCode " +
-                                            "\n Left join DeviceGroup deviceGroup on deviceGroup.Id = device.GroupId " +
                                             "\n where (cast(TimeRecords.DatetimeIOMain as date)>=CAST(@_from as date) or @_from is null) " +
                                             "\n     and ((cast(TimeRecords.DatetimeIOMain as date)<=CAST(@_to as date)) or @_to is null) " +
                                             "\n     and (DeviceCode = @_devicecode or @_devicecode is null) " +
                                             "\n     and (TimeRecords.CardNo = @_user or @_user is null)" +
                                             "\n     and (TimeRecords.RecordID = @_timeRecordId or @_timeRecordId is null)" +
-                                            "\n     and (TimeRecords.IsDelete = 0)" +
-                                            "\n     and (deviceGroup.Id = @_devicegroup or @_devicegroup is null)" +
-                                            "\n     and (userrgroup.Id = @_usergroup or @_usergroup is null)" +
+                                            "\n     and (TimeRecords.IsDeleted = 0)" +
                                             "\n order by TimeRecords.DatetimeIOMain",
                                             (model.FromDate != null ? "N'" + model.FromDate.Value.ToString("yyyy-MM-dd") + "'" : "NULL"),
                                             (model.ToDate != null ? "N'" + model.ToDate.Value.ToString("yyyy-MM-dd") + "'" : "NULL"),
@@ -2197,7 +2423,59 @@ namespace Service.UserManagement.Attendance
         }
         #endregion
 
+
+        public async Task<List<UsersPerformance>> TotalPerformancePersonal_AllUser_Excel(ReportParameter parameter)
+        {
+            try
+            {
+                var _users = await _repoPubUser.Get(x => !x.IsDeleted && (x.UserId == parameter.UserId || parameter.UserId == 0));
+                if (_users != null && _users.Count() > 0)
+                {
+                    var _model = new List<AttendanceVM>();
+
+                    var _result = new List<UsersPerformance>();
+                    foreach (var item in _users)
+                    {
+                        var _modelItem = await TotalPerformancePersonal_Report(new ReportParameter
+                        {
+                            FromDate = parameter.FromDate,
+                            ToDate = parameter.ToDate,
+                            UserId = item.UserId ?? 0,
+                            CalcEzafeBeforeVoroud = parameter.CalcEzafeBeforeVoroud,
+                        });
+                        _model.Add(_modelItem);
+
+                        _result.Add(new UsersPerformance
+                        {
+                            CARD_NO = item.UserId ?? 0,
+                            PER_NAME = _modelItem.personInfoVm.FirstName + " " + _modelItem.personInfoVm.LastName,
+                            HOZOUR_DAY = _modelItem.personInfoVm.CountHozorDay,
+                            HOZOUR_T = _modelItem.personInfoVm.TotalTimeHourValue - _modelItem.personInfoVm.TotalEzafeKari,
+                            GHEIBAT_T = _modelItem.personInfoVm.TotalGheybat,
+                            MORKHASI_D = _modelItem.personInfoVm.Vacations_Day,
+                            MORKHASI_T = _modelItem.personInfoVm.Vacations_Hour,
+                            EZFTATIL_T = _modelItem.personInfoVm.TotalEzafeKari_T,
+                            EZAFE_T = _modelItem.personInfoVm.TotalEzafeKari - _modelItem.personInfoVm.TotalEzafeKari_T,
+                            MAMURIAT = _modelItem.personInfoVm.Mission_Day,
+
+                            KASR_T = 0
+                        });
+
+                    }
+
+                    return _result;
+                }
+                return new List<UsersPerformance>();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         #endregion
 
     }
+
 }

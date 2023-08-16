@@ -19,6 +19,8 @@ namespace ViewModel.UserManagement.Attendance
         public string FromDateStr { get; set; }
         public DateTime? ToDate { get; set; }
         public string ToDateStr { get; set; }
+        public bool TarkeKar { get; set; }
+        public DateTime? TarkeKarDateEn { get; set; }
 
         /// <summary>
         /// مجموع ساعت کارکرد
@@ -33,6 +35,11 @@ namespace ViewModel.UserManagement.Attendance
         /// تعداد روز حضور
         /// </summary>
         public int CountHozorDay { get; set; }
+
+        /// <summary>
+        /// تعداد روز حضور
+        /// </summary>
+        public int CountHozorDay_AllWithVacataion { get; set; }
 
         /// <summary>
         /// تعداد روز غیبت
@@ -64,6 +71,15 @@ namespace ViewModel.UserManagement.Attendance
         public string TotalEzafeKariStr
         {
             get { return DateTimeOperation.FormatHour(this.TotalEzafeKari); }
+        }
+
+        /// <summary>
+        /// مجموع اضافه کاری در روزهای تعطیل
+        /// </summary>
+        public int TotalEzafeKari_T { get; set; }
+        public string TotalEzafeKari_TStr
+        {
+            get { return DateTimeOperation.FormatHour(this.TotalEzafeKari_T); }
         }
 
         /// <summary>

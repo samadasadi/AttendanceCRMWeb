@@ -6,7 +6,7 @@
         <Alias>AttendanceList</Alias>
         <BusinessObjects isList="true" count="0" />
         <Category />
-        <Columns isList="true" count="28">
+        <Columns isList="true" count="22">
           <value>DayStr,System.String</value>
           <value>DateEnFa,System.String</value>
           <value>EnterTime,System.String</value>
@@ -29,16 +29,9 @@
           <value>MissionDayStr,System.String</value>
           <value>MissionHourStr,System.String</value>
           <value>VacationsHourStr,System.String</value>
-          <value>EnterChangebyPerson,System.Boolean</value>
-          <value>EnterChangebyPerson2,System.Boolean</value>
-          <value>EnterChangebyPerson3,System.Boolean</value>
-          <value>LeaveChangebyPerson,System.Boolean</value>
-          <value>LeaveChangebyPerson2,System.Boolean</value>
-          <value>LeaveChangebyPerson3,System.Boolean</value>
         </Columns>
         <Dictionary isRef="1" />
         <Guid>f6aa94f99e8f4d7085e7fb7aaf3072d4</Guid>
-        <Key>db37e1ddd35f412784d7018cb86e372f</Key>
         <Name>AttendanceList</Name>
       </AttendanceList>
       <InformationGlobalReport Ref="3" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
@@ -56,7 +49,6 @@
         </Columns>
         <Dictionary isRef="1" />
         <Guid>ddadf872288c42ebb5bbbe90f61637ce</Guid>
-        <Key>4fe75132081d436ebdade45998793275</Key>
         <Name>InformationGlobalReport</Name>
       </InformationGlobalReport>
       <PersonelInfo Ref="4" type="Stimulsoft.Report.Dictionary.StiBusinessObject" isKey="true">
@@ -234,12 +226,12 @@
           <Components isList="true" count="71">
             <Text2 Ref="14" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.2,0.02,2.2,0.6</ClientRectangle>
+              <ClientRectangle>0,0.02,3.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,8</Font>
               <Guid>d98982a5c60f4b13a3b56a75b9d5e862</Guid>
-              <HorAlignment>Right</HorAlignment>
+              <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text2</Name>
               <Page isRef="5" />
@@ -252,7 +244,7 @@
             </Text2>
             <Text4 Ref="15" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>2.4,0.02,1.6,0.6</ClientRectangle>
+              <ClientRectangle>3.6,0.02,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,8,Bold</Font>
@@ -270,12 +262,12 @@
             </Text4>
             <Text10 Ref="16" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>0.2,0.62,2.2,0.6</ClientRectangle>
+              <ClientRectangle>0,0.62,3.6,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,8</Font>
               <Guid>1af69736da9c462e9e5f3b8c9281d749</Guid>
-              <HorAlignment>Right</HorAlignment>
+              <HorAlignment>Center</HorAlignment>
               <Margins>0,0,0,0</Margins>
               <Name>Text10</Name>
               <Page isRef="5" />
@@ -288,7 +280,7 @@
             </Text10>
             <Text11 Ref="17" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>2.4,0.62,1.6,0.6</ClientRectangle>
+              <ClientRectangle>3.6,0.62,2.2,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,8,Bold</Font>
@@ -306,7 +298,7 @@
             </Text11>
             <Text25 Ref="18" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>19.8,0,6.6,0.6</ClientRectangle>
+              <ClientRectangle>22.6,0,3.8,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,8</Font>
@@ -771,7 +763,7 @@
             </Text17>
             <Text53 Ref="43" type="Text" isKey="true">
               <Brush>Transparent</Brush>
-              <ClientRectangle>19.8,0.6,6.6,0.6</ClientRectangle>
+              <ClientRectangle>22.6,0.6,3.8,0.6</ClientRectangle>
               <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,8</Font>
@@ -1591,9 +1583,7 @@
               <Border>Left, Right;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>24.2,0,1.2,0.4</ClientRectangle>
-              <Conditions isList="true" count="1">
-                <value>AttendanceList.EnterChangebyPerson,EqualTo,true,,Boolean,[0:112:192],Transparent,Arial_x002C_8_x002C_Underline,True,False,,,All</value>
-              </Conditions>
+              <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,7</Font>
               <Guid>40c5609a7f5142d89dcdacfd969a1f91</Guid>
@@ -1612,9 +1602,7 @@
               <Border>Left, Right;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>23,0,1.2,0.4</ClientRectangle>
-              <Conditions isList="true" count="1">
-                <value>AttendanceList.LeaveChangebyPerson,EqualTo,true,,Boolean,[0:112:192],Transparent,Arial_x002C_8_x002C_Underline,True,False,,,All</value>
-              </Conditions>
+              <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,7</Font>
               <Guid>a51a2bd88359466dbd86650f0a96b0e9</Guid>
@@ -1709,9 +1697,7 @@
               <Border>Left, Right;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>21.8,0,1.2,0.4</ClientRectangle>
-              <Conditions isList="true" count="1">
-                <value>AttendanceList.EnterChangebyPerson2,EqualTo,true,,Boolean,[0:112:192],Transparent,Arial_x002C_8_x002C_Underline,True,False,,,All</value>
-              </Conditions>
+              <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,7</Font>
               <Guid>deee6075011d44109f67ff9fad6008ae</Guid>
@@ -1730,9 +1716,7 @@
               <Border>Left, Right;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>20.6,0,1.2,0.4</ClientRectangle>
-              <Conditions isList="true" count="1">
-                <value>AttendanceList.LeaveChangebyPerson2,EqualTo,true,,Boolean,[0:112:192],Transparent,Arial_x002C_8_x002C_Underline,True,False,,,All</value>
-              </Conditions>
+              <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,7</Font>
               <Guid>1f4a6ccb36ff422fb3e2c197994f42f9</Guid>
@@ -1751,9 +1735,7 @@
               <Border>Left, Right;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>19.4,0,1.2,0.4</ClientRectangle>
-              <Conditions isList="true" count="1">
-                <value>AttendanceList.EnterChangebyPerson3,EqualTo,true,,Boolean,[0:112:192],Transparent,Arial_x002C_8_x002C_Underline,True,False,,,All</value>
-              </Conditions>
+              <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,7</Font>
               <Guid>c72890e0a803494880e06b8e1316c15e</Guid>
@@ -1772,9 +1754,7 @@
               <Border>Left, Right;Black;1;Solid;False;4;Black</Border>
               <Brush>Transparent</Brush>
               <ClientRectangle>18.2,0,1.2,0.4</ClientRectangle>
-              <Conditions isList="true" count="1">
-                <value>AttendanceList.LeaveChangebyPerson3,EqualTo,true,,Boolean,[0:112:192],Transparent,Arial_x002C_8_x002C_Underline,True,False,,,All</value>
-              </Conditions>
+              <Conditions isList="true" count="0" />
               <Expressions isList="true" count="0" />
               <Font>Tahoma,7</Font>
               <Guid>3b3afd7544f74a63bd7b05593d5a700f</Guid>
@@ -1956,8 +1936,8 @@
         <GroupFooterBand1 Ref="105" type="GroupFooterBand" isKey="true">
           <Border>All;Black;1;Solid;False;4;Black</Border>
           <Brush>Transparent</Brush>
-          <ClientRectangle>0,8,28.7,1.6</ClientRectangle>
-          <Components isList="true" count="7">
+          <ClientRectangle>0,8,28.7,1.2</ClientRectangle>
+          <Components isList="true" count="6">
             <Text56 Ref="106" type="Text" isKey="true">
               <Brush>Transparent</Brush>
               <ClientRectangle>25.89,0,2.8,0.7</ClientRectangle>
@@ -2061,23 +2041,6 @@
               <Type>Expression</Type>
               <VertAlignment>Center</VertAlignment>
             </Text98>
-            <Text102 Ref="112" type="Text" isKey="true">
-              <Brush>Transparent</Brush>
-              <ClientRectangle>19.2,1.2,9.4,0.3</ClientRectangle>
-              <Conditions isList="true" count="0" />
-              <Expressions isList="true" count="0" />
-              <Font>Tahoma,7</Font>
-              <Guid>0f28ebe4508b4df9acfab73cf4fb4585</Guid>
-              <Margins>0,0,0,0</Margins>
-              <Name>Text102</Name>
-              <Page isRef="5" />
-              <Parent isRef="105" />
-              <Text>تایم هایی که زیرشان خط کشیده شده، بصورت دستی ثبت شده اند یا تغییر یافته اند</Text>
-              <TextBrush>Black</TextBrush>
-              <TextOptions>,,RightToLeft=True,,,A=0</TextOptions>
-              <Type>Expression</Type>
-              <VertAlignment>Center</VertAlignment>
-            </Text102>
           </Components>
           <Conditions isList="true" count="0" />
           <Expressions isList="true" count="0" />
@@ -2109,10 +2072,10 @@
     <value>Stimulsoft.Report.Dll</value>
   </ReferencedAssemblies>
   <ReportAlias>Report</ReportAlias>
-  <ReportChanged>9/18/2021 5:00:08 PM</ReportChanged>
+  <ReportChanged>8/24/2021 5:55:39 PM</ReportChanged>
   <ReportCreated>12/17/2017 12:32:00 AM</ReportCreated>
-  <ReportFile>D:\00_WorkSpace\06_MinadentMVC\_Source\Minadent_Clinic\Presentation\WebUI\App_Data\StimulSoftReport\TotalPerformancecPersonal.mrt</ReportFile>
-  <ReportGuid>835bc4c11fc1432eb9086d5557a036d3</ReportGuid>
+  <ReportFile>D:\00_WorkSpace\09_AttendanceSystem\_Source\AttendanceCRM\Presentation\Attendance\Report\TotalPerformancecPersonal.mrt</ReportFile>
+  <ReportGuid>94c29f51888d4477a1a7d0fabb7a4be1</ReportGuid>
   <ReportName>Report</ReportName>
   <ReportUnit>Centimeters</ReportUnit>
   <ReportVersion>2021.3.6.0</ReportVersion>

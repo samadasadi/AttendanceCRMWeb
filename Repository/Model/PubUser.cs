@@ -84,9 +84,15 @@ namespace Repository.Model
         public Guid? SignFileId { get; set; }
 
 
-        public bool? IsCallerActive { get; set; }
 
-        public string PrinterName { get; set; }
+
+        public bool? TarkeKar { get; set; }
+
+        public DateTime? TarkeKarDateEn { get; set; }
+
+        public string TarkeKarReason { get; set; }
+
+        public int? Rotbe { get; set; }
 
 
         public int ChatStatus { get; set; }

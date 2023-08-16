@@ -1,0 +1,114 @@
+﻿
+@using System
+@using System.Collections.Generic
+@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@model ViewModel.BasicInfo.CostVm
+
+@{
+    ViewBag.Title = "Create";
+
+    //Create By Mobin
+    var companyCode = "0" + ((int)Utility.PublicEnum.CodingEnum.Company).ToString();
+    var labCode = "0" + ((int)Utility.PublicEnum.CodingEnum.CostLabretory).ToString();
+    var doctorCode = "0" + ((int)Utility.PublicEnum.CodingEnum.DoctorsRights).ToString();
+    var assistantCode = "0" + ((int)Utility.PublicEnum.CodingEnum.StaffSalaries).ToString();
+}
+
+
+<section class="content">
+    <form id="CostFrm" class="col-md-12 form-horizontal">
+
+
+        <input data-val="true" id="IsAccountingKit" name="IsAccountingKit" type="hidden" value="0">
+
+
+        @if (Model != null)
+        {
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.Type)
+            @Html.HiddenFor(m => m.costRefIncomeID)
+            @Html.HiddenFor(m => m.RefvchhdrID)
+        }
+        <div class="col-md-6">
+            @Html.EditorFor(m => m.CostCode)
+            @Html.EditorFor(m => m.costPersonID)
+            @Html.EditorFor(m => m.Price)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(m => m.CommissionAmount)
+            @Html.EditorFor(m => m.CostDateEn)
+            @Html.EditorFor(m => m.Coment)
+            @Html.EditorFor(m => m.Factor_No)
+        </div>
+
+    </form>
+</section>
+
+<script src="~/Scripts/View/CostModal.js?updated=1"></script>
+<script type="text/javascript">
+
+    $('#Price').on('keypress', function (e) {
+        if (e.which != 8 && e.which != 45 && isNaN(String.fromCharCode(e.which)))
+            e.preventDefault();
+    });
+    $('#Price').on('keyup', function (e) {
+        $(this).val(moneyCommaSepWithReturn($(this).val()));
+    });
+
+    $(function () {
+        $('.select2').select2();
+    });
+
+    $(function () {
+        @*Create By Mobin*@
+        if ('@Model.CostCode' == '@doctorCode' || '@Model.CostCode' == '@assistantCode')
+            $('#Factor_No').attr("disabled", true);
+
+        FillCity('@Model.CostCode', "costPersonID",'@Model.costPersonID');
+        //CreateEventChangeNullWithId("DateEnStr");
+
+        MinaDent.Common.AjaxInitialization();
+
+    });
+
+    $("#CostCode").change(function () {
+
+        var code = $("#CostCode").val();
+
+        if (code == "@doctorCode") {
+            FillCity("@doctorCode", "costPersonID");
+            $('#Factor_No').attr("disabled", true);
+        }
+        else if (code == '@assistantCode') {
+            FillCity("@assistantCode", "costPersonID");
+            $('#Factor_No').attr("disabled", true);
+        }
+        else if (code == '@companyCode') {
+            FillCity("@companyCode", "costPersonID");
+        }
+        else if (code == '@labCode') {
+            FillCity("@labCode", "costPersonID");
+        }
+        else
+            FillCity(code, "costPersonID");
+    });
+
+    function FillCity(id, selectId, selectedvalue) {
+
+        if (id !== "" && id != null) {
+            var data = { parentId: id, selected: selectedvalue };
+            FillSelectByAjax("@Url.Action("GetListName")", selectId, data, true, true);
+
+            document.getElementById(selectId).value = selectedvalue;
+        }
+    };
+
+    $(document).ready(function () {
+        MinaDent.CostModal.CostValidation();
+    });
+    function ValidateForm() {
+        $("#CostFrm").data('formValidation').validate();
+    }
+
+</script>

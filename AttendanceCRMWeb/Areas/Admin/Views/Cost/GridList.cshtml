@@ -1,0 +1,29 @@
+﻿
+@using Utility;
+@using Utility.PublicEnum
+@using AttendanceCRMWeb.Helpers
+@using Utility.HtmlHelpers
+
+@model Utility.Utitlies.viewModel<ViewModel.BasicInfo.CostVm>
+
+
+
+        @*@Html.SelectAndText(Model.CommonCustomViewTablePaging.IdComboSelectCount, Resources.Md.Search, Model.CommonCustomViewTablePaging.IdTextSearch, Resources.Md.Registration, "CreateCost(" + "\"" + Model.CommonCustomViewTablePaging.TableIdDiv + "\"" + "," + "\"" + Model.CommonCustomViewTablePaging.IdComboSelectCount + "\"" + "," + "\"" + Model.CommonCustomViewTablePaging.IdTextSearch + "\"" + ");", true, true, true,true, null)*@
+        @Html.Partial("P_GetList_Cost", Model)
+
+
+
+<script type="text/javascript">
+
+    function Filter() {
+        debugger;
+
+        if(MinaDent.CostModal.ValidationFilterPanel())
+            setPagerAjaxTemp_@Model.CommonCustomViewTablePaging.IdTextSearch ($("#@Model.CommonCustomViewTablePaging.IdTextSearch").val(), 1, $('#@Model.CommonCustomViewTablePaging.IdComboSelectCount').val(), 1);
+    }
+
+</script>
+
+
+
+

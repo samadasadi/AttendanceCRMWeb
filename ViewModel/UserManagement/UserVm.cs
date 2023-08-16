@@ -214,17 +214,10 @@ namespace ViewModel.UserManagement
         public Guid? SignFileId { get; set; }
 
 
-        [Display(Name = "فعالسازی ارتباط با سخت افزار")]
-        [UIHint("HorizentalCheckBox")]
-        public bool IsCallerActive { get; set; }
-
 
 
         public string WebCamBase64 { get; set; }
 
-        [Display(Name = "پرینتر")]
-        [UIHint("HorizentalDropdwonR")]
-        public string PrinterName { get; set; }
 
 
 

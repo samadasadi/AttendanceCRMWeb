@@ -440,10 +440,7 @@
                             {
                                 <div onclick="TransactionReauestUser('@Model.Id');" class="btnPreview btnEdit" style="min-width: 100px;">مرخصی/ماموریت</div>
                             }
-                            @if (Service.Consts.Public.CurrentUser.IsTaminPrescription)
-                            {
-                                <div onclick="GetTwoStepDoctorSession('@Model.Id');" class="btnPreview btnEdit" style="min-width: 130px;">تایید دو مرحله ای پزشک</div>
-                            }
+
 
                         </div>
                         <div style="padding-top: 12px;float: left!important;white-space: nowrap; font-size: 106%;font-weight: bold;padding-bottom: 4px;">کد پرسنلی : @Model.EmployeeID</div>
@@ -476,16 +473,13 @@
                         </div>
                         <div style="width: 65%;float: right;padding-bottom: 5px;line-height: 25px;">
                             <div style="padding-right: 10px;">
-                                <div>
-                                    <span id="head_cus_name" style="white-space: nowrap;display: inline-block;font-size: 15px;padding-right: 6px;font-weight: bold;"> @Model.Name @Model.Family </span>
-                                </div>
+                                <div><span id="head_cus_name" style="white-space: nowrap;display: inline-block;font-size: 15px;padding-right: 6px;font-weight: bold;"> @Model.Name @Model.Family </span></div>
                                 <div><span id="head_cus_title">@Model.NationalCode</span></div>
                                 <div id="head_cus_activity"></div>
                                 <div><a id="head_cus_company" class="nolink" cus_code2="" tag="1"></a></div>
                             </div>
                             <div class="description" style="margin-top: 10px;"></div>
-                            <div class="contant_group">
-                            </div>
+                            <div class="contant_group"></div>
                         </div>
 
                         <div style="text-align: left;line-height: 23px;overflow: hidden;">

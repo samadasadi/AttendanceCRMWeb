@@ -6,7 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Utility;
+using Utility.EXT;
 using Utility.PublicEnum;
+using Utility.PublicEnum.Attendance;
 
 namespace ViewModel.UserManagement.Attendance
 {
@@ -22,6 +24,7 @@ namespace ViewModel.UserManagement.Attendance
         public Guid PersonId { get; set; }
         public List<NormalJsonClass> Personel_Lists { get; set; }
 
+        public bool CalcEzafeBeforeVoroud { get; set; }
 
         public int UserId { get; set; }
         public int DeviceGroupId { get; set; }
@@ -30,9 +33,14 @@ namespace ViewModel.UserManagement.Attendance
         public string Name { get; set; }
 
 
+        public bool? TarkeKar { get; set; }
+
+        public DateTime? TarkeKarDateEn { get; set; }
+
+
         [DisplayName("از تاریخ")]
         [UIHint("HorizentalCompleteDateTimeTextBox")]
-        public DateTime? FromDate { get; set; }
+        public DateTime? FromDate { get; set; } = DateTime.Now.AddMonths(-1);
         public string FromDateStr
         {
             get
@@ -44,7 +52,7 @@ namespace ViewModel.UserManagement.Attendance
 
         [DisplayName("تا تاریخ")]
         [UIHint("HorizentalCompleteDateTimeTextBox")]
-        public DateTime? ToDate { get; set; }
+        public DateTime? ToDate { get; set; } = DateTime.Now;
         public string ToDateStr
         {
             get
@@ -96,6 +104,11 @@ namespace ViewModel.UserManagement.Attendance
         public int Hour4 { get; set; }
 
 
+        [DisplayName("نوع گزارش")]
+        [UIHint("HorizentalDropdwonR")]
+        public SystemReportType SystemReportType { get; set; }
+        public List<NormalJsonClass> SystemReportTypeList { get { return EnumHelper<SystemReportType>.EnumToNormalJsonClass(); } }
+
 
 
         /// <summary>
@@ -127,5 +140,20 @@ namespace ViewModel.UserManagement.Attendance
 
         public NormalJsonClass UserGroup { get; set; }
         public NormalJsonClass ShiftWork { get; set; }
+
+
+
+
+
+
+
+
+
+
+
+        public bool SetExitAttRecord { get; set; }
+        public int NaharTime { get; set; }
+
     }
+
 }

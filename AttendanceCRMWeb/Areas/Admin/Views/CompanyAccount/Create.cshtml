@@ -1,0 +1,142 @@
+﻿@using System
+@using System.Collections.Generic
+@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@model ViewModel.BasicInfo.CompanyAccountVm
+
+@{
+    ViewBag.Title = "Create";
+
+    //Create By Mobin
+    var companyCode = "0" + ((int)Utility.PublicEnum.CodingEnum.Company).ToString();
+
+    //SalaryDoctor
+    var salaryDoctor = "0" + ((int)Utility.PublicEnum.CodingEnum.DoctorsRights).ToString();
+
+    //SalaryDasyar
+    var salaryDasyar = "0" + ((int)Utility.PublicEnum.CodingEnum.StaffSalaries).ToString();
+
+    string accountParties = "0150103";
+}
+
+
+<section class="content">
+    <form id="CompanyFrm" class="col-md-12 form-horizontal">
+        <div class="col-md-6">
+
+            @if (Model != null)
+            {
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.Exported)
+                @Html.HiddenFor(m => m.Selected)
+            }
+
+            <div class="form-group card">
+                <div class="card-body p-2">
+
+                    <input @string.Format("{0}", Model.costInCode == salaryDoctor ? "Checked" : "") id="rbDoc" name="costInCode" type="radio" value="@salaryDoctor">
+                    <label for="rbDoc">@Resources.Md.insuranceEmployeeID</label>
+                    &nbsp;&nbsp;
+
+                    <input @string.Format("{0}", Model.costInCode == salaryDasyar ? "Checked" : "") id="rbPersonel" name="costInCode" type="radio" value="@salaryDasyar">
+                    <label for="rbPersonel">@Resources.Md.Personnel</label>
+                    &nbsp;&nbsp;
+
+                    <input @string.Format("{0}", Model.costInCode == companyCode ? "Checked" : "") id="rbCompany" name="costInCode" type="radio" value="@companyCode">
+                    <label for="rbCompany">@Resources.Md.companies</label>
+                    &nbsp;&nbsp;
+
+                    <input @string.Format("{0}", Model.costInCode == accountParties ? "Checked" : "") id="rbAccountParties" name="costInCode" type="radio" value="@accountParties">
+                    <label for="rbAccountParties">طرف های حساب</label>
+
+                </div>
+            </div>
+
+            @Html.EditorFor(m => m.costPersonID)
+            @Html.EditorFor(m => m.DateEn)
+            @Html.EditorFor(m => m.Price)
+
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(m => m.Factor_No)
+            @Html.EditorFor(m => m.Coment)
+        </div>
+
+
+
+
+    </form>
+</section>
+
+
+
+
+
+
+
+<script src="@Url.Content("~/assets/global/plugins/icheck/icheck.min.js")"></script>
+<script type="text/javascript">
+    $('#Price').on('keypress', function (e) {
+        if (e.which != 8 && e.which != 45 && isNaN(String.fromCharCode(e.which)))
+            e.preventDefault();
+    });
+    $('#Price').on('keyup', function (e) {
+        $(this).val(moneyCommaSepWithReturn($(this).val()));
+    });
+    $(function () {
+        $('.select2').select2();
+    });
+    //$("#DateEnStr").change(function () {
+    //
+    //    $("#DateEnStr").trigger('Select');
+    //    $("#DateEn").trigger('change');
+    //    $("#DateEn").val(this.value);
+    //});
+    //End Date
+
+    $(function () {
+       // MinaDent.Common.iCheckStyleGreen(e,n)
+        MinaDent.Common.AjaxInitialization();
+
+        @*Create By Mobin*@
+        //CreateEventChangeNullWithId("DateEnStr");
+    });
+
+
+    $("#rbDoc").change(function () {
+
+        FillCity("0120202", "costPersonID");
+    });
+
+    $("#rbPersonel").change(function () {
+
+        FillCity("0120203", "costPersonID");
+    });
+
+    $("#rbCompany").change(function () {
+
+        FillCity("015132", "costPersonID");
+    });
+
+    $("#rbAccountParties").change(function () {
+
+        FillCity("@accountParties", "costPersonID");
+    });
+
+    function FillCity(id, selectId, selectedvalue) {
+        if (id !== "" && id != null) {
+            var data = { parentId: id, selected: selectedvalue };
+            FillSelectByAjax("@Url.Action("GetListName")", selectId, data, true, true);
+
+            document.getElementById(selectId).value = selectedvalue;
+        }
+    }
+
+    $(document).ready(function () {
+        MinaDent.CompanyAccountModal.CompanyCreateValidation();
+    });
+    function ValidateForm() {
+        $("#CompanyFrm").data('formValidation').validate();
+    }
+
+</script>

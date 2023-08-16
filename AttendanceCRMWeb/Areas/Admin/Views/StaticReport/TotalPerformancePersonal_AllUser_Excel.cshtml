@@ -1,0 +1,46 @@
+﻿@using Utility.HtmlHelpers
+@using System
+@using System.Collections.Generic
+@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@using ViewModel.UserManagement.Attendance;
+@model  ReportParameter
+
+
+@{
+    ViewBag.Title = "گزارش دفتر کل";
+}
+
+
+
+
+@using (Html.BsPanelWithCloseAndMinimize("گزارش دفتر کل", colorPanel: ColorPanel.purple))
+{
+    <form class="row form-horizontal" id="reportParameter">
+
+
+        <div class="col-md-12 mb-3">
+            <div class="col-md-4">
+                @Html.EditorFor(x => x.PersonId)
+            </div>
+            <div class="col-md-4">
+                @Html.EditorFor(x => x.FromDate)
+                @Html.EditorFor(x => x.ToDate)
+            </div>
+
+        </div>
+
+    </form>
+    @Html.Partial("ShowReportButtonPartial")
+}
+
+
+@Html.Partial("P_Report_Area", viewData: new ViewDataDictionary {
+{ Utility.PublicEnum.EnumForReportAreaView.UrlReport.ToString(), "TotalPerformancePersonal_AllUser_Excel_Report" },
+{ Utility.PublicEnum.EnumForReportAreaView.ShowScriptFromDateAndToDate.ToString(), true },
+{ Utility.PublicEnum.EnumForReportAreaView.SetConfigureDateComponent.ToString(), true },
+{ Utility.PublicEnum.EnumForReportAreaView.SetAttributeForDivReportView.ToString(), true },
+{ Utility.PublicEnum.EnumForReportAreaView.ShowNotification.ToString(), true } })
+
+
+

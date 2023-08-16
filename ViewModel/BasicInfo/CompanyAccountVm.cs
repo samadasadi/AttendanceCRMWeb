@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Utility.Utitlies;
 using Utility;
+using Utility.EXT;
+using Utility.PublicEnum;
 
 namespace ViewModel.BasicInfo
 {
@@ -74,6 +76,19 @@ namespace ViewModel.BasicInfo
         public int? costInUserID { get; set; }
         public Guid costUserID { get; set; }
         public string UserName { get; set; }
+
+
+        public string vchhdrNo { get; set; }
+
+        public CompanyAccountType CompanyAccountType
+        {
+            get
+            {
+                return this.RefvchhdrID == null || RefvchhdrID == 0 ?
+                    CompanyAccountType.CompanyAccount : CompanyAccountType.Warehouse;
+            }
+        }
+        public string CompanyAccountTypeStr { get { return EnumHelper<CompanyAccountType>.GetDisplayValue(this.CompanyAccountType); } }
 
         public bool? Exported { get; set; }
         public bool? Selected { get; set; }

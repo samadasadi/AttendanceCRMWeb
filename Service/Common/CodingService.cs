@@ -143,6 +143,7 @@ namespace Service.Common
             }
             return strMessage;
         }
+
         /// <summary>
         /// این متد برای این است که به هیچ عنوان نتواند آیتم های دارو یا آزمایش را تغییر بدهد
         /// </summary>
@@ -159,6 +160,7 @@ namespace Service.Common
                 return string.Format("امکان {0} این درخواست وجود ندارد", strOperationMessage);
             return string.Empty;
         }
+
         public async Task<IEnumerable<CodingVm>> GetAll()
         {
             try
@@ -190,25 +192,7 @@ namespace Service.Common
                 throw ex;
             }
         }
-        //public async Task<IEnumerable<CodingVm>> GetAll()
-        //{
 
-        //    var res = (await _repo.GetAll())
-        //        .AsEnumerable()
-        //        .Select(z => new CodingVm()
-        //        {
-        //            code = z.code,
-        //            FaName = z.FaName,
-        //            name = z.name,
-        //            CodeCanGrow = z.CodeCanGrow,
-        //            CodeActive = z.CodeActive,
-        //            Assistance = (z.Assistance == true ? true : false),
-        //            len = z.len,
-        //            level = z.level,
-        //            WorkFlow = z.WorkFlow == null ? false : true,
-        //        });
-        //    return res;
-        //}
         public async Task<IEnumerable<CodingVm>> GetAllChild(string code, int levelNum)
         {
             var model = await _repo.Find(code);
@@ -229,6 +213,7 @@ namespace Service.Common
             }).ToList();
             return res;
         }
+
         public async Task<IEnumerable<CodingVm>> GetAllFormChild(string code, int levelNum)
         {
             var model = await _repo.Find(code);
@@ -245,7 +230,7 @@ namespace Service.Common
                 });
             return res;
         }
-        /* فرم های اضافه شده در بالای پرونده بیمار را استخراج می کند.  */
+
         public async Task<IEnumerable<CodingVm>> GetAllFormChild_CustomerTab(string code)
         {
             var model = await _repo.Find(code);
@@ -265,7 +250,6 @@ namespace Service.Common
             return res;
         }
 
-        /* مشخصات فرم های ثبت شده رو برمی گردونه.  */
         public async Task<IEnumerable<CodingVm>> GetAllChildFormBuilderTrue(string code, int levelNum)
         {
             var model = await _repo.Find(code);
@@ -284,7 +268,6 @@ namespace Service.Common
             return res;
         }
 
-        /*  vp. استخرج ایتم های هینت منوی بالای پرونده بیمار*/
         public async Task<IEnumerable<CodingVm>> GetAllChildFormBuilder(string code, int levelNum)
         {
             var model = await _repo.Find(code);
@@ -303,7 +286,6 @@ namespace Service.Common
             return res;
         }
 
-        /* استخراج آیتم های جدول کدینگ بر حسب آرگومان های code , levelNum.  */
         public async Task<IEnumerable<CodingVm>> GetAllChildWhitWorkFlow(string code, int levelNum)
         {
             var model = await _repo.Find(code);
@@ -345,7 +327,6 @@ namespace Service.Common
             return res;
         }
 
-        /* تمام زیرمجموعه های فرم های ساخته شده رو برمیگردونه.  */
         public async Task<IEnumerable<CodingVm>> GetAllChildFormBuilder(string code)
         {
             var model = await _repo.Find(code);
@@ -597,8 +578,6 @@ namespace Service.Common
             return code;
         }
 
-
-
         public async Task<IEnumerable<CodingVm>> GetAllChildWithoutLevel(string code)
         {
             var model = await _repo.Find(code);
@@ -616,18 +595,14 @@ namespace Service.Common
         }
 
 
-
         #region CustomerClub
+
 
         public async Task<Coding> FindByCode(string code)
         {
             return await _repo.First(p => p.code.Equals(code));
         }
 
-
-
-
-        //لیست سرفصل اقدام لابراتوار را برمیگرداند
         public async Task<List<NormalJsonClass>> GetLaboratoryServiceList()
         {
             var res = (await GetAllChild("019", 2)).Select(
@@ -640,7 +615,7 @@ namespace Service.Common
                 }).OrderBy(m => m.Number).ToList();
             return res;
         }
-        //لیست شرح اقدام لابراتوار را بر میگرداند
+
         public async Task<List<NormalJsonClass>> GetLaboratoryServiceDetail(string serviceId)
         {
             var res = (await GetAllChild(serviceId, 1)).Select(
@@ -654,19 +629,29 @@ namespace Service.Common
             return res;
         }
 
-
         public async Task<IEnumerable<CodingVm>> GetChild(Filter_CodingVm model)
         {
             if (model == null || string.IsNullOrEmpty(model.Code)) return new List<CodingVm>();
             var q = await _repo.Find(model.Code);
-            return await _repoCoding.RunQuery<CodingVm>(string.Format(@"EXEC [dbo].[getListCodings],
-            @code = '{1}',@From = {2},@To = {3}, @txtKey = {4},@level = {5}" , (q.code == "030" ? "03" : q.code), (model.PageNum == 1 ? 1 : ((model.PageNum * model.PageSize) - model.PageSize)), model.PageNum * model.PageSize, string.IsNullOrEmpty(model.Search) ? "NULL" : "'" + model.Search + "'", q.level + 1));
+            return await _repoCoding.RunQuery<CodingVm>(
+                string.Format("EXEC [dbo].[getListCodings], " +
+                "@code = '{1}'," +
+                "@From = {2}," +
+                "@To = {3}," +
+                "@txtKey = {4}," +
+                "@level = {5}" , 
+                (q.code == "030" ? "03" : q.code), 
+                (model.PageNum == 1 ? 1 : ((model.PageNum * model.PageSize) - model.PageSize)), 
+                model.PageNum * model.PageSize, 
+                string.IsNullOrEmpty(model.Search) ? "NULL" : "'" + model.Search + "'", q.level + 1));
         }
+
         public async Task<int> CountAll_GetChild(Filter_CodingVm model)
         {
             var lst = await GetChild(model);
             return lst.Count() > 0 ? lst.FirstOrDefault().CountAllForPageing : 0;
         }
+
 
         #endregion
 
@@ -683,8 +668,6 @@ namespace Service.Common
                 }).ToList();
             return _model;
         }
-
-
 
         public async Task<List<NormalJsonClass>> GetAccountPartiesList(CodingVm entity)
         {

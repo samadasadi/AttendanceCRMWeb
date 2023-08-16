@@ -1320,12 +1320,12 @@ var CurrentFocus_Search;
 
 //  TextControl :   --------------------------------------------------------    کنترلی که جستجو روی آن انجام میشود
 //  type :          GET or POST
-//  url :           "/BasicInfo/CustomerInfo/searchSalamatServices" --------    آدرس جستجوی مقدار
+//  url :           "/Admin/CustomerInfo/searchSalamatServices" --------    آدرس جستجوی مقدار
 //  data :          { nationalNumberStr: _text }
 //  iswait :        true or false   ----------------------------------------    نمایش یا عدم نمایش لودینگ
 //  selectedId :    "CustomerId"    ----------------------------------------    قرار دادن مقدار انتخاب شده در این فیلد
 //  isHref :        true or false   ----------------------------------------    بعد از انتخاب یک مورد، در صفحه جدید باز شود یا خیر
-//  href_url :      "/BasicInfo/CustomerInfo/Detail/"   --------------------    اگر isHref=true باشد بعد از انتخاب یک مورد از لیست این آدرس در یک صفحه دیگر باز میشود
+//  href_url :      "/Admin/CustomerInfo/Detail/"   --------------------    اگر isHref=true باشد بعد از انتخاب یک مورد از لیست این آدرس در یک صفحه دیگر باز میشود
 function SearchServices(TextControl, type, url, data, iswait, selectedId, isHref, href_url, action_method = null, ajax_actionMethod = null) {
 
     AjaxCallAction(type, url, data, true, function (result) {

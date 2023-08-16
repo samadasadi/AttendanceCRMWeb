@@ -37,15 +37,15 @@
 
         <div class="row">
             @{
-                using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "4"))
+                using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "6"))
                 {
                     @HtmlExtenstions.BsBox("تعداد اکانت فعال", _userCount.ToString(), ColorBox.red, Icons.user, "اطلاعات بیشتر")
                 }
-                using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "4"))
+                @*using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "4"))
                 {
                     @HtmlExtenstions.BsBox("تعداد اکانت باقیمانده", (_maxUserCount - _userCount).ToString(), ColorBox.yellow, Icons.user, "اطلاعات بیشتر")
-                }
-                using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "4"))
+                }*@
+                using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "6"))
                 {
                     @HtmlExtenstions.BsBox("تعداد کاربران ثبت شده", (Model != null ? Model.Count().ToString() : ""), ColorBox.green, Icons.user, "اطلاعات بیشتر")
                 }

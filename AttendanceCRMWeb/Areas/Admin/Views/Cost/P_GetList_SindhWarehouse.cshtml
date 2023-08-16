@@ -1,0 +1,40 @@
+﻿
+
+@model Utility.Utitlies.viewModel<ViewModel.WareHousee.WarehouseHeaderVm>
+@using Utility.HtmlHelpers
+@{
+
+}
+
+        <div class="table-responsive">
+            <div id="@Model.CommonCustomViewTablePaging.TableIdDiv">
+                @using (Html.CreateDivForBootstrap())
+                {
+                    @(Html.TableFor<ViewModel.WareHousee.WarehouseHeaderVm>()
+                        .Columns(column =>
+                        {
+                            column.Expression(p => p.Row).Title(Resources.Md.Row);
+                            column.Expression(p => p.SupplierName).Title(Resources.Md.vchhdrSupplier);
+                            column.Expression(p => p.vchhdrNo).Title(Resources.Md.vchhdrNo);
+                            column.Expression(p => p.vchhdrDate).Title(Resources.Md.Date);
+                            column.Expression(p => p.vchhdrComment).Title(Resources.Md.Coment);
+                            column.Expression(p => p.InvoiceNumber).Title(Resources.Md.InvoiceNumber);
+                            column.Expression(p => p.AllSumProductStr).Title("جمع کل");
+                            column.Expression(p => p.IconInUploadOrCheck).Title("");
+
+                                })
+                        .DataSource(Model.TLists)
+                        .ToHtml(isShowButtonDeleteAndUpdate: false, lstIcons: new string[]
+                        {
+                                "IconInUploadOrCheck"
+                        }))
+                    @Html.Partial(Utility.Utitlies.VaribleForName.NamePartialOperationPageing, Model.CommonCustomViewTablePaging)
+                }
+            </div>
+        </div>
+
+
+
+
+
+

@@ -1,0 +1,44 @@
+﻿@using Utility.HtmlHelpers
+
+@model ViewModel.BasicInfo.FilterModelCompanyAccount
+@{
+    Layout = null;
+}
+
+
+
+
+
+
+
+
+<div class="card">
+    <div class="card-header border-0">
+        <h6 class="card-title">طرف های حساب</h6>
+    </div>
+    <div class="card-body">
+        <form id="formFilterCost" class="col-md-12 form-horizontal">
+            @Html.HiddenFor(m => m.Id)
+
+            <div class="col-md-6">
+                @Html.EditorFor(m => m.FromDate)
+                @Html.EditorFor(m => m.Search)
+            </div>
+            <div class="col-md-6">
+                @Html.EditorFor(m => m.ToDate)
+            </div>
+        </form>
+    </div>
+    <div class="card-footer clearfix p-2">
+        <button type="button" class="btn btn-block btn-primary btn-flat mt-2" onclick="return ReloadOpeningDocument_Type(_accTypeId);" style="width:130px;float:left;"><span class="fa fa-filter"></span> @Resources.Md.Filter</button>
+        <div id="divBtnAddNew">
+            <a class="btn btn-block btn-success btn-flat float-right ml-2" style="width:130px;" href="javascript:void(0);" onclick="CreateCompanyAccount('divLists_CompanyAccount','cboSelectCount_CompanyAccount','txtSearch_CompanyAccount');"><span class="fa fa-plus"></span> مورد جدید</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

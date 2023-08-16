@@ -18,8 +18,8 @@ namespace Utility.PublicEnum
         Cost = 11,
         [Display(Name = "طرف های حساب")]
         CompanyAccount = 12,
-        [Display(Name = "بارگزاری اسناد انبار")]
-        Warehouse = 13,
+        //[Display(Name = "بارگزاری اسناد انبار")]
+        //Warehouse = 13,
     }
 
     public enum CostType
@@ -28,8 +28,15 @@ namespace Utility.PublicEnum
         Cost = 1,
         [Display(Name = "طرف های حساب")]
         CompanyAccount = 2,
-        [Display(Name = "اسناد انبار")]
-        Warehouse = 3,
+        //[Display(Name = "اسناد انبار")]
+        //Warehouse = 3,
     }
 
+    public enum CompanyAccountType
+    {
+        [Display(Name = "طرف های حساب")]
+        CompanyAccount = 1,
+        [Display(Name = "اسناد انبار")]
+        Warehouse = 2,
+    }
 }

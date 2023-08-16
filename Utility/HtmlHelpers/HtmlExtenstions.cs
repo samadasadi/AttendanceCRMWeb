@@ -724,7 +724,8 @@ namespace Utility.HtmlHelpers
         Success,
         Warning,
         Danger,
-        Primary
+        Primary,
+        purple
     }
     #endregion
 
