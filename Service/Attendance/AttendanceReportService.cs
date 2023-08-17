@@ -97,24 +97,23 @@ namespace Service.UserManagement.Attendance
     {
 
         #region prop
+
         public Context _context;
-        private IRepository<PubUser> _repoPubUser;
-        private IRepository<PubUser_Shift> _repoPubUser_Shift;
-        private IRepository<FingerTemplate> _repoTEMPLATE;
-        private IRepository<TimeRecords> _repoTimeRecord;
-        private IRepository<Calendar> _repoCalendar;
-        private IRepository<JobTime> _repoJobTime;
-        private IRepository<NewDevice> _repoNewDevice;
-        private IRepository<ShiftWork> _repoShiftWork;
-        private IRepository<TransactionRequest> _repoTransactionRequest;
-        private IRepository<EmployeeAccounting> _repoEmployeeAccounting;
+        private readonly IRepository<Tbl_Cost> _repoCost;
+        private readonly IRepository<PubUser> _repoPubUser;
+        private readonly IRepository<JobTime> _repoJobTime;
+        private readonly IRepository<Calendar> _repoCalendar;
+        private readonly IRepository<NewDevice> _repoNewDevice;
+        private readonly IRepository<ShiftWork> _repoShiftWork;
+        private readonly IRepository<TimeRecords> _repoTimeRecord;
+        private readonly IRepository<FingerTemplate> _repoTEMPLATE;
+        private readonly IRepository<Cost_Incoming> _repoCostIncoming;
+        private readonly IRepository<PubUser_Shift> _repoPubUser_Shift;
         private readonly IRepository<PersonHoghogh> _repoPersonHoghogh;
-        private IRepository<Tbl_Cost> _repoCost;
-        private IRepository<Cost_Incoming> _repoCostIncoming;
+        private readonly IRepository<TransactionRequest> _repoTransactionRequest;
+        private readonly IRepository<EmployeeAccounting> _repoEmployeeAccounting;
 
-
-
-        Guid[] transMorkhasiIds = new Guid[7] {
+        private readonly Guid[] transMorkhasiIds = new Guid[7] {
                     Guid.Parse("F1AC3ACA-C785-23EB-9A89-0EFA126E3C8E"),
                     Guid.Parse("F1AC3ACA-C785-23EB-9A99-0EFA126E3C9E"),
                     Guid.Parse("F1AC3ACA-C785-23EB-1A89-0EFA126E1C7E"),
@@ -123,12 +122,12 @@ namespace Service.UserManagement.Attendance
                     Guid.Parse("F1AC3ACA-C785-23EB-4A89-0EFA126E4C7E"),
                     Guid.Parse("F1AC3ACA-C785-23EB-5A89-0EFA126E5C7E")
                 };
-
-        Guid[] transMamoriyatIds = new Guid[3] {
+        private readonly Guid[] transMamoriyatIds = new Guid[3] {
             Guid.Parse("F1AC3ACA-C785-23EB-9A59-0EFA126E3C5E"),
             Guid.Parse("F1AC3ACA-C785-23EB-9A69-0EFA126E3C6E"),
             Guid.Parse("F1AC3ACA-C785-23EB-9A79-0EFA126E3C7E")
         };
+
         #endregion
 
         #region ctor

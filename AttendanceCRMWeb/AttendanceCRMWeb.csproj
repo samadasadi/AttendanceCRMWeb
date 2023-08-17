@@ -299,6 +299,7 @@
     <Compile Include="Areas\Admin\Controllers\CodingController.cs" />
     <Compile Include="Areas\Admin\Controllers\CompanyAccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\CostController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DeviceController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeeAttendanceController.cs" />
     <Compile Include="Areas\Admin\Controllers\GeneralSettingsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MedicalCenterController.cs" />
@@ -5324,6 +5325,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\Device\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Content\Image\login\" />
     <Folder Include="Helpers\EXT\" />

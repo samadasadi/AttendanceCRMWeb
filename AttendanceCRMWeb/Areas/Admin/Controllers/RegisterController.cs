@@ -28,38 +28,28 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
     {
         private readonly IRegisterService _service;
         private readonly IFileService _fileService;
-        //private readonly IHolidayService _serviceHoliday;
-        //private readonly ITherapyService _therapyService;
         private readonly ICostService _costService;
         private readonly IAttendanceReportService _attendanceReportService;
         private readonly ITransactionRequestService _transactionRequestService;
-        //private readonly IAccountingModelFactory _accountingModelFactory;
 
         protected override string FormName
         {
             get { return Resources.Md.Users; }
         }
 
-        public RegisterController(IRegisterService service,
+        public RegisterController(
+            IRegisterService service,
             IFileService fileService,
-            //ITherapyService therapyService,
             ICostService costService,
             IAttendanceReportService attendanceReportService,
             ITransactionRequestService transactionRequestService
-            //IAccountingModelFactory accountingModelFactory,
-            //IHolidayService serviceHoliday,
-            //ITNPrescriptionService tNPrescriptionService
             )
         {
             _service = service;
             _fileService = fileService;
-            //_serviceHoliday = serviceHoliday;
-            //_therapyService = therapyService;
             _costService = costService;
             _attendanceReportService = attendanceReportService;
             _transactionRequestService = transactionRequestService;
-            //_PrescriptionService = tNPrescriptionService;
-            //_accountingModelFactory = accountingModelFactory;
         }
 
         [CustomAutorizeFilter(Role = new[] { EnumRole.Register })]
