@@ -643,7 +643,12 @@ namespace Service.UserManagement.Attendance
 
 
                 var _user = (await _repoPubUser.Get(x => x.Id == model.PersonId)).FirstOrDefault();
-                if (_user == null) return new AttendanceVM { Error = true, Message = "لطفا کاربر را انتخاب نمایید" };
+                if (_user == null)
+                {
+                    _model.Error = true;
+                    _model.Message = "لطفا کاربر را انتخاب نمایید";
+                    return _model;
+                }
 
 
 
@@ -2000,7 +2005,7 @@ namespace Service.UserManagement.Attendance
                     PageSize = 10000
                 });
 
-                if (reportParameter.ReportType.Id == (int)SystemReportType.TransactionReq_Mamoriyat)
+                if (reportParameter.SystemReportType == SystemReportType.TransactionReq_Mamoriyat)
                 {
                     _model.reportList = _model.reportList.Where(x => transMamoriyatIds.Contains(x.Transaction_Id)).ToList();
                 }
@@ -2428,7 +2433,7 @@ namespace Service.UserManagement.Attendance
         {
             try
             {
-                var _users = await _repoPubUser.Get(x => !x.IsDeleted && (x.UserId == parameter.UserId || parameter.UserId == 0));
+                var _users = (await _repoPubUser.Get(x => !x.IsDeleted && (x.Id == parameter.PersonId || parameter.PersonId == Guid.Empty))).ToList();
                 if (_users != null && _users.Count() > 0)
                 {
                     var _model = new List<AttendanceVM>();
@@ -2441,6 +2446,7 @@ namespace Service.UserManagement.Attendance
                             FromDate = parameter.FromDate,
                             ToDate = parameter.ToDate,
                             UserId = item.UserId ?? 0,
+                            PersonId = parameter.PersonId,
                             CalcEzafeBeforeVoroud = parameter.CalcEzafeBeforeVoroud,
                         });
                         _model.Add(_modelItem);

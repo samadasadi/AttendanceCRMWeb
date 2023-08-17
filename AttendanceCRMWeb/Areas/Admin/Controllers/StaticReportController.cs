@@ -430,7 +430,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
 
 
                 var report = new StiReport();
-                report.Load(Server.MapPath("~/App_Data/StimulSoftReport/TotalPerformancecPersonal.mrt"));
+                report.Load(Server.MapPath("~/App_Data/StimulSoftReport/AttendanceLogRpt.mrt"));
 
                 if (_list != null && _list.timeRecordVms != null && _list.timeRecordVms.Count > 0)
                 {
@@ -450,7 +450,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         #endregion
 
 
-        #region 
+        #region حضورغیاب در بازه زمانی
         public async Task<ActionResult> DailyAttendanceReport()
         {
             var model = new ViewModel.UserManagement.Attendance.ReportParameter();
@@ -488,7 +488,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         #endregion
 
 
-        #region PersonsAreNotExitReport
+        #region افرادی که خروج ندارند
         public async Task<ActionResult> PersonsAreNotExitReport()
         {
             var model = new ViewModel.UserManagement.Attendance.ReportParameter();
@@ -524,7 +524,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         #endregion
 
 
-        #region TransactionReqReport
+        #region گزارش ماموریت و مرخصی پرسنل
         public async Task<ActionResult> TransactionReqReport()
         {
             var model = new ViewModel.UserManagement.Attendance.ReportParameter();
@@ -540,7 +540,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
 
 
                 var report = new StiReport();
-                report.Load(Server.MapPath("~/App_Data/StimulSoftReport/PersonsAreNotExitReport.mrt"));
+                report.Load(Server.MapPath("~/App_Data/StimulSoftReport/MamoriyatReport.mrt"));
 
                 if (_list != null && _list.reportList != null && _list.reportList.Count > 0)
                 {
@@ -560,7 +560,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         #endregion
 
 
-        #region 
+        #region گزارش اکسل عملکرد کلی
         public async Task<ActionResult> TotalPerformancePersonal_AllUser_Excel()
         {
             var model = new ViewModel.UserManagement.Attendance.ReportParameter();
@@ -595,7 +595,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         #endregion
 
 
-        #region 
+        #region سایر گزارشات
         public async Task<ActionResult> OtherAttendanceReport()
         {
             var model = new ViewModel.UserManagement.Attendance.ReportParameter();
