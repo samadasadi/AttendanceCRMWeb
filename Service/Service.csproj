@@ -186,7 +186,6 @@
     <Compile Include="Consts\Session.cs" />
     <Compile Include="Cost\CompanyAccountService.cs" />
     <Compile Include="Cost\CostService.cs" />
-    <Compile Include="DeviceInfo\DeviceInfoService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\EncDec.cs" />
     <Compile Include="Security\FileManagement\FileManagement.cs" />

@@ -10,7 +10,7 @@ using Utility.PublicEnum.Attendance;
 
 namespace ViewModel.UserManagement.Attendance
 {
-    public class NewDeviceVm
+    public class NewDeviceVm:PageingParamer
     {
         public NewDeviceVm()
         {
@@ -18,7 +18,7 @@ namespace ViewModel.UserManagement.Attendance
             deviceHardwareInfo = new DeviceHardwareInformation();
         }
         //public int index { get; set; }
-        public int idn { get; set; }
+        public int Id { get; set; }
 
         [StringLength(50)]
         public string Name { get; set; }
@@ -60,9 +60,10 @@ namespace ViewModel.UserManagement.Attendance
         public bool Selected { get; set; }
 
         public string SerialNumber { get; set; }
+        public string UrlData { get; set; }
 
         #region SDK Prop
-        public int iMachineNumber { get { return this.idn; } }
+        public int iMachineNumber { get { return this.Id; } }
         public int idwErrorCode = 0;
         public int iDeviceTpye = 1;
         public List<string> biometricTypes { get; set; }

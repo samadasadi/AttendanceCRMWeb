@@ -15,7 +15,7 @@ namespace Service.Attendance
 {
     public interface IDeviceInfoService
     {
-        Task<DataModelResult> Save(NewDevice entity);
+        Task<DataModelResult> Save(NewDeviceVm entity);
         Task<NewDevice> GetDeviceInfo(int? id);
         Task<NewDevice> GetDeviceInfobyCode(int? code);
         Task<bool> DeleteDevice(int? id);
@@ -60,17 +60,18 @@ namespace Service.Attendance
 
 
         #region Device Information
-        public async Task<DataModelResult> Save(NewDevice entity)
+        public async Task<DataModelResult> Save(NewDeviceVm entity)
         {
             try
             {
                 var _device = await GetDeviceInfobyCode(entity.Code);
                 #region Add
-                var _model = new NewDevice();
+                var _model = Mapping.GenericMapping<NewDeviceVm, NewDevice>.Map(entity);
+
                 if (entity.Id == 0)
                 {
                     if (_device == null)
-                        await _repoNewDevice.Add(entity);
+                        await _repoNewDevice.Add(_model);
                     else return new DataModelResult { Error = true, Message = "کد دستگاه تکراری است!" };
                 }
                 #endregion
@@ -80,9 +81,9 @@ namespace Service.Attendance
                     var _oldentity = await _repoNewDevice.Find(entity.Id);
                     if (_device == null || (_device != null && _device.Id == entity.Id))
                     {
-                        await _repoNewDevice.Detached(entity);
+                        await _repoNewDevice.Detached(_model);
                         await _repoNewDevice.Detached(_oldentity);
-                        await _repoNewDevice.Update(entity, _oldentity);
+                        await _repoNewDevice.Update(_model, _oldentity);
                     }
                     else
                     {
@@ -101,7 +102,7 @@ namespace Service.Attendance
         {
             try
             {
-                var _query = string.Format(@" update NewDevice set [IP] = N'{0}' where idn = N'{1}' ", entity.IP, entity.idn);
+                var _query = string.Format(@" update NewDevice set [IP] = N'{0}' where idn = N'{1}' ", entity.IP, entity.Id);
                 await _repoNewDevice.ExecuteSqlCommand(_query);
                 return new DataModelResult();
             }
@@ -225,7 +226,7 @@ namespace Service.Attendance
                     entity.pwdCnt != null ? "'" + entity.pwdCnt + "'" : "NULL",
                     entity.oplogCnt != null ? "'" + entity.oplogCnt + "'" : "NULL",
                     entity.faceCnt != null ? "'" + entity.faceCnt + "'" : "NULL",
-                    entity.idn
+                    entity.Id
                     );
                 await _repoNewDevice.ExecuteSqlCommand(_query);
                 return new DataModelResult();
@@ -269,7 +270,7 @@ namespace Service.Attendance
             try
             {
                 var _query = string.Format(@" update NewDevice set GetAutoData = {0} where idn = '{1}' ",
-                    (entity.GetAutoData == true ? "1" : "0"), entity.idn);
+                    (entity.GetAutoData == true ? "1" : "0"), entity.Id);
                 await _repoNewDevice.ExecuteSqlCommand(_query);
                 return new DataModelResult();
             }
@@ -280,8 +281,9 @@ namespace Service.Attendance
         }
         #endregion
 
-        #region User Group
 
+
+        #region User Group
         public async Task<DeviceGroupVm> GetDeviceGroup(int? id)
         {
             try
@@ -326,7 +328,6 @@ namespace Service.Attendance
             }
             return new List<DeviceGroupVm>();
         }
-
         public async Task<DeviceGroup> Save_DeviceGroup(DeviceGroupVm entity)
         {
             try
@@ -386,7 +387,6 @@ namespace Service.Attendance
             }
             return new DataModelResult() { Error = true };
         }
-
         #endregion
 
 
