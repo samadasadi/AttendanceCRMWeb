@@ -4189,6 +4189,8 @@
     <Content Include="Localization\zh-CHT.xml" />
     <Content Include="Media\Document\logo.PNG" />
     <Content Include="Media\Document\NoPhoto.png" />
+    <Content Include="Media\fingerprint-off.png" />
+    <Content Include="Media\fingerprint-on.png" />
     <Content Include="pages\chats\css\Chat.css" />
     <Content Include="pages\chats\css\ChatCenter.css" />
     <Content Include="pages\chats\css\ChatClient.css" />
@@ -4853,6 +4855,9 @@
     <Content Include="Areas\Admin\Views\StaticReport\TransactionReqReport.cshtml" />
     <Content Include="Areas\Admin\Views\StaticReport\TotalPerformancePersonal_AllUser_Excel.cshtml" />
     <Content Include="Areas\Admin\Views\StaticReport\OtherAttendanceReport.cshtml" />
+    <Content Include="Areas\Admin\Views\Device\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Device\P_Device.cshtml" />
+    <Content Include="Areas\Admin\Views\Device\Create.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\chosen\chosen-sprite%402x.png" />
     <Content Include="Scripts\chosen\chosen-sprite.png" />
@@ -5322,10 +5327,10 @@
     <Content Include="Views\Shared\EditorTemplates\OnlyInputDateTimeWithotCol.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\OnlyInputDateTimeWithotColNullAble.cshtml" />
     <Content Include="Views\Shared\RecordsNotFoundToDisplay.cshtml" />
+    <Content Include="Views\Shared\DashboardDeviceList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\Device\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Content\Image\login\" />
     <Folder Include="Helpers\EXT\" />
@@ -5495,7 +5500,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53837</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:53837/</IISUrl>
+          <IISUrl>http://localhost:63838/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

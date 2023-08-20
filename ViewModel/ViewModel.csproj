@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attendance\DeviceEventLogVm.cs" />
     <Compile Include="Attendance\DeviceGroupVm.cs" />
     <Compile Include="Attendance\DeviceTransactionEventVm.cs" />
     <Compile Include="Attendance\PublicViewModel.cs" />

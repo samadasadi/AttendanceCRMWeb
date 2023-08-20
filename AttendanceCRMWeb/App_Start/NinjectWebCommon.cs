@@ -22,6 +22,7 @@ namespace AttendanceCRMWeb.App_Start
     using Service;
     using Service.Attendance;
     using Service.Common;
+    using Service.Consts;
     using Service.Cost;
     //using Service.Accounting;
     //using Service.Basic.Classes.Service.EssentialInfo;
@@ -74,6 +75,9 @@ namespace AttendanceCRMWeb.App_Start
 
                 EngineContext.Create();
                 EngineContext.Replace(kernel);
+
+                var _deviceService = EngineContext.Resolve<IDeviceInfoService>();
+                var _res = _deviceService.LoadDeviceList().Result;
 
                 return kernel;
             }

@@ -119,49 +119,54 @@
         
         code = $('#parentCode').val();
         $('#tree_1').jstree('open_node', code);
+
+        InitModal('', '/Admin/Coding/Add', { id: code },
+            function (result) {
+                AddTolist(idGrid, idComboBox, idTextBox)
+            }, false, true, false, null, null, false, 1000);
         
-        $.ajax({
-            type: "Get",
-            url: "/Admin/Coding/Add",
-            data: { id: code },
-            beforeSend: function () {
-                showWait();
-            },
-            success: function (result) {
-                if (result.statusCode === "301") {
-                    AlertDialog('شما مجوز انجام این عملیات را ندارید', 'خطا');
-                    return;
-                }
-                codingBox = bootbox.dialog({
-                    message: result,
-                    size: 'small',
-                    className: "small",
-                    title: MinaDent.Common.codingTitle,
-                    buttons: {
-                        danger: {
-                            label: MinaDent.Common.cancelBtnTxt,
-                            className: "red",
-                            callback: function () {
-                                activeModal = false;
-                            }
-                        },
-                        main: {
-                            label: MinaDent.Common.addBtnTxt,
-                            className: "blue",
-                            callback: function () {
-                                if (AddTolist(idGrid, idComboBox, idTextBox))
-                                    codingBox.hide();
-                                else
-                                    codingBox.showWaiting();
-                            }
-                        }
-                    }
-                })
-            },
-            complete: function () {
-                hideWait();
-            }
-        });
+        //$.ajax({
+        //    type: "Get",
+        //    url: "/Admin/Coding/Add",
+        //    data: { id: code },
+        //    beforeSend: function () {
+        //        showWait();
+        //    },
+        //    success: function (result) {
+        //        if (result.statusCode === "301") {
+        //            AlertDialog('شما مجوز انجام این عملیات را ندارید', 'خطا');
+        //            return;
+        //        }
+        //        codingBox = bootbox.dialog({
+        //            message: result,
+        //            size: 'small',
+        //            className: "small",
+        //            title: MinaDent.Common.codingTitle,
+        //            buttons: {
+        //                danger: {
+        //                    label: MinaDent.Common.cancelBtnTxt,
+        //                    className: "red",
+        //                    callback: function () {
+        //                        activeModal = false;
+        //                    }
+        //                },
+        //                main: {
+        //                    label: MinaDent.Common.addBtnTxt,
+        //                    className: "blue",
+        //                    callback: function () {
+        //                        if (AddTolist(idGrid, idComboBox, idTextBox))
+        //                            codingBox.hide();
+        //                        else
+        //                            codingBox.showWaiting();
+        //                    }
+        //                }
+        //            }
+        //        })
+        //    },
+        //    complete: function () {
+        //        hideWait();
+        //    }
+        //});
     }
 
     function SaveTreatmentConsiderations() {
@@ -203,49 +208,57 @@
     }
 
     function EditDiv(code, idGrid, idComboBox, idTextBox) {
+
+
+        InitModal('', '/Admin/Coding/Edit', { id: code },
+            function (result) {
+
+                EditTolist(idGrid, idComboBox, idTextBox)
+
+            }, false, true, false, null, null, false, 1000);
         
-        $.ajax({
-            type: "Get",
-            url: "/Admin/Coding/Edit",
-            data: { id: code },
-            beforeSend: function () {
-                showWait();
-            },
-            success: function (result) {
-                if (result.statusCode === "301") {
-                    AlertDialog('شما مجوز انجام این عملیات را ندارید', 'خطا');
-                    return;
-                }
-                codingBox = bootbox.dialog({
-                    message: result,
-                    size: 'small',
-                    className: "small",
-                    title: MinaDent.Common.codingTitle,
-                    buttons: {
-                        danger: {
-                            label: MinaDent.Common.cancelBtnTxt,
-                            className: "red",
-                            callback: function () {
-                                activeModal = false;
-                            }
-                        },
-                        main: {
-                            label: MinaDent.Common.addBtnTxt,
-                            className: "blue",
-                            callback: function () {
-                                if (EditTolist(idGrid, idComboBox, idTextBox))
-                                    codingBox.hide();
-                                else
-                                    codingBox.showWaiting();
-                            }
-                        }
-                    }
-                })
-            },
-            complete: function () {
-                hideWait();
-            }
-        });
+        //$.ajax({
+        //    type: "Get",
+        //    url: "/Admin/Coding/Edit",
+        //    data: { id: code },
+        //    beforeSend: function () {
+        //        showWait();
+        //    },
+        //    success: function (result) {
+        //        if (result.statusCode === "301") {
+        //            AlertDialog('شما مجوز انجام این عملیات را ندارید', 'خطا');
+        //            return;
+        //        }
+        //        codingBox = bootbox.dialog({
+        //            message: result,
+        //            size: 'small',
+        //            className: "small",
+        //            title: MinaDent.Common.codingTitle,
+        //            buttons: {
+        //                danger: {
+        //                    label: MinaDent.Common.cancelBtnTxt,
+        //                    className: "red",
+        //                    callback: function () {
+        //                        activeModal = false;
+        //                    }
+        //                },
+        //                main: {
+        //                    label: MinaDent.Common.addBtnTxt,
+        //                    className: "blue",
+        //                    callback: function () {
+        //                        if (EditTolist(idGrid, idComboBox, idTextBox))
+        //                            codingBox.hide();
+        //                        else
+        //                            codingBox.showWaiting();
+        //                    }
+        //                }
+        //            }
+        //        })
+        //    },
+        //    complete: function () {
+        //        hideWait();
+        //    }
+        //});
     }
 
     function ShowDivProfile(code, idGrid, idComboBox, idTextBox) {
@@ -425,16 +438,36 @@
 
 
     function AddTolist(idGrid, idComboBox, idTextBox) {
-        
+
         var name = $('#name').val();
         if (!CheckNullAddTolist(name)) return false;
-        $.ajax({
-            url: "/Admin/Coding/AddCode",
-            type: 'GET',
-            scriptCharset: "utf-16",
-            contentType: "application/x-www-form-urlencoded; charset=UTF-16",
-            data: $("Form").serialize(),
-            success: function (res) {
+
+
+        debugger;
+        var _deviceId = $("#POS_DeviceId").val();
+        if (_deviceId == '5') {
+            var _serial = $("#POS_SerialNo").val();
+            var _terminal = $("#POS_TerminalId").val();
+            var _acceptor = $("#POS_AcceptorId").val();
+            if (_serial == '' || _serial == undefined || _serial == null) {
+                AlertDialog('شماره سریال را وارد نمایید', '', 'error');
+                return;
+            }
+            if (_terminal == '' || _terminal == undefined || _terminal == null) {
+                AlertDialog('شماره ترمینال را وارد نمایید', '', 'error');
+                return;
+            }
+            if (_acceptor == '' || _acceptor == undefined || _acceptor == null) {
+                AlertDialog('شماره پذیرنده را وارد نمایید', '', 'error');
+                return;
+            }
+        }
+
+        AjaxCallAction('GET', '/Admin/Coding/AddCode', $("Form").serialize(), true,
+            function (res) {
+
+                debugger;
+
                 if (res.Selected) {
                     createNode($('#parentCode').val(), res.Class, name, "last");
                 }
@@ -442,12 +475,11 @@
                     EditNode(name, res.Class);
                 }
                 refreshComponents(idGrid, res.Data, idComboBox, idTextBox);
-            }, error: function () {
-                //AlertDialog("متاسفانه عملیات با موفقیت انجام نشد", "خطا", 'error');
-            }
-        });
-        return true;
+                CloseModal();
+            }, false);
+
     }
+
 
 
     function CheckNullAddProfileTolist() {

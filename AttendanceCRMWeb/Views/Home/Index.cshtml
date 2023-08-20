@@ -1,33 +1,162 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿
+@using Service.Attendance
+@{
+    ViewBag.Title = "داشبورد";
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">داشبورد</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-left">
+                    <li class="breadcrumb-item"><a href="#">خانه</a></li>
+                    <li class="breadcrumb-item active">داشبورد</li>
+                </ol>
+            </div>
+        </div>
     </div>
-</main>
+</div>
+
+
+<div class="col-md-12">
+
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header border-0">
+                <h3 class="card-title">لیست دستگاه ها</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn  btn-block bg-gradient-success btn-flat " onclick="AddDevice()">
+                        <i class="fas fa-plus"></i> افزودن
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row d-flex align-items-stretch" id="DashboardDeviceList">
+                    @Html.Partial("DashboardDeviceList")
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">لیست کارمندان</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+
+            @if (true)
+            {
+                <ul class="users-list clearfix">
+                    @foreach (var ite in new List<string>())
+                    {
+                        <li>
+                            <img src="~/Content/AdminResponsive3.0/dist/img/user1-128x128.jpg" alt="User Image">
+                            <a class="users-list-name" href="#">Alexander Pierce</a>
+                            <span class="users-list-date">Today</span>
+                        </li>
+                    }
+                </ul>
+            }
+
+        </div>
+        <div class="card-footer text-center">
+        </div>
+    </div>
+
+
+</div>
+
+
+<script>
+
+    function ReloadDeviceList() {
+        AjaxCallAction("GET", "/Home/DashboardDeviceList", {}, true,
+            function (res) {
+                if (!res.Error) {
+                    $("#DashboardDeviceList").html(res);
+                }
+                else {
+                    AlertDialog(res.Message, '', 'error');
+                }
+            }, true);
+    }
+    function ImportAllAttLogFromDevice(id) {
+
+        AjaxCallAction("GET", "/Admin/Device/ImportAllAttLogFromDevice", { Id: id }, true,
+            function (res) {
+                debugger;
+
+                if (!res.Error) {
+
+                }
+                else {
+                    AlertDialog(res.Message, '', 'error');
+                }
+
+            }, true);
+
+    }
+    function AddDevice() {
+        InitModal('', '/Admin/Device/Create', {}, function () { SaveDevice() }, false, true);
+    }
+    function EditDevice(id) {
+        InitModal('', '/Admin/Device/Edit', { id: id }, function () { SaveDevice() }, false, true);
+    }
+    function SaveDevice() {
+        var _DeviceName = $("#T_model_Name").val();
+        var _DeviceCode = $("#T_model_Code").val();
+        var _DeviceIP = $("#T_model_IP").val();
+        var _Deviceport = $("#T_model_port").val();
+
+
+        if (_DeviceName == "" || _DeviceName == null || _DeviceName == undefined) {
+            AlertDialog('لطفا عنوان را وارد نمایید', '', 'error');
+            return;
+        }
+        if (_DeviceCode == "" || _DeviceCode == null || _DeviceCode == undefined) {
+            AlertDialog('لطفا کد دستگاه را وارد نمایید', '', 'error');
+            return;
+        }
+        if (_DeviceIP == "" || _DeviceIP == null || _DeviceIP == undefined) {
+            AlertDialog('لطفا آی پی را وارد نمایید', '', 'error');
+            return;
+        }
+        if (_Deviceport == "" || _Deviceport == null || _Deviceport == undefined) {
+            AlertDialog('لطفا پورت را وارد نمایید', '', 'error');
+            return;
+        }
+
+
+
+        AjaxCallAction("POST", "/Admin/Device/Save", $("#DeviceFrm").serialize(), true, function (res) {
+
+            if (!res.Error) {
+                ReloadDeviceList();
+                CloseModal();
+            }
+            else {
+                AlertDialog(res.message, '', 'error');
+            }
+        }, true);
+    }
+    function DeleteDevice() {
+        ConfirmDelete('GET', '/Admin/Device/Delete', { Id: Id },
+            function (result) {
+                ReloadDeviceList();
+            });
+    }
+
+
+</script>
+

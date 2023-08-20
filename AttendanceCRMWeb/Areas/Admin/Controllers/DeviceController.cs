@@ -18,9 +18,11 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
     [RoleFullMedicalCenterFilter(Role = MedicalCenterRole.Attendance)]
     public class DeviceController : BaseController
     {
+
         #region Fields
         private readonly IDeviceInfoService _serviceDeviceInfo;
         #endregion
+
 
         #region ctor
         public DeviceController(
@@ -31,20 +33,21 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         }
         #endregion
 
+
         public async Task<ActionResult> Index()
         {
             var _res = await PrepareAction(
                 new NewDeviceVm
                 {
                     PageNum = 1,
-                    UrlData = "/Admin/Device/P_Calendar",
+                    UrlData = "/Admin/Device/P_Device",
                     PageSize = _selectCount,
                     FirstPage = 1
                 });
             return View(_res);
         }
 
-        #region Calendar
+        #region Device
 
         private async Task<viewModel<NewDeviceVm>> PrepareAction(NewDeviceVm model)
         {
@@ -59,9 +62,9 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
                     list2.CountAll_TLists,
                     "/Admin/Device/Delete",
                     urlEdit: "",
-                    tableIdDiv: "divListsCalendar",
+                    tableIdDiv: "divListsDevice",
                     urlDeleteRows: "/Admin/Device/Delete",
-                    functionWillGoForPageing: "operationAjaxFor_Calendar", firstPage: model.FirstPage);
+                    functionWillGoForPageing: "operationAjaxFor_Device", firstPage: model.FirstPage);
 
                 return list2;
             }
@@ -70,25 +73,24 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
                 throw ex;
             }
         }
-        public async Task<ActionResult> Calendar_Index(int page = 1)
-        {
-            var model = await PrepareAction(new NewDeviceVm { PageNum = page, UrlData = "/Admin/Device/P_Calendar", PageSize = _selectCount, FirstPage = 1 });
-            return Json(this.RenderPartialToString("Calendar_Index", model), JsonRequestBehavior.AllowGet);
-        }
+
+
         [HttpPost]
         [AjaxOnlyFilter]
-        public async Task<ActionResult> P_Calendar(NewDeviceVm model)
+        public async Task<ActionResult> P_Device(NewDeviceVm model)
         {
             try
             {
-                model.UrlData = "/Admin/Device/P_Calendar";
-                return Json(this.RenderPartialToString("P_Calendar", (await PrepareAction(model))), JsonRequestBehavior.AllowGet);
+                model.UrlData = "/Admin/Device/P_Device";
+                return Json(this.RenderPartialToString("P_Device", (await PrepareAction(model))), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+
+
         public async Task<ActionResult> Create()
         {
             try
@@ -96,9 +98,8 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
                 viewModel<NewDeviceVm> result = new viewModel<NewDeviceVm>();
                 result.TLists = new List<NewDeviceVm>();
                 result.T_model = new NewDeviceVm();
-                result.T_model = await _serviceDeviceInfo.GetCalendar(null);
-                SetViewBag_Calendar(result.T_model);
-                //return PartialView(result);
+                result.T_model = await _serviceDeviceInfo.GetDeviceInfo((int?)null);
+                SetViewBag(result.T_model);
                 return Json(this.RenderPartialToString("Create", result), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -106,6 +107,8 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
                 throw ex;
             }
         }
+
+
         public async Task<ActionResult> Edit(int id)
         {
             try
@@ -113,9 +116,8 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
                 viewModel<NewDeviceVm> result = new viewModel<NewDeviceVm>();
                 result.TLists = new List<NewDeviceVm>();
                 result.T_model = new NewDeviceVm();
-                result.T_model = await _serviceDeviceInfo.GetCalendar(id);
-                SetViewBag_Calendar(result.T_model);
-                //return PartialView("Create", result);
+                result.T_model = await _serviceDeviceInfo.GetDeviceInfo((int?)id);
+                SetViewBag(result.T_model);
                 return Json(this.RenderPartialToString("Create", result), JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -123,29 +125,49 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
                 throw ex;
             }
         }
+
+
+        public void SetViewBag(NewDeviceVm model)
+        {
+            ViewData["FPDeviceType"] = new SelectList(model.FPDeviceTypeList, "Value", "Text", model.FPDeviceType);
+        }
+
         [HttpPost]
         public async Task<ActionResult> Save(viewModel<NewDeviceVm> model)
         {
             try
             {
-                await _serviceDeviceInfo.Save(model.T_model);
-                return Json(new { }, JsonRequestBehavior.AllowGet);
+                var _res = await _serviceDeviceInfo.Save(model.T_model);
+                return Json(_res, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+
+
         public async Task<JsonResult> Delete(NewDeviceVm model)
         {
-            await _serviceDeviceInfo.DeleteDevice(model.Id);
-            return Json(true, JsonRequestBehavior.AllowGet);
+            var _res = await _serviceDeviceInfo.DeleteDevice(model.Id);
+            return Json(_res, JsonRequestBehavior.AllowGet);
         }
 
-        public void SetViewBag_Calendar(NewDeviceVm model)
+
+        public async Task<JsonResult> ImportAllAttLogFromDevice(int Id)
         {
-            ViewData["YearsNumber"] = new SelectList(model.YearsNumberList, "Value", "Text", model.YearsNumber);
+            try
+            {
+                var _res = await _serviceDeviceInfo.ImportAllAttLogFromDevice(Id);
+                return Json(_res, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
+
+
         #endregion
     }
 }

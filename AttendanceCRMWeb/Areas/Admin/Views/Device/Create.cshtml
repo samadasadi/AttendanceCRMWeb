@@ -1,0 +1,32 @@
+﻿@using Utility
+@using System
+@using System.Collections.Generic
+@using AttendanceCRMWeb.Helpers
+@using AttendanceCRMWeb.Helpers.Enum
+@using ViewModel.UserManagement.Attendance;
+@model  Utility.Utitlies.viewModel<NewDeviceVm>
+
+@{
+
+}
+
+<form id="DeviceFrm" class="col-md-12 form-horizontal">
+
+    @if (Model != null)
+    {
+        @Html.HiddenFor(m => m.T_model.Id)
+    }
+    <div class="col-md-4">
+        @Html.EditorFor(x => x.T_model.Name)
+        @Html.EditorFor(x => x.T_model.Code)
+    </div>
+    <div class="col-md-4">
+        @Html.EditorFor(x => x.T_model.IP)
+        @Html.EditorFor(x => x.T_model.port)
+    </div>
+    <div class="col-md-4">
+        @Html.EditorFor(x => x.T_model.FPDeviceType)
+    </div>
+
+</form>
+

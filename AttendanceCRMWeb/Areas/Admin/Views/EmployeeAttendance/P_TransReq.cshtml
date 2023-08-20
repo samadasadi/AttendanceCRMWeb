@@ -31,9 +31,9 @@
             {
                 var _color = item.ReqStatus == 2 ? "#28a745" : (item.ReqStatus == 3 ? "#dc3545" : "#000000");
                 <tr>
-                    <td>
-                        <a onclick="EditTransReq('@item.Id')" class="fa fa-edit" title="ویرایش"></a>
-                        <a onclick="DeleteTransReq('@item.Id')" class="fa fa-trash" title="حذف"></a>
+                    <td style="vertical-align:middle; min-width:100px;">
+                        <a class="btn btn-danger btn-sm" onclick="DeleteTransReq('@item.Id')" title="حذف"> <span class="fa fa-trash"></span> </a>
+                        <a class="btn btn-primary btn-sm" onclick="EditTransReq('@item.Id')" title="ویرایش"> <span class="fa fa-trash"></span> ویرایش </a>
                     </td>
                     <td style="min-width:120px;">
                         <div class="form-group">

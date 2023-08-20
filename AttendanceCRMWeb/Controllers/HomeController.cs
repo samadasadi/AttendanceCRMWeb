@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Utility.Utitlies;
 
 namespace AttendanceCRMWeb.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
@@ -18,6 +20,10 @@ namespace AttendanceCRMWeb.Controllers
             ViewBag.Message = "Your application description page.";
 
             return View();
+        }
+        public async Task<JsonResult> DashboardDeviceList()
+        {
+            return Json(this.RenderPartialToString("DashboardDeviceList"), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Contact()

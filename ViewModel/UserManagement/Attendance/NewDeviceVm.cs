@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Utility.EXT;
 using Utility;
 using Utility.PublicEnum.Attendance;
+using System.ComponentModel;
 
 namespace ViewModel.UserManagement.Attendance
 {
@@ -21,14 +22,23 @@ namespace ViewModel.UserManagement.Attendance
         public int Id { get; set; }
 
         [StringLength(50)]
+        [DisplayName("نام")]
+        [UIHint("HorizentalTextBox")]
         public string Name { get; set; }
 
+        [DisplayName("کد")]
+        [UIHint("HorizentalTextBox")]
         public int? Code { get; set; }
         public string DeviceFullName { get { return this.Name + " - " + this.Code; } }
 
+
+        [DisplayName("پورت")]
+        [UIHint("HorizentalTextBox")]
         public int? port { get; set; }
 
         [StringLength(15)]
+        [DisplayName("آی پی")]
+        [UIHint("HorizentalTextBox")]
         public string IP { get; set; }
         public int CommonKey { get; set; }
 
@@ -83,10 +93,10 @@ namespace ViewModel.UserManagement.Attendance
         public DateTime ModifiedDate { get; set; }
         public bool IsDeleted { get; set; }
 
-
-
-
         public int gnCommHandleIndex { get; set; }
+
+        [DisplayName("نوع دستگاه")]
+        [UIHint("HorizentalDropdwonR")]
         public FPDeviceType FPDeviceType { get; set; }
         public List<NormalJsonClass> FPDeviceTypeList { get { return EnumHelper<FPDeviceType>.EnumToNormalJsonClass(); } }
 

@@ -1,0 +1,148 @@
+﻿
+@using AttendanceCRMWeb.Helpers
+@using Utility.HtmlHelpers
+@using ViewModel.UserManagement.Attendance;
+@model  Utility.Utitlies.viewModel<NewDeviceVm>
+
+
+<div class="card">
+    <div class="card-body" id="Device">
+    </div>
+    <div class="card-footer">
+        <div class="form-group">
+            <div class="row" style="float:left;margin-left:10px;">
+                <div style="float:left;padding:5px;min-width: 135px;">
+                    <a class="btn btn-block bg-gradient-secondary btn-flat OperationButton" onclick="CreateDevices()">
+                        <i class="fa fa-plus"></i>
+                        مورد جدید
+                    </a>
+                </div>
+                <div style="float:left;padding:5px;min-width: 135px;">
+                    <a class="btn btn-block bg-gradient-success btn-flat OperationButton" onclick="Save_Device()">
+                        <i class="fa fa-save"></i>
+                        ذخیره 
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="card col-md-12">
+    <div class="card-header">
+        <h6 class="card-title">دستگاه</h6>
+        <div class="card-tools">
+            <div class="btn-group">
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" id="@Model.CommonCustomViewTablePaging.IdTextSearch" type="search" placeholder="جستجو" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-default" onclick="search_@Model.CommonCustomViewTablePaging.IdTextSearch ()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="input-group input-group-sm" style="width:75px;">
+                    <select class="form-control" id="cboSelectCount" name="cboSelectCount" onchange="search_@Model.CommonCustomViewTablePaging.IdTextSearch ()" style="width:75px;margin-right: 5px;">
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body table-responsive p-0" id="@Model.CommonCustomViewTablePaging.TableIdDiv">
+        @Html.Partial("P_Device", Model)
+    </div>
+</div>
+
+
+
+
+<script>
+
+    $(function () {
+        $('.select2').select2();
+
+        CreateDevices();
+    });
+
+    function CreateDevices() {
+        AjaxCallAction("GET", "/Admin/Device/Create", {}, true, function (res) {
+
+            $("#Device").html(res);
+
+        }, true);
+    }
+    function EditDevices(Id) {
+        AjaxCallAction("GET", "/Admin/Device/Edit", { id: Id }, true, function (res) {
+
+            $("#Device").html(res);
+
+        }, true);
+    }
+    function DeleteDevices(Id) {
+
+        ConfirmDelete('GET', '/Admin/Device/Delete', { Id: Id },
+            function (result) {
+                CreateDevices();
+                ReloadDevices();
+            });
+
+    }
+    function Save_Device() {
+
+        var _DeviceName = $("#T_model_Name").val();
+        var _DeviceCode = $("#T_model_Code").val();
+        var _DeviceIP = $("#T_model_IP").val();
+        var _Deviceport = $("#T_model_port").val();
+
+
+        if (_DeviceName == "" || _DeviceName == null || _DeviceName == undefined) {
+            AlertDialog('لطفا عنوان را وارد نمایید', '', 'error');
+            return;
+        }
+        if (_DeviceCode == "" || _DeviceCode == null || _DeviceCode == undefined) {
+            AlertDialog('لطفا کد دستگاه را وارد نمایید', '', 'error');
+            return;
+        }
+        if (_DeviceIP == "" || _DeviceIP == null || _DeviceIP == undefined) {
+            AlertDialog('لطفا آی پی را وارد نمایید', '', 'error');
+            return;
+        }
+        if (_Deviceport == "" || _Deviceport == null || _Deviceport == undefined) {
+            AlertDialog('لطفا پورت را وارد نمایید', '', 'error');
+            return;
+        }
+
+
+
+        AjaxCallAction("POST", "/Admin/Device/Save", $("#DeviceFrm").serialize(), true, function (res) {
+
+            if (!res.Error) {
+                CreateDevices();
+                ReloadDevices();
+            }
+            else {
+                AlertDialog(res.message, '', 'error');
+            }
+        }, true);
+
+    }
+
+    function ReloadDevices() {
+        AjaxCallAction("POST", "/Admin/Device/P_Device", { page: 1 }, true, function (res) {
+
+            if (!res.error) {
+                $("#divListsDevice").html(res);
+            }
+            else {
+                AlertDialog(res.message, '', 'error');
+            }
+        }, true);
+    }
+
+</script>

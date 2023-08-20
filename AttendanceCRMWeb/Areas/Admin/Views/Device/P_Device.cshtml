@@ -1,0 +1,44 @@
+﻿@using ViewModel.UserManagement.Attendance;
+
+@model  Utility.Utitlies.viewModel<NewDeviceVm>
+@{
+    var formSecurity = (ViewModel.Security.FormSecurity)ViewBag.FormSecurity;
+}
+
+
+<table class="table table-hover text-nowrap">
+    <thead>
+        <tr>
+            <th>عملیات</th>
+            <th>کد</th>
+            <th>نام دستگاه</th>
+            <th>آدرس آی پی</th>
+            <th>پورت</th>
+            <th>نوع دستگاه</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model.TLists)
+            {
+                <tr>
+                    <td style="vertical-align:middle; min-width:70px;">
+                        <a class="btn btn-danger btn-sm" href="javascript:void(0)" onclick="DeleteDevices('@item.Id')"><i class="fas fa-trash"></i></a>
+                        <a class="btn btn-info btn-sm" href="javascript:void(0)" onclick="EditDevices('@item.Id')"><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;ویرایش</a>
+                    </td>
+                    <td class="mailbox-name" style="vertical-align:middle;"><a>@item.Code</a></td>
+                    <td class="mailbox-name" style="vertical-align:middle;"><a>@item.Name</a></td>
+                    <td class="mailbox-subject" style="vertical-align:middle;"><b>@item.IP</b></td>
+                    <td class="mailbox-name" style="vertical-align:middle;"><a>@item.port</a></td>
+                    <td class="mailbox-name" style="vertical-align:middle;"><a>@item.FPDeviceType</a></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@Html.Partial(Utility.Utitlies.VaribleForName.NamePartialOperationPageing, Model.CommonCustomViewTablePaging)
+
+
+
+

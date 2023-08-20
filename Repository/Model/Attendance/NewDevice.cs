@@ -5,6 +5,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using Utility.PublicEnum.Attendance;
 
     [Table("NewDevice")]
     public class NewDevice
@@ -16,6 +17,8 @@
         public string Name { get; set; }
 
         public int? Code { get; set; }
+
+        public FPDeviceType FPDeviceType { get; set; }
 
         public int? port { get; set; }
 

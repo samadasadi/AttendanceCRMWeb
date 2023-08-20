@@ -12,9 +12,11 @@ using ViewModel.UserManagement.Attendance;
 using Utility.PublicEnum.Attendance;
 using System.Threading;
 using ViewModel.UserManagement;
+using ViewModel.Attendance;
 
 namespace Service.Attendance
 {
+
 
 
     public class DevicesList
@@ -33,25 +35,25 @@ namespace Service.Attendance
     public interface IFPDevice
     {
         NewDeviceVm _DeviceVm { get; set; }
-        int sta_ConnectTCP();
-        void sta_DisConnect();
-        bool PingDevice();
-        void Run_ImportAttLogFromDevice();
-        void Run_ImportAllAttLogFromDevice();
-        int sta_SetDeviceTime(DateTime dateTime);
-        int sta_SYNCTime();
+        DeviceEventLogVm sta_ConnectTCP();
+        DeviceEventLogVm sta_DisConnect();
+        DeviceEventLogVm PingDevice();
+        DeviceEventLogVm Run_ImportAttLogFromDevice();
+        DeviceEventLogVm Run_ImportAllAttLogFromDevice();
+        DeviceEventLogVm sta_SetDeviceTime(DateTime dateTime);
+        DeviceEventLogVm sta_SYNCTime();
         string sta_GetDeviceDate();
         string sta_GetDeviceTime();
-        int sta_GetCapacityInfo(out int adminCnt, out int userCount, out int fpCnt, out int recordCnt, out int pwdCnt, out int oplogCnt, out int faceCnt);
-        int sta_GetDeviceInfo(out string sFirmver, out string sMac, out string sPlatform, out string sSN, out string sProductTime, out string sDeviceName, out int iFPAlg, out int iFaceAlg, out string sProducter);
-        int SetUserInfo(UserVm user);
-        int sta_GetSeialNumber();
-        int sta_SetUserInfo(UserVm value);
-        int sta_ClearAdmin();
-        int sta_ClearAllLogs();
-        int sta_ClearAllFps();
-        int sta_ClearAllUsers();
-        int sta_ClearAllData();
+        DeviceEventLogVm sta_GetCapacityInfo(out int adminCnt, out int userCount, out int fpCnt, out int recordCnt, out int pwdCnt, out int oplogCnt, out int faceCnt);
+        DeviceEventLogVm sta_GetDeviceInfo(out string sFirmver, out string sMac, out string sPlatform, out string sSN, out string sProductTime, out string sDeviceName, out int iFPAlg, out int iFaceAlg, out string sProducter);
+        DeviceEventLogVm SetUserInfo(UserVm user);
+        DeviceEventLogVm sta_GetSeialNumber();
+        DeviceEventLogVm sta_SetUserInfo(UserVm value);
+        DeviceEventLogVm sta_ClearAdmin();
+        DeviceEventLogVm sta_ClearAllLogs();
+        DeviceEventLogVm sta_ClearAllFps();
+        DeviceEventLogVm sta_ClearAllUsers();
+        DeviceEventLogVm sta_ClearAllData();
 
         List<UserVm> sta_GetAllUserFPInfo();
         bool GetConnectState();
@@ -101,105 +103,102 @@ namespace Service.Attendance
 
         #region Insert Data Into Database
 
-        public DataModelResult AttLog_Save(TimeRecordVm entity)
+        public DeviceEventLogVm AttLog_Save(TimeRecordVm entity)
         {
             try
             {
                 //if (Properties.Settings.Default.AutoSaveAttendance)
-                    //deviceMethodHlper.ExecuteSqlScript(MakeCommand(entity));
+                //deviceMethodHlper.ExecuteSqlScript(MakeCommand(entity));
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
-            return new DataModelResult();
+            return new DeviceEventLogVm();
         }
 
-        public void Run_ImportAttLogFromDevice()
+        public DeviceEventLogVm Run_ImportAttLogFromDevice()
         {
-            try
-            {
-                Run_ImportAttLogFromDeviceFirstway();
-            }
-            catch { }
+            return Run_ImportAttLogFromDeviceFirstway();
         }
         /// <summary>
         /// روش اول چک کردن شماره سریال. با شماره سریال ثبت شده در بخش مدیریت دستگاه ها
         /// </summary>
-        public void Run_ImportAttLogFromDeviceFirstway()
+        public DeviceEventLogVm Run_ImportAttLogFromDeviceFirstway()
         {
             try
             {
                 //if (CurrentUser.CurrentUserS.applicationConfiguration.CheckSNeumber == "1" && string.IsNullOrEmpty(_DeviceVm.SerialNumber))
                 //{
-                //  //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotNotDefined, _DeviceVm.Name, _DeviceVm.Code) });
+                //  return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotNotDefined, _DeviceVm.Name, _DeviceVm.Code) });
                 //    return;
                 //}
-                if (sta_ConnectTCP() == 1)
+                if (sta_ConnectTCP().Error == false)
                 {
                     if (string.IsNullOrEmpty(_DeviceVm.SerialNumber))// اگر شماره سریال ثبت نشده باشد عملیات تخلیه را انجام میدهد
-                        ImportAttLogFromDevice();
+                        return ImportAttLogFromDevice();
                     else
                     {//اگر شماره سریال دستگاه ثبت شده باشد
                         if (string.IsNullOrEmpty(_DeviceVm.deviceHardwareInfo.sSN))
                         {// اگر شماره سریال دستگاه دریافت نشده باشد آن را دریافت میکند و بعد از چک کردن عملیات تخلیه را انجام میدهد
-                            if (sta_GetSeialNumber() == 1)
+                            if (sta_GetSeialNumber().Error == false)
                                 if (_DeviceVm.SerialNumber == _DeviceVm.deviceHardwareInfo.sSN)
                                 {
-                                    ImportAttLogFromDevice();
+                                    return ImportAttLogFromDevice();
                                 }
                                 else
                                 {
-                                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.idn });
+                                    return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.Id });
                                 }
                             else
                             {
-                                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotLoaded, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.idn });
+                                return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotLoaded, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.Id });
                             }
 
                         }
                         else
                         {
                             if (_DeviceVm.deviceHardwareInfo.sSN == _DeviceVm.SerialNumber)
-                                ImportAttLogFromDevice();
+                                return ImportAttLogFromDevice();
                             else
                             {
-                                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.idn });
+                                return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.Id });
                             }
                         }
                     }
                 }
+                return new DeviceEventLogVm();
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
 
-        private void ImportAttLogFromDevice()
+        private DeviceEventLogVm ImportAttLogFromDevice()
         {
             try
             {
-                if (sta_ConnectTCP() == 1)
+                if (sta_ConnectTCP().Error == false)
                 {
                     var _daycount = Math.Abs(FingerPrintDeviceService.SaveDatePerDayAgo);
                     if (_daycount > 0)
                     {
-                        var _res = sta_ImportLogByPeriod();
+                        return sta_ImportLogByPeriod();
                     }
                     else
                     {
-                        var _res = sta_ImportAttLog();
+                        return sta_ImportAttLog();
                     }
                 }
                 else
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + "ارتباط با دستگاه : " + _DeviceVm.Name + " برقرار نیست  " });
+                    return (new DeviceEventLogVm { Error = true, Message = "*" + "ارتباط با دستگاه : " + _DeviceVm.Name + " برقرار نیست  " });
                 }
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
 
@@ -214,83 +213,83 @@ namespace Service.Attendance
         /// <summary>
         /// دریافت تمامی لاگ های دستگاه
         /// </summary>
-        public void Run_ImportAllAttLogFromDevice()
+        public DeviceEventLogVm Run_ImportAllAttLogFromDevice()
         {
-            try
-            {
-                Run_ImportAllAttLogFromDeviceFirstway();
-            }
-            catch { }
+            return Run_ImportAllAttLogFromDeviceFirstway();
+
         }
         /// <summary>
         /// روش اول چک کردن شماره سریال. با شماره سریال ثبت شده در بخش مدیریت دستگاه ها
         /// </summary>
-        public void Run_ImportAllAttLogFromDeviceFirstway()
+        public DeviceEventLogVm Run_ImportAllAttLogFromDeviceFirstway()
         {
             try
             {
                 //if (CurrentUser.CurrentUserS.applicationConfiguration.CheckSNeumber == "1" && string.IsNullOrEmpty(_DeviceVm.SerialNumber))
                 //{
-                //  //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotNotDefined, _DeviceVm.Name, _DeviceVm.Code) });
+                //  return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotNotDefined, _DeviceVm.Name, _DeviceVm.Code) });
                 //    return;
                 //}
-                if (sta_ConnectTCP() == 1)
+                var _connect = sta_ConnectTCP();
+                if (_connect.Error == false)
                 {
                     if (string.IsNullOrEmpty(_DeviceVm.SerialNumber))// اگر شماره سریال ثبت نشده باشد عملیات تخلیه را انجام میدهد
-                        ImportAllAttLogFromDevice();
+                        return ImportAllAttLogFromDevice();
                     else
                     {//اگر شماره سریال دستگاه ثبت شده باشد
                         if (string.IsNullOrEmpty(_DeviceVm.deviceHardwareInfo.sSN))
                         {// اگر شماره سریال دستگاه دریافت نشده باشد آن را دریافت میکند و بعد از چک کردن عملیات تخلیه را انجام میدهد
-                            if (sta_GetSeialNumber() == 1)
+                            if (sta_GetSeialNumber().Error == false)
                                 if (_DeviceVm.SerialNumber == _DeviceVm.deviceHardwareInfo.sSN)
                                 {
-                                    ImportAllAttLogFromDevice();
+                                    return ImportAllAttLogFromDevice();
                                 }
                                 else
                                 {
-                                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.idn });
+                                    return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.Id });
                                 }
                             else
                             {
-                                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotLoaded, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.idn });
+                                return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotLoaded, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.Id });
                             }
 
                         }
                         else
                         {
                             if (_DeviceVm.deviceHardwareInfo.sSN == _DeviceVm.SerialNumber)
-                                ImportAllAttLogFromDevice();
+                                return ImportAllAttLogFromDevice();
                             else
                             {
-                                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.idn });
+                                return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.Id });
                             }
                         }
                     }
                 }
+                else
+                    return _connect;
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
 
-        private void ImportAllAttLogFromDevice()
+        private DeviceEventLogVm ImportAllAttLogFromDevice()
         {
             try
             {
-                if (sta_ConnectTCP() == 1)
+                if (sta_ConnectTCP().Error == false)
                 {
-                    var _res = sta_ImportAttLog();
+                    return sta_ImportAttLog();
                 }
                 else
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + "ارتباط با دستگاه : " + _DeviceVm.Name + " برقرار نیست  " });
+                    return (new DeviceEventLogVm { Error = true, Message = "*" + "ارتباط با دستگاه : " + _DeviceVm.Name + " برقرار نیست  " });
                 }
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
 
@@ -298,19 +297,19 @@ namespace Service.Attendance
         #endregion
 
         #region Methods
-        public int SetUserInfo(UserVm user)
+        public DeviceEventLogVm SetUserInfo(UserVm user)
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
+                    //return -1024;
                 }
                 if (user == null || user.UserId == null || user.UserId == 0)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.InputData });
-                    return -1023;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.InputData });
+                    //return -1023;
                 }
 
 
@@ -320,8 +319,8 @@ namespace Service.Attendance
                 bool bFlag = false;
                 if (iPrivilege == 5)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*نقش کاربر با خطا مواجه شد! لطفا دوباره تلاش نمایید!" });
-                    return -1023;
+                    return (new DeviceEventLogVm { Error = true, Message = "*نقش کاربر با خطا مواجه شد! لطفا دوباره تلاش نمایید!" });
+                    //return -1023;
                 }
 
                 int iPIN2Width = 0;
@@ -337,8 +336,8 @@ namespace Service.Attendance
 
                 if (user.UserId.ToString().Length > iPIN2Width)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*User ID error! The max length is " + iPIN2Width.ToString() });
-                    return -1022;
+                    return (new DeviceEventLogVm { Error = true, Message = "*User ID error! The max length is " + iPIN2Width.ToString() });
+                    //return -1022;
                 }
 
 
@@ -346,16 +345,16 @@ namespace Service.Attendance
                 {
                     if (user.UserId.ToString().Substring(0, 1) == "0")
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*User ID error! The first letter can not be as 0" });
-                        return -1022;
+                        return (new DeviceEventLogVm { Error = true, Message = "*User ID error! The first letter can not be as 0" });
+                        //return -1022;
                     }
 
                     foreach (char tempchar in user.UserId.ToString().ToCharArray())
                     {
                         if (!(char.IsDigit(tempchar)))
                         {
-                            //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*User ID error! User ID only support digital" });
-                            return -1022;
+                            return (new DeviceEventLogVm { Error = true, Message = "*User ID error! User ID only support digital" });
+                            //return -1022;
                         }
                     }
                 }
@@ -382,7 +381,7 @@ namespace Service.Attendance
                 axCZKEM1.SetStrCardNumber(sCardnumber);//Before you using function SetUserInfo,set the card number to make sure you can upload it to the device
                 if (axCZKEM1.SSR_SetUserInfo(_DeviceVm.iMachineNumber, sdwEnrollNumber, sName, sPassword, iPrivilege, bEnabled))//upload the user's information(card number included)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "ذخیره اطلاعات کاربر " + user.FirstName + " با موفقیت انجام شد" });
+                    //return (new DeviceEventLogVm { Error = true, Message = "ذخیره اطلاعات کاربر " + user.FirstName + " با موفقیت انجام شد" });
 
 
                     if (!string.IsNullOrEmpty(user.FaceImage))
@@ -408,7 +407,7 @@ namespace Service.Attendance
                 else
                 {
                     axCZKEM1.GetLastError(ref idwErrorCode);
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.OperationfailedErrorCode + idwErrorCode.ToString() });
+                    //return (new DeviceEventLogVm { Error = true, Message = PublicResource.OperationfailedErrorCode + idwErrorCode.ToString() });
 
                 }
 
@@ -418,12 +417,12 @@ namespace Service.Attendance
                 axCZKEM1.EnableDevice(_DeviceVm.iMachineNumber, true);
 
 
-                return 1;
+                return new DeviceEventLogVm();
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
+                //return -1024;
             }
         }
         private byte[] CnvertStrToImage(string value)
@@ -443,7 +442,7 @@ namespace Service.Attendance
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                //return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
             return new byte[0];
         }
@@ -484,33 +483,34 @@ namespace Service.Attendance
         /// برقراری ارتباط با دستگاه
         /// </summary>
         /// <returns></returns>
-        public int sta_ConnectTCP()
+        public DeviceEventLogVm sta_ConnectTCP()
         {
             try
             {
-                if (!PingDevice())
+                var _ping = PingDevice();
+                if (_ping.Error == true)
                 {
                     SetConnectState(false);
-                    return -1;
+                    return _ping;
                 }
-                if (GetConnectState()) return 1;
+                if (GetConnectState()) new DeviceEventLogVm();
 
                 if (_DeviceVm == null || string.IsNullOrEmpty(_DeviceVm.IP) || _DeviceVm.port == null)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*نام، آی پی یا پورت اشتباه می باشد !", DeviceId = _DeviceVm.idn });
-                    return -1;// ip or port is null
+                    return (new DeviceEventLogVm { Error = true, Message = "*نام، آی پی یا پورت اشتباه می باشد !", DeviceId = _DeviceVm.Id });
+                    //return -1;// ip or port is null
                 }
 
                 if (_DeviceVm.port <= 0 || _DeviceVm.port > 65535)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*پورت اشتباه است!" });
-                    return -1;
+                    return (new DeviceEventLogVm { Error = true, Message = "*پورت اشتباه است!" });
+                    //return -1;
                 }
 
                 if (Convert.ToInt32(_DeviceVm.CommonKey) < 0 || Convert.ToInt32(_DeviceVm.CommonKey) > 999999)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.CommKeyIllegal, DeviceId = _DeviceVm.idn });
-                    return -1;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.CommKeyIllegal, DeviceId = _DeviceVm.Id });
+                    //return -1;
                 }
 
                 int idwErrorCode = 0;
@@ -523,25 +523,25 @@ namespace Service.Attendance
                     if (axCZKEM1.Connect_Net(_DeviceVm.IP, _DeviceVm.port.Value) == true)
                     {
                         SetConnectState(true);
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "ارتباط برقرار شد. نام دستگاه: " + _DeviceVm.Name + "   کد دستگاه : " + _DeviceVm.Code, DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                        //return (new DeviceEventLogVm { Error = true, Message = "ارتباط برقرار شد. نام دستگاه: " + _DeviceVm.Name + "   کد دستگاه : " + _DeviceVm.Code, DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
 
                         sta_RegRealTime();
                         //sta_getBiometricType();
-                        return 1;
+                        //return 1;
                     }
                 }
                 axCZKEM1.GetLastError(ref idwErrorCode);
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.UnableConnectDevice, _DeviceVm.Name) + idwErrorCode.ToString(), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
-                return idwErrorCode;
+                return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.UnableConnectDevice, _DeviceVm.Name) + idwErrorCode.ToString(), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
+                //return idwErrorCode;
 
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
+                //return -1;
             }
         }
-        public bool PingDevice()
+        public DeviceEventLogVm PingDevice()
         {
             try
             {
@@ -553,22 +553,22 @@ namespace Service.Attendance
                         var reply = ping.Send(IPAddress.Parse(_DeviceVm.IP), timeout);
                         if (reply.Status == IPStatus.Success)
                         {
-                            return true;
+                            return new DeviceEventLogVm();
                         }
                     }
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + $"دستگاه:  {_DeviceVm.Name} پینگ نشد", DeviceId = _DeviceVm.idn, ModifiedDate = DateTime.Now });
+                    //return (new DeviceEventLogVm { Error = true, Message = "*" + $"دستگاه:  {_DeviceVm.Name} پینگ نشد", DeviceId = _DeviceVm.Id, ModifiedDate = DateTime.Now });
                     SetConnectState(false);
-                    return false;
+                    return new DeviceEventLogVm { Error = true, Message = "*" + $"دستگاه:  {_DeviceVm.Name} پینگ نشد", DeviceId = _DeviceVm.Id, ModifiedDate = DateTime.Now };
                 }
             }
             catch (Exception ex)
             {
                 SetConnectState(false);
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + "شبکه یافت نشد" });
-                return false;
+                //return (new DeviceEventLogVm { Error = true, Message = "*" + "شبکه یافت نشد" });
+                return new DeviceEventLogVm { Error = true };
             }
         }
-        public int sta_GetDeviceInfo(out string sFirmver, out string sMac, out string sPlatform, out string sSN, out string sProductTime, out string sDeviceName, out int iFPAlg, out int iFaceAlg, out string sProducter)
+        public DeviceEventLogVm sta_GetDeviceInfo(out string sFirmver, out string sMac, out string sPlatform, out string sSN, out string sProductTime, out string sDeviceName, out int iFPAlg, out int iFaceAlg, out string sProducter)
         {
             try
             {
@@ -585,15 +585,17 @@ namespace Service.Attendance
                 sProductTime = "";
                 string strTemp = "";
 
-                if (!PingDevice())
+                var _ping = PingDevice();
+                if (_ping.Error == true)
                 {
                     SetConnectState(false);
-                    return -1024;
+                    //return -1024;
+                    return _ping;
                 }
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice, DeviceId = _DeviceVm.idn });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice, DeviceId = _DeviceVm.Id });
+                    //return -1024;
                 }
 
 
@@ -619,15 +621,14 @@ namespace Service.Attendance
 
                 axCZKEM1.EnableDevice(GetMachineNumber(), true);//enable the device
 
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "اطلاعات با موفقیت دریافت شد", DeviceId = _DeviceVm.idn });
+                return (new DeviceEventLogVm { Error = true, Message = "اطلاعات با موفقیت دریافت شد", DeviceId = _DeviceVm.Id });
 
 
-                iRet = 1;
-                return iRet;
+                //iRet = 1;
+                //return iRet;
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
                 sFirmver = null;
                 sMac = null;
                 sPlatform = null;
@@ -637,10 +638,11 @@ namespace Service.Attendance
                 iFPAlg = 0;
                 iFaceAlg = 0;
                 sProducter = null;
-                return -1024;
+                //return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
-        public int sta_GetCapacityInfo(out int adminCnt, out int userCount, out int fpCnt, out int recordCnt, out int pwdCnt, out int oplogCnt, out int faceCnt)
+        public DeviceEventLogVm sta_GetCapacityInfo(out int adminCnt, out int userCount, out int fpCnt, out int recordCnt, out int pwdCnt, out int oplogCnt, out int faceCnt)
         {
             int ret = 0;
 
@@ -652,15 +654,17 @@ namespace Service.Attendance
             oplogCnt = 0;
             faceCnt = 0;
 
-            if (!PingDevice())
+            var _ping = PingDevice();
+            if (_ping.Error == true)
             {
                 SetConnectState(false);
-                return -1024;
+                //return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice, DeviceId = _DeviceVm.Id });
             }
             if (GetConnectState() == false)
             {
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice, DeviceId = _DeviceVm.idn });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice, DeviceId = _DeviceVm.Id });
+                //return -1024;
             }
 
 
@@ -676,46 +680,47 @@ namespace Service.Attendance
 
             axCZKEM1.EnableDevice(GetMachineNumber(), true);//enable the device
 
-            //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "دریافت اطلاعات دستگاه با موفقیت انجام شد" });
+            return (new DeviceEventLogVm { Error = true, Message = "دریافت اطلاعات دستگاه با موفقیت انجام شد" });
 
 
-            ret = 1;
-            return ret;
+            //ret = 1;
+            //return ret;
         }
-        public int sta_GetSeialNumber()
+        public DeviceEventLogVm sta_GetSeialNumber()
         {
             try
             {
-                if (sta_ConnectTCP() == 1)
+                var _connect = sta_ConnectTCP();
+                if (_connect.Error == false)
                 {
                     var _serialNumber = "";
                     axCZKEM1.GetSerialNumber(GetMachineNumber(), out _serialNumber);
                     _DeviceVm.deviceHardwareInfo.sSN = _serialNumber;
-                    return 1;
                 }
+                return _connect;
             }
             catch (Exception ex)
             {
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = ex.Message });
+                return (new DeviceEventLogVm { Error = true, Message = ex.Message });
             }
-            return 1024;
+            //return 1024;
         }
-        public void sta_DisConnect()
+        public DeviceEventLogVm sta_DisConnect()
         {
             try
             {
-                if (PingDevice())
+                if (PingDevice().Error == false)
                     if (GetConnectState() == true)
                     {
                         axCZKEM1.Disconnect();
                         sta_UnRegRealTime();
                     }
                 _DeviceVm.IsConected = false;
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "* ارتباط با دستگاه " + _DeviceVm.Name + " قطع شد.", DeviceId = _DeviceVm.idn, DeviceName = _DeviceVm.Name, ModifiedDate = DateTime.Now });
+                return (new DeviceEventLogVm { Error = true, Message = "* ارتباط با دستگاه " + _DeviceVm.Name + " قطع شد.", DeviceId = _DeviceVm.Id, DeviceName = _DeviceVm.Name, ModifiedDate = DateTime.Now });
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
 
@@ -744,16 +749,16 @@ namespace Service.Attendance
 
         }
 
-        public int sta_RegRealTime()
+        public DeviceEventLogVm sta_RegRealTime()
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
 
 
-                    return -1024;
+                    //return -1024;
                 }
 
                 int ret = 0;
@@ -791,21 +796,22 @@ namespace Service.Attendance
 
                     if (_DeviceVm.idwErrorCode != 0)
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*خطایی رخ داد, کد خطا: " + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.idn });
+                        return (new DeviceEventLogVm { Error = true, Message = "*خطایی رخ داد, کد خطا: " + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.Id });
 
                     }
                     else
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code), DeviceId = _DeviceVm.idn });
+                        return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code), DeviceId = _DeviceVm.Id });
 
                     }
                 }
-                return ret;
+                return new DeviceEventLogVm();
+                //return ret;
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
+                //return -1024;
             }
         }
 
@@ -826,7 +832,7 @@ namespace Service.Attendance
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                //return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
 
@@ -1001,7 +1007,8 @@ namespace Service.Attendance
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                //return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
+                throw ex;
             }
         }
 
@@ -1030,7 +1037,7 @@ namespace Service.Attendance
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
+                    //return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
 
                     return new List<UserVm>();
                 }
@@ -1123,14 +1130,14 @@ namespace Service.Attendance
 
                     _userList.Add(_userItem);
                 }
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "تعداد کاربران دریافت شده : " + num.ToString() + " ,  تعداد اثر انگشت ها : " + iFpCount.ToString(), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                //return (new DeviceEventLogVm { Error = true, Message = "تعداد کاربران دریافت شده : " + num.ToString() + " ,  تعداد اثر انگشت ها : " + iFpCount.ToString(), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
 
                 axCZKEM1.EnableDevice(_DeviceVm.iMachineNumber, true);
                 return _userList;
             }
             catch (Exception ex)
             {
-                //// Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                //return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
                 return new List<UserVm>();
             }
         }
@@ -1152,21 +1159,19 @@ namespace Service.Attendance
                 return value;
             }
         }
-        public int sta_SetUserInfo(UserVm value)
+        public DeviceEventLogVm sta_SetUserInfo(UserVm value)
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
 
-                    return -1024;
                 }
                 if (value.UserId == null || value.Previlige == null)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.InputData });
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.InputData });
 
-                    return -1023;
                 }
 
 
@@ -1175,9 +1180,8 @@ namespace Service.Attendance
 
                 if (iPrivilege == 5)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*نقش انتخابی کاربر اشتباه است!" });
+                    return (new DeviceEventLogVm { Error = true, Message = "*نقش انتخابی کاربر اشتباه است!" });
 
-                    return -1023;
                 }
 
 
@@ -1194,9 +1198,8 @@ namespace Service.Attendance
 
                 if (value.UserId.ToString().Length > iPIN2Width)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*خطا در کد کاربر! حداکثر طول کد برابر : " + iPIN2Width.ToString() });
+                    return (new DeviceEventLogVm { Error = true, Message = "*خطا در کد کاربر! حداکثر طول کد برابر : " + iPIN2Width.ToString() });
 
-                    return -1022;
                 }
 
 
@@ -1204,8 +1207,8 @@ namespace Service.Attendance
                 {
                     if (value.UserId.ToString().Substring(0, 1) == "0")
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*خطا در کد کاربر! اولین کاراکتر نمیتواند 0 باشد" });
-                        return -1022;
+                        return (new DeviceEventLogVm { Error = true, Message = "*خطا در کد کاربر! اولین کاراکتر نمیتواند 0 باشد" });
+
                     }
 
 
@@ -1213,8 +1216,8 @@ namespace Service.Attendance
                     {
                         if (!(char.IsDigit(tempchar)))
                         {
-                            //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*خطا در کد کاربر! کد کاربر فقط باید شامل عدد باشد" });
-                            return -1022;
+                            return (new DeviceEventLogVm { Error = true, Message = "*خطا در کد کاربر! کد کاربر فقط باید شامل عدد باشد" });
+
                         }
                     }
                 }
@@ -1231,26 +1234,28 @@ namespace Service.Attendance
                 axCZKEM1.SetStrCardNumber(sCardnumber);
                 if (axCZKEM1.SSR_SetUserInfo(_DeviceVm.iMachineNumber, sdwEnrollNumber, sName, sPassword, iPrivilege, bEnabled))
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "اطلاعات کاربر با موفقیت ذخیره شد" });
+
+
+                    axCZKEM1.RefreshData(_DeviceVm.iMachineNumber);
+                    axCZKEM1.EnableDevice(_DeviceVm.iMachineNumber, true);
+                    return (new DeviceEventLogVm { Error = true, Message = "اطلاعات کاربر با موفقیت ذخیره شد" });
                 }
                 else
                 {
+
+
+                    axCZKEM1.RefreshData(_DeviceVm.iMachineNumber);
+                    axCZKEM1.EnableDevice(_DeviceVm.iMachineNumber, true);
                     axCZKEM1.GetLastError(ref idwErrorCode);
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.OperationfailedErrorCode + idwErrorCode.ToString() });
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.OperationfailedErrorCode + idwErrorCode.ToString() });
                 }
 
 
-
-                axCZKEM1.RefreshData(_DeviceVm.iMachineNumber);
-                axCZKEM1.EnableDevice(_DeviceVm.iMachineNumber, true);
-
-
-                return 1;
             }
             catch (Exception ex)
             {
-                //// Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
+                //return -1024;
             }
         }
         #endregion
@@ -1266,7 +1271,7 @@ namespace Service.Attendance
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                //return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
                 return "";
             }
         }
@@ -1290,7 +1295,7 @@ namespace Service.Attendance
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                throw ex;
             }
         }
         #endregion
@@ -1316,7 +1321,7 @@ namespace Service.Attendance
         //    }
         //    catch (Exception ex)
         //    {
-        //        // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+        //        return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
         //    }
         //}
         //private void getFuncName(string funcList, ComboBox cb_function)
@@ -1346,7 +1351,7 @@ namespace Service.Attendance
         //    }
         //    catch (Exception ex)
         //    {
-        //        // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+        //        return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
         //    }
         //}
         #endregion
@@ -1355,20 +1360,15 @@ namespace Service.Attendance
 
 
         #region  AttLogMng
-        public int sta_ImportAttLog()
+        public DeviceEventLogVm sta_ImportAttLog()
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice, DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice, DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                 }
 
-
-
-
-                int ret = 0;
 
                 axCZKEM1.EnableDevice(GetMachineNumber(), false);//disable the device
 
@@ -1411,56 +1411,44 @@ namespace Service.Attendance
                         _DeviceVm.LastImportLogCount = _attList.Count;
                         UpdateLastTimeRecord(_attList.Count);
 
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "- " + "تخلیه اطلاعات از دستگاه: " + _DeviceVm.Name + " با موفقیت انجام شد. " + "   ==>  تعداد رکورد ها : " + _attList.Count() + "   ==> " + "زمان آخرین تخلیه: " + DateTimeOperation.M2S(DateTime.Now) + " " + DateTime.Now.ToString("HH:mm"), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
-
-                        //System.Windows.Application.Current.Dispatcher.Invoke(delegate
-                        //{
-                        //    PublicMethod.SaveLogFile(_DeviceVm.Name, "تخلیه اطلاعات از دستگاه: " + _DeviceVm.Name + " با موفقیت انجام شد. " + "   ==>  تعداد رکورد ها : " + _attList.Count() + "   ==> " + "زمان آخرین تخلیه: " + DateTimeOperation.M2S(DateTime.Now) + " " + DateTime.Now.ToString("HH:mm"));
-                        //});
+                        axCZKEM1.EnableDevice(GetMachineNumber(), true);
+                        return (new DeviceEventLogVm { Error = true, Message = "- " + "تخلیه اطلاعات از دستگاه: " + _DeviceVm.Name + " با موفقیت انجام شد. " + "   ==>  تعداد رکورد ها : " + _attList.Count() + "   ==> " + "زمان آخرین تخلیه: " + DateTimeOperation.M2S(DateTime.Now) + " " + DateTime.Now.ToString("HH:mm"), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                     }
-                    ret = 1;
                 }
                 else
                 {
                     axCZKEM1.GetLastError(ref _DeviceVm.idwErrorCode);
-                    ret = _DeviceVm.idwErrorCode;
+                    //ret = _DeviceVm.idwErrorCode;
 
+                    axCZKEM1.EnableDevice(GetMachineNumber(), true);
                     if (_DeviceVm.idwErrorCode != 0)
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*دریافت اطلاعات شکست خورد, ک خطا: " + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                        return (new DeviceEventLogVm { Error = true, Message = "*دریافت اطلاعات شکست خورد, ک خطا: " + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                     }
                     else
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
-                        //System.Windows.Application.Current.Dispatcher.Invoke(delegate
-                        //{
-                        //    //PublicMethod.SaveLogFile(_DeviceVm.Name, string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code) + "  ==>  زمان: " + DateTimeOperation.M2S(DateTime.Now) + " " + DateTime.Now.ToString("HH:mm"));
-                        //});
+                        return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
+
                     }
                 }
-
-                axCZKEM1.EnableDevice(GetMachineNumber(), true);//enable the device
-
-                return ret;
+                return new DeviceEventLogVm();
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
-        public int sta_ImportLogByPeriod()
+        public DeviceEventLogVm sta_ImportLogByPeriod()
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice, DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice, DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                     //System.Windows.Application.Current.Dispatcher.Invoke(delegate
                     //{
                     //    PublicMethod.SaveLogFile(_DeviceVm.Name, PublicResource.ConnectDevice + "  ==>  زمان: " + DateTimeOperation.M2S(DateTime.Now) + " " + DateTime.Now.ToString("HH:mm"));
                     //});
-                    return -1024;
                 }
 
 
@@ -1526,13 +1514,14 @@ namespace Service.Attendance
                         _DeviceVm.LastImportLogCount = _attList.Count;
                         UpdateLastTimeRecord(_attList.Count);
 
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm
-                        //{
-                        //    LogData = "- " + "تخلیه اطلاعات از دستگاه: " + _DeviceVm.Name + " با موفقیت انجام شد. " + "   ==> تعداد رکورد ها : " + _attList.Count() + "   ==> " + "زمان آخرین تخلیه: " + DateTimeOperation.M2S(DateTime.Now) + " " + DateTime.Now.ToString("HH:mm"),
-                        //    DeviceId = _DeviceVm.idn,
-                        //    SaveInDB = true,
-                        //    ModifiedDate = DateTime.Now
-                        //});
+                        axCZKEM1.EnableDevice(GetMachineNumber(), true);//enable the device
+                        return (new DeviceEventLogVm
+                        {
+                            LogData = "- " + "تخلیه اطلاعات از دستگاه: " + _DeviceVm.Name + " با موفقیت انجام شد. " + "   ==> تعداد رکورد ها : " + _attList.Count() + "   ==> " + "زمان آخرین تخلیه: " + DateTimeOperation.M2S(DateTime.Now) + " " + DateTime.Now.ToString("HH:mm"),
+                            DeviceId = _DeviceVm.Id,
+                            SaveInDB = true,
+                            ModifiedDate = DateTime.Now
+                        });
                         //System.Windows.Application.Current.Dispatcher.Invoke(delegate
                         //{
                         //    PublicMethod.SaveLogFile(_DeviceVm.Name, "تخلیه اطلاعات از دستگاه: " + _DeviceVm.Name + " با موفقیت انجام شد. " + "   ==> تعداد رکورد ها : " + _attList.Count() + "   ==> " + "زمان آخرین تخلیه: " + DateTimeOperation.M2S(DateTime.Now) + " " + DateTime.Now.ToString("HH:mm"));
@@ -1545,13 +1534,14 @@ namespace Service.Attendance
                     axCZKEM1.GetLastError(ref _DeviceVm.idwErrorCode);
                     ret = _DeviceVm.idwErrorCode;
 
+                    axCZKEM1.EnableDevice(GetMachineNumber(), true);//enable the device
                     if (_DeviceVm.idwErrorCode != 0)
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*دریافت اطلاعات با خطا مواجه شد, کد خطا: " + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                        return (new DeviceEventLogVm { Error = true, Message = "*دریافت اطلاعات با خطا مواجه شد, کد خطا: " + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                     }
                     else
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                        return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                         //System.Windows.Application.Current.Dispatcher.Invoke(delegate
                         //{
                         //    Helper.PublicMethod.SaveLogFile(_DeviceVm.Name, string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code) + "  ==>  زمان: " + DateTimeOperation.M2S(DateTime.Now) + " " + DateTime.Now.ToString("HH:mm"));
@@ -1559,14 +1549,13 @@ namespace Service.Attendance
                     }
                 }
 
-                axCZKEM1.EnableDevice(GetMachineNumber(), true);//enable the device
 
-                return ret;
+                return new DeviceEventLogVm();
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
+                //return -1024;
             }
         }
         public string MakeCommand(TimeRecordVm item)
@@ -1598,7 +1587,7 @@ namespace Service.Attendance
             }
             catch (Exception ex)
             {
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                //return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
             return "";
         }
@@ -1684,219 +1673,198 @@ namespace Service.Attendance
         #endregion
 
         #region ClearData
-        public int sta_ClearAdmin()
+        public DeviceEventLogVm sta_ClearAdmin()
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice, DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice, DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
+                    //return -1024;
                 }
-                int ret = 0;
+                //int ret = 0;
 
                 axCZKEM1.EnableDevice(GetMachineNumber(), false);
 
                 if (axCZKEM1.ClearAdministrators(GetMachineNumber()))
                 {
+                    axCZKEM1.EnableDevice(GetMachineNumber(), true);
                     axCZKEM1.RefreshData(GetMachineNumber());//the data in the device should be refreshed
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "تمامی ادمین ها ا سیستم حذف شدند", DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                    return (new DeviceEventLogVm { Error = true, Message = "تمامی ادمین ها ا سیستم حذف شدند", DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
 
-                    ret = 1;
+                    //ret = 1;
                 }
                 else
                 {
+                    axCZKEM1.EnableDevice(GetMachineNumber(), true);
                     axCZKEM1.GetLastError(ref _DeviceVm.idwErrorCode);
                     if (_DeviceVm.idwErrorCode != 0)
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*حذف اطلاعات ادمین انجام نشد, کد خطا :=" + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                        return (new DeviceEventLogVm { Error = true, Message = "*حذف اطلاعات ادمین انجام نشد, کد خطا :=" + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                     }
                     else
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                        return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
 
                     }
-                    ret = _DeviceVm.idwErrorCode;
+                    //ret = _DeviceVm.idwErrorCode;
                 }
 
-                axCZKEM1.EnableDevice(GetMachineNumber(), true);
-                return ret;
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
-        public int sta_ClearAllLogs()
+        public DeviceEventLogVm sta_ClearAllLogs()
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
 
-                    return -1024;
                 }
-                int ret = 0;
 
                 axCZKEM1.EnableDevice(GetMachineNumber(), false);
 
                 if (axCZKEM1.ClearData(GetMachineNumber(), 1))
                 {
+                    axCZKEM1.EnableDevice(GetMachineNumber(), true);
                     axCZKEM1.RefreshData(GetMachineNumber());//the data in the device should be refreshed
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "تمامی لاگ های ورود و خروج از سیستم حذف شدند", DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
-                    ret = 1;
+                    return (new DeviceEventLogVm { Error = true, Message = "تمامی لاگ های ورود و خروج از سیستم حذف شدند", DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
+
                 }
                 else
                 {
+                    axCZKEM1.EnableDevice(GetMachineNumber(), true);
                     axCZKEM1.GetLastError(ref _DeviceVm.idwErrorCode);
                     if (_DeviceVm.idwErrorCode != 0)
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*حذف تمامی لاگ ها با خطا مواجه شد, کد خطا=" + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.idn, ModifiedDate = DateTime.Now });
+                        return (new DeviceEventLogVm { Error = true, Message = "*حذف تمامی لاگ ها با خطا مواجه شد, کد خطا=" + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.Id, ModifiedDate = DateTime.Now });
                     }
                     else
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code), DeviceId = _DeviceVm.idn, ModifiedDate = DateTime.Now });
+                        return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code), DeviceId = _DeviceVm.Id, ModifiedDate = DateTime.Now });
                     }
-                    ret = _DeviceVm.idwErrorCode;
                 }
 
-                axCZKEM1.EnableDevice(GetMachineNumber(), true);
-                return ret;
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
-        public int sta_ClearAllFps()
+        public DeviceEventLogVm sta_ClearAllFps()
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
                 }
-                int ret = 0;
 
                 axCZKEM1.EnableDevice(GetMachineNumber(), false);
 
                 if (axCZKEM1.ClearData(GetMachineNumber(), 2))
                 {
+                    axCZKEM1.EnableDevice(GetMachineNumber(), true);
                     axCZKEM1.RefreshData(GetMachineNumber());
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "تمامی اثر انگشت ها از دستگاه حذف شدند", DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
-                    ret = 1;
+                    return (new DeviceEventLogVm { Error = true, Message = "تمامی اثر انگشت ها از دستگاه حذف شدند", DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
+
                 }
                 else
                 {
+                    axCZKEM1.EnableDevice(GetMachineNumber(), true);
                     axCZKEM1.GetLastError(ref _DeviceVm.idwErrorCode);
                     if (_DeviceVm.idwErrorCode != 0)
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*حذف اثر انگشت ها با خطا مواجه شد, کد خطا=" + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                        return (new DeviceEventLogVm { Error = true, Message = "*حذف اثر انگشت ها با خطا مواجه شد, کد خطا=" + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                     }
                     else
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code) });
+                        return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code) });
                     }
-                    ret = _DeviceVm.idwErrorCode;
                 }
-
-                axCZKEM1.EnableDevice(GetMachineNumber(), true);
-                return ret;
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
-        public int sta_ClearAllUsers()
+        public DeviceEventLogVm sta_ClearAllUsers()
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
                 }
-                int ret = 0;
 
                 axCZKEM1.EnableDevice(GetMachineNumber(), false);
 
                 if (axCZKEM1.ClearData(GetMachineNumber(), 5))
                 {
+                    axCZKEM1.EnableDevice(GetMachineNumber(), true);
                     axCZKEM1.RefreshData(GetMachineNumber());//the data in the device should be refreshed
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "تمامی کاربران دستگاه حذف شدند", DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                    return (new DeviceEventLogVm { Error = true, Message = "تمامی کاربران دستگاه حذف شدند", DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
 
-                    ret = 1;
                 }
                 else
                 {
+                    axCZKEM1.EnableDevice(GetMachineNumber(), true);
                     axCZKEM1.GetLastError(ref _DeviceVm.idwErrorCode);
                     if (_DeviceVm.idwErrorCode != 0)
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*ClearAllUsers failed,ErrorCode=" + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                        return (new DeviceEventLogVm { Error = true, Message = "*ClearAllUsers failed,ErrorCode=" + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                     }
                     else
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code) });
+                        return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code) });
 
                     }
-                    ret = _DeviceVm.idwErrorCode;
                 }
-
-                axCZKEM1.EnableDevice(GetMachineNumber(), true);
-                return ret;
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
-        public int sta_ClearAllData()
+        public DeviceEventLogVm sta_ClearAllData()
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
                 }
-                int ret = 0;
                 axCZKEM1.EnableDevice(GetMachineNumber(), false);
                 if (axCZKEM1.ClearKeeperData(GetMachineNumber()))
                 {
+                    axCZKEM1.EnableDevice(GetMachineNumber(), true);
                     axCZKEM1.RefreshData(GetMachineNumber());//the data in the device should be refreshed
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "تمامی داده های دستگاه حذف شدند", DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                    return (new DeviceEventLogVm { Error = true, Message = "تمامی داده های دستگاه حذف شدند", DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
 
-                    ret = 1;
                 }
                 else
                 {
+                    axCZKEM1.EnableDevice(GetMachineNumber(), true);
                     axCZKEM1.GetLastError(ref _DeviceVm.idwErrorCode);
                     if (_DeviceVm.idwErrorCode != 0)
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*ClearAllData failed,ErrorCode=" + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                        return (new DeviceEventLogVm { Error = true, Message = "*ClearAllData failed,ErrorCode=" + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                     }
                     else
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code) });
+                        return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.NoDataForShowingInDevice, _DeviceVm.Name, _DeviceVm.Code) });
 
                     }
-                    ret = _DeviceVm.idwErrorCode;
                 }
 
-                axCZKEM1.EnableDevice(GetMachineNumber(), true);
-                return ret;
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
         #endregion
@@ -1906,60 +1874,53 @@ namespace Service.Attendance
         #region OtherMng
 
         #region control
-        public int sta_btnRestartDevice()
+        public DeviceEventLogVm sta_btnRestartDevice()
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
                 }
 
                 if (axCZKEM1.RestartDevice(_DeviceVm.iMachineNumber))
                 {
                     sta_DisConnect();
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "دستگاه باید ریستارت شود", DeviceId = _DeviceVm.idn, ModifiedDate = DateTime.Now });
+                    return (new DeviceEventLogVm { Error = true, Message = "دستگاه باید ریستارت شود", DeviceId = _DeviceVm.Id, ModifiedDate = DateTime.Now });
                 }
-
                 else
                 {
                     axCZKEM1.GetLastError(ref _DeviceVm.idwErrorCode);
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.OperationfailedErrorCode + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.idn, ModifiedDate = DateTime.Now });
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.OperationfailedErrorCode + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.Id, ModifiedDate = DateTime.Now });
                 }
-                return 1;
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
-        public int sta_btnPowerOffDevice()
+        public DeviceEventLogVm sta_btnPowerOffDevice()
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
                 }
                 if (axCZKEM1.PowerOffDevice(_DeviceVm.iMachineNumber))
                 {
                     sta_DisConnect();
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "دستگاه خاموش شد", DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                    return (new DeviceEventLogVm { Error = true, Message = "دستگاه خاموش شد", DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                 }
                 else
                 {
                     axCZKEM1.GetLastError(ref _DeviceVm.idwErrorCode);
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.OperationfailedErrorCode + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.OperationfailedErrorCode + _DeviceVm.idwErrorCode.ToString(), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                 }
-                return 1;
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
         #endregion
@@ -1971,37 +1932,35 @@ namespace Service.Attendance
         /// همگام سازی زمان و تاریخ با سیستم
         /// </summary>
         /// <returns></returns>
-        public int sta_SYNCTime()
+        public DeviceEventLogVm sta_SYNCTime()
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
                 }
                 if (axCZKEM1.SetDeviceTime(_DeviceVm.iMachineNumber))
                 {
                     axCZKEM1.RefreshData(_DeviceVm.iMachineNumber);
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.SuccessfullySyncTime });
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.SuccessfullySyncTime });
                 }
                 else
                 {
                     axCZKEM1.GetLastError(ref _DeviceVm.idwErrorCode);
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.OperationfailedErrorCode + _DeviceVm.idwErrorCode.ToString() });
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.OperationfailedErrorCode + _DeviceVm.idwErrorCode.ToString() });
                 }
-                return 1;
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
 
         public string sta_GetDeviceDate()
         {
-            if (sta_ConnectTCP() == 1)
+            var _connect = sta_ConnectTCP();
+            if (_connect.Error == false)
             {
                 int idwYear = 0;
                 int idwMonth = 0;
@@ -2013,23 +1972,23 @@ namespace Service.Attendance
                 if (axCZKEM1.GetDeviceTime(_DeviceVm.iMachineNumber, ref idwYear, ref idwMonth, ref idwDay, ref idwHour, ref idwMinute, ref idwSecond))//show the time
                 {
                     var _res = new DateTime(idwYear, idwMonth, idwDay);
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.SuccessfullyGetDeviceTime });
+                    //return (new DeviceEventLogVm { Error = true, Message = PublicResource.SuccessfullyGetDeviceTime });
                     return DateTimeOperation.M2S(_res);
                 }
                 else
                 {
                     axCZKEM1.GetLastError(ref _DeviceVm.idwErrorCode);
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.OperationfailedErrorCode + _DeviceVm.idwErrorCode.ToString() });
+                    //return (new DeviceEventLogVm { Error = true, Message = PublicResource.OperationfailedErrorCode + _DeviceVm.idwErrorCode.ToString() });
                 }
                 return "1";
             }
 
-            //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
+            //return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
             return "-1024";
         }
         public string sta_GetDeviceTime()
         {
-            if (sta_ConnectTCP() == 1)
+            if (sta_ConnectTCP().Error == false)
             {
                 int idwYear = 0;
                 int idwMonth = 0;
@@ -2041,18 +2000,18 @@ namespace Service.Attendance
                 if (axCZKEM1.GetDeviceTime(_DeviceVm.iMachineNumber, ref idwYear, ref idwMonth, ref idwDay, ref idwHour, ref idwMinute, ref idwSecond))//show the time
                 {
                     var _res = idwHour.ToString() + ":" + idwMinute.ToString() + ":" + idwSecond.ToString();
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.SuccessfullyGetDeviceTime });
+                    //return (new DeviceEventLogVm { Error = true, Message = PublicResource.SuccessfullyGetDeviceTime });
                     return _res;
                 }
                 else
                 {
                     axCZKEM1.GetLastError(ref _DeviceVm.idwErrorCode);
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.OperationfailedErrorCode + _DeviceVm.idwErrorCode.ToString() });
+                    //return (new DeviceEventLogVm { Error = true, Message = PublicResource.OperationfailedErrorCode + _DeviceVm.idwErrorCode.ToString() });
                 }
                 return "1";
             }
 
-            //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
+            //return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
             return "-1024";
         }
 
@@ -2061,14 +2020,13 @@ namespace Service.Attendance
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
-        public int sta_SetDeviceTime(DateTime dateTime)
+        public DeviceEventLogVm sta_SetDeviceTime(DateTime dateTime)
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
                 }
                 DateTime date = dateTime;
                 int idwYear = Convert.ToInt32(date.Year.ToString());
@@ -2081,19 +2039,17 @@ namespace Service.Attendance
                 if (axCZKEM1.SetDeviceTime2(_DeviceVm.iMachineNumber, idwYear, idwMonth, idwDay, idwHour, idwMinute, idwSecond))
                 {
                     axCZKEM1.RefreshData(_DeviceVm.iMachineNumber);
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.SuccessfullySetDeviceTime });
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.SuccessfullySetDeviceTime });
                 }
                 else
                 {
                     axCZKEM1.GetLastError(ref _DeviceVm.idwErrorCode);
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.OperationfailedErrorCode + _DeviceVm.idwErrorCode.ToString() });
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.OperationfailedErrorCode + _DeviceVm.idwErrorCode.ToString() });
                 }
-                return 1;
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
         #endregion
@@ -2121,16 +2077,17 @@ namespace Service.Attendance
         #endregion
 
 
-        public int sta_ConnectTCP()
+        public DeviceEventLogVm sta_ConnectTCP()
         {
             try
             {
-                if (!PingDevice())
+                var _ping = PingDevice();
+                if (_ping.Error == true)
                 {
-                    SetConnectState(false);
-                    return -1;
+                    SetConnectState(false); 
+                    return _ping;
                 }
-                if (GetConnectState()) return 1;
+                if (GetConnectState()) new DeviceEventLogVm();
 
                 _DeviceVm.gnCommHandleIndex = FKAttendHelper.FK_ConnectNet(
                     anMachineNo: _DeviceVm.Code ?? 1,
@@ -2144,52 +2101,51 @@ namespace Service.Attendance
                 if (_DeviceVm.gnCommHandleIndex > 0)
                 {
                     SetConnectState(true);
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm
-                    //{
-                    //    LogData = "ارتباط برقرار شد. نام دستگاه: " + _DeviceVm.Name + "   کد دستگاه : " + _DeviceVm.Code,
-                    //    DeviceId = _DeviceVm.idn,
-                    //    SaveInDB = true,
-                    //    ModifiedDate = DateTime.Now
-                    //});
-                    return 1;
+                    return (new DeviceEventLogVm
+                    {
+                        LogData = "ارتباط برقرار شد. نام دستگاه: " + _DeviceVm.Name + "   کد دستگاه : " + _DeviceVm.Code,
+                        DeviceId = _DeviceVm.Id,
+                        SaveInDB = true,
+                        ModifiedDate = DateTime.Now
+                    });
                 }
                 else
                 {
                     FKAttendHelper.FK_DisConnect(1);
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm
-                    //{
-                    //    LogData = string.Format(PublicResource.UnableConnectDevice, _DeviceVm.Name) + " - " + ReturnResultPrint(_DeviceVm.gnCommHandleIndex),
-                    //    DeviceId = _DeviceVm.idn,
-                    //    SaveInDB = true,
-                    //    ModifiedDate = DateTime.Now
-                    //});
-                    return _DeviceVm.gnCommHandleIndex;
+                    return (new DeviceEventLogVm
+                    {
+                        LogData = string.Format(PublicResource.UnableConnectDevice, _DeviceVm.Name) + " - " + ReturnResultPrint(_DeviceVm.gnCommHandleIndex),
+                        DeviceId = _DeviceVm.Id,
+                        SaveInDB = true,
+                        ModifiedDate = DateTime.Now
+                    });
+                    //return _DeviceVm.gnCommHandleIndex;
                 }
 
             }
             catch (Exception ex)
             {
-                return -1;
+                throw ex;
             }
         }
-        public void sta_DisConnect()
+        public DeviceEventLogVm sta_DisConnect()
         {
             try
             {
-                if (PingDevice())
+                if (PingDevice().Error == false)
                     if (GetConnectState() == true)
                     {
                         FKAttendHelper.FK_DisConnect(_DeviceVm.gnCommHandleIndex);
                     }
                 _DeviceVm.IsConected = false;
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "* ارتباط با دستگاه " + _DeviceVm.Name + " قطع شد.", DeviceId = _DeviceVm.idn, DeviceName = _DeviceVm.Name, ModifiedDate = DateTime.Now });
+                return (new DeviceEventLogVm { Error = true, Message = "* ارتباط با دستگاه " + _DeviceVm.Name + " قطع شد.", DeviceId = _DeviceVm.Id, DeviceName = _DeviceVm.Name, ModifiedDate = DateTime.Now });
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
-        public bool PingDevice()
+        public DeviceEventLogVm PingDevice()
         {
             try
             {
@@ -2201,19 +2157,18 @@ namespace Service.Attendance
                         var reply = ping.Send(IPAddress.Parse(_DeviceVm.IP), timeout);
                         if (reply.Status == IPStatus.Success)
                         {
-                            return true;
+                            return new DeviceEventLogVm();
                         }
                     }
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + $"دستگاه:  {_DeviceVm.Name} پینگ نشد", DeviceId = _DeviceVm.idn, ModifiedDate = DateTime.Now });
                     SetConnectState(false);
-                    return false;
+                    return (new DeviceEventLogVm { Error = true, Message = "*" + $"دستگاه:  {_DeviceVm.Name} پینگ نشد", DeviceId = _DeviceVm.Id, ModifiedDate = DateTime.Now });
+
                 }
             }
             catch (Exception ex)
             {
                 SetConnectState(false);
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + "شبکه یافت نشد" });
-                return false;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + "شبکه یافت نشد" });
             }
         }
 
@@ -2283,7 +2238,7 @@ namespace Service.Attendance
 
         #region Insert Data Into Database
 
-        public DataModelResult AttLog_Save(TimeRecordVm entity)
+        public DeviceEventLogVm AttLog_Save(TimeRecordVm entity)
         {
             try
             {
@@ -2292,185 +2247,177 @@ namespace Service.Attendance
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
-            return new DataModelResult();
+            return new DeviceEventLogVm();
         }
 
-        public void Run_ImportAttLogFromDevice()
+        public DeviceEventLogVm Run_ImportAttLogFromDevice()
         {
             try
             {
-                Run_ImportAttLogFromDeviceFirstway();
+                return Run_ImportAttLogFromDeviceFirstway();
             }
-            catch { }
+            catch (Exception ex) { throw ex; }
         }
         /// <summary>
         /// روش اول چک کردن شماره سریال. با شماره سریال ثبت شده در بخش مدیریت دستگاه ها
         /// </summary>
-        public void Run_ImportAttLogFromDeviceFirstway()
+        public DeviceEventLogVm Run_ImportAttLogFromDeviceFirstway()
         {
             try
             {
                 //if (CurrentUser.CurrentUserS.applicationConfiguration.CheckSNeumber == "1" && string.IsNullOrEmpty(_DeviceVm.SerialNumber))
                 //{
-                //  //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotNotDefined, _DeviceVm.Name, _DeviceVm.Code) });
+                //  return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotNotDefined, _DeviceVm.Name, _DeviceVm.Code) });
                 //    return;
                 //}
-                if (sta_ConnectTCP() == 1)
-                {
-                    if (string.IsNullOrEmpty(_DeviceVm.SerialNumber))// اگر شماره سریال ثبت نشده باشد عملیات تخلیه را انجام میدهد
-                        ImportAttLogFromDevice();
-                    else
-                    {//اگر شماره سریال دستگاه ثبت شده باشد
-                        if (string.IsNullOrEmpty(_DeviceVm.deviceHardwareInfo.sSN))
-                        {// اگر شماره سریال دستگاه دریافت نشده باشد آن را دریافت میکند و بعد از چک کردن عملیات تخلیه را انجام میدهد
-                            if (sta_GetSeialNumber() == 1)
-                                if (_DeviceVm.SerialNumber == _DeviceVm.deviceHardwareInfo.sSN)
-                                {
-                                    ImportAttLogFromDevice();
-                                }
-                                else
-                                {
-                                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.idn });
-                                }
+                var _connect = sta_ConnectTCP();
+                if (_connect.Error) return _connect;
+
+                if (string.IsNullOrEmpty(_DeviceVm.SerialNumber))// اگر شماره سریال ثبت نشده باشد عملیات تخلیه را انجام میدهد
+                    return ImportAttLogFromDevice();
+                else
+                {//اگر شماره سریال دستگاه ثبت شده باشد
+                    if (string.IsNullOrEmpty(_DeviceVm.deviceHardwareInfo.sSN))
+                    {// اگر شماره سریال دستگاه دریافت نشده باشد آن را دریافت میکند و بعد از چک کردن عملیات تخلیه را انجام میدهد
+                        if (sta_GetSeialNumber().Error == false)
+                            if (_DeviceVm.SerialNumber == _DeviceVm.deviceHardwareInfo.sSN)
+                            {
+                                return ImportAttLogFromDevice();
+                            }
                             else
                             {
-                                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotLoaded, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.idn });
+                                return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.Id });
                             }
-
-                        }
                         else
                         {
-                            if (_DeviceVm.deviceHardwareInfo.sSN == _DeviceVm.SerialNumber)
-                                ImportAttLogFromDevice();
-                            else
-                            {
-                                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.idn });
-                            }
+                            return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotLoaded, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.Id });
+                        }
+
+                    }
+                    else
+                    {
+                        if (_DeviceVm.deviceHardwareInfo.sSN == _DeviceVm.SerialNumber)
+                            return ImportAttLogFromDevice();
+                        else
+                        {
+                            return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.Id });
                         }
                     }
                 }
+
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
-        private void ImportAttLogFromDevice()
+        private DeviceEventLogVm ImportAttLogFromDevice()
         {
             try
             {
-                if (sta_ConnectTCP() == 1)
+                var _connect = sta_ConnectTCP();
+                if (_connect.Error == false)
                 {
                     var _daycount = Math.Abs(FingerPrintDeviceService.SaveDatePerDayAgo);
                     if (_daycount > 0)
                     {
-                        var _res = sta_ImportLogByPeriod();
+                        return sta_ImportLogByPeriod();
                     }
                     else
                     {
-                        var _res = sta_ImportAttLog();
+                        return sta_ImportAttLog();
                     }
                 }
                 else
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + "ارتباط با دستگاه : " + _DeviceVm.Name + " برقرار نیست  " });
+                    return (new DeviceEventLogVm { Error = true, Message = "*" + "ارتباط با دستگاه : " + _DeviceVm.Name + " برقرار نیست  " });
                 }
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
-
-
-
-
-
-
-
-
 
         /// <summary>
         /// دریافت تمامی لاگ های دستگاه
         /// </summary>
-        public void Run_ImportAllAttLogFromDevice()
+        public DeviceEventLogVm Run_ImportAllAttLogFromDevice()
         {
-            try
-            {
-                Run_ImportAllAttLogFromDeviceFirstway();
-            }
-            catch { }
+            return Run_ImportAllAttLogFromDeviceFirstway();
         }
         /// <summary>
         /// روش اول چک کردن شماره سریال. با شماره سریال ثبت شده در بخش مدیریت دستگاه ها
         /// </summary>
-        public void Run_ImportAllAttLogFromDeviceFirstway()
+        public DeviceEventLogVm Run_ImportAllAttLogFromDeviceFirstway()
         {
             try
             {
                 //if (CurrentUser.CurrentUserS.applicationConfiguration.CheckSNeumber == "1" && string.IsNullOrEmpty(_DeviceVm.SerialNumber))
                 //{
-                //  //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotNotDefined, _DeviceVm.Name, _DeviceVm.Code) });
+                //  return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotNotDefined, _DeviceVm.Name, _DeviceVm.Code) });
                 //    return;
                 //}
-                if (sta_ConnectTCP() == 1)
-                {
-                    if (string.IsNullOrEmpty(_DeviceVm.SerialNumber))// اگر شماره سریال ثبت نشده باشد عملیات تخلیه را انجام میدهد
-                        ImportAllAttLogFromDevice();
-                    else
-                    {//اگر شماره سریال دستگاه ثبت شده باشد
-                        if (string.IsNullOrEmpty(_DeviceVm.deviceHardwareInfo.sSN))
-                        {// اگر شماره سریال دستگاه دریافت نشده باشد آن را دریافت میکند و بعد از چک کردن عملیات تخلیه را انجام میدهد
-                            if (sta_GetSeialNumber() == 1)
-                                if (_DeviceVm.SerialNumber == _DeviceVm.deviceHardwareInfo.sSN)
-                                {
-                                    ImportAllAttLogFromDevice();
-                                }
-                                else
-                                {
-                                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.idn });
-                                }
+                var _connect = sta_ConnectTCP();
+                if (_connect.Error) return _connect;
+
+                if (string.IsNullOrEmpty(_DeviceVm.SerialNumber))// اگر شماره سریال ثبت نشده باشد عملیات تخلیه را انجام میدهد
+                    return ImportAllAttLogFromDevice();
+                else
+                {//اگر شماره سریال دستگاه ثبت شده باشد
+                    if (string.IsNullOrEmpty(_DeviceVm.deviceHardwareInfo.sSN))
+                    {// اگر شماره سریال دستگاه دریافت نشده باشد آن را دریافت میکند و بعد از چک کردن عملیات تخلیه را انجام میدهد
+                        if (sta_GetSeialNumber().Error == false)
+                            if (_DeviceVm.SerialNumber == _DeviceVm.deviceHardwareInfo.sSN)
+                            {
+                                return ImportAllAttLogFromDevice();
+                            }
                             else
                             {
-                                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotLoaded, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.idn });
+                                return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.Id });
                             }
-
-                        }
                         else
                         {
-                            if (_DeviceVm.deviceHardwareInfo.sSN == _DeviceVm.SerialNumber)
-                                ImportAllAttLogFromDevice();
-                            else
-                            {
-                                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.idn });
-                            }
+                            return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotLoaded, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.Id });
+                        }
+
+                    }
+                    else
+                    {
+                        if (_DeviceVm.deviceHardwareInfo.sSN == _DeviceVm.SerialNumber)
+                            return ImportAllAttLogFromDevice();
+                        else
+                        {
+                            return (new DeviceEventLogVm { Error = true, Message = string.Format(PublicResource.DeviceSerialNumberNotEqualToRegisterSN, _DeviceVm.Name, _DeviceVm.Code), SaveInDB = true, DeviceId = _DeviceVm.Id });
                         }
                     }
                 }
+
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
-        private void ImportAllAttLogFromDevice()
+        private DeviceEventLogVm ImportAllAttLogFromDevice()
         {
             try
             {
-                if (sta_ConnectTCP() == 1)
+                var _connect = sta_ConnectTCP();
+                if (_connect.Error == false)
                 {
-                    var _res = sta_ImportAttLog();
+                    return sta_ImportAttLog();
                 }
                 else
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + "ارتباط با دستگاه : " + _DeviceVm.Name + " برقرار نیست  " });
+                    return (new DeviceEventLogVm { Error = true, Message = "*" + "ارتباط با دستگاه : " + _DeviceVm.Name + " برقرار نیست  " });
                 }
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
 
@@ -2479,14 +2426,13 @@ namespace Service.Attendance
 
 
         #region  AttLogMng
-        public int sta_ImportAttLog()
+        public DeviceEventLogVm sta_ImportAttLog()
         {
             try
             {
                 if (!GetConnectState())
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice, DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice, DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                 }
 
                 int ret = 0;
@@ -2503,15 +2449,15 @@ namespace Service.Attendance
                 vnResultCode = FKAttendHelper.FK_EnableDevice(_DeviceVm.gnCommHandleIndex, 0);
                 if (vnResultCode == 0)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = GlobalConstants.gstrNoDevice, DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = GlobalConstants.gstrNoDevice, DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
+
                 }
                 System.Threading.Thread.Sleep(10);
                 vnResultCode = FKAttendHelper.FK_LoadGeneralLogData(_DeviceVm.gnCommHandleIndex, vnReadMark);
                 if (vnResultCode != (int)enumErrorCode.RUN_SUCCESS)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = ReturnResultPrint(vnResultCode), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = ReturnResultPrint(vnResultCode), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
+
                 }
                 else
                 {
@@ -2552,31 +2498,29 @@ namespace Service.Attendance
                         InsertAttLogToDB(_attList);
                         _DeviceVm.LastImportLogCount = _attList.Count;
                         UpdateLastTimeRecord(_attList.Count);
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "- " + "تخلیه اطلاعات از دستگاه: " + _DeviceVm.Name + " با موفقیت انجام شد. " + "   ==>  تعداد رکورد ها : " + _attList.Count() + "   ==> " + "زمان آخرین تخلیه: " + DateTimeOperation.M2S(DateTime.Now) + " " + DateTime.Now.ToString("HH:mm"), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                        FKAttendHelper.FK_EnableDevice(_DeviceVm.gnCommHandleIndex, 1);
+                        return (new DeviceEventLogVm { Error = true, Message = "- " + "تخلیه اطلاعات از دستگاه: " + _DeviceVm.Name + " با موفقیت انجام شد. " + "   ==>  تعداد رکورد ها : " + _attList.Count() + "   ==> " + "زمان آخرین تخلیه: " + DateTimeOperation.M2S(DateTime.Now) + " " + DateTime.Now.ToString("HH:mm"), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                         //System.Windows.Application.Current.Dispatcher.Invoke(delegate
                         //{
                         //    PublicMethod.SaveLogFile(_DeviceVm.Name, "تخلیه اطلاعات از دستگاه: " + _DeviceVm.Name + " با موفقیت انجام شد. " + "   ==>  تعداد رکورد ها : " + _attList.Count() + "   ==> " + "زمان آخرین تخلیه: " + DateTimeOperation.M2S(DateTime.Now) + " " + DateTime.Now.ToString("HH:mm"));
                         //});
-                        ret = 1;
                     }
                     else
                     {
-                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = ReturnResultPrint(vnResultCode), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
-                        return -1024;
+                        FKAttendHelper.FK_EnableDevice(_DeviceVm.gnCommHandleIndex, 1);
+                        return (new DeviceEventLogVm { Error = true, Message = ReturnResultPrint(vnResultCode), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
+
                     }
                 }
-                FKAttendHelper.FK_EnableDevice(_DeviceVm.gnCommHandleIndex, 1);
 
-                return ret;
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
 
-        public int sta_ImportLogByPeriod()
+        public DeviceEventLogVm sta_ImportLogByPeriod()
         {
             return sta_ImportAttLog();
         }
@@ -2609,9 +2553,8 @@ namespace Service.Attendance
             }
             catch (Exception ex)
             {
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
+                throw ex;
             }
-            return "";
         }
         public void UpdateLastTimeRecord(int attcount)
         {
@@ -2668,30 +2611,7 @@ namespace Service.Attendance
                 throw ex;
             }
         }
-        //public void SaveTransactionLog(DeviceTransactionEventVm model)
-        //{
-        //    try
-        //    {
-        //        var _query = string.Format(" Insert Into DeviceTransactionEvent([Id],[IsDelete],[ModifiedDate]," +
-        //            "\n [DeviceId],[LastTransaction_Date],[LastTransaction_Count],[LastTransaction_Msg]," +
-        //            "\n [LastTransaction_ErrorCode],[LastTransaction_Success],[TransactionPeriod],[TransactionType])" +
-        //            "\n Values(NEWID(), 0, GETDATE(), N'{0}', GETDATE(), N'{1}', N'{2}', N'{3}', N'{4}', N'{5}', N'{6}') ",
-        //            model.DeviceId,
-        //            model.LastTransaction_Count,
-        //            model.LastTransaction_Msg,
-        //            model.LastTransaction_ErrorCode,
-        //            model.LastTransaction_Success == true ? "1" : "0",
-        //            model.TransactionPeriod,
-        //            model.TransactionType != 0 ? model.TransactionType : 1
-        //            );
 
-        //        deviceMethodHlper.ExecuteSqlScript(_query);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
         #endregion
 
 
@@ -2700,7 +2620,7 @@ namespace Service.Attendance
         /// همگام سازی زمان و تاریخ با سیستم
         /// </summary>
         /// <returns></returns>
-        public int sta_SYNCTime()
+        public DeviceEventLogVm sta_SYNCTime()
         {
             try
             {
@@ -2708,14 +2628,13 @@ namespace Service.Attendance
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
 
         public string sta_GetDeviceDate()
         {
-            if (sta_ConnectTCP() == 1)
+            if (sta_ConnectTCP().Error == false)
             {
                 string _result = "1";
                 DateTime vdwDate = DateTime.Now;
@@ -2730,7 +2649,7 @@ namespace Service.Attendance
                     //lblMessage.Text = GlobalConstants.gstrNoDevice;
                     //cmdGetDeviceTime.Enabled = true;
                     //return;
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.OperationfailedErrorCode + vnResultCode.ToString() });
+                    //return (new DeviceEventLogVm { Error = true, Message = PublicResource.OperationfailedErrorCode + vnResultCode.ToString() });
                 }
                 vnResultCode = FKAttendHelper.FK_GetDeviceTime(_DeviceVm.gnCommHandleIndex, ref vdwDate);
                 if (vnResultCode == (int)enumErrorCode.RUN_SUCCESS)
@@ -2738,12 +2657,12 @@ namespace Service.Attendance
                     //strDataTime = "Date = " + vdwDate.ToLongDateString() + ", Time = " + vdwDate.ToLongTimeString();
                     //lblMessage.Text = strDataTime;
 
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.SuccessfullyGetDeviceTime });
+                    //return (new DeviceEventLogVm { Error = true, Message = PublicResource.SuccessfullyGetDeviceTime });
                     _result = DateTimeOperation.M2S(vdwDate);
                 }
                 else
                     //lblMessage.Text = ReturnResultPrint(vnResultCode);
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = ReturnResultPrint(vnResultCode) });
+                    //return (new DeviceEventLogVm { Error = true, Message = ReturnResultPrint(vnResultCode) });
 
                     FKAttendHelper.FK_EnableDevice(_DeviceVm.gnCommHandleIndex, 1);
                 //cmdGetDeviceTime.Enabled = true;
@@ -2751,13 +2670,13 @@ namespace Service.Attendance
                 return _result;
             }
 
-            //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
+            //return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
             return "-1024";
         }
 
         public string sta_GetDeviceTime()
         {
-            if (sta_ConnectTCP() == 1)
+            if (sta_ConnectTCP().Error == false)
             {
                 string _result = "1";
                 DateTime vdwDate = DateTime.Now;
@@ -2765,7 +2684,7 @@ namespace Service.Attendance
                 vnResultCode = FKAttendHelper.FK_EnableDevice(_DeviceVm.gnCommHandleIndex, 0);
                 if (vnResultCode != (int)enumErrorCode.RUN_SUCCESS)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.OperationfailedErrorCode + vnResultCode.ToString() });
+                    //return (new DeviceEventLogVm { Error = true, Message = PublicResource.OperationfailedErrorCode + vnResultCode.ToString() });
                 }
                 vnResultCode = FKAttendHelper.FK_GetDeviceTime(_DeviceVm.gnCommHandleIndex, ref vdwDate);
                 if (vnResultCode == (int)enumErrorCode.RUN_SUCCESS)
@@ -2773,12 +2692,12 @@ namespace Service.Attendance
                     //strDataTime = "Date = " + vdwDate.ToLongDateString() + ", Time = " + vdwDate.ToLongTimeString();
                     //lblMessage.Text = strDataTime;
 
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.SuccessfullyGetDeviceTime });
+                    //return (new DeviceEventLogVm { Error = true, Message = PublicResource.SuccessfullyGetDeviceTime });
                     _result = vdwDate.ToString("HH:mm");
                 }
                 else
                     //lblMessage.Text = ReturnResultPrint(vnResultCode);
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = ReturnResultPrint(vnResultCode) });
+                    //return (new DeviceEventLogVm { Error = true, Message = ReturnResultPrint(vnResultCode) });
 
                     FKAttendHelper.FK_EnableDevice(_DeviceVm.gnCommHandleIndex, 1);
                 //cmdGetDeviceTime.Enabled = true;
@@ -2786,7 +2705,7 @@ namespace Service.Attendance
                 return _result;
             }
 
-            //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
+            //return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
             return "-1024";
         }
 
@@ -2795,35 +2714,10 @@ namespace Service.Attendance
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
-        public int sta_SetDeviceTime(DateTime dateTime)
+        public DeviceEventLogVm sta_SetDeviceTime(DateTime dateTime)
         {
             try
             {
-                //if (GetConnectState() == false)
-                //{
-                //  //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
-                //    return -1024;
-                //}
-                //DateTime date = dateTime;
-                //int idwYear = Convert.ToInt32(date.Year.ToString());
-                //int idwMonth = Convert.ToInt32(date.Month.ToString());
-                //int idwDay = Convert.ToInt32(date.Day.ToString());
-                //int idwHour = Convert.ToInt32(date.Hour.ToString());
-                //int idwMinute = Convert.ToInt32(date.Minute.ToString());
-                //int idwSecond = Convert.ToInt32(date.Second.ToString());
-                //if (axCZKEM1.SetDeviceTime2(_DeviceVm.iMachineNumber, idwYear, idwMonth, idwDay, idwHour, idwMinute, idwSecond))
-                //{
-                //    axCZKEM1.RefreshData(_DeviceVm.iMachineNumber);
-                //  //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.SuccessfullySetDeviceTime });
-                //}
-                //else
-                //{
-                //    axCZKEM1.GetLastError(ref _DeviceVm.idwErrorCode);
-                //  //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.OperationfailedErrorCode + _DeviceVm.idwErrorCode.ToString() });
-                //}
-                //return 1;
-
-
 
 
 
@@ -2833,66 +2727,66 @@ namespace Service.Attendance
                     //lblMessage.Text = GlobalConstants.gstrNoDevice;
                     //cmdSetDeviceTime.Enabled = true;
                     //return;
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.OperationfailedErrorCode + vnResultCode.ToString() });
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.OperationfailedErrorCode + vnResultCode.ToString() });
                 }
 
                 vnResultCode = FKAttendHelper.FK_SetDeviceTime(_DeviceVm.gnCommHandleIndex, dateTime);
                 //lblMessage.Text = ReturnResultPrint(vnResultCode);
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.SuccessfullySetDeviceTime });
                 FKAttendHelper.FK_EnableDevice(_DeviceVm.gnCommHandleIndex, 1);
+                return (new DeviceEventLogVm { Error = true, Message = PublicResource.SuccessfullySetDeviceTime });
 
-                return 1;
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
         #endregion
 
 
-        public int sta_GetCapacityInfo(out int adminCnt, out int userCount, out int fpCnt, out int recordCnt, out int pwdCnt, out int oplogCnt, out int faceCnt)
+        public DeviceEventLogVm sta_GetCapacityInfo(out int adminCnt, out int userCount, out int fpCnt, out int recordCnt, out int pwdCnt, out int oplogCnt, out int faceCnt)
         {
             throw new NotImplementedException();
         }
 
-        public int sta_GetDeviceInfo(out string sFirmver, out string sMac, out string sPlatform, out string sSN, out string sProductTime, out string sDeviceName, out int iFPAlg, out int iFaceAlg, out string sProducter)
+        public DeviceEventLogVm sta_GetDeviceInfo(out string sFirmver, out string sMac, out string sPlatform, out string sSN, out string sProductTime, out string sDeviceName, out int iFPAlg, out int iFaceAlg, out string sProducter)
         {
             throw new NotImplementedException();
         }
 
-        public int SetUserInfo(UserVm user)
+        public DeviceEventLogVm SetUserInfo(UserVm user)
         {
-            return 0;
+            return new DeviceEventLogVm();
         }
 
-        public int sta_GetSeialNumber()
+        public DeviceEventLogVm sta_GetSeialNumber()
         {
             try
             {
-                if (sta_ConnectTCP() == 1)
+                var _connect = sta_ConnectTCP();
+                if (_connect.Error == false)
                 {
                     var _serialNumber = "";
                     //axCZKEM1.GetSerialNumber(GetMachineNumber(), out _serialNumber);
                     var vnResultCode = FuncGetProductData((long)enumProductInfo.PRODUCT_SERIALNUMBER, ref _serialNumber);
-                    if (vnResultCode == (long)enumErrorCode.RUN_SUCCESS)
+                    if (vnResultCode.Error == false)
                     {
                         _DeviceVm.deviceHardwareInfo.sSN = _serialNumber;
+                        return new DeviceEventLogVm();
                     }
-                    return 1;
                 }
+                return _connect;
             }
             catch (Exception ex)
             {
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm
+                //return (new DeviceEventLogVm
                 //{
                 //    LogData = ex.Message
                 //});
             }
-            return 1024;
+            return new DeviceEventLogVm();
         }
-        private long FuncGetProductData(long anIndex, ref string astrItem)
+        private DeviceEventLogVm FuncGetProductData(long anIndex, ref string astrItem)
         {
             long vnResultCode;
             string vstrData = new string((char)0x20, 256);
@@ -2900,65 +2794,57 @@ namespace Service.Attendance
             vnResultCode = FKAttendHelper.FK_GetProductData(this._DeviceVm.gnCommHandleIndex, (int)anIndex, ref vstrData);
             if (vnResultCode != (long)enumErrorCode.RUN_SUCCESS)
             {
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ReturnResultPrint(vnResultCode) });
-                return vnResultCode;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ReturnResultPrint(vnResultCode) });
             }
             astrItem = vstrData.Trim();
-            return vnResultCode;
+            return new DeviceEventLogVm();
         }
-        public int sta_SetUserInfo(UserVm value)
+        public DeviceEventLogVm sta_SetUserInfo(UserVm value)
         {
-            return 0;
+            return new DeviceEventLogVm();
         }
 
-        public int sta_ClearAdmin()
+        public DeviceEventLogVm sta_ClearAdmin()
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice, DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
-                    return -1024;
                 }
                 int ret = 0;
 
                 ret = FKAttendHelper.FK_EnableDevice(_DeviceVm.gnCommHandleIndex, 0);
                 if (ret != (int)enumErrorCode.RUN_SUCCESS)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = GlobalConstants.gstrNoDevice });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = GlobalConstants.gstrNoDevice });
                 }
 
                 ret = FKAttendHelper.FK_BenumbAllManager(_DeviceVm.gnCommHandleIndex);
-                //if (ret == (int)enumErrorCode.RUN_SUCCESS)
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "تمامی ادمین ها ا سیستم حذف شدند", DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
-                //else
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = ReturnResultPrint(ret), DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
+                if (ret != (int)enumErrorCode.RUN_SUCCESS)
+                    return (new DeviceEventLogVm { Error = true, Message = ReturnResultPrint(ret), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                 FKAttendHelper.FK_EnableDevice(_DeviceVm.gnCommHandleIndex, 1);
 
 
-                return ret;
+                return new DeviceEventLogVm();
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
 
-        public int sta_ClearAllLogs()
+        public DeviceEventLogVm sta_ClearAllLogs()
         {
-            return 0;
+            return new DeviceEventLogVm();
         }
 
-        public int sta_ClearAllFps()
+        public DeviceEventLogVm sta_ClearAllFps()
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
                 }
                 int vnResultCode = 0;
 
@@ -2966,66 +2852,56 @@ namespace Service.Attendance
                 vnResultCode = FKAttendHelper.FK_EnableDevice(_DeviceVm.gnCommHandleIndex, 0);
                 if (vnResultCode != (int)enumErrorCode.RUN_SUCCESS)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = GlobalConstants.gstrNoDevice });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = GlobalConstants.gstrNoDevice });
                 }
 
                 vnResultCode = FKAttendHelper.FK_EmptyEnrollData(_DeviceVm.gnCommHandleIndex);
-                //if (vnResultCode == (int)enumErrorCode.RUN_SUCCESS)
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "تمامی داده های دستگاه حذف شدند", DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
-                //else
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = ReturnResultPrint(vnResultCode) });
+                if (vnResultCode != (int)enumErrorCode.RUN_SUCCESS)
+                    return (new DeviceEventLogVm { Error = true, Message = ReturnResultPrint(vnResultCode) });
 
                 FKAttendHelper.FK_EnableDevice(_DeviceVm.gnCommHandleIndex, 1);
 
 
-                return vnResultCode;
+                return new DeviceEventLogVm();
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
         }
 
-        public int sta_ClearAllUsers()
+        public DeviceEventLogVm sta_ClearAllUsers()
         {
-            return 0;
+            return new DeviceEventLogVm();
         }
 
-        public int sta_ClearAllData()
+        public DeviceEventLogVm sta_ClearAllData()
         {
             try
             {
                 if (GetConnectState() == false)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = PublicResource.ConnectDevice });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
                 }
-                int ret = 0;
 
 
                 int vnResultCode;
                 vnResultCode = FKAttendHelper.FK_EnableDevice(_DeviceVm.gnCommHandleIndex, 0);
                 if (vnResultCode != (int)enumErrorCode.RUN_SUCCESS)
                 {
-                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = GlobalConstants.gstrNoDevice });
-                    return -1024;
+                    return (new DeviceEventLogVm { Error = true, Message = GlobalConstants.gstrNoDevice });
                 }
                 vnResultCode = FKAttendHelper.FK_ClearKeeperData(_DeviceVm.gnCommHandleIndex);
-                //if (vnResultCode == (int)enumErrorCode.RUN_SUCCESS)
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "تمامی داده های دستگاه حذف شدند", DeviceId = _DeviceVm.idn, SaveInDB = true, ModifiedDate = DateTime.Now });
-                //else
-                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = ReturnResultPrint(vnResultCode) });
+                if (vnResultCode != (int)enumErrorCode.RUN_SUCCESS)
+                    return (new DeviceEventLogVm { Error = true, Message = ReturnResultPrint(vnResultCode) });
 
                 FKAttendHelper.FK_EnableDevice(_DeviceVm.gnCommHandleIndex, 1);
 
-                return ret;
+                return new DeviceEventLogVm();
             }
             catch (Exception ex)
             {
-                // Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + ex.Message });
-                return -1024;
+                return (new DeviceEventLogVm { Error = true, Message = "*" + ex.Message });
             }
 
         }

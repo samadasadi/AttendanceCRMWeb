@@ -285,10 +285,6 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
 
         #endregion
 
-
-
-
-
         #region Manage Coding Customers
 
         public async Task<ActionResult> CeateAccountParties(CodingVm entity)
@@ -321,7 +317,6 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         }
 
         #endregion
-
 
         #region Discounts
 
@@ -407,6 +402,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         }
 
         #endregion
+
 
     }
 }

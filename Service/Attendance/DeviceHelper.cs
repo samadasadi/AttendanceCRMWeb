@@ -157,7 +157,7 @@ namespace Service.Attendance
                         {
                             //item.sDK = new SDKHelper(Terminal, item.deviceVm);
                             item.sDK = new TwainDeviceCreator().TwainDevice(item.deviceVm);
-                            if (item.sDK.sta_ConnectTCP() == 1)
+                            if (item.sDK.sta_ConnectTCP().Error == false)
                                 item.sDK.sta_GetSeialNumber();
                         }, FingerPrintDeviceService.TokenSource.Token);
                     tasks.Add(task);
@@ -338,9 +338,9 @@ namespace Service.Attendance
                         {
                             //item.sDK = new SDKHelper(Terminal, item.deviceVm);
                             item.sDK = new TwainDeviceCreator().TwainDevice(item.deviceVm);
-                            if (item.sDK.sta_ConnectTCP() == 1)
+                            if (item.sDK.sta_ConnectTCP().Error == false)
                                 item.sDK.Run_ImportAttLogFromDevice();
-                            if (item.sDK.sta_ConnectTCP() == 1) item.sDK.sta_DisConnect();
+                            if (item.sDK.sta_ConnectTCP().Error == false) item.sDK.sta_DisConnect();
                         }, FingerPrintDeviceService.TokenSource.Token);
                     tasks.Add(task);
                 }
@@ -465,11 +465,11 @@ namespace Service.Attendance
                             {
                                 //item.sDK = new SDKHelper(Terminal, item.deviceVm);
                                 item.sDK = new TwainDeviceCreator().TwainDevice(item.deviceVm);
-                                if (item.sDK.sta_ConnectTCP() == 1)
+                                if (item.sDK.sta_ConnectTCP().Error == false)
                                 {
                                     getDeviceInfo(item);
                                 }
-                                if (item.sDK.sta_ConnectTCP() == 1) item.sDK.sta_DisConnect();
+                                if (item.sDK.sta_ConnectTCP().Error == false) item.sDK.sta_DisConnect();
                             }, FingerPrintDeviceService.TokenSource.Token);
                         tasks.Add(task);
                     }

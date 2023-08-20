@@ -10,15 +10,16 @@ using System.Threading.Tasks;
 using ViewModel.UserManagement.Attendance;
 using ViewModel.Attendance;
 using Repository.Model.Attendance;
+using Service.Consts;
 
 namespace Service.Attendance
 {
     public interface IDeviceInfoService
     {
         Task<DataModelResult> Save(NewDeviceVm entity);
-        Task<NewDevice> GetDeviceInfo(int? id);
+        Task<NewDeviceVm> GetDeviceInfo(int? id);
         Task<NewDevice> GetDeviceInfobyCode(int? code);
-        Task<bool> DeleteDevice(int? id);
+        Task<DataModelResult> DeleteDevice(int? id);
         Task<List<NewDeviceVm>> GetAllDevice();
         Task<DataModelResult> UpdateLastTimeReport(NewDevice entity);
         Task<DataModelResult> GetLastTimeReport(NewDeviceVm entity);
@@ -30,6 +31,8 @@ namespace Service.Attendance
         Task<DeviceGroupVm> GetDeviceGroup(int? id);
         Task<DeviceGroup> Save_DeviceGroup(DeviceGroupVm entity);
         Task<DataModelResult> UpdateDeviceIP(NewDeviceVm entity);
+        Task<DataModelResult> LoadDeviceList();
+        Task<DataModelResult> ImportAllAttLogFromDevice(int Id);
     }
     public class DeviceInfoService : IDeviceInfoService
     {
@@ -71,10 +74,11 @@ namespace Service.Attendance
                 if (entity.Id == 0)
                 {
                     if (_device == null)
-                        await _repoNewDevice.Add(_model);
+                        await _repoNewDevice.AddInt(_model);
                     else return new DataModelResult { Error = true, Message = "کد دستگاه تکراری است!" };
                 }
                 #endregion
+
                 #region Edit
                 else
                 {
@@ -91,11 +95,15 @@ namespace Service.Attendance
                     }
                 }
                 #endregion
+
+
+                await LoadDeviceList();
+
                 return new DataModelResult();
             }
             catch (Exception ex)
             {
-                return new DataModelResult { Error = false, Message = ex.Message };
+                return new DataModelResult { Error = true, Message = ex.Message };
             }
         }
         public async Task<DataModelResult> UpdateDeviceIP(NewDeviceVm entity)
@@ -104,6 +112,9 @@ namespace Service.Attendance
             {
                 var _query = string.Format(@" update NewDevice set [IP] = N'{0}' where idn = N'{1}' ", entity.IP, entity.Id);
                 await _repoNewDevice.ExecuteSqlCommand(_query);
+
+                await LoadDeviceList();
+
                 return new DataModelResult();
             }
             catch (Exception ex)
@@ -111,18 +122,18 @@ namespace Service.Attendance
                 return new DataModelResult { Error = false, Message = ex.Message };
             }
         }
-        public async Task<NewDevice> GetDeviceInfo(int? id)
+        public async Task<NewDeviceVm> GetDeviceInfo(int? id)
         {
             try
             {
                 if (id == null)
                 {
-                    return new NewDevice();
+                    return new NewDeviceVm();
                 }
                 else
                 {
                     var model = await _repoNewDevice.Find(id.Value);
-                    return model;
+                    return GenericMapping<NewDevice, NewDeviceVm>.Map(model);
                 }
             }
             catch (Exception ex)
@@ -170,21 +181,19 @@ namespace Service.Attendance
                 return new DataModelResult { Message = ex.Message, Error = true };
             }
         }
-        public async Task<bool> DeleteDevice(int? id)
+        public async Task<DataModelResult> DeleteDevice(int? id)
         {
             try
             {
                 var _entity = await _repoNewDevice.Find(id.Value);
                 if (_entity != null)
                 {
-                    var _query = string.Format(@" update NewDevice set IsDelete = '1' where idn ='{0}' ", id);
+                    var _query = string.Format(@" update NewDevice set IsDeleted = '1' where Id ='{0}' ", id);
                     await _repoNewDevice.ExecuteSqlCommand(_query);
 
-                    _entity.IsDeleted = true;
-
-                    return true;
+                    await LoadDeviceList();
                 }
-                return false;
+                return new DataModelResult();
             }
             catch (Exception ex)
             {
@@ -195,7 +204,7 @@ namespace Service.Attendance
         {
             try
             {
-                var _query = string.Format(@" select * from NewDevice where IsDelete = '0' order by Name");
+                var _query = string.Format(@" select * from NewDevice where IsDeleted = '0' order by Name");
 
                 var _res = (await _repoNewDevice.RunQuery<NewDeviceVm>(_query)).ToList();
 
@@ -279,6 +288,41 @@ namespace Service.Attendance
                 return new DataModelResult { Error = false, Message = ex.Message };
             }
         }
+
+
+        public async Task<DataModelResult> LoadDeviceList()
+        {
+            var _device = await GetAllDevice();
+            FingerPrintDeviceService.Devices = new List<DevicesList>();
+            if (_device != null && _device.Count > 0)
+            {
+                foreach (var item in _device)
+                {
+                    var _deviceItem = new DevicesList(item);
+                    FingerPrintDeviceService.Devices.Add(_deviceItem);
+                }
+            }
+            else
+            {
+                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = "*" + "لطفا دستگاه را تعریف کنید" });
+            }
+            return new DataModelResult();
+        }
+
+        public async Task<DataModelResult> ImportAllAttLogFromDevice(int Id)
+        {
+            try
+            {
+                var _deviceVm = FingerPrintDeviceService.Devices.Where(x => x.deviceVm.Id == Id).FirstOrDefault();
+                return _deviceVm.sDK.Run_ImportAllAttLogFromDevice();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         #endregion
 
 

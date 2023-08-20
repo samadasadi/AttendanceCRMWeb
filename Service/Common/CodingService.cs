@@ -634,12 +634,12 @@ namespace Service.Common
             if (model == null || string.IsNullOrEmpty(model.Code)) return new List<CodingVm>();
             var q = await _repo.Find(model.Code);
             return await _repoCoding.RunQuery<CodingVm>(
-                string.Format("EXEC [dbo].[getListCodings], " +
-                "@code = '{1}'," +
-                "@From = {2}," +
-                "@To = {3}," +
-                "@txtKey = {4}," +
-                "@level = {5}" , 
+                string.Format("EXEC [dbo].[getListCodings] " +
+                "@code = '{0}'," +
+                "@From = {1}," +
+                "@To = {2}," +
+                "@txtKey = {3}," +
+                "@level = {4}" , 
                 (q.code == "030" ? "03" : q.code), 
                 (model.PageNum == 1 ? 1 : ((model.PageNum * model.PageSize) - model.PageSize)), 
                 model.PageNum * model.PageSize, 

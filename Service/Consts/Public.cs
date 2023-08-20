@@ -1,4 +1,5 @@
 ﻿using Repository.Model;
+using Service.Attendance;
 using Service.Security;
 using System.Collections.Generic;
 using System.Web;
@@ -6,6 +7,7 @@ using ViewModel;
 using ViewModel.BasicInfo;
 using ViewModel.Chat;
 using ViewModel.Security;
+using ViewModel.UserManagement.Attendance;
 
 namespace Service.Consts
 {
@@ -48,6 +50,7 @@ namespace Service.Consts
         public static List<ChatUserModel> UserChatList { get; set; }
         public static AccountExpireInfo AccountExpireInfo { get; set; }
         public static GeneralSetting GeneralSetting { get; set; }
+
 
 
     }

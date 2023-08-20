@@ -20,8 +20,8 @@
             {
                 <tr>
                     <td style="vertical-align:middle; min-width:100px;">
-                        <a onclick="EditShiftWork('@item.Id')" class="fa fa-edit" title="ویرایش"></a>
-                        <a onclick="DeleteShiftWork('@item.Id')" class="fa fa-trash" title="حذف"></a>
+                        <a class="btn btn-danger btn-sm" onclick="DeleteShiftWork('@item.Id')" title="حذف"> <span class="fa fa-trash"></span> </a>
+                        <a class="btn btn-primary btn-sm" onclick="EditShiftWork('@item.Id')" title="ویرایش"> <span class="fa fa-trash"></span> ویرایش </a>
                     </td>
                     <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.ShiftName</a></td>
                 </tr>

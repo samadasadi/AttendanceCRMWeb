@@ -21,9 +21,9 @@
             foreach (var item in Model.TLists)
             {
                 <tr>
-                    <td style="vertical-align:middle; min-width:70px;">
-                        <a onclick="EditCalendars('@item.ID')" class="fa fa-edit" title="ویرایش"></a>
-                        <a onclick="DeleteCalendars('@item.ID')" class="fa fa-trash" title="حذف"></a>
+                    <td style="vertical-align:middle; min-width:100px;">
+                        <a class="btn btn-danger btn-sm" onclick="DeleteCalendars('@item.ID')" title="حذف"> <span class="fa fa-trash"></span> </a>
+                        <a class="btn btn-primary btn-sm" onclick="EditCalendars('@item.ID')" title="ویرایش"> <span class="fa fa-trash"></span> ویرایش </a>
                     </td>
                     <td class="mailbox-name" style="vertical-align:middle; min-width:100px;"><a>@item.CalendarName</a></td>
                     <td class="mailbox-subject" style="vertical-align:middle; min-width:250px;">
