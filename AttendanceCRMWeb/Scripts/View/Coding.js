@@ -443,7 +443,6 @@
         if (!CheckNullAddTolist(name)) return false;
 
 
-        debugger;
         var _deviceId = $("#POS_DeviceId").val();
         if (_deviceId == '5') {
             var _serial = $("#POS_SerialNo").val();
@@ -465,9 +464,6 @@
 
         AjaxCallAction('GET', '/Admin/Coding/AddCode', $("Form").serialize(), true,
             function (res) {
-
-                debugger;
-
                 if (res.Selected) {
                     createNode($('#parentCode').val(), res.Class, name, "last");
                 }
