@@ -314,7 +314,8 @@ namespace Service.Attendance
             try
             {
                 var _deviceVm = FingerPrintDeviceService.Devices.Where(x => x.deviceVm.Id == Id).FirstOrDefault();
-                return _deviceVm.sDK.Run_ImportAllAttLogFromDevice();
+                var _result = _deviceVm.sDK.Run_ImportAllAttLogFromDevice();
+                return _result;
             }
             catch (Exception ex)
             {

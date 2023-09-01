@@ -95,10 +95,9 @@
 
         AjaxCallAction("GET", "/Admin/Device/ImportAllAttLogFromDevice", { Id: id }, true,
             function (res) {
-                debugger;
 
                 if (!res.Error) {
-
+                    AlertDialog(res.Message, '');
                 }
                 else {
                     AlertDialog(res.Message, '', 'error');

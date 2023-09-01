@@ -2087,7 +2087,7 @@ namespace Service.Attendance
                     SetConnectState(false); 
                     return _ping;
                 }
-                if (GetConnectState()) new DeviceEventLogVm();
+                if (GetConnectState()) return new DeviceEventLogVm();
 
                 _DeviceVm.gnCommHandleIndex = FKAttendHelper.FK_ConnectNet(
                     anMachineNo: _DeviceVm.Code ?? 1,
@@ -2499,7 +2499,7 @@ namespace Service.Attendance
                         _DeviceVm.LastImportLogCount = _attList.Count;
                         UpdateLastTimeRecord(_attList.Count);
                         FKAttendHelper.FK_EnableDevice(_DeviceVm.gnCommHandleIndex, 1);
-                        return (new DeviceEventLogVm { Error = true, Message = "- " + "تخلیه اطلاعات از دستگاه: " + _DeviceVm.Name + " با موفقیت انجام شد. " + "   ==>  تعداد رکورد ها : " + _attList.Count() + "   ==> " + "زمان آخرین تخلیه: " + DateTimeOperation.M2S(DateTime.Now) + " " + DateTime.Now.ToString("HH:mm"), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
+                        return (new DeviceEventLogVm { Error = false, Message = "- " + "تخلیه اطلاعات از دستگاه: " + _DeviceVm.Name + " با موفقیت انجام شد. " + "   ==>  تعداد رکورد ها : " + _attList.Count() + "   ==> " + "زمان آخرین تخلیه: " + DateTimeOperation.M2S(DateTime.Now) + " " + DateTime.Now.ToString("HH:mm"), DeviceId = _DeviceVm.Id, SaveInDB = true, ModifiedDate = DateTime.Now });
                         //System.Windows.Application.Current.Dispatcher.Invoke(delegate
                         //{
                         //    PublicMethod.SaveLogFile(_DeviceVm.Name, "تخلیه اطلاعات از دستگاه: " + _DeviceVm.Name + " با موفقیت انجام شد. " + "   ==>  تعداد رکورد ها : " + _attList.Count() + "   ==> " + "زمان آخرین تخلیه: " + DateTimeOperation.M2S(DateTime.Now) + " " + DateTime.Now.ToString("HH:mm"));
@@ -2530,8 +2530,8 @@ namespace Service.Attendance
             {
                 var _query = string.Format(@" IF((Select COUNT(*) from TimeRecords where {0} = DeviceCode and {1} = CardNo and {2} = [Year] and {3} = [Month] and {4} = [Day] and {5} = Hour and {6} = Minute) <=0) " +
                                             "\n BEGIN " +
-                                            "\n 	INSERT INTO [dbo].[TimeRecords]([CardNo],[DeviceCode],[Year],[Month],[Day],[Hour],[Minute],[DatetimeIO],[AttStatus],[VerifyMethod],[IsDelete],[ChangebyPerson],[WorkCode], [DatetimeIOMain]) " +
-                                            "\n 	VALUES({1}, {0}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, '0', '0', {10}, {11}) " +
+                                            "\n 	INSERT INTO [dbo].[TimeRecords]([CardNo],[DeviceCode],[Year],[Month],[Day],[Hour],[Minute],[DatetimeIO],[AttStatus],[VerifyMethod],[IsDeleted],[ChangebyPerson],[WorkCode], [DatetimeIOMain], ModifiedDate, DoingUserId) " +
+                                            "\n 	VALUES({1}, {0}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, '0', '0', {10}, {11}, GETDATE(), N'00000000-0000-0000-0000-000000000000') " +
                                             "\n END",
                                             item.DeviceCode != null ? "N'" + item.DeviceCode + "'" : "NULL",
                                             !string.IsNullOrEmpty(item.CardNo) ? "N'" + item.CardNo + "'" : "NULL",

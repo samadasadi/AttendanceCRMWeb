@@ -1,4 +1,5 @@
-﻿using Repository.Infrastructure;
+﻿using Repository;
+using Repository.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -543,8 +544,16 @@ namespace Service.Attendance
             try
             {
                 if (string.IsNullOrEmpty(sql)) return new DataModelResult();
-                var _connectionString = "";  //PublicMethod.GetConnectionString();
-                using (DbConnection connection = new SqlConnection(_connectionString.Replace("MultipleActiveResultSets=True;App=EntityFramework", "")))
+
+
+                var _connstring = ConnectionStringManager.LoadSettings(true);
+                if (_connstring == null || !ConnectionStringManager.DatabaseIsInstalled)
+                {
+                    _connstring = new MainConnectionString();
+                    _connstring.ConnectionString = $"Data Source=.;initial catalog=MinaDB;user id=sa;password=Admin@110;MultipleActiveResultSets=True;";
+                }
+
+                using (DbConnection connection = new SqlConnection(_connstring.ConnectionString.Replace("MultipleActiveResultSets=True;App=EntityFramework", "")))
                 {
                     connection.Open();
                     try
