@@ -496,5 +496,8 @@ namespace ViewModel.Common
 
 
 
+        [Display(Name = "نام درگاه پرداخت")]
+        [UIHint("HorizentalDropdwonR")]
+        public string FingerPrintDevice { get; set; }
     }
 }

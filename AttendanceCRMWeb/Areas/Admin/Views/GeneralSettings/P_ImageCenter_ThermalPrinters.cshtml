@@ -8,122 +8,167 @@
 @using Repository.Infrastructure
 
 
-@using (Html.CreateDivForBootstrap())
-{
-    using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "6"))
-    {
-        <label class="text-AlignBySoftWare col-md-3">@Resources.Md.ChoosePhoto</label>
-        <div class="form-group">
-            @if (Model.FileId != null)
-            {
-                <div class="fileinput fileinput-exists" data-provides="fileinput">
-                    <style>
-                        .fileinput-new img {
-                            width: 200px;
-                        }
 
-                        .fileinput-preview img {
-                            width: 200px;
-                        }
-                    </style>
-                    <div class="fileinput-new fileinput-preview thumbnail" style="width: 200px; height: 150px;">
-                        <img src="@Model.Img" style="width:200px;" />
-                    </div>
-                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;">
-                        <img src="@Model.Img" style="width:200px;" />
-                    </div>
-                    <div>
-                        <span class="btn btn-default btn-file">
-                            <span class="fileinput-new">
-                                @Resources.Md.ChoosePhoto
-                            </span>
-                            <span class="fileinput-exists">
-                                @Resources.Md.ChangePhoto
-                            </span>
-                            <input type="hidden" value="" name="...">
-                            <input type="hidden" value="" name=""><input type="file" name="File" id="File" class="valid">
-                        </span>
-                        <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-                            <span class="md-click-circle md-click-animate" style="height: 78px; width: 78px; top: 209px; left: 651px;"></span>
-                            @Resources.Md.Delete
-                        </a>
-                    </div>
-                </div>
-            }
-            else
-            {
-                <div class="fileinput fileinput-new" data-provides="fileinput">
-                    <style>
-                        .fileinput-new img {
-                            width: 200px;
-                        }
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
 
-                        .fileinput-preview img {
-                            width: 200px;
+                    <label class="text-AlignBySoftWare col-md-3">@Resources.Md.ChoosePhoto</label>
+                    <div class="form-group">
+                        @if (Model.FileId != null)
+                        {
+                            <div class="fileinput fileinput-exists" data-provides="fileinput">
+                                <style>
+                                    .fileinput-new img {
+                                        width: 200px;
+                                    }
+
+                                    .fileinput-preview img {
+                                        width: 200px;
+                                    }
+                                </style>
+                                <div class="fileinput-new fileinput-preview thumbnail" style="width: 200px; height: 150px;">
+                                    <img src="@Model.Img" style="width:200px;" />
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;">
+                                    <img src="@Model.Img" style="width:200px;" />
+                                </div>
+                                <div>
+                                    <span class="btn btn-default btn-file">
+                                        <span class="fileinput-new">
+                                            @Resources.Md.ChoosePhoto
+                                        </span>
+                                        <span class="fileinput-exists">
+                                            @Resources.Md.ChangePhoto
+                                        </span>
+                                        <input type="hidden" value="" name="...">
+                                        <input type="hidden" value="" name=""><input type="file" name="File" id="File" class="valid">
+                                    </span>
+                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+                                        <span class="md-click-circle md-click-animate" style="height: 78px; width: 78px; top: 209px; left: 651px;"></span>
+                                        @Resources.Md.Delete
+                                    </a>
+                                </div>
+                            </div>
                         }
-                    </style>
-                    <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                        <img src="~/assets/global/img/text.png" style="width:200px;" />
+                        else
+                        {
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <style>
+                                    .fileinput-new img {
+                                        width: 200px;
+                                    }
+
+                                    .fileinput-preview img {
+                                        width: 200px;
+                                    }
+                                </style>
+                                <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+                                    <img src="~/assets/global/img/text.png" style="width:200px;" />
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;">
+                                </div>
+                                <div>
+                                    <span class="btn btn-default btn-file">
+                                        <span class="fileinput-new">
+                                            @Resources.Md.ChoosePhoto
+                                        </span>
+                                        <span class="fileinput-exists">
+                                            @Resources.Md.ChangePhoto
+                                        </span>
+                                        <input type="hidden" value="" name="...">
+                                        <input type="file" name="File" id="File">
+                                    </span>
+                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
+                                        <span class="md-click-circle md-click-animate" style="height: 78px; width: 78px; top: 209px; left: 651px;"></span>
+                                        @Resources.Md.Delete
+                                    </a>
+                                </div>
+                            </div>
+                        }
                     </div>
-                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;">
-                    </div>
-                    <div>
-                        <span class="btn btn-default btn-file">
-                            <span class="fileinput-new">
-                                @Resources.Md.ChoosePhoto
-                            </span>
-                            <span class="fileinput-exists">
-                                @Resources.Md.ChangePhoto
-                            </span>
-                            <input type="hidden" value="" name="...">
-                            <input type="file" name="File" id="File">
-                        </span>
-                        <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput">
-                            <span class="md-click-circle md-click-animate" style="height: 78px; width: 78px; top: 209px; left: 651px;"></span>
-                            @Resources.Md.Delete
-                        </a>
-                    </div>
+                
                 </div>
-            }
+            </div>
         </div>
-    }
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
 
-    if (Service.Consts.Public.CurrentUser.IsPrinter)
-    {
-        using (Html.CreateDivForBootstrap(isDivRow: false, divColNumber: "6"))
-        {
-            using (Html.BsPanelWithCloseAndMinimize("چاپگر حرارتی", colorPanel: ColorPanel.Default, isClose: false, isMinus: false))
-            {
-                using (Html.CreateDivForBootstrap())
-                {
-
-                    var taskService = EngineContext.Resolve<IGenericAttributeService>();
-                    var ShowTimeInPatientAccountFishPrint = taskService.GetAttribute<bool>(new Repository.Model.BaseClass { Id = Guid.Empty }, "PatientAccount.ShowTimeInFishPrint").Result;
-                    <div class="row">
-                        <label class="text-AlignBySoftWare col-md-7" for="ShowTimeInPatientAccountFishPrint">نمایش زمان در فیش پرینت حرارتی</label>
-                        <div class="icheck-success d-inline">
-                            <input type="checkbox" id="ShowTimeInPatientAccountFishPrint" @(ShowTimeInPatientAccountFishPrint ? "checked" : "")>
+                    <div class="col-sm-12 margin-bottom-10">
+                        <div class="col-md-12">
+                            @Html.EditorFor(x=>x.FingerPrintDevice)
                         </div>
-                        <script>
-                            $('#ShowTimeInPatientAccountFishPrint').on('ifChanged', function (event) {
+                        <a class="btn btn-info col-md-12" style="margin-bottom: 5px;" onclick="RunScript()">بازسازی دیتا بیس</a>
+                        <a class="btn btn-info col-md-12" style="margin-bottom: 5px;" >وارد کردن اطلاعات از SD/USB</a>
+                        <a class="btn btn-info col-md-12" style="margin-bottom: 5px;" onclick="clearAdmin()">پاک کردن مدیر</a>
+                        <a class="btn btn-info col-md-12" style="margin-bottom: 5px;" onclick="clearAllLogs()">پاک کردن همه سوابق</a>
+                        <a class="btn btn-info col-md-12" style="margin-bottom: 5px;" onclick="clearAllFp()">پاک کردن همه اثر انگشت ها</a>
+                        <a class="btn btn-info col-md-12" style="margin-bottom: 5px;" onclick="clearAllUser()">پاک کردن همه کاربران</a>
+                        <a class="btn btn-info col-md-12" style="margin-bottom: 5px;" onclick="clearAllData()">پاک کردن همه داده ها</a>
 
-                                if ($("#ShowTimeInPatientAccountFishPrint").is(":checked")) {
-                                    SaveGeneralPreference('PatientAccount.ShowTimeInFishPrint', 'True');
-                                } else {
-                                    SaveGeneralPreference('PatientAccount.ShowTimeInFishPrint', 'False');
-                                }
-                            });
-                        </script>
                     </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                }
-            }
-        }
-    }
-}
 <script>
+
     $(function () {
         $('.select2').select2();
     });
+
+    function GetSelectedDevice() {
+        var _device = $("#FingerPrintDevice").val();
+        if (_device == null || _device == undefined || _device == '') {
+            AlertDialog('لطفا دستگاه را انتخاب نمایید', '', 'error');
+            return null;
+        }
+        return _device;
+    }
+
+    function clearAllData() {
+        var _device = GetSelectedDevice();
+        if (_device == null) return;
+
+        ConfirmDelete('GET', '/Admin/Device/ClearAllData', { Id: _device }, function (res) {  });
+    }
+    function clearAdmin() {
+        debugger;
+
+        var _device = GetSelectedDevice();
+        if (_device == null) return;
+
+        ConfirmDelete('GET', '/Admin/Device/ClearAdmin', { Id: _device }, function (res) {  });
+    }
+    function clearAllLogs() {
+        var _device = GetSelectedDevice();
+        if (_device == null) return;
+
+        ConfirmDelete('GET', '/Admin/Device/ClearAllLogs', { Id: _device }, function (res) {  });
+    }
+    function clearAllFp() {
+        var _device = GetSelectedDevice();
+        if (_device == null) return;
+
+        ConfirmDelete('GET', '/Admin/Device/ClearAllFp', { Id: _device }, function (res) {  });
+    }
+    function clearAllUser() {
+        var _device = GetSelectedDevice();
+        if (_device == null) return;
+
+        ConfirmDelete('GET', '/Admin/Device/ClearAllUser', { Id: _device }, function (res) {  });
+    }
+    function RunScript() {
+        ConfirmDelete('GET', '/Admin/Device/RunScript', { Id: id }, function (res) {  });
+    }
+    //function () {
+    //    ConfirmDelete('GET', '/Admin/Device/', { Id: id }, function (res) {  });
+    //}
+
 </script>

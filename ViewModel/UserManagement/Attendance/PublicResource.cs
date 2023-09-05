@@ -26,6 +26,10 @@ namespace ViewModel.UserManagement.Attendance
         /// *لطفاً ابتدا دستگاه را متصل کنید!
         /// </summary>
         public static string ConnectDevice => "*لطفاً ابتدا دستگاه را متصل کنید!";
+
+        public static string DeviceConnected => "دستگاه متصل است";
+        public static string DeviceNotConnected => "دستگاه متصل نیست";
+
         /// <summary>
         /// *لطفاً ابتدا شناسه کاربر را وارد کنید!
         /// </summary>

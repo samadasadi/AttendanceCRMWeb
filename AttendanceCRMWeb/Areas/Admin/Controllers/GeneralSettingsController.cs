@@ -13,6 +13,7 @@ using Utility.EXT;
 using Utility.PublicEnum;
 using Utility;
 using ViewModel.Common;
+using Service.Attendance;
 
 namespace AttendanceCRMWeb.Areas.Admin.Controllers
 {
@@ -21,6 +22,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
     {
 
         private readonly IGeneralSettingService _service;
+        private readonly IDeviceInfoService _serviceDeviceInfo;
 
         protected override string FormName
         {
@@ -28,10 +30,12 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         }
 
         public GeneralSettingsController(
-            IGeneralSettingService Service
+            IGeneralSettingService Service,
+            IDeviceInfoService serviceDeviceInfo
             )
         {
             _service = Service;
+            _serviceDeviceInfo = serviceDeviceInfo;
         }
 
         [FillSecurityDepFilter(RoleType = EnumRole.BasicSetting)]
@@ -49,6 +53,14 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
 
             ViewBag.enumList = lstEnumList;
             ViewData["PaymentName"] = new SelectList(_service.GetPaymentNameEnumList(), "Value", "Text", model.PaymentName);
+
+            var _deviceList = (from item in await _serviceDeviceInfo.GetAllDevice()
+                               select new NormalJsonClass
+                               {
+                                   Text = item.DeviceFullName,
+                                   Value = item.Id.ToString(),
+                               }).ToList();
+            ViewData["FingerPrintDevice"] = new SelectList(_deviceList, "Value", "Text", model.FingerPrintDevice);
 
             return View(model);
         }

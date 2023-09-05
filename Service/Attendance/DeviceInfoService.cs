@@ -33,6 +33,18 @@ namespace Service.Attendance
         Task<DataModelResult> UpdateDeviceIP(NewDeviceVm entity);
         Task<DataModelResult> LoadDeviceList();
         Task<DataModelResult> ImportAllAttLogFromDevice(int Id);
+
+
+        Task<DataModelResult> ClearAdmin(int Id);
+        Task<DataModelResult> ClearAllData(int Id);
+        Task<DataModelResult> ClearAllLogs(int Id);
+        Task<DataModelResult> ClearAllFp(int Id);
+        Task<DataModelResult> ClearAllUser(int Id);
+
+        Task<DataModelResult> ConnectDevice(int Id);
+        Task<DataModelResult> DisConnectDevice(int Id);
+
+
     }
     public class DeviceInfoService : IDeviceInfoService
     {
@@ -322,6 +334,102 @@ namespace Service.Attendance
                 throw ex;
             }
         }
+
+        public async Task<DataModelResult> ConnectDevice(int Id)
+        {
+            try
+            {
+                var _deviceVm = FingerPrintDeviceService.Devices.Where(x => x.deviceVm.Id == Id).FirstOrDefault();
+                var _result = _deviceVm.sDK.sta_ConnectTCP();
+                return _result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<DataModelResult> DisConnectDevice(int Id)
+        {
+            try
+            {
+                var _deviceVm = FingerPrintDeviceService.Devices.Where(x => x.deviceVm.Id == Id).FirstOrDefault();
+                var _result = _deviceVm.sDK.sta_DisConnect();
+                return _result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public async Task<DataModelResult> ClearAdmin(int Id)
+        {
+            try
+            {
+                var _deviceVm = FingerPrintDeviceService.Devices.Where(x => x.deviceVm.Id == Id).FirstOrDefault();
+                var _result = _deviceVm.sDK.sta_ClearAdmin();
+                return _result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<DataModelResult> ClearAllUser(int Id)
+        {
+            try
+            {
+                var _deviceVm = FingerPrintDeviceService.Devices.Where(x => x.deviceVm.Id == Id).FirstOrDefault();
+                var _result = _deviceVm.sDK.sta_ClearAllUsers();
+                return _result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<DataModelResult> ClearAllFp(int Id)
+        {
+            try
+            {
+                var _deviceVm = FingerPrintDeviceService.Devices.Where(x => x.deviceVm.Id == Id).FirstOrDefault();
+                var _result = _deviceVm.sDK.sta_ClearAllFps();
+                return _result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<DataModelResult> ClearAllLogs(int Id)
+        {
+            try
+            {
+                var _deviceVm = FingerPrintDeviceService.Devices.Where(x => x.deviceVm.Id == Id).FirstOrDefault();
+                var _result = _deviceVm.sDK.sta_ClearAllLogs();
+                return _result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<DataModelResult> ClearAllData(int Id)
+        {
+            try
+            {
+                var _deviceVm = FingerPrintDeviceService.Devices.Where(x => x.deviceVm.Id == Id).FirstOrDefault();
+                var _result = _deviceVm.sDK.sta_ClearAllData();
+                return _result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
 
 
         #endregion

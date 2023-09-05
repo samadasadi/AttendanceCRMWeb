@@ -1265,12 +1265,12 @@ function ConfirmDelete(type, url, data, successCallBack, question = 'آیا مط
     RaveshUI.deleteConfirmModal('بله, حذف شود!', 'خیر', question, function () {
 
         AjaxCallAction(type, url, data, true, function (res) {
-            if (!res.error) {
+            if (!res.Error) {
                 successCallBack(res);
                 AlertDialog('حذف با موفقیت انجام شد', 'حذف شد!')
             }
             else {
-                AlertDialog(res.message, 'شکست!', 'error')
+                AlertDialog(res.Message, 'شکست!', 'error')
             }
         }, false);
 

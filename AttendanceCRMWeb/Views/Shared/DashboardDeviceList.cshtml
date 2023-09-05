@@ -39,8 +39,10 @@
                                 <i class="fa fa-ellipsis-v" style="font-size:14px;"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu" style="">
+                                <a href="javascript:;" onclick="ConnectDevice('@item.deviceVm.Id')" class="dropdown-item"><i class="fa fa-toggle-on text-success"></i>  اتصال </a>
+                                <a href="javascript:;" onclick="DisConnectDevice('@item.deviceVm.Id')" class="dropdown-item"><i class="fa fa-toggle-off text-danger"></i>  قطع اتصال </a>
                                 <a href="javascript:;" onclick="ImportAllAttLogFromDevice('@item.deviceVm.Id')" class="dropdown-item"><i class="fa fa-download text-success"></i>  تخلیه اطلاعات </a>
-                                <a href="javascript:;" onclick="EditDevice('@item.deviceVm.Id')" class="dropdown-item"><i class="fas fa-edit text-success"></i>  ویرایش </a>
+                                <a href="javascript:;" onclick="EditDevice('@item.deviceVm.Id')" class="dropdown-item"><i class="fas fa-edit text-primary"></i>  ویرایش </a>
                                 <a href="javascript:;" onclick="DeleteDevice('@item.deviceVm.Id')" class="dropdown-item"><i class="fas fa-trash text-danger"></i> حذف</a>
                             </div>
                         </div>

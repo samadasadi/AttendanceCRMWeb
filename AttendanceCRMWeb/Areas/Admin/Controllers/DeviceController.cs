@@ -74,7 +74,6 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
             }
         }
 
-
         [HttpPost]
         [AjaxOnlyFilter]
         public async Task<ActionResult> P_Device(NewDeviceVm model)
@@ -89,7 +88,6 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
                 throw ex;
             }
         }
-
 
         public async Task<ActionResult> Create()
         {
@@ -108,7 +106,6 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
             }
         }
 
-
         public async Task<ActionResult> Edit(int id)
         {
             try
@@ -125,7 +122,6 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
                 throw ex;
             }
         }
-
 
         public void SetViewBag(NewDeviceVm model)
         {
@@ -146,13 +142,11 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
             }
         }
 
-
         public async Task<JsonResult> Delete(NewDeviceVm model)
         {
             var _res = await _serviceDeviceInfo.DeleteDevice(model.Id);
             return Json(_res, JsonRequestBehavior.AllowGet);
         }
-
 
         public async Task<JsonResult> ImportAllAttLogFromDevice(int Id)
         {
@@ -167,7 +161,97 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
             }
         }
 
+        public async Task<JsonResult> ConnectDevice(int Id)
+        {
+            try
+            {
+                var _res = await _serviceDeviceInfo.ConnectDevice(Id);
+                return Json(_res, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<JsonResult> DisConnectDevice(int Id)
+        {
+            try
+            {
+                var _res = await _serviceDeviceInfo.DisConnectDevice(Id);
+                return Json(_res, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        public async Task<JsonResult> ClearAdmin(int Id)
+        {
+            try
+            {
+                var _res = await _serviceDeviceInfo.ClearAdmin(Id);
+                return Json(_res, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<JsonResult> ClearAllData(int Id)
+        {
+            try
+            {
+                var _res = await _serviceDeviceInfo.ClearAllData(Id);
+                return Json(_res, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<JsonResult> ClearAllLogs(int Id)
+        {
+            try
+            {
+                var _res = await _serviceDeviceInfo.ClearAllLogs(Id);
+                return Json(_res, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<JsonResult> ClearAllFp(int Id)
+        {
+            try
+            {
+                var _res = await _serviceDeviceInfo.ClearAllFp(Id);
+                return Json(_res, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<JsonResult> ClearAllUser(int Id)
+        {
+            try
+            {
+                var _res = await _serviceDeviceInfo.ClearAllUser(Id);
+                return Json(_res, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
 
         #endregion
+
+
     }
 }

@@ -17,8 +17,6 @@ using ViewModel.Attendance;
 namespace Service.Attendance
 {
 
-
-
     public class DevicesList
     {
         public DevicesList(NewDeviceVm device)
@@ -493,7 +491,7 @@ namespace Service.Attendance
                     SetConnectState(false);
                     return _ping;
                 }
-                if (GetConnectState()) new DeviceEventLogVm();
+                if (GetConnectState()) return new DeviceEventLogVm { Message = PublicResource.DeviceConnected };
 
                 if (_DeviceVm == null || string.IsNullOrEmpty(_DeviceVm.IP) || _DeviceVm.port == null)
                 {
@@ -709,6 +707,9 @@ namespace Service.Attendance
         {
             try
             {
+                if(!GetConnectState()) 
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.DeviceNotConnected });
+
                 if (PingDevice().Error == false)
                     if (GetConnectState() == true)
                     {
@@ -2081,13 +2082,14 @@ namespace Service.Attendance
         {
             try
             {
+                if (GetConnectState()) return new DeviceEventLogVm { Message = PublicResource.DeviceConnected };
+
                 var _ping = PingDevice();
                 if (_ping.Error == true)
                 {
                     SetConnectState(false); 
                     return _ping;
                 }
-                if (GetConnectState()) return new DeviceEventLogVm();
 
                 _DeviceVm.gnCommHandleIndex = FKAttendHelper.FK_ConnectNet(
                     anMachineNo: _DeviceVm.Code ?? 1,
@@ -2132,6 +2134,10 @@ namespace Service.Attendance
         {
             try
             {
+                if (!GetConnectState())
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.DeviceNotConnected });
+
+
                 if (PingDevice().Error == false)
                     if (GetConnectState() == true)
                     {
@@ -2810,6 +2816,7 @@ namespace Service.Attendance
             {
                 if (GetConnectState() == false)
                 {
+                    return (new DeviceEventLogVm { Error = true, Message = PublicResource.ConnectDevice });
                 }
                 int ret = 0;
 
@@ -2920,7 +2927,5 @@ namespace Service.Attendance
         public static List<DevicesList> Devices { get; set; }
         public static CancellationTokenSource TokenSource { get; set; } = new CancellationTokenSource();
     }
-
-
 
 }

@@ -320,7 +320,7 @@
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <ul class="navbar-nav" style="padding: 5px;">
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" ><i class="fas fa-bars"></i></a>
+                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
             </ul>
 
@@ -746,6 +746,127 @@
 
 
     @RenderSection("scripts", required: false)
+
+
+
+
+
+
+    <script>
+
+        function ReloadDeviceList() {
+            AjaxCallAction("GET", "/Home/DashboardDeviceList", {}, true,
+                function (res) {
+                    if (!res.Error) {
+                        $("#DashboardDeviceList").html(res);
+                    }
+                    else {
+                        AlertDialog(res.Message, '', 'error');
+                    }
+                }, true);
+        }
+        function ImportAllAttLogFromDevice(id) {
+
+            AjaxCallAction("GET", "/Admin/Device/ImportAllAttLogFromDevice", { Id: id }, true,
+                function (res) {
+
+                    if (!res.Error) {
+                        AlertDialog(res.Message, '');
+                    }
+                    else {
+                        AlertDialog(res.Message, '', 'error');
+                    }
+
+                }, true);
+
+        }
+        function AddDevice() {
+            InitModal('', '/Admin/Device/Create', {}, function () { SaveDevice() }, false, true);
+        }
+        function EditDevice(id) {
+            InitModal('', '/Admin/Device/Edit', { id: id }, function () { SaveDevice() }, false, true);
+        }
+        function SaveDevice() {
+            var _DeviceName = $("#T_model_Name").val();
+            var _DeviceCode = $("#T_model_Code").val();
+            var _DeviceIP = $("#T_model_IP").val();
+            var _Deviceport = $("#T_model_port").val();
+
+
+            if (_DeviceName == "" || _DeviceName == null || _DeviceName == undefined) {
+                AlertDialog('لطفا عنوان را وارد نمایید', '', 'error');
+                return;
+            }
+            if (_DeviceCode == "" || _DeviceCode == null || _DeviceCode == undefined) {
+                AlertDialog('لطفا کد دستگاه را وارد نمایید', '', 'error');
+                return;
+            }
+            if (_DeviceIP == "" || _DeviceIP == null || _DeviceIP == undefined) {
+                AlertDialog('لطفا آی پی را وارد نمایید', '', 'error');
+                return;
+            }
+            if (_Deviceport == "" || _Deviceport == null || _Deviceport == undefined) {
+                AlertDialog('لطفا پورت را وارد نمایید', '', 'error');
+                return;
+            }
+
+
+
+            AjaxCallAction("POST", "/Admin/Device/Save", $("#DeviceFrm").serialize(), true, function (res) {
+
+                if (!res.Error) {
+                    ReloadDeviceList();
+                    CloseModal();
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true);
+        }
+        function DeleteDevice() {
+            ConfirmDelete('GET', '/Admin/Device/Delete', { Id: Id },
+                function (result) {
+                    ReloadDeviceList();
+                });
+        }
+
+
+        function ConnectDevice(id) {
+
+            AjaxCallAction("GET", "/Admin/Device/ConnectDevice", { Id: id }, true,
+                function (res) {
+
+                    if (!res.Error) {
+                        AlertDialog(res.Message, '');
+                    }
+                    else {
+                        AlertDialog(res.Message, '', 'error');
+                    }
+
+                }, true);
+
+        }
+        function DisConnectDevice(id) {
+
+            AjaxCallAction("GET", "/Admin/Device/DisConnectDevice", { Id: id }, true,
+                function (res) {
+
+                    if (!res.Error) {
+                        AlertDialog(res.Message, '');
+                    }
+                    else {
+                        AlertDialog(res.Message, '', 'error');
+                    }
+
+                }, true);
+
+        }
+
+
+    </script>
+
+
+
 
 </body>
 </html>
