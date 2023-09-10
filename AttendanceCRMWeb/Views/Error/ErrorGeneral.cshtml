@@ -1,0 +1,37 @@
+﻿
+@{
+
+    ViewBag.Title = "صفحه مورد نظر یافت نشد";
+
+    var _msgerror = ViewBag.ExceptionError;
+
+}
+
+
+
+
+
+<section class="content">
+    <div class="error-page">
+        <h2 class="headline text-warning"> خطای نا مشخص</h2>
+
+        <div class="error-content">
+            <h3><i class="fas fa-exclamation-triangle text-warning"></i> صفحه مورد نظر یافت نشد.</h3>
+
+            <p>@_msgerror</p>
+
+            <p>
+                <a href="/Home/IndexR">برگشت به داشبورد</a>
+            </p>
+
+        </div>
+        <!-- /.error-content -->
+    </div>
+    <!-- /.error-page -->
+</section>
+
+
+
+
+
+

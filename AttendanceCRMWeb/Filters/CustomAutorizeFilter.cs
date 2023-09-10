@@ -10,6 +10,8 @@ using Utility.PublicEnum;
 using ViewModel.Security;
 using Repository;
 using Repository.iContext;
+using static System.Net.Mime.MediaTypeNames;
+using ViewModel.BasicInfo;
 
 namespace AttendanceCRMWeb.Filters
 {
@@ -35,7 +37,7 @@ namespace AttendanceCRMWeb.Filters
         //    set { _UserType = value; }
         //}
 
-        void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext)
+        async void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext)
         {
 
             var currentUser = (UserLogin)filterContext.HttpContext.Session["CurrentUser"];
@@ -47,24 +49,30 @@ namespace AttendanceCRMWeb.Filters
                 var currentUserEnumRole = currentUser.AvailableRole;
                 if (_EnumRole != null)
                 {
-                    var rolesCheck = _EnumRole.Any(currentUserEnumRole.Contains);
-                    if (rolesCheck)
+
+                    if (DateTime.Now.Date > Public.CurrentUser.ExpierDate)
                     {
-                        base.OnActionExecuting(filterContext);
+                        if (filterContext.HttpContext.Request.IsAjaxRequest())
+                            filterContext.Result = new JsonResult() { Data = new { statusCode = "303" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+                        else
+                            filterContext.Result = new RedirectResult("~/Account/UpdateActivationLisc");
+
                     }
                     else
                     {
-                        if (filterContext.HttpContext.Request.IsAjaxRequest())
-                        {
-                            filterContext.Result = new JsonResult()
-                            {
-                                Data = new { statusCode = "301" },
-                                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                            };
-                        }
+                        var rolesCheck = _EnumRole.Any(currentUserEnumRole.Contains);
+                        if (rolesCheck)
+                            base.OnActionExecuting(filterContext);
+
                         else
                         {
-                            filterContext.Result = new RedirectResult("~/Home/AccessDenied");
+                            if (filterContext.HttpContext.Request.IsAjaxRequest())
+                                filterContext.Result = new JsonResult() { Data = new { statusCode = "301" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+
+                            else
+                                filterContext.Result = new RedirectResult("~/Home/AccessDenied");
+
                         }
                     }
                 }
@@ -74,16 +82,16 @@ namespace AttendanceCRMWeb.Filters
                 if (filterContext.HttpContext.Request.IsAjaxRequest())
                 {
                     //throw new Exception("شما مجاز به انجام این عملیات نیستید.");
-                    filterContext.Result = new JsonResult()
-                    {
-                        Data = new { statusCode = "301" },
-                        JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                    };
+                    filterContext.Result = new JsonResult() { Data = new { statusCode = "301" }, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                     return;
                 }
                 Sessions.LogoutUrlReferrer = filterContext.HttpContext.Request.Url.LocalPath;
                 filterContext.Result = new RedirectResult("~/Account/Login");
             }
         }
+
+
+
+
     }
 }

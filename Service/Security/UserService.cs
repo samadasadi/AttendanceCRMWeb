@@ -24,7 +24,8 @@ using System.Management;
 using Newtonsoft.Json;
 using Repository.Model.ApplicationMenu;
 using System.Diagnostics.PerformanceData;
-
+using System.Xml.Linq;
+using Utility.Security;
 
 namespace Service.Security
 {
@@ -241,48 +242,16 @@ namespace Service.Security
                 Password = user.UserPwd
             };
 
-            var TinyData = "asadi";
-            if (TinyData.Length > 0)
-            {
-                userVm.IsVpsServer = AppSettings.ISVPS == "0" ? false : true;
-                userVm.TinyKeyCode = TinyData;
+
+            var _query = $"select top(1) ActivationLisc from tbl_Application";
+            var _activationLisc = (await _repo.RunQuery_Str(_query));
 
 
-                string[] _strSplit = TinyData.Split('-');
+            userVm.DatabaseName = DatabaseName;
 
-
-                var _keyCode = _strSplit[0];
-                //var _hashedKeyCode = EncDec.Encrypt(_keyCode);
-                //var _query = string.Format(@" EXEC sp_SaveKeyCode @Key_Code = N'{0}' ", _hashedKeyCode);
-                //await _repo.ExecuteSqlCommand(_query);
-                //var _savedKeyCode = (await _repo.RunQuery_Str("select KeyCodeHash from tbl_Application"));
-                //if (!string.IsNullOrEmpty(_savedKeyCode))
-                //{
-                //    var _dehashedKeyCode = EncDec.Decrypt(_savedKeyCode);
-                //    if (_dehashedKeyCode != _keyCode)
-                //        return new LoginResult
-                //        {
-                //            KeyCode = _keyCode,
-                //            LoginResultStatus = LoginResultStatus.KeyCodeIsNotValidWithDatabase
-                //        };
-                //}
-
-
-                userVm.DatabaseName = DatabaseName;
-                if (AppSettings.ISVPS == "0")
-                {
-                    //--------------------Start Publish FOR Local
-                    userVm.IsCallerActive = user.IsCallerActive ?? false;
-                    userVm.TinyUserCode = _keyCode;
-                    //------------------END Publish  FOR Local
-                }
-                else
-                {
-                    //--------------------Start Publish FOR VPS Server 
-                    userVm.IsCallerActive = false;
-                    //------------------END Publish  FOR VPS Server 
-                }
-            }
+            userVm.IsCallerActive = user.IsCallerActive ?? false;
+            userVm.TinyUserCode = _activationLisc;
+            userVm.IsVpsServer = true;
 
             var roles = await GetAllUserRoles(userVm);
 
@@ -329,23 +298,21 @@ namespace Service.Security
                 var jsonSerializer = new JavaScriptSerializer();
                 userVm.DiseaseGroupAccessSelected = jsonSerializer.Deserialize<List<string>>(userVm.DiseaseGroupAccessPatient);
             }
+
             Public.CurrentUser = userVm;
             Public.CurrentUser.IsAccountingClient = user.IsAccountingClient;
+            Public.CurrentUser.ActivationLisc = _activationLisc;
 
 
             var _ip1 = Utility.Utitlies.Utility.GetIp();
             var _queryLogin = String.Format("insert into tbl_Login  (UserId, SessionId, LoggedIn, ModifiedDate, IpAddress, OperatingSystem, Browser) " +
                 "values('{0}', '{1}', '{2}', GETDATE(), N'{3}', N'{4}', N'{5}') ",
-                username,
-                sessionId,
-                true,
-                _ip1,
+                username, sessionId, true, _ip1,
                 Utility.Utitlies.Utility.GetUserPlatform(System.Web.HttpContext.Current.Request),
                 System.Web.HttpContext.Current.Request.Browser.Type
                 );
-            await _loginRepo.ExecuteSqlCommand(_queryLogin);
 
-            //DataSettingsManager.SaveSettings(_settings);
+            await _loginRepo.ExecuteSqlCommand(_queryLogin);
 
             Public.GeneralSetting = await _GeneralSettingrepo.First(m => m.IsDeleted == false);
 
@@ -355,7 +322,7 @@ namespace Service.Security
         public async Task<List<MenuVm>> GetAllMenuVm(UserLogin user)
         {
 
-            var temp = (await _menuRepo.Get(x=>x.IsDeleted == false)).ToList();
+            var temp = (await _menuRepo.Get(x => x.IsDeleted == false)).ToList();
 
             temp = temp.Where(x => user.AvailableRoleGuid.Contains(x.RoleId) || x.RoleId == Guid.Empty).ToList();
 
@@ -492,8 +459,8 @@ namespace Service.Security
                         }
                         break;
                     case "حسابداری پیشرفته":
-                            TempList.Add(item);
-                            TempList.AddRange(parrentlist);
+                        TempList.Add(item);
+                        TempList.AddRange(parrentlist);
                         break;
                     default:
                         TempList.Add(item);
@@ -595,7 +562,7 @@ namespace Service.Security
         {
             if (user.UserName == "admin")
             {
-                return await _roleRepo.Get(x=>x.IsDeleted == false);
+                return await _roleRepo.Get(x => x.IsDeleted == false);
             }
             else
             {

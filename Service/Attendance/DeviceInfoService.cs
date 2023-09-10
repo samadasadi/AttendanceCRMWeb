@@ -16,32 +16,53 @@ namespace Service.Attendance
 {
     public interface IDeviceInfoService
     {
+
         Task<DataModelResult> Save(NewDeviceVm entity);
+
         Task<NewDeviceVm> GetDeviceInfo(int? id);
+
         Task<NewDevice> GetDeviceInfobyCode(int? code);
+
         Task<DataModelResult> DeleteDevice(int? id);
+
         Task<List<NewDeviceVm>> GetAllDevice();
+
         Task<DataModelResult> UpdateLastTimeReport(NewDevice entity);
+
         Task<DataModelResult> GetLastTimeReport(NewDeviceVm entity);
+
         Task<DataModelResult> GetVerifyStatus(NewDevice device, int verifyStat);
+
         Task<DataModelResult> UpdateDeviceAutoRecive(NewDeviceVm entity);
+
         Task<DataModelResult> UpdateDeviceCapacity(NewDeviceVm entity);
+
         Task<List<DeviceGroupVm>> GetAllDeviceGroup(PagingViewModel value);
+
         Task<DataModelResult> Delete_DeviceGroup(int? Id);
+
         Task<DeviceGroupVm> GetDeviceGroup(int? id);
+
         Task<DeviceGroup> Save_DeviceGroup(DeviceGroupVm entity);
+
         Task<DataModelResult> UpdateDeviceIP(NewDeviceVm entity);
+
         Task<DataModelResult> LoadDeviceList();
+
         Task<DataModelResult> ImportAllAttLogFromDevice(int Id);
 
-
         Task<DataModelResult> ClearAdmin(int Id);
+
         Task<DataModelResult> ClearAllData(int Id);
+
         Task<DataModelResult> ClearAllLogs(int Id);
+
         Task<DataModelResult> ClearAllFp(int Id);
+
         Task<DataModelResult> ClearAllUser(int Id);
 
         Task<DataModelResult> ConnectDevice(int Id);
+
         Task<DataModelResult> DisConnectDevice(int Id);
 
 

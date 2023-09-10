@@ -1,0 +1,102 @@
+﻿@using Utility.PublicEnum
+@using Utility.EXT
+@model ViewModel.Common.ImportFromUSBVm
+
+@{
+    ViewBag.Title = "ورود از USB";
+    int _index = 0;
+
+}
+
+<div class="row">
+
+    <div class="col-md-12">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", id = "ImportExcelFile" }))
+        {
+            <input hidden id="File_Id" name="File_Id" value="@Model.File_Id" />
+
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="col-md-6">
+
+                        @Html.EditorFor(x => x.FingerPrintDevice)
+                    </div>
+                    <div class="col-md-6">
+
+                        @*@Html.TextBoxFor(x => x.ExcelFile, new { type = "file" })*@
+                        <input type="file" id="ExcelFile" name="ExcelFile" hidden value="@Model.ExcelFile" />
+                        <label class="btn btn-block bg-gradient-primary btn-flat" style="width:130px;" for="ExcelFile">انتخاب فایل</label>
+
+                        @Html.ValidationMessageFor(x => x.ExcelFile)
+                        <script>
+                            document.getElementById('ExcelFile').addEventListener('change', HandleImportExcelFile, false);
+                            function HandleImportExcelFile() {
+                                document.getElementById('ImportExcelFile').submit();
+                            }
+                        </script>
+                    </div>
+
+                </div>
+                <div class="card-footer">
+
+                    <a class="btn btn-primary btn-flat float-left" onclick="SaveExcel()" style="width:120px;"><span class="fa fa-save"></span> ذخیره</a>
+
+                </div>
+            </div>
+
+
+        }
+    </div>
+
+
+</div>
+<script>
+
+    $(function () {
+
+        $('.select2').select2()
+    });
+    function SaveExcel() {
+
+        $("#divError").html('');
+
+
+        var _fileId = $("#File_Id").val();
+        if (_fileId == undefined || _fileId == '' || _fileId == '00000000-0000-0000-0000-000000000000' || _fileId == null) {
+            AlertDialog('لطفا فایل اکسل را انتخاب نمایید', '', 'error')
+            return;
+        }
+
+        var _CheckUpDR = $("#CheckUpDR").val();
+        if (_CheckUpDR == undefined || _CheckUpDR == '' || _CheckUpDR == null) {
+            AlertDialog('لطفا دستگاه را انتخاب نمایید', '', 'error')
+            return;
+        }
+
+        //var _name = $("#ProfileList_2__Value").val();
+        //if (_name == undefined || _name == '' || _name == null) {
+        //    AlertDialog('لطفا نام را انتخاب نمایید', '', 'error')
+        //    return;
+        //}
+
+        AjaxCallAction("POST", "/BasicInfo/CustomerInfo/SaveExcel", $("#ImportExcelFile").serialize(), true,
+            function (res) {
+                if (!res.error) {
+                    AlertDialog('اطلاعات با موفقیت دخیره شد', '')
+                }
+                else {
+                    if (res.message != null && res.message != undefined && res.message != '')
+                        AlertDialog(res.message, '', 'error')
+
+                    var _errors = '';
+                    res.messages.forEach((item) => {
+                        debugger;
+                        _errors += '<span class="text-danger  col-md-4 mb-1">* - ' + item + '</span>';
+                    });
+                    $("#divError").html(_errors)
+                }
+
+            },);
+    }
+</script>

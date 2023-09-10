@@ -15,6 +15,11 @@ using Utility.PublicEnum;
 using Utility;
 using ViewModel.Common;
 using ViewModel.Report;
+using System.Xml.Linq;
+using System.ComponentModel;
+using Utility.Utitlies;
+using ViewModel.BasicInfo;
+using Utility.Security;
 
 namespace Service.Common
 {
@@ -34,7 +39,8 @@ namespace Service.Common
         System.Threading.Tasks.Task updateGeneralSettingWithBackUpDate();
         System.Threading.Tasks.Task SaveSmsSetting(GeneralSettingVm model);
         System.Threading.Tasks.Task SaveAvaSetting(GeneralSettingVm model);
-        System.Threading.Tasks.Task SaveGeneralSetting(GeneralSettingVm model, string serverPath, string LocalPath);
+        Task<DataModel> SaveGeneralSetting(GeneralSettingVm model, string serverPath, string LocalPath);
+        Task<DataModel> UpdateActivationLisc(string activationLisc);
     }
     public class GeneralSettingService : IGeneralSettingService
     {
@@ -112,7 +118,7 @@ namespace Service.Common
             {
                 var _genericService = EngineContext.Resolve<IGenericAttributeService>();
                 var _serviceAddress = _genericService.GetAttribute<string>(new BaseClass { Id = Guid.Empty }, GenericAttributeDefault.WhatsApp_ServiceAddress).Result;
-                var _senderNumber = _genericService.GetAttribute<string>(new BaseClass { Id = Guid.Empty  }, GenericAttributeDefault.WhatsApp_SenderNumber).Result;
+                var _senderNumber = _genericService.GetAttribute<string>(new BaseClass { Id = Guid.Empty }, GenericAttributeDefault.WhatsApp_SenderNumber).Result;
                 var _key = _genericService.GetAttribute<string>(new BaseClass { Id = Guid.Empty }, GenericAttributeDefault.WhatsApp_Key).Result;
 
                 model.WhatsApp_ServiceAddress = _serviceAddress;
@@ -159,13 +165,33 @@ namespace Service.Common
             setting.BackupDate = DateTime.Now;
             await _repo.Update(setting);
         }
-        public async System.Threading.Tasks.Task SaveGeneralSetting(GeneralSettingVm model, string serverPath, string LocalPath)
+        public async Task<DataModel> SaveGeneralSetting(GeneralSettingVm model, string serverPath, string LocalPath)
         {
             try
             {
 
+                if (string.IsNullOrEmpty(model.ActivationLisc)) return new DataModel { error = true, message = "کد فعالسازی را وارد نمایید" };
+
+
+                string _data = StringCipher.Decrypt(model.ActivationLisc);
+                string[] _dataSplit = _data.Split(':');
+                var _expireDate = DateTimeOperation.S2M(_dataSplit[1]);
+                if (DateTime.Now.Date <= _expireDate.Date)
+                {
+                    Public.CurrentUser.ActivationLisc = model.ActivationLisc;
+                }
+                else
+                {
+                    return new DataModel { error = true, message = "کد فعالسازی منقضی شده است" };
+                }
+
+
+
+
+
+
                 var taskService = EngineContext.Resolve<IGenericAttributeService>();
-                await taskService.SaveAttribute<string>(new BaseClass { Id = Guid.Empty}, GenericAttributeDefault.HostURL, model.appHostIp + ":" + model.appHostPort);
+                await taskService.SaveAttribute<string>(new BaseClass { Id = Guid.Empty }, GenericAttributeDefault.HostURL, model.appHostIp + ":" + model.appHostPort);
 
 
                 var setting = (await _repo.Get(m => !m.IsDeleted)).FirstOrDefault();
@@ -231,8 +257,15 @@ namespace Service.Common
                     setting.appHostPort = model.appHostPort;
                     setting.IsShowAlarmTypeSickness = model.IsShowAlarmTypeSickness;
                     setting.PaymentName = model.PaymentName;
+
+                    setting.ActivationLisc = model.ActivationLisc;
+
+
                     await _repo.Update(setting);
                 }
+
+                return new DataModel();
+
             }
             catch (Exception ex)
             {
@@ -326,6 +359,36 @@ namespace Service.Common
         public List<NormalJsonClass> GetPaymentNameEnumList()
         {
             return Utility.EXT.EnumHelper<PaymentNameEnum>.EnumToNormalJsonClass();
+        }
+
+
+        public async Task<DataModel> UpdateActivationLisc(string activationLisc)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(activationLisc)) return new DataModel { error = true, message = "کد فعالسازی را وارد نمایید" };
+
+                string _data = StringCipher.Decrypt(activationLisc);
+
+                string[] _dataSplit = _data.Split(':');
+                var _expireDate = DateTimeOperation.S2M(_dataSplit[1]);
+                if (DateTime.Now.Date > _expireDate.Date)
+                {
+                    return new DataModel { error = true, message = "کد فعالسازی منقضی شده است" };
+                }
+                else
+                {
+                    Public.CurrentUser.ActivationLisc = activationLisc;
+                }
+
+                var _query = $"update tbl_Application set ActivationLisc = '{activationLisc}'";
+                await _repo.ExecuteSqlCommand(_query);
+                return new DataModel();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
     }

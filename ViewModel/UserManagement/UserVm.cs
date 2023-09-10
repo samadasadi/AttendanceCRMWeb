@@ -245,6 +245,31 @@ namespace ViewModel.UserManagement
         public bool IsAccountingClient { get; set; }
 
 
+
+
+
+
+
+
+
+
+
+
+
+        public bool IsPresent { get; set; }
+        public string IsPresentStr { get { return IsPresent ? "حاضر" : "غایب"; } }
+        public DateTime? EnterDate { get; set; }
+        public string EnterTime { get { return EnterDate != null ? EnterDate.Value.ToString("HH:mm") : string.Empty; } }
+        public DateTime? LeaveDate { get; set; }
+        public string LeaveTime { get { return LeaveDate != null ? LeaveDate.Value.ToString("HH:mm") : string.Empty; } }
+
+
+
+
+
+
+
+
     }
 
     public class Filter_UserVm : PageingParamer

@@ -18,6 +18,7 @@ using System.Diagnostics;
 using Ninject;
 using Repository.Infrastructure;
 using AttendanceCRMWeb.Filters;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AttendanceCRMWeb.Controllers
 {
@@ -69,17 +70,17 @@ namespace AttendanceCRMWeb.Controllers
                     case "/SMS/Index": GlobalApp.CurrentMenuItem = "931413DB-5EAD-E511-8267-8096F290B3A3"; break;
 
                     case "/Prescription/ExportInsuranceReport": GlobalApp.CurrentMenuItem = "A90E7793-F0B9-E511-80BD-382C3AB1073F"; GlobalApp.CurrentChildMenuItem = "A90E7793-F0B9-E511-81BD-382C3AB1073F"; break;
-                    case "/Prescription/Prescription_Backup": 
-                    case "/Prescription/IndexPrescriptionServiceList": 
+                    case "/Prescription/Prescription_Backup":
+                    case "/Prescription/IndexPrescriptionServiceList":
                     case "/Prescription/PrescriptionSetting": GlobalApp.CurrentMenuItem = "A90E7793-F0B9-E511-80BD-382C3AB1073F"; GlobalApp.CurrentChildMenuItem = "A90E7793-F0B9-E511-82BD-382C3AB1073F"; break;
 
                     case "/TNPrescription/Index": GlobalApp.CurrentMenuItem = "A71E8754-F2B9-E511-80BD-382C3BA1373F"; GlobalApp.CurrentChildMenuItem = "A90E7624-F0B9-E511-76BD-382C3AB1273F"; break;
-                    case "/TNPrescription/TN_ServiceList": 
+                    case "/TNPrescription/TN_ServiceList":
                     case "/TNPrescription/TN_Setting": GlobalApp.CurrentMenuItem = "A71E8754-F2B9-E511-80BD-382C3BA1373F"; GlobalApp.CurrentChildMenuItem = "A90E7624-F0B9-E511-76BD-382C3AB1274F"; break;
 
-                    case "/CompanyAccount/GetListCompanyAccount": 
+                    case "/CompanyAccount/GetListCompanyAccount":
                     case "/CompanyAccount/index": GlobalApp.CurrentMenuItem = "6107F599-DF62-E611-80CA-387C4AB1072F"; GlobalApp.CurrentChildMenuItem = "F7FCEC4F-CCD0-E611-80CE-982C4AB1072F"; break;
-                    case "/Cost/GridList": 
+                    case "/Cost/GridList":
                     case "/Cost/index": GlobalApp.CurrentMenuItem = "6107F599-DF62-E611-80CA-387C4AB1072F"; GlobalApp.CurrentChildMenuItem = "F7FCEC4F-CCD0-E611-80CE-382C4AB1072F"; break;
                     case "/Check/index": GlobalApp.CurrentMenuItem = "6107F599-DF62-E611-80CA-387C4AB1072F"; GlobalApp.CurrentChildMenuItem = "F7FCEC4F-CCD0-E611-80CE-387C4AB1072F"; break;
                     case "/InsuranceCash/index": GlobalApp.CurrentMenuItem = "6107F599-DF62-E611-80CA-387C4AB1072F"; GlobalApp.CurrentChildMenuItem = "F7FCEC7F-CCD0-E611-80CE-387C4AB1072F"; break;
@@ -96,7 +97,7 @@ namespace AttendanceCRMWeb.Controllers
 
                     case "/Register/Index": GlobalApp.CurrentMenuItem = "6107F599-DF62-E611-80CA-382C4AB1072F"; GlobalApp.CurrentChildMenuItem = "4DC9A3BF-3A4E-E611-80C9-382C4AB1072F"; break;
                     case "/UserGroup/Index": GlobalApp.CurrentMenuItem = "6107F599-DF62-E611-80CA-382C4AB1072F"; GlobalApp.CurrentChildMenuItem = "8E09C1E0-A8B6-E511-80BD-382C4AB1072F"; break;
-                    case "/Holiday/FilterModelDoctorTime": 
+                    case "/Holiday/FilterModelDoctorTime":
                     case "/Holiday/index": GlobalApp.CurrentMenuItem = "6107F599-DF62-E611-80CA-382C4AB1072F"; GlobalApp.CurrentChildMenuItem = "331413DB-5EAD-E511-8267-8286F270B3A3"; break;
                     case "/Holiday/OfficialHoliday": GlobalApp.CurrentMenuItem = "6107F599-DF62-E611-80CA-382C4AB1072F"; GlobalApp.CurrentChildMenuItem = "331413DB-5EAD-E511-8267-8586F270B3A3"; break;
 
@@ -106,10 +107,10 @@ namespace AttendanceCRMWeb.Controllers
 
                     case "/Setting/UserAuthorize": GlobalApp.CurrentMenuItem = "8654F599-DF62-E611-80CA-382C4AB1072F"; GlobalApp.CurrentChildMenuItem = "FACA4CDE-91B9-E811-8A87-BCAEC52EF25B"; break;
                     case "/Announcements/Index": GlobalApp.CurrentMenuItem = "8654F599-DF62-E611-80CA-382C4AB1072F"; GlobalApp.CurrentChildMenuItem = "FACA4CDE-91B9-E811-8A87-BCAEF32EF25B"; break;
-                    case "/Award/GetList": 
-                    case "/Scoring/Index": 
-                    case "/Scoring/GetList": 
-                    case "/Award/GetScoring": 
+                    case "/Award/GetList":
+                    case "/Scoring/Index":
+                    case "/Scoring/GetList":
+                    case "/Award/GetScoring":
                     case "/Award/Index": GlobalApp.CurrentMenuItem = "8654F599-DF62-E611-80CA-382C4AB1072F"; GlobalApp.CurrentChildMenuItem = "1354F599-DF62-E611-80CA-386C4AB1072F"; break;
                     case "/UserRateHistory/Index": GlobalApp.CurrentMenuItem = "8654F599-DF62-E611-80CA-382C4AB1072F"; GlobalApp.CurrentChildMenuItem = "8654F599-DF62-E611-80CA-389C4AB1072F"; break;
 
@@ -341,6 +342,7 @@ namespace AttendanceCRMWeb.Controllers
                 error = errors
             });
         }
+
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]

@@ -372,22 +372,12 @@
                             </div>
                             <div class="dropdown-divider"></div>
 
-                            @if (Public.CurrentUser.IsCenterActivityType)
-                            {
-                                <a href="http://minamedical.ir/" target="_blank" class="dropdown-item" style="text-align:center;">
-                                    <img src="~/Media/LogoMedical.png" style=" width: 50px; height: 50px;" />
-                                    <p class="text-red">مینا مدیکال &nbsp;-&nbsp; Ver&nbsp;:&nbsp;@Service.Consts.Public.CurrentUser.AppVersion</p>
-                                    <p class="text-green">کد قفل &nbsp;:&nbsp;&nbsp;&nbsp;@Public.CurrentUser.TinyUserCode</p>
-                                </a>
-                            }
-                            else
-                            {
-                                <a href="https://minadent.ir/" target="_blank" class="dropdown-item" style="text-align:center;">
+                                <a href="#" target="_blank" class="dropdown-item" style="text-align:center;">
                                     <img src="~/Content/Image/Hydrangeas.jpg" style=" width: 50px; height: 50px;" />
-                                    <p class="text-red">مینا دنت &nbsp;-&nbsp; Ver&nbsp;:&nbsp;@Service.Consts.Public.CurrentUser.AppVersion</p>
+                                    <p class="text-red">کاماتک &nbsp;-&nbsp; Ver&nbsp;:&nbsp;@Service.Consts.Public.CurrentUser.AppVersion</p>
                                     <p class="text-green">کد قفل &nbsp;:&nbsp;&nbsp;&nbsp;@Public.CurrentUser.TinyUserCode</p>
                                 </a>
-                            }
+                            
                             <p style="text-align:center; margin:5px;"><a href="#" data-toggle="modal" data-target="#modal-ActiveKit">مشاهده کیت های فعال برنامه</a></p>
 
                             <div class="dropdown-divider"></div>
@@ -550,14 +540,9 @@
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                             <div class="modal-header">
-                                @if (Public.CurrentUser.IsCenterActivityType)
-                                {
-                                    <h6 class="modal-title">تغییرات مینا مدیکال</h6>
-                                }
-                                else
-                                {
-                                    <h6 class="modal-title">تغییرات مینا دنت</h6>
-                                }
+
+                                    <h6 class="modal-title">تغییرات </h6>
+                                
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
@@ -627,7 +612,7 @@
 
 
         <footer class="main-footer">
-            <strong>کپی رایت &copy; <span>@Public.CurrentUser.AppVersionDate</span> &nbsp; <a href="http://minadent.ir">گروه نرم افزاری مینا</a>.</strong>
+            <strong>کپی رایت &copy; <span>@Public.CurrentUser.AppVersionDate</span> &nbsp; <a href="#">گروه نرم افزاری</a>.</strong>
             تمامی حقوق محفوظ است.
             <div class="float-right d-none d-sm-inline-block">
                 <b>ورژن</b> @Public.CurrentUser.AppVersion
@@ -823,8 +808,8 @@
                 }
             }, true);
         }
-        function DeleteDevice() {
-            ConfirmDelete('GET', '/Admin/Device/Delete', { Id: Id },
+        function DeleteDevice(id) {
+            ConfirmDelete('GET', '/Admin/Device/Delete', { Id: id },
                 function (result) {
                     ReloadDeviceList();
                 });

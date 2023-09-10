@@ -51,6 +51,7 @@ namespace Service.Consts
         public static AccountExpireInfo AccountExpireInfo { get; set; }
         public static GeneralSetting GeneralSetting { get; set; }
 
+        public static List<ViewModel.UserManagement.UserVm> UserVmList { get; set; } = new List<ViewModel.UserManagement.UserVm>();
 
 
     }

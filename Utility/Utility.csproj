@@ -173,6 +173,7 @@
     <Compile Include="PublicEnum\ValidationCustomerInfoRepeatEnum.cs" />
     <Compile Include="PublicEnum\WorkEnum.cs" />
     <Compile Include="PublicEnum\WorkLogEnum.cs" />
+    <Compile Include="Security\EncDec.cs" />
     <Compile Include="Utitlies\CommonCustomViewTablePaging.cs" />
     <Compile Include="Utitlies\CreateDatabaseRuntime.cs" />
     <Compile Include="Utitlies\DateTimeOperation.cs" />

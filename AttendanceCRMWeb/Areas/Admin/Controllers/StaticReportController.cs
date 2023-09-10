@@ -31,6 +31,7 @@ using static Stimulsoft.Report.StiOptions.Designer;
 
 namespace AttendanceCRMWeb.Areas.Admin.Controllers
 {
+    [CustomAutorizeFilter(Role = new[] { EnumRole.AppReports })]
     public class StaticReportController : BaseController
     {
 

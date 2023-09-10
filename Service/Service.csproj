@@ -170,6 +170,10 @@
     <Compile Include="Attendance\DeviceInfoService.cs" />
     <Compile Include="Attendance\FingerPrintDeviceService.cs" />
     <Compile Include="Attendance\FKAttendHelper.cs" />
+    <Compile Include="Attendance\Helper\Raw.cs" />
+    <Compile Include="Attendance\Helper\SearchforUSBCom.cs" />
+    <Compile Include="Attendance\Helper\UDisk.cs" />
+    <Compile Include="Attendance\Helper\UDiskStruct.cs" />
     <Compile Include="Attendance\LimitedConcurrencyLevelTaskScheduler.cs" />
     <Compile Include="Attendance\ShiftService.cs" />
     <Compile Include="Attendance\TransactionRequestService.cs" />
@@ -187,7 +191,6 @@
     <Compile Include="Cost\CompanyAccountService.cs" />
     <Compile Include="Cost\CostService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\EncDec.cs" />
     <Compile Include="Security\FileManagement\FileManagement.cs" />
     <Compile Include="Security\FileManagement\ImageSize.cs" />
     <Compile Include="Security\IRoleGroupService.cs" />

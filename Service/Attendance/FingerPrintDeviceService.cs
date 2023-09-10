@@ -52,7 +52,7 @@ namespace Service.Attendance
         DeviceEventLogVm sta_ClearAllFps();
         DeviceEventLogVm sta_ClearAllUsers();
         DeviceEventLogVm sta_ClearAllData();
-
+        DataModel InsertAttLogToDB(List<TimeRecordVm> list);
         List<UserVm> sta_GetAllUserFPInfo();
         bool GetConnectState();
         void SetConnectState(bool state);
@@ -2927,5 +2927,8 @@ namespace Service.Attendance
         public static List<DevicesList> Devices { get; set; }
         public static CancellationTokenSource TokenSource { get; set; } = new CancellationTokenSource();
     }
+
+
+
 
 }

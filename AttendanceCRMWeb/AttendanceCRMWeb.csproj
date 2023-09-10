@@ -308,6 +308,7 @@
     <Compile Include="Areas\Admin\Controllers\UserGroupController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\CustomAutorizeFilter.cs" />
     <Compile Include="Filters\CustomerAutorizeFilter.cs" />
@@ -4191,6 +4192,9 @@
     <Content Include="Media\Document\NoPhoto.png" />
     <Content Include="Media\fingerprint-off.png" />
     <Content Include="Media\fingerprint-on.png" />
+    <Content Include="Media\ReportLogo.jpeg" />
+    <Content Include="Media\ReportLogo.png" />
+    <Content Include="Media\Untitled-5.ico" />
     <Content Include="pages\chats\css\Chat.css" />
     <Content Include="pages\chats\css\ChatCenter.css" />
     <Content Include="pages\chats\css\ChatClient.css" />
@@ -4858,6 +4862,8 @@
     <Content Include="Areas\Admin\Views\Device\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Device\P_Device.cshtml" />
     <Content Include="Areas\Admin\Views\Device\Create.cshtml" />
+    <Content Include="Views\Account\UpdateActivationLisc.cshtml" />
+    <Content Include="Areas\Admin\Views\EmployeeAttendance\ImportFromUSB.cshtml" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\chosen\chosen-sprite%402x.png" />
     <Content Include="Scripts\chosen\chosen-sprite.png" />
@@ -5328,6 +5334,10 @@
     <Content Include="Views\Shared\EditorTemplates\OnlyInputDateTimeWithotColNullAble.cshtml" />
     <Content Include="Views\Shared\RecordsNotFoundToDisplay.cshtml" />
     <Content Include="Views\Shared\DashboardDeviceList.cshtml" />
+    <Content Include="Views\Error\Error403.cshtml" />
+    <Content Include="Views\Error\Error404.cshtml" />
+    <Content Include="Views\Error\Error500.cshtml" />
+    <Content Include="Views\Error\ErrorGeneral.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
@@ -5500,7 +5510,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53837</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:63851/</IISUrl>
+          <IISUrl>http://localhost:63855/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://localhost:63855/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

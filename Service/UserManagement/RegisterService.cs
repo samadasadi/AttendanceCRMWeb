@@ -17,11 +17,15 @@ using ViewModel.UserManagement.Attendance;
 using ViewModel.UserManagement;
 using System.Web.Script.Serialization;
 using Service.Common;
+using Utility.Security;
 
 namespace Service.UserManagement
 {
+
     public interface IRegisterService
     {
+
+        Task<DataModel> CheckPersonsAttEvent(List<UserVm> model);
         Task<bool> CanAddUserAsync(Guid? employeeId);
         Task<UserVm> GetUserVmAsync(Guid? id);
         System.Threading.Tasks.Task<PubUser> SaveUserAsync(UserVm model, string serverPath, string LocalPath);
@@ -226,19 +230,19 @@ namespace Service.UserManagement
 
         public async System.Threading.Tasks.Task DeleteAsync(Guid id)
         {
-                var admin = await _repo.First(m => m.IsDeleted == false && m.Id == id);
-                if (admin.UserName == "admin")
-                {
-                    throw new Exception("شما امکان حذف ادمین را ندارید");
-                }
-                await _repo.Delete(m => m.Id == id);
+            var admin = await _repo.First(m => m.IsDeleted == false && m.Id == id);
+            if (admin.UserName == "admin")
+            {
+                throw new Exception("شما امکان حذف ادمین را ندارید");
+            }
+            await _repo.Delete(m => m.Id == id);
         }
 
 
         public async Task<string> GetNewEmployeerDocNo()
         {
             var Number = 8606;
-            var employee = await _repo.Get(m => m.IsDeleted == false );
+            var employee = await _repo.Get(m => m.IsDeleted == false);
             if (employee.Count() == 0)
             {
                 return Number.ToString();
@@ -664,7 +668,7 @@ namespace Service.UserManagement
         public async Task<bool> CheckUserNameAsync(string userName, Guid? Id)
         {
             if (Id == Guid.Empty || Id == null)
-                return await _repo.CustomAny(m => m.IsDeleted == false &&  m.UserName == userName.Trim() && !string.IsNullOrEmpty(m.UserName));
+                return await _repo.CustomAny(m => m.IsDeleted == false && m.UserName == userName.Trim() && !string.IsNullOrEmpty(m.UserName));
             return await _repo.CustomAny(m => m.IsDeleted == false && m.UserName == userName.Trim() && !string.IsNullOrEmpty(m.UserName) && !m.Id.Equals(Id.Value));
 
         }
@@ -727,7 +731,7 @@ namespace Service.UserManagement
             if (Id != Guid.Empty)
             {
                 DocNo = DocNo.ToLower();
-                var result = await _repo.CustomAny(m => m.EmployeeID == DocNo && m.Id != Id );
+                var result = await _repo.CustomAny(m => m.EmployeeID == DocNo && m.Id != Id);
                 return result;
             }
             else
@@ -765,7 +769,61 @@ namespace Service.UserManagement
             }
         }
 
+        public async Task<DataModel> CheckPersonsAttEvent(List<UserVm> model)
+        {
+            try
+            {
+                if (model == null || model.Count <= 0) return new DataModel();
 
+                foreach (var item in model)
+                {
+                    await CheckPersonIsPresents(item);
+                }
+                return new DataModel();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<DataModel> CheckPersonIsPresents(UserVm model)
+        {
+            try
+            {
+                var _query = string.Format(@"select *  from TimeRecords  where  IsDeleted = 0 and CardNo = '{0}' and CAST(DatetimeIO as date) = CAST(GETDATE() as date) order by DatetimeIO ", model.EmployeeID);
+                var _res = (await _repo.RunQuery<TimeRecordVm>(_query)).ToList();
+                if (_res != null && _res.Count > 0)
+                {
+                    model.IsPresent = true;
+
+                    int _index = 0;
+                    foreach (var item in _res)
+                    {
+                        if (_index == 0)
+                            model.EnterDate = item.DatetimeIO;
+                        else if (_index == 1)
+                            model.LeaveDate = item.DatetimeIO;
+                        else if (_index == 2)
+                            model.LeaveDate = item.DatetimeIO;
+                        else if (_index == 3)
+                            model.LeaveDate = item.DatetimeIO;
+                        else if (_index == 4)
+                            model.LeaveDate = item.DatetimeIO;
+                        else if (_index == 5)
+                            model.LeaveDate = item.DatetimeIO;
+                        _index++;
+                        if (_index == 6) break;
+                    }
+                }
+
+                return new DataModel();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         #region Quick Link
 
         public async Task<QuickLinkVm> Get_QuickLinkAsync(QuickLinkVm entity)
@@ -915,4 +973,6 @@ namespace Service.UserManagement
         #endregion
 
     }
+
+
 }

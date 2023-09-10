@@ -1,8 +1,7 @@
 ﻿
-
 let lastValue;
-let dialog = null;
 
+let dialog = null;
 
 $(document).ready(function () {
     $(".card-header").click(ToggleSearchBlockAndSavePreferences);

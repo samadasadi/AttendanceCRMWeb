@@ -1,5 +1,9 @@
 ﻿using AttendanceCRMWeb.Controllers;
 using AttendanceCRMWeb.Filters;
+using Repository.Infrastructure;
+using Service.Attendance;
+using Service.BasicInfo;
+using Service.Consts;
 using Service.UserManagement.Attendance;
 using System;
 using System.Collections.Generic;
@@ -7,32 +11,37 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Utility;
 using Utility.Filters;
 using Utility.PublicEnum;
 using Utility.Utitlies;
+using ViewModel.Common;
 using ViewModel.UserManagement.Attendance;
 
 namespace AttendanceCRMWeb.Areas.Admin.Controllers
 {
-    [RoleFullMedicalCenterFilter(Role = MedicalCenterRole.Attendance)]
+    [CustomAutorizeFilter(Role = new[] { EnumRole.PresenceAbsence })]
     public class EmployeeAttendanceController : BaseController
     {
         #region Fields
         private readonly IAttendanceReportService _serviceAttendanceReport;
         private readonly IShiftService _serviceShiftService;
         private readonly ITransactionRequestService _serviceTransactionRequest;
+        private readonly IDeviceInfoService _serviceDeviceInfo;
         #endregion
 
         #region ctor
         public EmployeeAttendanceController(
             IAttendanceReportService serviceAttendanceReport,
             IShiftService serviceShiftService,
-            ITransactionRequestService serviceTransactionRequest
+            ITransactionRequestService serviceTransactionRequest,
+            IDeviceInfoService serviceDeviceInfo
             )
         {
             _serviceAttendanceReport = serviceAttendanceReport;
             _serviceShiftService = serviceShiftService;
             _serviceTransactionRequest = serviceTransactionRequest;
+            _serviceDeviceInfo = serviceDeviceInfo;
         }
         #endregion
 
@@ -767,6 +776,57 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         {
             return Json(await _serviceTransactionRequest.DeclineTransactionRequest(Id), JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+        #region Import with Excel
+
+        public async Task<ActionResult> ImportFromUSB()
+        {
+            try
+            {
+                var model = new ImportFromUSBVm();
+
+                var _deviceList = (from item in await _serviceDeviceInfo.GetAllDevice()
+                                   select new NormalJsonClass
+                                   {
+                                       Text = item.DeviceFullName,
+                                       Value = item.Id.ToString(),
+                                   }).ToList();
+                ViewData["FingerPrintDevice"] = new SelectList(_deviceList, "Value", "Text", model.FingerPrintDevice);
+
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> ImportFromUSB(ImportFromUSBVm model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var _fileService = EngineContext.Resolve<IFileService>();
+            var fileVm = await _fileService.AddFileWithHttpPostedFilePath(model.ExcelFile, Server.MapPath(AppSettings.DocumentFolder), AppSettings.DocumentFolder, "Employee");
+
+            model.File_Id = fileVm.Id;
+            var _result = await _serviceAttendanceReport.ImportAttLogFromUSB(model);
+            if(_result != null && _result.error)
+            {
+                return View(model);
+            }
+            else
+            {
+                return View(model);
+            }
+        }
+
         #endregion
 
     }

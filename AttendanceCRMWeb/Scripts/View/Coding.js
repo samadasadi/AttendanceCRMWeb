@@ -62,7 +62,6 @@
         });
     }
 
-
     function EditDivForDiscount(code, idGrid, idComboBox, idTextBox) {
         $.ajax({
             type: "Get",
@@ -109,12 +108,12 @@
         });
     }
 
-
     function refreshComponents(idGrid, res, idComboBox, idTextBox) {
         $("#" + idComboBox).val($("#" + idComboBox + " option:first").val());
         $("#" + idTextBox).val("");
         $("#" + idGrid).html(res);
     }
+
     function ShowDiv(idGrid, idComboBox, idTextBox) {
         
         code = $('#parentCode').val();
@@ -355,9 +354,6 @@
 
     }
 
-
-
-
     function showModalInsuranceForAssistant(code, idGrid, idComboBox, idTextBox) {
 
 
@@ -420,13 +416,15 @@
                     EditNode(name, res.Class);
                 }
                 refreshComponents(idGrid, res.Data, idComboBox, idTextBox);
+
+                CloseModal();
+
             }, error: function () {
                 //AlertDialog("", "خطا");
             }
         });
         return true;
     }
-
 
     function CheckNullAddTolist(name) {
         if ((name === "") || (name === null)) {
@@ -435,7 +433,6 @@
         }
         return true;
     }
-
 
     function AddTolist(idGrid, idComboBox, idTextBox) {
 
@@ -476,8 +473,6 @@
 
     }
 
-
-
     function CheckNullAddProfileTolist() {
         if ($("#FaName").val() === "") {
             //window.lang === "fa" ? AlertDialog("نام فارسی را وارد کنید", "هشدار") : AlertDialog("Enter Persian Name", "Warning");
@@ -494,7 +489,6 @@
         }
         return true;
     }
-
 
     function AddProfileTolist(idGrid, idComboBox, idTextBox) {
         
@@ -565,7 +559,6 @@
                 }
             });
     }
-
 
     function deleteRowForListService(code, idGrid, idComboBox, idTextBox) {
         
@@ -638,6 +631,7 @@
         $("#insuranceGnrPrice").val((parseInt(arrTempinsuranceGnrRefPriceStr) / 100) * (parseInt($("#PercentinsuranceGnrPrice").val())));
         $("i[class|='form-control-feedback fa fa-plus']").hide();
     }
+
     function FullTextBox2() {
         $("i[class|='form-control-feedback fa fa-plus']").hide();
         
@@ -698,6 +692,7 @@
         DeleteRowForBasingCoding: deleteRowForBasingCoding,
         FunctionTempForDelete: functionTempForDelete
     };
+
 })(MinaDent, jQuery);
 
 

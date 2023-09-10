@@ -19,6 +19,12 @@
 {
     using (Html.BeginForm("SaveSetting", "GeneralSettings", FormMethod.Post, new { id = "settingForm", enctype = "multipart/form-data", @class = "form-horizontal" }))
     {
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+
         @HtmlExtenstions.Tabs(new List<SettingTaps>()
         {
             new SettingTaps(){

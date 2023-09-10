@@ -32,6 +32,8 @@
         Cost_Update,
         Cost_Delete,
 
+        FingerPrintDevices,
+
         PresenceAbsence,
 
         WarehousesCoding,
@@ -58,7 +60,7 @@
         CompanyAccount_Delete,
 
 
-        Report,
+        AppReports,
 
 
 

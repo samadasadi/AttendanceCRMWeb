@@ -1,0 +1,50 @@
+﻿@model ViewModel.Common.GeneralSettingVm
+@{ 
+    Layout = Utility.Utitlies.VaribleForName.AddressLayoutMasterNew;
+    }
+
+
+<div class="row">
+
+    <div class="col-md-12">
+
+        <div class="card">
+
+            <div class="card-body">
+
+                @Html.EditorFor(x => x.ActivationLisc)
+
+            </div>
+
+            <div class="card-footer">
+
+                <a class="btn btn-sm btn-info float-left" href="#" onclick="UpdateActivationLisc()">دخیره</a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    function UpdateActivationLisc() {
+
+        var _activCode = $("#ActivationLisc").val();
+
+        AjaxCallAction('POST', '/Account/SaveActivationLisc', { activationLisc: _activCode }, true, function (res) {
+            if (!res.error) {
+                AlertDialog('فعالسازی با موفقیت انجام شد', '');
+            }
+            else {
+                AlertDialog(res.message, '', 'error');
+            }
+        })
+
+    }
+</script>
+
+
+

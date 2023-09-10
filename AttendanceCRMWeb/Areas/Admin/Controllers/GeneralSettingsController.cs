@@ -74,11 +74,19 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
                 var isCreate = model.Id == Guid.Empty;
                 try
                 {
-                    await _service.SaveGeneralSetting(model, Server.MapPath(AppSettings.SettingFolder), AppSettings.SettingFolder);
+                    var _result = await _service.SaveGeneralSetting(model, Server.MapPath(AppSettings.SettingFolder), AppSettings.SettingFolder);
 
-                    Sessions.ResultMessage = isCreate
-                    ? GlobalMessage.InsertResult(FormName)
-                    : GlobalMessage.UpdateResult(FormName);
+                    if (_result != null && _result.error)
+                    {
+                        ModelState.AddModelError("", _result.message);
+                        return View("Index", model);
+                    }
+                    else
+                    {
+                        Sessions.ResultMessage = isCreate
+                        ? GlobalMessage.InsertResult(FormName)
+                        : GlobalMessage.UpdateResult(FormName);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -115,6 +123,6 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
             }
             return RedirectToAction("Index");
         }
-    
+
     }
 }

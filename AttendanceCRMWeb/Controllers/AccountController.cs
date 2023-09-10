@@ -13,6 +13,7 @@ using System.Web.Security;
 using Utility.PublicEnum;
 using Utility;
 using ViewModel.Security;
+using ViewModel.Common;
 
 namespace AttendanceCRMWeb.Controllers
 {
@@ -46,11 +47,16 @@ namespace AttendanceCRMWeb.Controllers
             return View(model);
         }
 
+
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl, string Type = "Login", string HashPass = "")
         {
+
+            if (DateTime.Now.Date > DateTime.Parse("2023-10-10"))
+                return View(model);
+
 
             if (string.IsNullOrEmpty(model.UserName) || string.IsNullOrEmpty(model.Password))
             {
@@ -78,7 +84,7 @@ namespace AttendanceCRMWeb.Controllers
                         var loginResultStatus = new LoginResult();
                         if (Type.Equals("Login"))
                         {
-                            loginResultStatus = await _service.Login(model.UserName, model.Password,  _databaseName, _IPAddress, _sessionId, "", Type);
+                            loginResultStatus = await _service.Login(model.UserName, model.Password, _databaseName, _IPAddress, _sessionId, "", Type);
                         }
                         else
                         {
@@ -134,6 +140,46 @@ namespace AttendanceCRMWeb.Controllers
             }
         }
 
+
+
+        [AllowAnonymous]
+        public async Task<ActionResult> LogOff(int? type)
+        {
+            Public.CurrentUser = null;
+            return RedirectToAction("Login", "Account", new { Locktype = type });
+        }
+
+
+
+
+
+
+        public async Task<ActionResult> UpdateActivationLisc()
+        {
+            try
+            {
+                var _model = new GeneralSettingVm();
+                return View(_model);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SaveActivationLisc(string activationLisc)
+        {
+            try
+            {
+                var _result = await _serviceGeneralSettingService.UpdateActivationLisc(activationLisc);
+                return Json(_result, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
 
 

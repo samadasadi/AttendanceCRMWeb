@@ -5,6 +5,7 @@ using System.ComponentModel;
 using Utility;
 using Utility.PublicEnum;
 using ViewModel.Basic;
+using ViewModel.BasicInfo;
 
 namespace ViewModel.Security
 {
@@ -127,7 +128,7 @@ namespace ViewModel.Security
         public bool IsVPS { get { try { return this.IsVpsServer ? true : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(13, 1) == "1") ? true : false); } catch { return false; } } }
         public bool IsAndroid { get { try { return this.IsVpsServer ? true : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(14, 1) == "1") ? true : false); } catch { return false; } } }
         public bool IsCenterType { get { try { return this.IsVpsServer ? true : ((!string.IsNullOrEmpty(Avilabel_Kits) && Avilabel_Kits.Substring(15, 1) == "1") ? true : false); } catch { return false; } } }
-        
+
         /// <summary>
         /// اگر true باشد مدیکال است
         /// اگر false باشد دنتال است
@@ -232,6 +233,50 @@ namespace ViewModel.Security
         public string DiseaseGroupAccessPatient { get; set; }
 
         public List<string> DiseaseGroupAccessSelected { get; set; }
+
+
+        public string ActivationLisc { get; set; }
+        public string KeyCode
+        {
+            get
+            {
+                if(string.IsNullOrEmpty(ActivationLisc)) return string.Empty;
+
+                string _data = Utility.Security.StringCipher.Decrypt(ActivationLisc);
+
+                string[] _dataSplit = _data.Split(':');
+                var _expireDate = DateTimeOperation.S2M(_dataSplit[1]);
+                if (DateTime.Now.Date <= _expireDate.Date)
+                {
+                    return _dataSplit[0];
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
+        public DateTime ExpierDate
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(ActivationLisc)) return DateTime.Now.AddYears(-1);
+
+                string _data = Utility.Security.StringCipher.Decrypt(ActivationLisc);
+
+                string[] _dataSplit = _data.Split(':');
+                var _expireDate = DateTimeOperation.S2M(_dataSplit[1]);
+                if (DateTime.Now.Date <= _expireDate.Date)
+                {
+                    return DateTimeOperation.S2M(_dataSplit[1]);
+                }
+                else
+                {
+                    return DateTime.Now.AddYears(-1);
+                }
+            }
+        }
+
 
     }
 }

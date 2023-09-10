@@ -33,7 +33,17 @@
 
                 <div class="info-box-content">
                     <div class="d-flex justify-content-between align-items-center ">
-                        <b>@item.deviceVm.Name</b>
+                        <b>
+                            @if (item.sDK.GetConnectState())
+                            {
+                                <span class="fa fa-toggle-on text-success"></span>
+                            }
+                            else
+                            {
+                                <span class="fa fa-toggle-off text-danger"></span>
+                            }
+                            @item.deviceVm.Name - <span class="@(item.sDK.GetConnectState()?"text-success":"text-danger")">@item.deviceVm.IsConectedStr</span>
+                        </b>
                         <div class="btn-group">
                             <button type="button" class="btn btn-tool " data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-ellipsis-v" style="font-size:14px;"></i>

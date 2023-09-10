@@ -15,7 +15,7 @@ using ViewModel.UserManagement.Attendance;
 
 namespace AttendanceCRMWeb.Areas.Admin.Controllers
 {
-    [RoleFullMedicalCenterFilter(Role = MedicalCenterRole.Attendance)]
+    [CustomAutorizeFilter(Role = new[] { EnumRole.FingerPrintDevices })]
     public class DeviceController : BaseController
     {
 

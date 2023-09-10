@@ -24,6 +24,7 @@ using Service.Cost;
 
 namespace AttendanceCRMWeb.Areas.Admin.Controllers
 {
+    [CustomAutorizeFilter(Role = new[] { EnumRole.Register })]
     public class RegisterController : BaseController
     {
         private readonly IRegisterService _service;

@@ -51,7 +51,7 @@ namespace Repository.Model
 
         //سایر
 
-
+        public string ActivationLisc { get; set; }
         public Nullable<int> StartNumber { get; set; }
         [Column("appLockUnitPice")]
         public bool? ChangeCostBase { get; set; }

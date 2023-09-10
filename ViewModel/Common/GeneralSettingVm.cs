@@ -14,6 +14,8 @@ using Utility.CommonAttribute;
 using Utility.PublicEnum;
 using Utility;
 using ViewModel.Message;
+using Utility.EXT;
+using ViewModel.BasicInfo;
 
 namespace ViewModel.Common
 {
@@ -31,7 +33,7 @@ namespace ViewModel.Common
 
         public int appID { get; set; }
         //اطلاعات مرکزی
-        [Display(ResourceType = typeof(Md), Name = "NameClinic")]
+        [Display(Name = "نام مرکز")]
         [UIHint("HorizentalTextBox")]
         public string NameClinic { get; set; }
         // [DisplayName("تلفن")]
@@ -494,10 +496,40 @@ namespace ViewModel.Common
         [UIHint("HorizentalNumberTextBox")]
         public int AutoSendMessageTime { get; set; }
 
+        [Display(Name = "کد فعالسازی")]
+        [UIHint("HorizentalTextBox")]
+        public string ActivationLisc { get; set; }
 
 
-        [Display(Name = "نام درگاه پرداخت")]
+        [Display(Name = "دستگاه")]
         [UIHint("HorizentalDropdwonR")]
         public string FingerPrintDevice { get; set; }
     }
+
+
+
+    public class ImportFromUSBVm : DataModel
+    {
+
+        [Required]
+        public HttpPostedFileBase ExcelFile { get; set; }
+
+        public string MSExcelTable { get; set; }
+
+        public string FileName { get; set; }
+
+        public Guid File_Id { get; set; }
+
+
+
+
+        [Display(Name = "دستگاه")]
+        [UIHint("HorizentalDropdwonR")]
+        public int FingerPrintDevice { get; set; }
+
+        public List<NormalJsonClass> FingerPrintDeviceList { get; set; }
+
+
+    }
+
 }

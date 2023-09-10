@@ -4,17 +4,16 @@
     <div class="col-sm-12">
         <div class="col-md-6">
             @Html.EditorFor(m => m.NameClinic)
-            @*@Html.EditorFor(m => m.Mobile)*@
             @Html.EditorFor(m => m.Title)
             @Html.EditorFor(m => m.Phone)
             @Html.EditorFor(m => m.Fax)
             @Html.EditorFor(m => m.WebSite)
         </div>
         <div class="col-md-6">
+            @Html.EditorFor(x => x.ActivationLisc)
             @Html.EditorFor(m => m.Address)
 
 
-            @*@Html.EditorFor(m => m.Email)*@
         </div>
     </div>
 </div>

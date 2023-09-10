@@ -2,18 +2,26 @@
 using Newtonsoft.Json;
 using Repository;
 using Repository.iContext;
+using Repository.Infrastructure;
 using Repository.Model;
 using Repository.Model.Attendance;
+using Service.Attendance;
+using Service.Attendance.Helper;
+using Service.BasicInfo;
 using Service.Consts;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Hosting;
 using Utility;
 using Utility.PublicEnum;
 using Utility.Utitlies;
 using ViewModel.Attendance;
+using ViewModel.BasicInfo;
+using ViewModel.Common;
 using ViewModel.Report;
 using ViewModel.UserManagement;
 using ViewModel.UserManagement.Attendance;
@@ -69,8 +77,6 @@ namespace Service.UserManagement.Attendance
         Task<DataModelResult> SavePersonelAccount_Cost(ViewModel.BasicInfo.CostVm model);
         Task<ViewModel.BasicInfo.ResultModel<Cost_Incoming>> SavePersonelAccount_CostIncoming(ViewModel.BasicInfo.CostVm model);
 
-
-
         /// <summary>
         /// لاگ ورود و خروج پرسنل
         /// </summary>
@@ -78,11 +84,7 @@ namespace Service.UserManagement.Attendance
         /// <returns></returns>
         Task<AttLogEvent_Report> GetAttendanceLog(ReportParameter model);
 
-
-
         Task<List<UsersPerformance>> TotalPerformancePersonal_AllUser_Excel(ReportParameter parameter);
-
-
 
         #region Att Log
         Task<DataModelResult> SaveAttLog(TimeRecordVm entity);
@@ -91,6 +93,12 @@ namespace Service.UserManagement.Attendance
         Task<DataModelResult> Delete_AttLog(TimeRecordVm model);
 
         #endregion
+
+
+        Task<DataModel> ImportAttLogFromUSB(ImportFromUSBVm model);
+
+
+
     }
 
     public class AttendanceReportService : IAttendanceReportService
@@ -113,6 +121,8 @@ namespace Service.UserManagement.Attendance
         private readonly IRepository<TransactionRequest> _repoTransactionRequest;
         private readonly IRepository<EmployeeAccounting> _repoEmployeeAccounting;
 
+        private readonly IFileService _fileService;
+
         private readonly Guid[] transMorkhasiIds = new Guid[7] {
                     Guid.Parse("F1AC3ACA-C785-23EB-9A89-0EFA126E3C8E"),
                     Guid.Parse("F1AC3ACA-C785-23EB-9A99-0EFA126E3C9E"),
@@ -128,6 +138,7 @@ namespace Service.UserManagement.Attendance
             Guid.Parse("F1AC3ACA-C785-23EB-9A79-0EFA126E3C7E")
         };
 
+        private List<TimeRecordVm> AttLogRecordList { get; set; }
         #endregion
 
         #region ctor
@@ -143,6 +154,7 @@ namespace Service.UserManagement.Attendance
             IRepository<PersonHoghogh> repoPersonHoghogh,
             IRepository<EmployeeAccounting> repoEmployeeAccounting,
             IRepository<Tbl_Cost> repoCost,
+            IFileService fileService,
             IRepository<Cost_Incoming> repoCostIncoming,
             IRepository<FingerTemplate> repoTEMPLATE)
         {
@@ -153,6 +165,8 @@ namespace Service.UserManagement.Attendance
             _repoPubUser_Shift = repoPubUser_Shift;
             _repoPubUser_Shift.FrameworkContext = currentcontext;
             _repoPubUser_Shift.DbFactory = contextFactory;
+
+            _fileService = fileService;
 
             _repoEmployeeAccounting = repoEmployeeAccounting;
             _repoEmployeeAccounting.FrameworkContext = currentcontext;
@@ -1977,13 +1991,6 @@ namespace Service.UserManagement.Attendance
         #endregion
 
 
-
-
-
-
-
-
-
         #region گزارش مرخصی
         public async Task<ReportVm<TransactionRequestVm>> TransactionReqReport(ReportParameter reportParameter)
         {
@@ -2478,6 +2485,452 @@ namespace Service.UserManagement.Attendance
             }
         }
 
+
+        public async Task<DataModel> ImportAttLogFromUSB(ImportFromUSBVm model)
+        {
+            try
+            {
+
+                var _deviceVm = FingerPrintDeviceService.Devices.Where(x => x.deviceVm.Id == model.FingerPrintDevice).FirstOrDefault();
+                if (model.FingerPrintDevice <= 0 || _deviceVm == null) { return new DataModel { error = true, message = "لطفا دستگاه را انتخاب نمایید" }; }
+
+                if (_deviceVm.deviceVm.FPDeviceType == Utility.PublicEnum.Attendance.FPDeviceType.ZKTimeDevice)
+                    return await btnSSRAttLogRead(model);
+                else return await funcGetGeneralLogData(model);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private async Task<DataModel> btnSSRAttLogRead(ImportFromUSBVm model)
+        {
+            try
+            {
+                if (model.ExcelFile == null) return new DataModel { error = true, message = "لطفا فایل را انتخاب نمایید" };
+
+                var _deviceVm = FingerPrintDeviceService.Devices.Where(x => x.deviceVm.Id == model.FingerPrintDevice).FirstOrDefault();
+                if (model.FingerPrintDevice <= 0 || _deviceVm == null) { return new DataModel { error = true, message = "لطفا دستگاه را انتخاب نمایید" }; }
+
+                UDisk udisk = new UDisk();
+
+                byte[] byDataBuf = null;
+                int iLength;//length of the bytes to get from the data
+
+                string sPIN2 = "";
+                string sVerified = "";
+                string sTime_second = "";
+                string sDeviceID = "";
+                string sStatus = "";
+                string sWorkcode = "";
+
+
+                if (model.ExcelFile != null)
+                {
+
+
+                    var _filePath = await _fileService.GetPath(model.File_Id);
+                    if (string.IsNullOrEmpty(_filePath))
+                        return new DataModel();
+                    CommonHelper.DefaultFileProvider = new NopFileProvider(HostingEnvironment.MapPath("~"));
+                    var _serverPath = new NopFileProvider(HostingEnvironment.MapPath("~")).Root;
+                    _filePath = CommonHelper.DefaultFileProvider.Combine(_serverPath, _filePath);
+
+
+                    using (FileStream stream = new FileStream(_filePath, FileMode.OpenOrCreate, FileAccess.Read))
+                    {
+                        byDataBuf = System.IO.File.ReadAllBytes(_filePath);
+                        iLength = Convert.ToInt32(stream.Length);
+
+
+
+                        //using (Stream stream = model.ExcelFile.InputStream)
+                        //{
+                        //    MemoryStream memoryStream = stream as MemoryStream;
+                        //    if (memoryStream == null)
+                        //    {
+                        //        memoryStream = new MemoryStream();
+                        //        model.ExcelFile.InputStream.CopyTo(memoryStream);
+                        //    }
+                        //    byDataBuf = memoryStream.ToArray();
+                        //    iLength = Convert.ToInt32(stream.Length);
+
+
+
+
+
+                        AttLogRecordList = new List<TimeRecordVm>();
+                        //dtAttLogList.ItemsSource = null;
+
+                        int iStartIndex = 0;
+                        int iOneLogLength;//the length of one line of attendence log
+                        for (int i = iStartIndex; i < iLength; i++)
+                        {
+                            if (byDataBuf[i] == 13 && byDataBuf[i + 1] == 10)
+                            {
+                                iOneLogLength = (i + 1) + 1 - iStartIndex;
+                                byte[] bySSRAttLog = new byte[iOneLogLength];
+                                Array.Copy(byDataBuf, iStartIndex, bySSRAttLog, 0, iOneLogLength);
+
+                                udisk.GetAttLogFromDat(bySSRAttLog, iOneLogLength, out sPIN2, out sTime_second, out sDeviceID, out sStatus, out sVerified, out sWorkcode);
+                                try
+                                {
+
+                                    var _datetime = sTime_second.StartsWith("14") ? DateTimeOperation.S2M(sTime_second.Substring(0, 10).Replace("-", "/")) : DateTime.Parse(sTime_second);
+
+                                    var _hh = Convert.ToInt32(sTime_second.Substring(11, 2));
+                                    var _mm = Convert.ToInt32(sTime_second.Substring(14, 2));
+                                    var _ss = Convert.ToInt32(sTime_second.Substring(17, 2));
+
+
+                                    var _timespan = new TimeSpan(_hh, _mm, _ss);
+                                    _datetime = _datetime.Date + _timespan;
+
+                                    var item = new TimeRecordVm();
+                                    item.CardNo = !string.IsNullOrEmpty(sPIN2) ? sPIN2.Trim() : "";
+                                    item.DatetimeIO = _datetime;
+                                    item.DeviceCode = Convert.ToInt32(sDeviceID);
+                                    item.AttStatus = Convert.ToInt32(sStatus);
+                                    item.VerifyMode = Convert.ToInt32(sVerified);
+                                    item.VerifyMethod = Convert.ToInt32(sVerified);
+                                    item.WorkCode = Convert.ToInt32(sWorkcode);
+                                    item.Day = item.DatetimeIO.Value.Day;
+                                    item.Hour = item.DatetimeIO.Value.Hour;
+                                    item.Minute = item.DatetimeIO.Value.Minute;
+                                    item.Month = item.DatetimeIO.Value.Month;
+                                    item.Year = item.DatetimeIO.Value.Year;
+                                    AttLogRecordList.Add(item);
+
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = ex.Message });
+                                }
+
+                                bySSRAttLog = null;
+                                iStartIndex += iOneLogLength;
+                                iOneLogLength = 0;
+                            }
+                        }
+                        stream.Close();
+                    }
+
+                    _deviceVm.sDK.InsertAttLogToDB(AttLogRecordList);
+                    //dtAttLogList.ItemsSource = AttLogRecordList;
+                    //dtAttLogList.CanUserAddRows = false;
+                    //dtAttLogList.CanUserDeleteRows = false;
+                    //dtAttLogList.IsReadOnly = true;
+                }
+
+                return new DataModel();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private async Task<DataModel> funcGetGeneralLogData(ImportFromUSBVm model)
+        {
+            try
+            {
+                if (model.ExcelFile == null) return new DataModel { error = true, message = "لطفا فایل را انتخاب نمایید" };
+
+
+                int vSEnrollNumber = 0;
+                int vVerifyMode = 0;
+                int vInOutMode = 0;
+                DateTime vdwDate = DateTime.MinValue;
+                int vnCount;
+                int vnResultCode = 0;
+                //string vstrFileName;
+                string vstrFileData;
+                int vnReadMark;
+
+                //vstrFileName = "";
+                //lblMessage.Text = "Waiting...";
+                //lblTotal.Text = "Total : 0";
+                //Application.DoEvents();
+                //funcGeneralLogDataGridFormat();
+
+
+                //vstrFileName = dlgOpen.FileName;
+                //dlgOpen.FileName = "";
+
+
+
+
+
+
+                var _filePath = await _fileService.GetPath(model.File_Id);
+                if (string.IsNullOrEmpty(_filePath))
+                    return new DataModel();
+                CommonHelper.DefaultFileProvider = new NopFileProvider(HostingEnvironment.MapPath("~"));
+                var _serverPath = new NopFileProvider(HostingEnvironment.MapPath("~")).Root;
+                _filePath = CommonHelper.DefaultFileProvider.Combine(_serverPath, _filePath);
+
+
+
+                vnResultCode = FKAttendHelper.FK_USBLoadGeneralLogDataFromFile(0, _filePath);
+
+
+                //if (vnResultCode != (int)enumErrorCode.RUN_SUCCESS)
+                //    lblMessage.Text = frmMain.ReturnResultPrint(vnResultCode);
+                //else
+                //{
+
+                vnCount = 1;
+                do
+                {
+                    //vnResultCode = FKAttendHelper.FK_GetGeneralLogData(frmMain.gnCommHandleIndex, ref vSEnrollNumber, ref vVerifyMode, ref vInOutMode, ref vdwDate);
+                    vnResultCode = FKAttendHelper.FK_GetGeneralLogData(0, ref vSEnrollNumber, ref vVerifyMode, ref vInOutMode, ref vdwDate);
+                    if (vnResultCode != (int)enumErrorCode.RUN_SUCCESS)
+                    {
+                        if (vnResultCode == (int)enumErrorCode.RUNERR_DATAARRAY_END)
+                        {
+                            vnResultCode = (int)enumErrorCode.RUN_SUCCESS;
+                        }
+                        break;
+                    }
+                    try
+                    {
+                        //if (funcShowGeneralLogDataToGrid(vnCount, vSEnrollNumber, vVerifyMode, vInOutMode, vdwDate) == false) break;
+                        var _value = new TimeRecordVm
+                        {
+                            //DeviceCode = _DeviceVm.Code,
+                            CardNo = vSEnrollNumber.ToString(),
+                            Day = vdwDate.Day,
+                            Hour = vdwDate.Hour,
+                            Minute = vdwDate.Minute,
+                            Month = vdwDate.Month,
+                            Year = vdwDate.Year,
+                            AttStatus = vInOutMode,
+                            VerifyMethod = vVerifyMode,
+                            DatetimeIO = vdwDate
+                        };
+                        AttLogRecordList.Add(_value);
+                    }
+                    catch (Exception ex)
+                    {
+                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = ex.Message });
+                    }
+                    vnCount = vnCount + 1;
+                } while (true);
+
+                //dtAttLogList.ItemsSource = AttLogRecordList;
+                //dtAttLogList.CanUserAddRows = false;
+                //dtAttLogList.CanUserDeleteRows = false;
+                //dtAttLogList.IsReadOnly = true;
+                //if (vnResultCode == (int)enumErrorCode.RUN_SUCCESS)
+                //{
+                //    lblMessage.Text = "USBReadGeneralLogDataFromFile OK";
+                //}
+                //else
+                //    lblMessage.Text = frmMain.ReturnResultPrint(vnResultCode);
+                //}
+                return new DataModel();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        private async Task<DataModel> funcGetSuperLogData(ImportFromUSBVm model)
+        {
+            int vSEnrollNumber = 0;
+            int vGEnrollNumber = 0;
+            int vManipulation = 0;
+            int vBackupNumber = 0;
+            DateTime vdwDate = DateTime.Now;
+            int vnii;
+
+            string[] vstrLogItem;
+            //string vstrFileName;
+            int vnReadMark;
+            int vnResultCode;
+            string vstrTmp;
+            //System.Windows.Forms.ListViewItem vtItem;
+
+            //vstrFileName = "";
+            vstrTmp = "";
+
+            vstrLogItem = new string[] { "", "SEnrollNo", "GEnrollNo", "Manipulation", "BackupNo", "DateTime" };
+
+
+            //var dlgOpen = new System.Windows.Forms.OpenFileDialog();
+            //dlgOpen.InitialDirectory = Directory.GetCurrentDirectory();
+            //dlgOpen.Filter = "SLog Files (*.txt)|*.txt|All Files (*.*)|*.*";
+            //dlgOpen.FilterIndex = 1;
+            //if (dlgOpen.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+            //vstrFileName = dlgOpen.FileName;
+            //if (vstrFileName == "") return;
+            //dlgOpen.FileName = "";
+
+
+
+
+
+
+
+
+
+            var _filePath = await _fileService.GetPath(model.File_Id);
+            if (string.IsNullOrEmpty(_filePath))
+                return new DataModel();
+
+            CommonHelper.DefaultFileProvider = new NopFileProvider(HostingEnvironment.MapPath("~"));
+            var _serverPath = new NopFileProvider(HostingEnvironment.MapPath("~")).Root;
+
+            _filePath = CommonHelper.DefaultFileProvider.Combine(_serverPath, _filePath);
+
+
+
+
+
+            vnResultCode = FKAttendHelper.FK_USBLoadSuperLogDataFromFile(0, _filePath);
+
+
+            if (vnResultCode != (int)enumErrorCode.RUN_SUCCESS)
+                return new DataModel { error = true, message = FDKHelper.ReturnResultPrint(vnResultCode) };
+            else
+            {
+                vnii = 1;
+                do
+                {
+                    vnResultCode = FKAttendHelper.FK_GetSuperLogData(0, ref vSEnrollNumber, ref vGEnrollNumber, ref vManipulation, ref vBackupNumber, ref vdwDate);
+
+                    if (vnResultCode != (int)enumErrorCode.RUN_SUCCESS)
+                    {
+                        if (vnResultCode == (int)enumErrorCode.RUNERR_DATAARRAY_END)
+                            vnResultCode = (int)enumErrorCode.RUN_SUCCESS;
+                        break;
+                    }
+
+
+
+
+
+                    //vtItem = new System.Windows.Forms.ListViewItem();
+                    //vtItem.Text = (Convert.ToString(vnii)).Trim();
+                    //vtItem.SubItems.Add(vSEnrollNumber.ToString().Trim());
+                    //vtItem.SubItems.Add(vGEnrollNumber.ToString().Trim());
+                    //switch (vManipulation)
+                    //{
+                    //    case (int)enumSuperLogInfo.LOG_ENROLL_USER:
+                    //        vstrTmp = "Enroll User"; break;
+                    //    case (int)enumSuperLogInfo.LOG_ENROLL_MANAGER:
+                    //        vstrTmp = "Enroll Manager"; break;
+                    //    case (int)enumSuperLogInfo.LOG_ENROLL_DELFP:
+                    //        vstrTmp = "Delete Fp Data"; break;
+                    //    case (int)enumSuperLogInfo.LOG_ENROLL_DELPASS:
+                    //        vstrTmp = "Delete Password"; break;
+                    //    case (int)enumSuperLogInfo.LOG_ENROLL_DELCARD:
+                    //        vstrTmp = "Delete Card Data"; break;
+                    //    case (int)enumSuperLogInfo.LOG_LOG_ALLDEL:
+                    //        vstrTmp = "Delete All LogData"; break;
+                    //    case (int)enumSuperLogInfo.LOG_SETUP_SYS:
+                    //        vstrTmp = "Modify System Info"; break;
+                    //    case (int)enumSuperLogInfo.LOG_SETUP_TIME:
+                    //        vstrTmp = "Modify System Time"; break;
+                    //    case (int)enumSuperLogInfo.LOG_SETUP_LOG:
+                    //        vstrTmp = "Modify Log Setting"; break;
+                    //    case (int)enumSuperLogInfo.LOG_SETUP_COMM:
+                    //        vstrTmp = "Modify Comm Setting"; break;
+                    //    case (int)enumSuperLogInfo.LOG_PASSTIME:
+                    //        vstrTmp = "Pass Time Set"; break;
+                    //    case (int)enumSuperLogInfo.LOG_SETUP_DOOR:
+                    //        vstrTmp = "Door Set Log"; break;
+                    //    default:
+                    //        vstrTmp = "--"; break;
+                    //}
+                    //vtItem.SubItems.Add(vstrTmp);
+
+                    //if (vBackupNumber == (int)enumBackupNumberType.BACKUP_PSW)
+                    //    vstrTmp = "Password";
+                    //else if (vBackupNumber == (int)enumBackupNumberType.BACKUP_CARD)
+                    //    vstrTmp = "Card";
+                    //else if (vBackupNumber < (int)enumBackupNumberType.BACKUP_PSW)
+                    //    vstrTmp = "Fp-" + vBackupNumber.ToString().Trim();
+                    //else
+                    //    vstrTmp = "--";
+
+                    //vtItem.SubItems.Add(vstrTmp);
+
+                    //vstrTmp = vdwDate.Year + vdwDate.Month.ToString("/0#") + vdwDate.Day.ToString("/0#") +
+                    //    vdwDate.Hour.ToString(" 0#") + vdwDate.Minute.ToString(":0#") + vdwDate.Second.ToString(":0#");
+
+                    //vtItem.SubItems.Add(vstrTmp);
+                    //vtItem = null;
+
+
+
+
+
+
+
+
+
+                    vnResultCode = FKAttendHelper.FK_GetSuperLogData(0, ref vSEnrollNumber, ref vGEnrollNumber, ref vManipulation, ref vBackupNumber, ref vdwDate);
+                    //vnResultCode = FKAttendHelper.FK_GetGeneralLogData(0, ref vSEnrollNumber, ref vVerifyMode, ref vInOutMode, ref vdwDate);
+                    if (vnResultCode != (int)enumErrorCode.RUN_SUCCESS)
+                    {
+                        if (vnResultCode == (int)enumErrorCode.RUNERR_DATAARRAY_END)
+                            vnResultCode = (int)enumErrorCode.RUN_SUCCESS;
+                        break;
+                    }
+
+                    try
+                    {
+                        var _value = new TimeRecordVm
+                        {
+                            //DeviceCode = _DeviceVm.Code,
+                            CardNo = vSEnrollNumber.ToString(),
+                            Day = vdwDate.Day,
+                            Hour = vdwDate.Hour,
+                            Minute = vdwDate.Minute,
+                            Month = vdwDate.Month,
+                            Year = vdwDate.Year,
+                            AttStatus = 0,
+                            VerifyMethod = 1,
+                            DatetimeIO = vdwDate
+                        };
+                        AttLogRecordList.Add(_value);
+                    }
+                    catch (Exception ex)
+                    {
+                        //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = ex.Message });
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+                    vnii = vnii + 1;
+                } while (true);
+                //dtAttLogList.ItemsSource = AttLogRecordList;
+                //dtAttLogList.CanUserAddRows = false;
+                //dtAttLogList.CanUserDeleteRows = false;
+                //dtAttLogList.IsReadOnly = true;
+
+                if (vnResultCode == (int)enumErrorCode.RUN_SUCCESS)
+                {
+                    return new DataModel();
+                }
+                else
+                    return new DataModel { error = true, message = FDKHelper.ReturnResultPrint(vnResultCode) };
+            }
+
+
+        }
 
         #endregion
 
