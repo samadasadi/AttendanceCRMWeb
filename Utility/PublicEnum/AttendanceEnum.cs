@@ -7,6 +7,15 @@ using System.Threading.Tasks;
 
 namespace Utility.PublicEnum
 {
+    public enum HoghoghType
+    {
+        [Display(Name = "ثابت")]
+        Sabet = 1,
+        [Display(Name = "روزمزد")]
+        RoozMozd = 2
+
+    }
+
     public enum FingerPrintEnum
     {
         IPIsNull,

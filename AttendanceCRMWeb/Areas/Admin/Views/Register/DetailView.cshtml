@@ -284,7 +284,7 @@
             $("#PatientAccountResult").html('');
             $.ajax({
                 type: "Get",
-                url: "/Report/StaticReport/PrintPatientAccount",
+                url: "/Admin/StaticReport/PrintPatientAccount",
                 data: $("#PatientAccountFrm").serialize(),
                 beforeSend: function () {
                     showWait();

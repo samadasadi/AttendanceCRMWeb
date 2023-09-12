@@ -53,7 +53,7 @@
             </div>
             <div class="card-body p-2" id="div_Result">
 
-                @Html.Action("GridList", new { TypeId = ((int)CostEnum.Cost).ToString() })
+                @*@Html.Action("GridList", new { TypeId = ((int)CostEnum.Cost).ToString() })*@
 
             </div>
         </div>
@@ -73,6 +73,22 @@
         //ReloadOpeningDocument();
         //ReloadOpeningDocument_Type('1');
     });
+
+    function LoadGridList() {
+
+        AjaxCallAction("GET", "/Admin/Cost/GridList",{TypeId: '@(((int)CostEnum.Cost).ToString())'},true,
+            function (res) {
+                debugger;
+
+                if (!res.error) {
+                    $("#div_Result").html(res);
+                }
+                else {
+                    AlertDialog(res.message, '', 'error');
+                }
+            }, true, null, null);
+    }
+
 
     function CreateCost(idGrid, idComboBox, idTextBox) {
         InitModal('ثبت', '/Admin/Cost/Create', {}, function () { SaveCost(idGrid, idComboBox, idTextBox) });
@@ -129,7 +145,7 @@
                     AlertDialog(res.message, '', 'error');
                 }
             }, false);
-        
+
     }
 
     function DeleteCostItem(id) {

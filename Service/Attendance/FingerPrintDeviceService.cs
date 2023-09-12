@@ -707,7 +707,7 @@ namespace Service.Attendance
         {
             try
             {
-                if(!GetConnectState()) 
+                if (!GetConnectState())
                     return (new DeviceEventLogVm { Error = true, Message = PublicResource.DeviceNotConnected });
 
                 if (PingDevice().Error == false)
@@ -1565,8 +1565,8 @@ namespace Service.Attendance
             {
                 var _query = string.Format(@" IF((Select COUNT(*) from TimeRecords where {0} = DeviceCode and {1} = CardNo and {2} = [Year] and {3} = [Month] and {4} = [Day] and {5} = Hour and {6} = Minute) <=0) " +
                                             "\n BEGIN " +
-                                            "\n 	INSERT INTO [dbo].[TimeRecords]([CardNo],[DeviceCode],[Year],[Month],[Day],[Hour],[Minute],[DatetimeIO],[AttStatus],[VerifyMethod],[IsDelete],[ChangebyPerson],[WorkCode], [DatetimeIOMain]) " +
-                                            "\n 	VALUES({1}, {0}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, '0', '0', {10}, {11}) " +
+                                            "\n 	INSERT INTO [dbo].[TimeRecords]([CardNo],[DeviceCode],[Year],[Month],[Day],[Hour],[Minute],[DatetimeIO],[AttStatus],[VerifyMethod],[IsDeleted],[ChangebyPerson],[WorkCode], [DatetimeIOMain], ModifiedDate, DoingUserId) " +
+                                            "\n 	VALUES({1}, {0}, {2}, {3}, {4}, {5}, {6}, {7}, {8}, {9}, '0', '0', {10}, {11}, GETDATE(), N'00000000-0000-0000-0000-000000000000') " +
                                             "\n END",
                                             item.DeviceCode != null ? "N'" + item.DeviceCode + "'" : "NULL",
                                             !string.IsNullOrEmpty(item.CardNo) ? "N'" + item.CardNo + "'" : "NULL",
@@ -1607,12 +1607,12 @@ namespace Service.Attendance
 
             }
         }
-        public void InsertAttLogToDB(List<TimeRecordVm> list)
+        public DataModel InsertAttLogToDB(List<TimeRecordVm> list)
         {
             try
             {
                 int _recordCount = 25;
-                if (list == null || list.Count <= 0) return;
+                if (list == null || list.Count <= 0) return new DataModel { error = true };
 
                 if (list.Count > _recordCount)
                 {
@@ -1641,6 +1641,7 @@ namespace Service.Attendance
                     }
                     deviceMethodHlper.ExecuteSqlScript(_Commands);
                 }
+                return new DataModel();
             }
             catch (Exception ex)
             {
@@ -1663,7 +1664,6 @@ namespace Service.Attendance
         //            model.TransactionPeriod,
         //            model.TransactionType != 0 ? model.TransactionType : 1
         //            );
-
         //        deviceMethodHlper.ExecuteSqlScript(_query);
         //    }
         //    catch (Exception)
@@ -2087,7 +2087,7 @@ namespace Service.Attendance
                 var _ping = PingDevice();
                 if (_ping.Error == true)
                 {
-                    SetConnectState(false); 
+                    SetConnectState(false);
                     return _ping;
                 }
 
@@ -2238,8 +2238,6 @@ namespace Service.Attendance
         {
             _DeviceVm.IsConected = state;
         }
-
-
 
 
         #region Insert Data Into Database
@@ -2577,12 +2575,12 @@ namespace Service.Attendance
 
             }
         }
-        public void InsertAttLogToDB(List<TimeRecordVm> list)
+        public DataModel InsertAttLogToDB(List<TimeRecordVm> list)
         {
             try
             {
                 int _recordCount = 25;
-                if (list == null || list.Count <= 0) return;
+                if (list == null || list.Count <= 0) return new DataModel { error = true, message="داده ای یافت نشد" };
 
                 if (list.Count > _recordCount)
                 {
@@ -2611,6 +2609,7 @@ namespace Service.Attendance
                     }
                     deviceMethodHlper.ExecuteSqlScript(_Commands);
                 }
+                return new DataModel();
             }
             catch (Exception ex)
             {

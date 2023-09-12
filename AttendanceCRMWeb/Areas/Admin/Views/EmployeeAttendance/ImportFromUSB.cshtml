@@ -29,12 +29,12 @@
                         <label class="btn btn-block bg-gradient-primary btn-flat" style="width:130px;" for="ExcelFile">انتخاب فایل</label>
 
                         @Html.ValidationMessageFor(x => x.ExcelFile)
-                        <script>
+                        @*<script>
                             document.getElementById('ExcelFile').addEventListener('change', HandleImportExcelFile, false);
                             function HandleImportExcelFile() {
                                 document.getElementById('ImportExcelFile').submit();
                             }
-                        </script>
+                        </script>*@
                     </div>
 
                 </div>
@@ -62,14 +62,14 @@
         $("#divError").html('');
 
 
-        var _fileId = $("#File_Id").val();
-        if (_fileId == undefined || _fileId == '' || _fileId == '00000000-0000-0000-0000-000000000000' || _fileId == null) {
-            AlertDialog('لطفا فایل اکسل را انتخاب نمایید', '', 'error')
-            return;
-        }
+        //var _fileId = $("#File_Id").val();
+        //if (_fileId == undefined || _fileId == '' || _fileId == '00000000-0000-0000-0000-000000000000' || _fileId == null) {
+        //    AlertDialog('لطفا فایل اکسل را انتخاب نمایید', '', 'error')
+        //    return;
+        //}
 
-        var _CheckUpDR = $("#CheckUpDR").val();
-        if (_CheckUpDR == undefined || _CheckUpDR == '' || _CheckUpDR == null) {
+        var _FingerPrintDevice = $("#FingerPrintDevice").val();
+        if (_FingerPrintDevice == undefined || _FingerPrintDevice == '' || _FingerPrintDevice == null) {
             AlertDialog('لطفا دستگاه را انتخاب نمایید', '', 'error')
             return;
         }
@@ -80,23 +80,25 @@
         //    return;
         //}
 
-        AjaxCallAction("POST", "/BasicInfo/CustomerInfo/SaveExcel", $("#ImportExcelFile").serialize(), true,
-            function (res) {
-                if (!res.error) {
-                    AlertDialog('اطلاعات با موفقیت دخیره شد', '')
-                }
-                else {
-                    if (res.message != null && res.message != undefined && res.message != '')
-                        AlertDialog(res.message, '', 'error')
+        document.getElementById('ImportExcelFile').submit();
 
-                    var _errors = '';
-                    res.messages.forEach((item) => {
-                        debugger;
-                        _errors += '<span class="text-danger  col-md-4 mb-1">* - ' + item + '</span>';
-                    });
-                    $("#divError").html(_errors)
-                }
+        //AjaxCallAction("POST", "/Admin/EmployeeAttendance/ImportFromUSB", $("#ImportExcelFile").serialize(), true,
+        //    function (res) {
+        //        if (!res.error) {
+        //            AlertDialog('اطلاعات با موفقیت دخیره شد', '')
+        //        }
+        //        else {
+        //            if (res.message != null && res.message != undefined && res.message != '')
+        //                AlertDialog(res.message, '', 'error')
+        //            var _errors = '';
+        //            res.messages.forEach((item) => {
+        //                debugger;
+        //                _errors += '<span class="text-danger  col-md-4 mb-1">* - ' + item + '</span>';
+        //            });
+        //            $("#divError").html(_errors)
+        //        }
+        //    }, false, null, null);
 
-            },);
+
     }
 </script>

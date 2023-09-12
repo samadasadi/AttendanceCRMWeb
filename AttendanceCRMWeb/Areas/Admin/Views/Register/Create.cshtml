@@ -388,9 +388,6 @@
 
                         </div>
 
-
-
-
                     </div>
                     <div class="tab-pane fade" id="custom-tabs-three-messages" role="tabpanel">
                         @using (Html.BsPanelWithCloseAndMinimize("دسترسی به :", colorPanel: ColorPanel.Warning))
@@ -403,7 +400,6 @@
                                             {
                                                 foreach (var usergroup in Model.RoleGroups)
                                                 {
-
                                                     <option id="@usergroup.Value" value="@usergroup.Value" @string.Format("{0}", Model.SelectedRoleGroups.Contains(Guid.Parse(usergroup.Value)) ? "selected" : " ")>@usergroup.Text </option>
                                                 }
                                             }
@@ -422,25 +418,36 @@
                         }
                     </div>
                     <div class="tab-pane fade" id="person_hoghogh" role="tabpanel">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            @Html.EditorFor(m => m.personHoghogh.HoghoghType)
                             @Html.EditorFor(m => m.personHoghogh.BimehNumber)
                             @Html.EditorFor(m => m.personHoghogh.BankName)
                             @Html.EditorFor(m => m.personHoghogh.HesabNumber)
                             @Html.EditorFor(m => m.personHoghogh.AaberNumber)
+                            @Html.EditorFor(m => m.personHoghogh.Nahar)
+                            @Html.EditorFor(m => m.personHoghogh.Sobhane)
+                        </div>
+                        <div class="col-md-4">
                             @Html.EditorFor(m => m.personHoghogh.HoghoghePaye)
+                            @Html.EditorFor(m => m.personHoghogh.HoghoghePaye_Roozaneh)
                             @Html.EditorFor(m => m.personHoghogh.HagheMaskan)
                             @Html.EditorFor(m => m.personHoghogh.OladCount)
                             @Html.EditorFor(m => m.personHoghogh.PadasheBahrevari)
+                            @Html.EditorFor(m => m.personHoghogh.HaghMamoriyat)
+                            @Html.EditorFor(m => m.personHoghogh.AyaboZahab)
+                            @Html.EditorFor(m => m.personHoghogh.Eydi)
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             @Html.EditorFor(m => m.personHoghogh.BimehZarib)
                             @Html.EditorFor(m => m.personHoghogh.EKarZarib)
                             @Html.EditorFor(m => m.personHoghogh.Bon)
                             @Html.EditorFor(m => m.personHoghogh.SaghfeKasreKar1Zarib)
-                            @Html.EditorFor(m => m.personHoghogh.Nahar)
-                            @Html.EditorFor(m => m.personHoghogh.Sobhane)
-                            @Html.EditorFor(m => m.personHoghogh.AyaboZahab)
+                            @Html.EditorFor(m => m.personHoghogh.SaghfeKasreKar2Zarib)
+                            @Html.EditorFor(m => m.personHoghogh.Maliyat)
+                            @Html.EditorFor(m => m.personHoghogh.Sanavat)
+                            @Html.EditorFor(m => m.personHoghogh.HaghOlad)
                         </div>
+
                     </div>
                 </div>
             </div>

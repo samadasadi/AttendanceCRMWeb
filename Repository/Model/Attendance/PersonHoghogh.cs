@@ -5,6 +5,7 @@ namespace Repository.Model
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using Utility.PublicEnum;
 
     [Table("PersonHoghogh")]
     public partial class PersonHoghogh
@@ -63,6 +64,20 @@ namespace Repository.Model
         public string AaberNumber { get; set; }
 
         public int? OladCount { get; set; }
+
+        public decimal? Eydi { get; set; }
+
+        public decimal? Sanavat { get; set; }
+
+        public decimal? HaghMamoriyat { get; set; }
+
+        public decimal Maliyat { get; set; }
+
+        public HoghoghType? HoghoghType { get; set; }
+
+        public decimal? HoghoghePaye_Roozaneh { get; set; }
+
+        public decimal? HaghOlad { get; set; }
 
     }
 }

@@ -304,7 +304,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> access(ViewModel.UserManagement. UserVm model)
+        public async Task<ActionResult> access(ViewModel.UserManagement.UserVm model)
         {
             await _service.SaveUsergroupAsync(model);
             // ReSharper disable once Mvc.ActionNotResolved
@@ -317,6 +317,10 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
             ViewData["UserType"] = new SelectList(model.UserTypeList, "Value", "Text", model.UserType);
             ViewData["Education"] = new SelectList(model.EducationList, "Value", "Text", model.Education);
             ViewData["ParentId"] = new SelectList(model.ParentLists, "Value", "Text", model.ParentId);
+
+            if (model.personHoghogh.HoghoghType == 0)
+                model.personHoghogh.HoghoghType = HoghoghType.Sabet;
+            ViewData["HoghoghType"] = new SelectList(model.personHoghogh.HoghoghTypeList, "Value", "Text", model.personHoghogh.HoghoghType);
 
         }
 

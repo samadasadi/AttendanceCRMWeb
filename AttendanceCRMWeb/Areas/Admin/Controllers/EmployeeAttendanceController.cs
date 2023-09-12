@@ -786,15 +786,7 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
             {
                 var model = new ImportFromUSBVm();
 
-                var _deviceList = (from item in await _serviceDeviceInfo.GetAllDevice()
-                                   select new NormalJsonClass
-                                   {
-                                       Text = item.DeviceFullName,
-                                       Value = item.Id.ToString(),
-                                   }).ToList();
-                ViewData["FingerPrintDevice"] = new SelectList(_deviceList, "Value", "Text", model.FingerPrintDevice);
-
-
+                await SetViewBag(model);
                 return View(model);
             }
             catch (Exception ex)
@@ -802,22 +794,32 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
                 throw ex;
             }
         }
+        public async System.Threading.Tasks. Task SetViewBag(ImportFromUSBVm model)
+        {
 
+            var _deviceList = (from item in await _serviceDeviceInfo.GetAllDevice()
+                               select new NormalJsonClass
+                               {
+                                   Text = item.DeviceFullName,
+                                   Value = item.Id.ToString(),
+                               }).ToList();
+            ViewData["FingerPrintDevice"] = new SelectList(_deviceList, "Value", "Text", model.FingerPrintDevice);
+        }
 
         [HttpPost]
         public async Task<ActionResult> ImportFromUSB(ImportFromUSBVm model)
         {
+            await SetViewBag(model);
             if (!ModelState.IsValid)
-            {
                 return View(model);
-            }
+
 
             var _fileService = EngineContext.Resolve<IFileService>();
             var fileVm = await _fileService.AddFileWithHttpPostedFilePath(model.ExcelFile, Server.MapPath(AppSettings.DocumentFolder), AppSettings.DocumentFolder, "Employee");
 
             model.File_Id = fileVm.Id;
             var _result = await _serviceAttendanceReport.ImportAttLogFromUSB(model);
-            if(_result != null && _result.error)
+            if (_result != null && _result.error)
             {
                 return View(model);
             }

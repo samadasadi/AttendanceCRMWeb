@@ -18,6 +18,7 @@ namespace ViewModel.UserManagement.Attendance
         public bool IsActive { get; set; }
 
         public DateTime ModifiedDate { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public Guid PersonID { get; set; }
@@ -26,21 +27,21 @@ namespace ViewModel.UserManagement.Attendance
         /// حقوق پایه
         /// </summary>
         [Display(Name = "حقوق پایه")]
-        [UIHint("HorizentalTextBox")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
         public decimal? HoghoghePaye { get; set; }
 
         /// <summary>
         /// پاداش بهره وری
         /// </summary>
         [Display(Name = "پاداش بهره وری")]
-        [UIHint("HorizentalNumberTextBox")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
         public decimal? PadasheBahrevari { get; set; }
 
         /// <summary>
         /// ضریب اضافه کار
         /// </summary>
         [Display(Name = "ضریب اضافه کار")]
-        [UIHint("HorizentalNumberTextBox")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
         public decimal? EKarZarib { get; set; }
 
         public bool? EydiSanavatMahane { get; set; }
@@ -49,14 +50,22 @@ namespace ViewModel.UserManagement.Attendance
         /// حق مسکن
         /// </summary>
         [Display(Name = "حق مسکن")]
-        [UIHint("HorizentalNumberTextBox")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
         public decimal? HagheMaskan { get; set; }
+
+
+        [Display(Name = "حق مسکن")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
+        public decimal? HaghMamoriyat { get; set; }
+
+
+
 
         /// <summary>
         /// بن کارگری
         /// </summary>
         [Display(Name = "بن کارگری")]
-        [UIHint("HorizentalNumberTextBox")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
         public int? Bon { get; set; }
 
         /// <summary>
@@ -77,10 +86,13 @@ namespace ViewModel.UserManagement.Attendance
 
         public DateTime? SaghfeKasreKar2 { get; set; }
 
-        [Display(Name = "ضریب کسر کار")]
-        [UIHint("HorizentalNumberTextBox")]
+        [Display(Name = "ضریب غیبت")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
         public int? SaghfeKasreKar1Zarib { get; set; }
 
+
+        [Display(Name = "ضریب تاخیر")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
         public int? SaghfeKasreKar2Zarib { get; set; }
 
         public int? SaghfeKasreKar3Zarib { get; set; }
@@ -89,21 +101,21 @@ namespace ViewModel.UserManagement.Attendance
         /// هزینه ناهار
         /// </summary>
         [Display(Name = "هزینه ناهار")]
-        [UIHint("HorizentalNumberTextBox")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
         public decimal? Nahar { get; set; }
 
         /// <summary>
         /// هزینه صبحانه
         /// </summary>
         [Display(Name = "هزینه صبحانه")]
-        [UIHint("HorizentalNumberTextBox")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
         public decimal? Sobhane { get; set; }
 
         /// <summary>
         /// ایاب و ذهاب
         /// </summary>
         [Display(Name = "ایاب و ذهاب")]
-        [UIHint("HorizentalNumberTextBox")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
         public decimal? AyaboZahab { get; set; }
 
         /// <summary>
@@ -134,6 +146,37 @@ namespace ViewModel.UserManagement.Attendance
         [UIHint("HorizentalNumberTextBox")]
         public int? OladCount { get; set; }
 
+
+
+
+        [Display(Name = "عیدی")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
+        public decimal? Eydi { get; set; }
+
+        [Display(Name = "سنوات")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
+        public decimal? Sanavat { get; set; }
+
+        [Display(Name = "حق اولاد")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
+        public decimal? HaghOlad { get; set; }
+
+        [Display(Name = "مالیات")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
+        public decimal Maliyat { get; set; }
+
+        [Display(Name = "ضریب روزانه")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
+        public decimal? HoghoghePaye_Roozaneh { get; set; }
+
+
+
+        [Display(Name = "نوع حقوق")]
+        [UIHint("HorizentalDropdwonR")]
+        public HoghoghType HoghoghType { get; set; } = HoghoghType.Sabet;
+        public List<NormalJsonClass> HoghoghTypeList { get { return EnumHelper<HoghoghType>.EnumToNormalJsonClass(); } }
+
+
     }
     public class PersonAccountingFilter
     {
@@ -144,33 +187,53 @@ namespace ViewModel.UserManagement.Attendance
         public Guid EmployeesId { get; set; }
 
         [Display(Name = "هزینه عیدی")]
-        [UIHint("HorizentalNumberTextBox")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
         public decimal HazinehEydi { get; set; }
 
 
         [Display(Name = "هزینه سنوات")]
-        [UIHint("HorizentalNumberTextBox")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
         public decimal HazinehSanavat { get; set; }
 
 
         [Display(Name = "سایر مزایا")]
-        [UIHint("HorizentalNumberTextBox")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
         public decimal SayerMazaya { get; set; }
 
 
         [Display(Name = "سهم کارکرد")]
-        [UIHint("HorizentalNumberTextBox")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
         public decimal SahmKarkard { get; set; }
 
 
         [Display(Name = "سایر کسورات")]
-        [UIHint("HorizentalNumberTextBox")]
+        [UIHint("HorizentalCurrencyTextBoxDecimal")]
         public decimal SayerKosorat { get; set; }
 
 
         [DisplayName("محاسبه کسر کار")]
         [UIHint("HorizentalCheckBox")]
         public bool CalcKasrKar { get; set; }
+
+
+
+
+        [DisplayName("اضافه کار قبل از ساعت ورود محاسبه نشود")]
+        [UIHint("HorizentalCheckBox")]
+        public bool CalcEzafeBeforeVoroud { get; set; }
+
+
+        [DisplayName("ثبت ساعت خروج برای روزهایی که خروج ثبت نشده")]
+        [UIHint("HorizentalCheckBox")]
+        public bool SetExitAttRecord { get; set; }
+
+
+        [Display(Name = "تایم ناهار (دقیقه)")]
+        [UIHint("HorizentalNumberTextBox")]
+        public int NaharTime { get; set; }
+
+
+
 
 
         [DisplayName("هزینه ناهار")]
@@ -209,6 +272,8 @@ namespace ViewModel.UserManagement.Attendance
                 return ((this.ToDate != null) ? DateTimeOperation.M2S(this.ToDate.Value) : "");
             }
         }
+
+
 
 
 

@@ -4188,6 +4188,12 @@
     <Content Include="Localization\vi.xml" />
     <Content Include="Localization\zh-CHS.xml" />
     <Content Include="Localization\zh-CHT.xml" />
+    <Content Include="Media\Application\0861b24e.svg" />
+    <Content Include="Media\Application\7502d52a.js" />
+    <Content Include="Media\Application\ddcba6ed.svg" />
+    <Content Include="Media\Application\e3f2d609.css" />
+    <Content Include="Media\Application\fef3c21a.js" />
+    <Content Include="Media\Application\mouseflow.js" />
     <Content Include="Media\Document\logo.PNG" />
     <Content Include="Media\Document\NoPhoto.png" />
     <Content Include="Media\fingerprint-off.png" />
@@ -4864,6 +4870,9 @@
     <Content Include="Areas\Admin\Views\Device\Create.cshtml" />
     <Content Include="Views\Account\UpdateActivationLisc.cshtml" />
     <Content Include="Areas\Admin\Views\EmployeeAttendance\ImportFromUSB.cshtml" />
+    <Content Include="Media\Application\4685775c.woff2" />
+    <Content Include="Media\Application\79533773.ttf" />
+    <Content Include="Media\Application\a7d41f91.ttf" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\chosen\chosen-sprite%402x.png" />
     <Content Include="Scripts\chosen\chosen-sprite.png" />

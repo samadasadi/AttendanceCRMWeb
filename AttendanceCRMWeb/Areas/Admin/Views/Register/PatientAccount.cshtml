@@ -11,21 +11,26 @@
 
         @Html.HiddenFor(m => m.Id)
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             @Html.EditorFor(x => x.personAccountingFilter.PersonelSalariMonth)
             @Html.EditorFor(x => x.personAccountingFilter.FromDate)
-            @Html.EditorFor(x => x.personAccountingFilter.ToDate)
-            @Html.EditorFor(x => x.personAccountingFilter.AyabZahab)
-            @Html.EditorFor(x => x.personAccountingFilter.Sobhane)
-            @Html.EditorFor(x => x.personAccountingFilter.Nahar)
-        </div>
-        <div class="col-md-6">
-            @Html.EditorFor(x => x.personAccountingFilter.HazinehEydi)
-            @Html.EditorFor(x => x.personAccountingFilter.HazinehSanavat)
             @Html.EditorFor(x => x.personAccountingFilter.SayerMazaya)
             @Html.EditorFor(x => x.personAccountingFilter.SahmKarkard)
             @Html.EditorFor(x => x.personAccountingFilter.SayerKosorat)
+        </div>
+        <div class="col-md-4">
+            @Html.EditorFor(x => x.personAccountingFilter.NaharTime)
+            @Html.EditorFor(x => x.personAccountingFilter.ToDate)
+            @Html.EditorFor(x => x.personAccountingFilter.HazinehEydi)
+            @Html.EditorFor(x => x.personAccountingFilter.HazinehSanavat)
+        </div>
+        <div class="col-md-4">
+            @Html.EditorFor(x => x.personAccountingFilter.AyabZahab)
+            @Html.EditorFor(x => x.personAccountingFilter.Sobhane)
+            @Html.EditorFor(x => x.personAccountingFilter.Nahar)
             @Html.EditorFor(x => x.personAccountingFilter.CalcKasrKar)
+            @Html.EditorFor(x => x.personAccountingFilter.SetExitAttRecord)
+            @Html.EditorFor(x => x.personAccountingFilter.CalcEzafeBeforeVoroud)
         </div>
 
         <div class="form-group">

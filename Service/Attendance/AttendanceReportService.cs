@@ -1005,7 +1005,7 @@ namespace Service.UserManagement.Attendance
                                     if (filter.SetExitAttRecord)
                                     {
                                         //ثبت خروج برای روزهایی که خزوج آنها ثبت نشده است
-                                        RegisterLeaveTimeForNoneLeave(timeRecord_item, _jobTime);
+                                        await RegisterLeaveTimeForNoneLeave(timeRecord_item, _jobTime);
                                     }
                                 }
 
@@ -1769,7 +1769,16 @@ namespace Service.UserManagement.Attendance
         {
             try
             {
-                var model = await TotalPerformancePersonal_Report(new ReportParameter { PersonId = filter.Id, FromDate = filter.personAccountingFilter.FromDate, ToDate = filter.personAccountingFilter.ToDate });
+                var model = await TotalPerformancePersonal_Report(
+                    new ReportParameter
+                    {
+                        PersonId = filter.Id,
+                        FromDate = filter.personAccountingFilter.FromDate,
+                        ToDate = filter.personAccountingFilter.ToDate,
+                        CalcEzafeBeforeVoroud = filter.personAccountingFilter.CalcEzafeBeforeVoroud,
+                        SetExitAttRecord = filter.personAccountingFilter.SetExitAttRecord,
+                        NaharTime = filter.personAccountingFilter.NaharTime
+                    });
 
                 var _personHoghogh = (await _repoPersonHoghogh.Get(x => x.PersonID == filter.Id)).ToList().FirstOrDefault();
                 model.personHoghogh = _personHoghogh != null ? GenericMapping<PersonHoghogh, PersonHoghoghVm>.Map(_personHoghogh) : new PersonHoghoghVm();
@@ -1784,9 +1793,9 @@ namespace Service.UserManagement.Attendance
                 }
                 var _accounting = new PersonAccounting(model.personHoghogh,
                     _presentDays,
-                    filter.personAccountingFilter.Nahar == false ? false : true,
-                    filter.personAccountingFilter.Sobhane == false ? false : true,
-                    filter.personAccountingFilter.AyabZahab == false ? false : true,
+                    filter.personAccountingFilter.Nahar,
+                    filter.personAccountingFilter.Sobhane,
+                    filter.personAccountingFilter.AyabZahab,
                     filter.personAccountingFilter.SayerKosorat,
                     filter.personAccountingFilter.HazinehSanavat,
                     filter.personAccountingFilter.HazinehEydi,
@@ -2526,106 +2535,105 @@ namespace Service.UserManagement.Attendance
                 string sStatus = "";
                 string sWorkcode = "";
 
+                if (model.ExcelFile == null)
+                    return new DataModel { error = true, message = "فایل یافت نشد" };
 
-                if (model.ExcelFile != null)
+
+                var _filePath = await _fileService.GetPath(model.File_Id);
+                if (string.IsNullOrEmpty(_filePath))
+                    return new DataModel();
+                CommonHelper.DefaultFileProvider = new NopFileProvider(HostingEnvironment.MapPath("~"));
+                var _serverPath = new NopFileProvider(HostingEnvironment.MapPath("~")).Root;
+                _filePath = CommonHelper.DefaultFileProvider.Combine(_serverPath, _filePath);
+
+                using (FileStream stream = new FileStream(_filePath, FileMode.OpenOrCreate, FileAccess.Read))
                 {
+                    byDataBuf = System.IO.File.ReadAllBytes(_filePath);
+                    iLength = Convert.ToInt32(stream.Length);
 
 
-                    var _filePath = await _fileService.GetPath(model.File_Id);
-                    if (string.IsNullOrEmpty(_filePath))
-                        return new DataModel();
-                    CommonHelper.DefaultFileProvider = new NopFileProvider(HostingEnvironment.MapPath("~"));
-                    var _serverPath = new NopFileProvider(HostingEnvironment.MapPath("~")).Root;
-                    _filePath = CommonHelper.DefaultFileProvider.Combine(_serverPath, _filePath);
+
+                    //using (Stream stream = model.ExcelFile.InputStream)
+                    //{
+                    //    MemoryStream memoryStream = stream as MemoryStream;
+                    //    if (memoryStream == null)
+                    //    {
+                    //        memoryStream = new MemoryStream();
+                    //        model.ExcelFile.InputStream.CopyTo(memoryStream);
+                    //    }
+                    //    byDataBuf = memoryStream.ToArray();
+                    //    iLength = Convert.ToInt32(stream.Length);
 
 
-                    using (FileStream stream = new FileStream(_filePath, FileMode.OpenOrCreate, FileAccess.Read))
+
+
+
+                    AttLogRecordList = new List<TimeRecordVm>();
+                    //dtAttLogList.ItemsSource = null;
+
+                    int iStartIndex = 0;
+                    int iOneLogLength;//the length of one line of attendence log
+                    for (int i = iStartIndex; i < iLength; i++)
                     {
-                        byDataBuf = System.IO.File.ReadAllBytes(_filePath);
-                        iLength = Convert.ToInt32(stream.Length);
-
-
-
-                        //using (Stream stream = model.ExcelFile.InputStream)
-                        //{
-                        //    MemoryStream memoryStream = stream as MemoryStream;
-                        //    if (memoryStream == null)
-                        //    {
-                        //        memoryStream = new MemoryStream();
-                        //        model.ExcelFile.InputStream.CopyTo(memoryStream);
-                        //    }
-                        //    byDataBuf = memoryStream.ToArray();
-                        //    iLength = Convert.ToInt32(stream.Length);
-
-
-
-
-
-                        AttLogRecordList = new List<TimeRecordVm>();
-                        //dtAttLogList.ItemsSource = null;
-
-                        int iStartIndex = 0;
-                        int iOneLogLength;//the length of one line of attendence log
-                        for (int i = iStartIndex; i < iLength; i++)
+                        if (byDataBuf[i] == 13 && byDataBuf[i + 1] == 10)
                         {
-                            if (byDataBuf[i] == 13 && byDataBuf[i + 1] == 10)
+                            iOneLogLength = (i + 1) + 1 - iStartIndex;
+                            byte[] bySSRAttLog = new byte[iOneLogLength];
+                            Array.Copy(byDataBuf, iStartIndex, bySSRAttLog, 0, iOneLogLength);
+
+                            udisk.GetAttLogFromDat(bySSRAttLog, iOneLogLength, out sPIN2, out sTime_second, out sDeviceID, out sStatus, out sVerified, out sWorkcode);
+                            try
                             {
-                                iOneLogLength = (i + 1) + 1 - iStartIndex;
-                                byte[] bySSRAttLog = new byte[iOneLogLength];
-                                Array.Copy(byDataBuf, iStartIndex, bySSRAttLog, 0, iOneLogLength);
 
-                                udisk.GetAttLogFromDat(bySSRAttLog, iOneLogLength, out sPIN2, out sTime_second, out sDeviceID, out sStatus, out sVerified, out sWorkcode);
-                                try
-                                {
+                                var _datetime = sTime_second.StartsWith("14") ? DateTimeOperation.S2M(sTime_second.Substring(0, 10).Replace("-", "/")) : DateTime.Parse(sTime_second);
 
-                                    var _datetime = sTime_second.StartsWith("14") ? DateTimeOperation.S2M(sTime_second.Substring(0, 10).Replace("-", "/")) : DateTime.Parse(sTime_second);
-
-                                    var _hh = Convert.ToInt32(sTime_second.Substring(11, 2));
-                                    var _mm = Convert.ToInt32(sTime_second.Substring(14, 2));
-                                    var _ss = Convert.ToInt32(sTime_second.Substring(17, 2));
+                                var _hh = Convert.ToInt32(sTime_second.Substring(11, 2));
+                                var _mm = Convert.ToInt32(sTime_second.Substring(14, 2));
+                                var _ss = Convert.ToInt32(sTime_second.Substring(17, 2));
 
 
-                                    var _timespan = new TimeSpan(_hh, _mm, _ss);
-                                    _datetime = _datetime.Date + _timespan;
+                                var _timespan = new TimeSpan(_hh, _mm, _ss);
+                                _datetime = _datetime.Date + _timespan;
 
-                                    var item = new TimeRecordVm();
-                                    item.CardNo = !string.IsNullOrEmpty(sPIN2) ? sPIN2.Trim() : "";
-                                    item.DatetimeIO = _datetime;
-                                    item.DeviceCode = Convert.ToInt32(sDeviceID);
-                                    item.AttStatus = Convert.ToInt32(sStatus);
-                                    item.VerifyMode = Convert.ToInt32(sVerified);
-                                    item.VerifyMethod = Convert.ToInt32(sVerified);
-                                    item.WorkCode = Convert.ToInt32(sWorkcode);
-                                    item.Day = item.DatetimeIO.Value.Day;
-                                    item.Hour = item.DatetimeIO.Value.Hour;
-                                    item.Minute = item.DatetimeIO.Value.Minute;
-                                    item.Month = item.DatetimeIO.Value.Month;
-                                    item.Year = item.DatetimeIO.Value.Year;
-                                    AttLogRecordList.Add(item);
+                                var item = new TimeRecordVm();
+                                item.CardNo = !string.IsNullOrEmpty(sPIN2) ? sPIN2.Trim() : "";
+                                item.DatetimeIO = _datetime;
+                                item.DeviceCode = Convert.ToInt32(sDeviceID);
+                                item.AttStatus = Convert.ToInt32(sStatus);
+                                item.VerifyMode = Convert.ToInt32(sVerified);
+                                item.VerifyMethod = Convert.ToInt32(sVerified);
+                                item.WorkCode = Convert.ToInt32(sWorkcode);
+                                item.Day = item.DatetimeIO.Value.Day;
+                                item.Hour = item.DatetimeIO.Value.Hour;
+                                item.Minute = item.DatetimeIO.Value.Minute;
+                                item.Month = item.DatetimeIO.Value.Month;
+                                item.Year = item.DatetimeIO.Value.Year;
+                                AttLogRecordList.Add(item);
 
 
-                                }
-                                catch (Exception ex)
-                                {
-                                    //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = ex.Message });
-                                }
-
-                                bySSRAttLog = null;
-                                iStartIndex += iOneLogLength;
-                                iOneLogLength = 0;
                             }
-                        }
-                        stream.Close();
-                    }
+                            catch (Exception ex)
+                            {
+                                //Terminal.SaveAndShowLog(new DeviceEventLogVm { LogData = ex.Message });
+                            }
 
-                    _deviceVm.sDK.InsertAttLogToDB(AttLogRecordList);
-                    //dtAttLogList.ItemsSource = AttLogRecordList;
-                    //dtAttLogList.CanUserAddRows = false;
-                    //dtAttLogList.CanUserDeleteRows = false;
-                    //dtAttLogList.IsReadOnly = true;
+                            bySSRAttLog = null;
+                            iStartIndex += iOneLogLength;
+                            iOneLogLength = 0;
+                        }
+                    }
+                    stream.Close();
                 }
 
-                return new DataModel();
+                var _saveResult = _deviceVm.sDK.InsertAttLogToDB(AttLogRecordList);
+                return _saveResult;
+                //dtAttLogList.ItemsSource = AttLogRecordList;
+                //dtAttLogList.CanUserAddRows = false;
+                //dtAttLogList.CanUserDeleteRows = false;
+                //dtAttLogList.IsReadOnly = true;
+
+
+
             }
             catch (Exception ex)
             {
@@ -2638,50 +2646,28 @@ namespace Service.UserManagement.Attendance
             {
                 if (model.ExcelFile == null) return new DataModel { error = true, message = "لطفا فایل را انتخاب نمایید" };
 
+                var _deviceVm = FingerPrintDeviceService.Devices.Where(x => x.deviceVm.Id == model.FingerPrintDevice).FirstOrDefault();
+                if (model.FingerPrintDevice <= 0 || _deviceVm == null) { return new DataModel { error = true, message = "لطفا دستگاه را انتخاب نمایید" }; }
+
 
                 int vSEnrollNumber = 0;
                 int vVerifyMode = 0;
                 int vInOutMode = 0;
                 DateTime vdwDate = DateTime.MinValue;
-                int vnCount;
+                int vnCount = 1;
                 int vnResultCode = 0;
-                //string vstrFileName;
-                string vstrFileData;
-                int vnReadMark;
-
-                //vstrFileName = "";
-                //lblMessage.Text = "Waiting...";
-                //lblTotal.Text = "Total : 0";
-                //Application.DoEvents();
-                //funcGeneralLogDataGridFormat();
-
-
-                //vstrFileName = dlgOpen.FileName;
-                //dlgOpen.FileName = "";
-
-
-
-
 
 
                 var _filePath = await _fileService.GetPath(model.File_Id);
                 if (string.IsNullOrEmpty(_filePath))
-                    return new DataModel();
+                    return new DataModel { error = true, message = "لطفا فایل را انتخاب نمایید" };
                 CommonHelper.DefaultFileProvider = new NopFileProvider(HostingEnvironment.MapPath("~"));
                 var _serverPath = new NopFileProvider(HostingEnvironment.MapPath("~")).Root;
                 _filePath = CommonHelper.DefaultFileProvider.Combine(_serverPath, _filePath);
 
 
-
                 vnResultCode = FKAttendHelper.FK_USBLoadGeneralLogDataFromFile(0, _filePath);
 
-
-                //if (vnResultCode != (int)enumErrorCode.RUN_SUCCESS)
-                //    lblMessage.Text = frmMain.ReturnResultPrint(vnResultCode);
-                //else
-                //{
-
-                vnCount = 1;
                 do
                 {
                     //vnResultCode = FKAttendHelper.FK_GetGeneralLogData(frmMain.gnCommHandleIndex, ref vSEnrollNumber, ref vVerifyMode, ref vInOutMode, ref vdwDate);
@@ -2719,18 +2705,9 @@ namespace Service.UserManagement.Attendance
                     vnCount = vnCount + 1;
                 } while (true);
 
-                //dtAttLogList.ItemsSource = AttLogRecordList;
-                //dtAttLogList.CanUserAddRows = false;
-                //dtAttLogList.CanUserDeleteRows = false;
-                //dtAttLogList.IsReadOnly = true;
-                //if (vnResultCode == (int)enumErrorCode.RUN_SUCCESS)
-                //{
-                //    lblMessage.Text = "USBReadGeneralLogDataFromFile OK";
-                //}
-                //else
-                //    lblMessage.Text = frmMain.ReturnResultPrint(vnResultCode);
-                //}
-                return new DataModel();
+                var _saveReslt = _deviceVm.sDK.InsertAttLogToDB(AttLogRecordList);
+
+                return _saveReslt;
             }
             catch (Exception ex)
             {

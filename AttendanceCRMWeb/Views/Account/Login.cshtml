@@ -2,80 +2,541 @@
 
 @model LoginViewModel
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = "ورود";
     Layout = null;
 }
 
 
 
 
-<html lang="en" dir="rtl">
+
+
+
+
+<html>
 <head>
-    <meta charset="utf-8">
+    <title>کاماتک</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>فرم ورود</title>
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <link rel="stylesheet" href="~/Content/AdminResponsive3.0/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="~/Content/AdminResponsive3.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <link rel="stylesheet" href="~/Content/AdminResponsive3.0/dist/css/adminlte.css">
-    <link href="~/Content/AdminResponsive3.0/dist/css/rtl.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="~/Content/AdminResponsive3.0/logo.jpg">
+    <script type="text/javascript" src="~/Media/Application/mouseflow.js"></script>
+    <script>
+        var module_hash_id_storage = 1;
+        var module_no_replace_update_command_status = 1;
+        var module_no_cli_lock = 1;
+        var module_cache_keeper = 1;
+        var module_daily_sellable_stock = 1;
+        var module_online_shipment_cancellation = 1;
+        var module_digistyle = 1;
+        var module_nav_report_guide_modal = 1;
+        var module_profile_calendar_holiday_improvement = 1;
+        var module_profile_calendar_holiday_numbers = 1;
+        var module_sbs_psat_sms = 1;
+        var module_proof_of_delivery = 1;
+        var module_refactor_nps_survey = 1;
+        var module_seller_new_digikala_logo = 1;
+        var module_ship_by_seller_sort = 1;
+        var module_shopping_setting = 1;
+        var module_fbd_schedule_order = 1;
+        var module_online_return = 1;
+        var module_change_comments_like_button = 1;
+        var module_return_outbound = 1;
+        var module_ship_by_seller_verification_code_try_rate_limit = 1;
+        var module_international_po = 1;
+        var module_fmcg = 1;
+        var module_plp_redesign = 1;
+        var module_FMCG_emarsys = 1;
+        var module_fake_products = 1;
+        var module_digikala_fashion = 1;
+        var module_digikala_news = 1;
+        var module_video_modal = 1;
+        var module_fresh_badge_basket = 1;
+        var module_revised_sellers_promotions_price = 1;
+        var module_new_post = 1;
+        var module_dynamic_fashion_category = 1;
+        var module_product_change_queue_entity = 1;
+        var module_package_gate = 1;
+        var module_faq_short_answer = 1;
+        var module_gallery_zoom = 1;
+        var module_enable_fast_excel = 1;
+        var module_fc_split_receipt_item = 1;
+        var module_seller_bank_account_refactor = 1;
+        var module_shipment_cost_bar = 1;
+        var module_adro_tracker_sales = 1;
+        var module_adro_banner_placement = 1;
+        var module_product_redesign = 1;
+        var module_sponsoredAd = 1;
+        var module_share_invoice = 1;
+        var module_digikala_profile_return = 1;
+        var module_bank_card_redesign = 1;
+        var module_faq_tab_redesign = 1;
+        var module_comments_file = 1;
+        var module_increase_comment_video_limit_count = 1;
+        var module_contact_design = 1;
+        var module_dk_contact_redesign = 1;
+        var module_digiclub_touchpoints = 1;
+        var module_digiclub_touchpoints_september = 1;
+        var module_digiclub_luckydraw_stopped = 1;
+        var module_digiclub_promotion = 1;
+        var module_digiclub_new_header = 1;
+        var module_digiclub_lucky_spinner = 1;
+        var module_digiclub_multiple_shipment = 1;
+        var module_digiclub_new_info = 1;
+        var module_digiclub_navigation = 1;
+        var module_digiclub_shipping_points = 1;
+        var module_digiclub_birthday_anniversary_gift_points = 1;
+        var module_marketplace_orders_ovl = 1;
+        var module_marketplace_ovl = 1;
+        var module_modal_add_to_cart = 1;
+        var module_size_guide_new = 1;
+        var module_marketplace_request_invoices_export = 1;
+        var module_faq_feedback = 1;
+        var module_marketplace_remove_active_field_from_bank_account_entity = 1;
+        var module_cart_details_new_design = 1;
+        var module_seven_days_warranty = 1;
+        var module_crm_after_sale = 1;
+        var module_sms_comments_file = 1;
+        var module_user_history = 1;
+        var module_Adro_sponsoredAd = 1;
+        var module_search_new_style = 1;
+        var module_new_shipping = 1;
+        var module_qa_moderation = 1;
+        var module_js_crashlytics = 1;
+        var module_marketplace_electronic_contract = 1;
+        var module_marketplace_electronic_contract_admin_side = 1;
+        var module_premium_brand = 1;
+        var module_merge_accounts = 1;
+        var module_dkms_new_brand = 1;
+        var module_adservice_digikala_premium_brand = 1;
+        var module_adservice_digikala_premium_brand_improvement = 1;
+        var module_desktop_sis = 1;
+        var module_mobile_sis = 1;
+        var module_footer_new_social_links = 1;
+        var module_new_registration = 1;
+        var module_new_desktop_header = 1;
+        var module_general_location = 1;
+        var module_top_banner_make_unsticky = 1;
+        var module_ds_voucher_box = 1;
+        var module_yalda_box = 1;
+        var module_dkms_brand_campaign = 1;
+        var module_order_item_modification = 1;
+        var module_voucher_fraud_prevention = 1;
+        var module_marketplace_package_wh_capacity = 1;
+        var module_address_landline = 1;
+        var module_dk_wallet = 1;
+        var module_dk_wallet_cash_back = 1;
+        var module_admin_marketplace_seller_edit_address = 1;
+        var module_marketplace_seller_sort_warehouses = 1;
+        var module_admin_seller_addresses_history = 1;
+        var module_marketplace_seller_registration_address = 1;
+        var module_DS_megamenu_redesign = 1;
+        var module_marketplace_seller_profile_wh = 1;
+        var module_new_carousel_price = 1;
+        var module_ds_seller = 1;
+        var module_ds_seller_new = 1;
+        var module_adservice_sku_price = 1;
+        var module_ds_special_sale = 1;
+        var module_promotion_mega_menu = 1;
+        var module_add_item = 1;
+        var module_cancel_item = 1;
+        var module_category_product_types = 1;
+        var module_marketplace_hidden_category_panel = 1;
+        var module_ds_mobile_web_mega_menu_redesign = 1;
+        var module_pdp_digikala_rate = 1;
+        var module_vouchers_order_count = 1;
+        var module_marketplace_buy_box_usage_log = 1;
+        var module_mobile_carousels_fast_shopping = 1;
+        var module_DK_Recommendation = 1;
+        var module_dk_mobile_contact_redesign = 1;
+        var module_contact_change_upload_logic = 1;
+        var module_retail_buy_box_challenge = 1;
+        var module_adro_digistyle_affiliate = 1;
+        var module_profile_topup = 1;
+        var module_new_bill = 1;
+        var module_refactor_shipping = 1;
+        var module_new_payment = 1;
+        var module_minicart_red_button = 1;
+        var module_marketplace_order_package_mapping = 1;
+        var module_new_gallery = 1;
+        var module_mobile_new_gallery = 1;
+        var module_price_chart_scale = 1;
+        var module_marketplace_large_item_hub_time_scope_modification = 1;
+        var module_new_add_btn = 1;
+        var module_yalda_home = 1;
+        var module_marketplace_info_footer = 1;
+        var module_new_gallery_icons = 1;
+        var module_adro_sponsor_badge_banner = 1;
+        var module_adro_sponsor_badge_banner_fashion = 1;
+        var module_yalda_cash_back = 1;
+        var module_new_empty_cart = 1;
+        var module_dkms_brand_campaign_redesign = 1;
+        var module_cpo_new_search = 1;
+        var module_cpo_winner_buy_box = 1;
+        var module_pdp_large_item = 1;
+        var module_packaging_info = 1;
+        var module_marketplace_order_detail = 1;
+        var module_remove_title_mandatory = 1;
+        var module_cpo_new_rules = 1;
+        var module_marketplace_seller_cpo_access_restriction = 1;
+        var module_my_dk_navbar = 1;
+        var module_ds_new_home = 1;
+        var module_product_new_image = 1;
+        var module_marketplace_lead_time_in_category = 1;
+        var module_brand_iranian_designer = 1;
+        var module_deactivate_canceled_variants = 1;
+        var module_shopping_new_incredible_categories = 1;
+        var module_marketplace_promotion_management = 1;
+        var module_modify_reference_price_rules = 1;
+        var module_shopping_fresh_in_incredible_carousel = 1;
+        var module_DK_DC_navigation = 1;
+        var module_marketplace_price_tag = 1;
+        var module_adservice_banner_sort = 1;
+        var module_new_chat_client = 1;
+        var module_new_chat_client_ajax = 1;
+        var module_parsi_map = 1;
+        var module_new_address_modal = 1;
+        var module_new_profile_addresses = 1;
+        var module_new_profile_gift_card = 1;
+        var module_new_profile_user_history = 1;
+        var module_new_checkout_address = 1;
+        var module_address_geolocation = 1;
+        var module_adservice_incredible_offer_eligible_variant = 1;
+        var module_paste_barcode_copied = 1;
+        var module_ds_faq_dynamic = 1;
+        var module_new_lead_time_text = 1;
+        var module_digistyle_special_event = 1;
+        var module_digistyle_voucher_spinner = 1;
+        var module_cart_sampling_gift = 1;
+        var module_ds_favorite_brands = 1;
+        var module_new_user_history = 1;
+        var module_ds_new_add_to_cart = 1;
+        var module_light_box = 1;
+        var module_fmcg_navigation = 1;
+        var module_marketplace_moderation_category_suggestion_modal = 1;
+        var module_video_js = 1;
+        var module_marketplace_new_seller_dashboard = 1;
+        var module_large_item_shipping_fee = 1;
+        var module_new_address_improvement = 1;
+        var module_seller_notification_changing_email = 1;
+        var module_profile_list = 1;
+        var module_premium_brand_bullet_points = 1;
+        var module_shared_address = 1;
+        var module_pdp_seller_rate_info_modal = 1;
+        var module_product_variant_dimension = 1;
+        var module_dimension_config_validation = 1;
+        var module_ds_update_cart_when_removed = 1;
+        var module_ds_profile_icon_dropdown = 1;
+        var module_ds_default_size_none = 1;
+        var module_ds_faq_new = 1;
+        var module_ab_test_plp_rating = 1;
+        var module_ds_employee_discount = 1;
+        var module_ds_next_purchase_counter_update = 1;
+        var module_admin_warranty_insurance = 1;
+        var module_new_profile_orders = 1;
+        var module_new_profile_sidebar = 1;
+        var module_delete_comment = 1;
+        var module_ds_refresh_when_phone_edit = 1;
+        var module_new_market_price_rules = 1;
+        var module_ds_only_banner_logo = 1;
+        var module_ds_banner_description_scroll = 1;
+        var module_digiplus_pdp = 1;
+        var module_digiplus_plp = 1;
+        var module_digiplus_navigation = 1;
+        var module_digiplus_checkout = 1;
+        var module_digiplus_timescope = 1;
+        var module_digiplus_shipping = 1;
+        var module_digiplus_filter = 1;
+        var module_digiplus_incredible = 1;
+        var module_digiplus_profile = 1;
+        var module_digiplus_carousel = 1;
+        var module_digiplus_tnc = 1;
+        var module_digiplus_cashback = 1;
+        var module_digiplus_alpha = 1;
+        var module_digiplus_notifications = 1;
+        var module_digikala_plus_service = 1;
+        var module_plus_free_shipping = 1;
+        var module_digiplus_rebrand = 1;
+        var module_digiplus_public = 1;
+        var module_marketplace_profile_refactor = 1;
+        var module_ds_next_for_non_logged_users = 1;
+        var module_sfl_separation = 1;
+        var module_esi_in_mini_header = 1;
+        var module_ds_comment_for_non_logged = 1;
+        var module_ds_mobile_full_footer = 1;
+        var module_banner_url_check = 1;
+        var module_ds_mobile_comment_verfication = 1;
+        var module_ds_mobile_back_menu = 1;
+        var module_ds_new_mobile_header = 1;
+        var module_new_mobile_header = 1;
+        var module_new_ds_brands = 1;
+        var module_dk_mobile_menu_revision = 1;
+        var module_ds_plp_redesign = 1;
+        var module_ds_hide_related = 1;
+        var module_voucher_fraud_detection = 1;
+        var module_marketplace_dk_pickup_shipment = 1;
+        var module_marketplace_create_package_shipment = 1;
+        var module_shipment_effect_create_package = 1;
+        var module_recaptcha_contact_us = 1;
+        var module_ds_mega_menu_redesign = 1;
+        var module_data_layer = 1;
+        var module_data_layer_phase2 = 1;
+        var module_data_layer_my_landing = 1;
+        var module_limit_seller_pricing = 1;
+        var module_checkout_action_button_replacement = 1;
+        var module_ds_shipment_back = 1;
+        var module_new_comment = 1;
+        var module_new_profile_orders_mobile = 1;
+        var module_new_price_chart_header = 1;
+        var module_ds_comment_errors = 1;
+        var module_mobile_time_table = 1;
+        var module_admin_new_ship_by_seller = 1;
+        var module_ship_by_seller_profile = 1;
+        var module_shipping_v2 = 1;
+        var module_ship_by_seller_checkout = 1;
+        var module_ship_by_seller_product = 1;
+        var module_new_cpo_icon_config = 1;
+        var module_separated_delete_button = 1;
+        var module_new_profile_notification = 1;
+        var module_mandatory_location_shipping = 1;
+        var module_ds_minicart_redesign = 1;
+        var module_sfl_inactive_product = 1;
+        var module_marketplace_ship_by_seller_pdp = 1;
+        var module_drop_off = 1;
+        var module_new_profile_additional_info = 1;
+        var module_new_profile_additional_info_mobile = 1;
+        var module_new_vat_rule = 1;
+        var module_seller_live_date = 1;
+        var module_plp_top_filters = 1;
+        var module_cbr_unsatisfied_users = 1;
+        var module_chatbox_all_pages = 1;
+        var module_display_inactive_products = 1;
+        var module_update_product_site_excel = 1;
+        var module_ds_faq_new_mobile = 1;
+        var module_stop_sending_email_sms_to_sellers = 1;
+        var module_nps_ship_by_seller = 1;
+        var module_new_login = 1;
+        var module_mobile_hub = 1;
+        var module_cpo_import_excel = 1;
+        var module_ship_by_seller_ovl = 1;
+        var module_collective_promotions_module = 1;
+        var module_selection_pricing = 1;
+        var module_remove_cross_price_in_collective = 1;
+        var module_dynamic_shipping_cost = 1;
+        var module_ds_category_filter = 1;
+        var module_sbs_failed_delivery = 1;
+        var module_jet_delivery = 1;
+        var module_amazing_carousel_show_all = 1;
+        var module_marketplace_seller_data = 1;
+        var module_new_economic_profile = 1;
+        var module_min_return_threshold = 1;
+        var module_jet_delivery_filter = 1;
+        var module_new_burger_menu = 1;
+        var module_ds_home_rearrange = 1;
+        var module_ds_pdp_cart_header = 1;
+        var module_new_cmp_category = 1;
+        var module_auto_title_suggestion = 1;
+        var module_dk_rebranding = 1;
+        var module_rebrand_border_radius = 1;
+        var module_variant_restrictions = 1;
+        var module_new_question_gallery = 1;
+        var module_ds_seller_pdp_redesign = 1;
+        var module_ds_comment_redesign = 1;
+        var module_ds_pdp_redesign_f = 1;
+        var module_new_thank_you = 1;
+        var module_thankyou_without_action = 1;
+        var module_ds_mega_menu_beauty = 1;
+        var module_cart_swiper_ab_test = 1;
+        var module_cpo_excel_import = 1;
+        var module_ml_profile_ab_test = 1;
+        var module_sbs_delivery_send_delivered_sms = 1;
+        var module_new_contact_us = 1;
+        var module_new_ds_contact_us = 1;
+        var module_carousel_brand_campaign = 1;
+        var module_long_time_declare = 1;
+        var module_ds_beatuy_new_badge = 1;
+        var module_ds_new_contact_us = 1;
+        var module_admin_contact_tab_improvements = 1;
+        var module_document_rejection_reason = 1;
+        var module_ds_design_improve = 1;
+        var module_mc_adro = 1;
+        var module_jet_delivery_variant_dimension = 1;
+        var module_mobile_back_btn_position = 1;
+        var module_marketplace_restriction_refactor_command = 1;
+        var module_marketplace_restriction_refactor = 1;
+        var module_only_seller_shipping_type = 1;
+        var module_checkout_ship_by_seller_phase_2 = 1;
+        var module_ds_new_forget_pass_email = 1;
+        var module_ds_product_image_zoom = 1;
+        var module_only_fbs = 1;
+        var module_hoda_verification = 1;
+        var module_ds_new_auth = 1;
+        var module_share_new_option = 1;
+        var module_ds_order_history = 1;
+        var module_ds_order_details = 1;
+        var module_vat_not_required = 1;
+        var module_marketplace_ship_by_seller_order_new_sort = 1;
+        var module_filter_sellers = 1;
+        var module_mobile_hub_large_item = 1;
+        var module_auto_assign_products_photo = 1;
+        var module_unavailable_payment_method_ab_test = 1;
+        var module_apple_watch_landing = 1;
+        var module_ds_order_history_dt = 1;
+        var module_ds_profile_components = 1;
+        var module_ds_order_search = 1;
+        var module_ds_order_search_dt = 1;
+        var module_marketplace_new_passive_order = 1;
+        var module_content_x = 1;
+        var module_plp_on_promotion = 1;
+        var module_order_limit_on_plus_promotions = 1;
+        var module_ad_service_separate_plus_amazing_duration = 1;
+        var module_duration_time_between_plus_amazing_and_amazing = 1;
+        var module_threshold_duration_auto_amazing = 1;
+        var module_dkms_sponsor_brand_description_and_weight = 1;
+        var module_disabled_max_allowable_price_assertion_in_active_amazing = 1;
+        var module_new_max_allowable_price_for_incredible = 1;
+        var module_adding_tags_to_sponsor_brand_campaigns = 1;
+        var module_log_missing_translations = 1;
+        var module_marketplace_cc = 1;
+        var module_marketplace_login_captcha = 1;
+        var module_new_reports_page = 1;
+        var module_cpo_batch_upload_new = 1;
+        var module_marketplace_fbs_only_by_seller = 1;
+        var module_split_inbound_capacity = 1;
+        var module_marketplace_seller_holiday_for_ship_by_seller = 1;
+    </script>
+    <link rel="stylesheet" href="~/Media/Application/e3f2d609.css">
+    <script>
+        var supernova_mode = "production";
+        var supernova_tracker_url = "";
+        var isLoggedSeller = 0;
+        var is_yalda = 0;
+    </script>
+    <script src="~/Media/Application/fef3c21a.js"></script>
+    <script src="~/Media/Application/7502d52a.js"></script>
 </head>
-<body class="hold-transition login-page">
-    <div class="login-box">
-        <div class="card card-outline card-primary">
-            <div class="card-header text-center">
-                <a href="~/Content/AdminResponsive3.0/index2.html" class="h1"><b>فرم</b> ورود</a>
+
+<body class="" style="">
+
+
+    <div class="c-new-login">
+        <aside class="c-new-login__sidebar c-new-login__sidebar--xs">
+            <div class="c-new-login__sidebar-content">
+                <header class="c-new-login__sidebar-header">
+                    <a href="#" class="c-new-login__logo">
+                        <img src="~/Content/AdminResponsive3.0/logo.jpg" alt="Digikala marketplace seller center logo" style="width: 100px;">
+                    </a>
+                    <h1 class="c-new-login__header">ورود به کنترل پنل مدیریت</h1>
+                </header>
+
+                <div class="c-new-login__sidebar-center  uk-hidden">
+                    <div class="c-new-login__sidebar-img-wrapper">
+                        <img src="~/Media/Application/0861b24e.svg" alt="" class="c-new-login__sidebar-img">
+                    </div>
+                    <h1 class="c-new-login__main-header">با <em>کاماتک</em><br>به کسب و کارت<br> رونق بده!</h1>
+                </div>
+                <footer class="c-new-login__footer">
+                    <p>Copyright © kamateciran.com</p>
+                </footer>
             </div>
-            <div class="card-body">
-                <p class="login-box-msg">فرم ورود</p>
+        </aside>
 
-                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @name = "Login" }))
-                {
-                    @Html.ValidationSummary(true, "", new { @class = "" })
-                    @Html.AntiForgeryToken()
+        <aside class="c-new-login__sidebar c-new-login__sidebar--xs-visible">
+            <div class="c-new-login__sidebar-content">
+                <header class="c-new-login__sidebar-header">
+                    <a href="#" class="c-new-login__logo">
+                        <img src="~/Content/AdminResponsive3.0/logo.jpg" alt="Digikala marketplace seller center logo" style="width: 100px;">
+                    </a>
+                    <h1 class="c-new-login__header">ورود به کنترل پنل مدیریت</h1>
+                </header>
+            </div>
+        </aside>
+
+        <main class="c-new-login__main">
+            <div class="c-reg-form c-reg-form--login">
+                <form method="post" id="login-form" data-name="login" novalidate="novalidate">
 
 
-
-                    <div class="input-group mb-3">
-                        <input id="UserName" name="UserName" value="@Model.UserName" class="form-control" placeholder="نام کاربری">
-                        @Html.ValidationMessageFor(m => m.UserName)
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                        @Html.ValidationSummary(true)
+                        @Html.AntiForgeryToken()
+                        <div class="c-reg-form__row">
+                            <div class="c-reg-form__col c-reg-form__col--12">
+                                <div class="c-ui-input">
+                                    <input type="text" name="UserName" id="UserName" class="c-ui-input__field c-ui-input__field--ltr c-ui-input__field--has-icon" value="" placeholder="نام کاربری خود را وارد کنید" maxlength="255"  required="">
+                                    <div class="c-ui-input__icon c-ui-input__icon--email"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="input-group mb-3">
-                        <input type="password" id="Password" name="Password" value="@Model.Password" class="form-control" placeholder="کلمه عبور">
-                        @Html.ValidationMessageFor(m => m.Password)
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                        <div class="c-reg-form__row">
+                            <div class="c-reg-form__col c-reg-form__col--12">
+                                <div class="c-ui-input">
+                                    <input type="password" name="Password" id="Password" class="c-ui-input__field c-ui-input__field--ltr c-ui-input__field--has-icon c-ui-input__field--has-btn" placeholder="کلمه عبور خود را وارد کنید"  maxlength="255" autocomplete="current-password" required="">
+                                    <div class="c-ui-input__icon c-ui-input__icon--password"></div>
+                                    <div class="c-ui-input__btn c-ui-input__btn--password "></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="c-reg-form__row c-reg-form__row--gap-40 c-reg-form__row--align-center">
+                            <div class="c-reg-form__col">
+                                <div class="c-ui-checkbox__group">
+                                    <label class="c-ui-checkbox">
+                                        <input class="c-ui-checkbox__origin " type="checkbox" name="RememberMe" value="true">
+                                        <span class="c-ui-checkbox__check"></span>
+                                        <span class="c-ui-checkbox__label">مرا به خاطر بسپار</span>
+                                    </label>
+                                </div>
 
-                    <div class="row">
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary btn-block">ورود</button>
+                            </div>
                         </div>
-                    </div>
-                }
-
+                        <div class="c-reg-form__row c-reg-form__row--align-center">
+                            <div class="c-reg-form__col">
+                                <button class="c-reg-form__submit-btn" id="btnSubmit">ورود</button>
+                            </div>
+                        </div>
+                        <div class="c-reg-form__row c-reg-form__row--align-center c-reg-form__row--gap-40 uk-hidden">
+                            <div class="c-reg-form__col">
+                                <p class="c-reg-form__text">
+                                    <a href="#" class="c-reg-form__link">
+                                        رمز عبورم را
+                                        فراموش کرده ام.
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="c-reg-form__row c-reg-form__row--align-center c-reg-form__row--gap-40 uk-hidden">
+                            <div class="c-reg-form__col">
+                                <p class="c-reg-form__text">
+                                    هنوز ثبت نام نکرده‌اید؟
+                                    <a href="#" class="c-reg-form__link">
+                                        همین حالا ثبت
+                                        نام کنید
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                  
+                </form>
             </div>
-        </div>
+
+            <ul class="c-new-login__content-footer ">
+                <li class="c-new-login__content-footer-item">
+                    <a target="_blank" href="#">کاماتک</a>
+                </li>
+                <li class="c-new-login__content-footer-item uk-hidden">
+                    <a target="_blank" href="#">شرایط استفاده</a>
+                </li>
+                <li class="c-new-login__content-footer-item uk-hidden">
+                    <a target="_blank" href="#">حریم خصوصی</a>
+                </li>
+                <li class="c-new-login__content-footer-item">
+                    <a target="_blank" href="http://www.kamateciran.com/">تماس با ما</a>
+                </li>
+            </ul>
+        </main>
     </div>
-    <script src="~/Content/AdminResponsive3.0/plugins/jquery/jquery.min.js"></script>
-    <script src="~/Content/AdminResponsive3.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/Content/AdminResponsive3.0/dist/js/adminlte.min.js"></script>
+
+
+
+
 </body>
+
 </html>
-
-
-
-
-
-
-

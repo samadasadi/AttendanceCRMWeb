@@ -558,6 +558,70 @@ namespace AttendanceCRMWeb.Areas.Admin.Controllers
                 throw ex;
             }
         }
+
+        public async Task<ActionResult> PrintPatientAccount(UserVm entity)
+        {
+            try
+            {
+                if (entity.Id == Guid.Empty) throw new Exception("پرسنل را انتخاب نمایید");
+                var model = await _serviceAttendanceReport.CalculatePatientAccount(entity);
+
+
+
+                var report = new StiReport();
+                report.Load(Server.MapPath("~/App_Data/StimulSoftReport/PersonalAccounting.mrt"));
+
+                if (model != null && model.listAttenDanceVm != null && model.listAttenDanceVm.Count > 0)
+                {
+                    report.BusinessObjectsStore.Clear();
+                    report.RegBusinessObject("PersonelInfo", model.personInfoVm);
+                    report.RegBusinessObject("AttendanceList", model.listAttenDanceVm);
+                    report.RegBusinessObject("InformationGlobalReport", model.informationGlobalReport);
+                    report.RegBusinessObject("PersonalAccounting", model.personAccounting);
+                }
+                Session["rptResult"] = report;
+
+                return PartialView("_ReportResult");
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<ActionResult> ShowPatientAccountDetail(ViewModel.UserManagement.Attendance.EmployeeAccountingVm entity)
+        {
+            try
+            {
+                if (entity.Id == Guid.Empty) throw new Exception("پرسنل را انتخاب نمایید");
+                var model = await _serviceAttendanceReport.GetPersonAccount(entity);
+
+
+
+                var report = new StiReport();
+                report.Load(Server.MapPath("~/App_Data/StimulSoftReport/PersonalAccounting.mrt"));
+
+                if (model != null && model.DataJson_Value != null && model.DataJson_Value.listAttenDanceVm != null && model.DataJson_Value.listAttenDanceVm.Count > 0)
+                {
+                    report.BusinessObjectsStore.Clear();
+                    report.RegBusinessObject("PersonelInfo", model.DataJson_Value.personInfoVm);
+                    report.RegBusinessObject("AttendanceList", model.DataJson_Value.listAttenDanceVm);
+                    report.RegBusinessObject("InformationGlobalReport", model.DataJson_Value.informationGlobalReport);
+                    report.RegBusinessObject("PersonalAccounting", model.DataJson_Value.personAccounting);
+                }
+                Session["rptResult"] = report;
+
+                return PartialView("_ReportResult");
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        
         #endregion
 
 

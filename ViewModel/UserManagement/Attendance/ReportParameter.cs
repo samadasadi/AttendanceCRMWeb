@@ -24,8 +24,6 @@ namespace ViewModel.UserManagement.Attendance
         public Guid PersonId { get; set; }
         public List<NormalJsonClass> Personel_Lists { get; set; }
 
-        public bool CalcEzafeBeforeVoroud { get; set; }
-
         public int UserId { get; set; }
         public int DeviceGroupId { get; set; }
         public int DeviceId { get; set; }
@@ -149,10 +147,13 @@ namespace ViewModel.UserManagement.Attendance
 
 
 
-
-
+        public bool CalcEzafeBeforeVoroud { get; set; }
         public bool SetExitAttRecord { get; set; }
         public int NaharTime { get; set; }
+
+
+
+
 
     }
 
