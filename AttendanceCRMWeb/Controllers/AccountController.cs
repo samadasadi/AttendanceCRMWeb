@@ -54,8 +54,11 @@ namespace AttendanceCRMWeb.Controllers
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl, string Type = "Login", string HashPass = "")
         {
 
-            if (DateTime.Now.Date > DateTime.Parse("2023-10-10"))
+            if (DateTime.Now.Date > DateTime.Parse("2024-10-10"))
+            {
+                //ModelState.AddModelError("", "خطایی رخ داده لطفا با شماره 09196214571 تماس بگیرید");
                 return View(model);
+            }
 
 
             if (string.IsNullOrEmpty(model.UserName) || string.IsNullOrEmpty(model.Password))
