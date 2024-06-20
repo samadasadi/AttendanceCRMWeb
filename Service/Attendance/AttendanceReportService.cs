@@ -1300,6 +1300,18 @@ namespace Service.UserManagement.Attendance
 
                 var _tot_valid = (timeRecord_item.VacationsHour + timeRecord_item.MissionHour) + filter.NaharTime;
 
+
+
+                timeRecord_item.Gheybat = timeRecord_item.Tajil + timeRecord_item.Takhir;
+                if (timeRecord_item.TotalMinuteCurrentDay > (timeRecord_item.TotalTime + timeRecord_item.Gheybat))
+                {
+                    var _gh = timeRecord_item.TotalMinuteCurrentDay - (timeRecord_item.TotalTime + timeRecord_item.Gheybat);
+                    timeRecord_item.Gheybat += (_gh ?? 0);
+                }
+
+
+
+
                 timeRecord_item.Gheybat = timeRecord_item.Tajil + timeRecord_item.Takhir;
                 timeRecord_item.Gheybat = _tot_valid > timeRecord_item.Gheybat ? 0 : (timeRecord_item.Gheybat - (_tot_valid));
             }
